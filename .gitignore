@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules
+
+# dotenv environment variables file
+.env.local
+
+# Distribution directories
+dist/
+.next
+
+# Mac OSX files
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cypress
+test-results
+cypress/screenshots
+cypress/videos
+cypress.env.json
+
+# Optional npm cache directory
+.npm
