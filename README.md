@@ -1,6 +1,4 @@
-![cv](https://github.com/BartoszJarocki/cv/assets/1017620/79bdb9fc-0b20-4d2c-aafe-0526ad4a71d2)
-
-# Minimalist CV
+# Portfolio
 
 Simple web app that renders minimalist CV with print-friendly layout.
 
@@ -59,9 +57,5 @@ docker compose up -d
 Stop the Container
 
 ```
-docker compose down 
+docker compose down
 ```
-
-# License
-
-[MIT](https://choosealicense.com/licenses/mit/)
