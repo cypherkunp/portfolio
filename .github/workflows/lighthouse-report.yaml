@@ -1,0 +1,74 @@
+name: Unlighthouse Report
+
+concurrency:
+  group: unlighthouse
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+
+permissions:
+  contents: write
+  actions: write
+  repository-projects: read
+
+jobs:
+  unlighthouse:
+    name: Generate Unlighthouse Report
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup node_modules cache'
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: node-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Package size report
+        uses: pkg-size/action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Unlighthouse CI
+        run: |
+          npx unlighthouse-ci
+
+      - name: Upload Unlighthouse report to artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unlighthouse-reports
+          path: .unlighthouse/
