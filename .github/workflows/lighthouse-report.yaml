@@ -56,11 +56,11 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install
+        run: npm install
 
       - name: Run Unlighthouse CI
         run: |
-          yarn unlighthouse-ci
+          npm run unlighthouse-ci
 
       - name: Upload Unlighthouse report to artifact
         uses: actions/upload-artifact@v4
