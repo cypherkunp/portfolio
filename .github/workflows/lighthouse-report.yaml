@@ -52,7 +52,7 @@ jobs:
         with:
           path: |
             node_modules
-          key: node-${{ hashFiles('**/yarn.lock') }}
+          key: node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
