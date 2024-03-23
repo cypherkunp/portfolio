@@ -26,3 +26,6 @@ cypress.env.json
 
 # Optional npm cache directory
 .npm
+
+# Unlighthouse folder
+.unlighthouse/

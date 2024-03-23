@@ -60,7 +60,7 @@ jobs:
 
       - name: Run Unlighthouse CI
         run: |
-          npx unlighthouse-ci
+          yarn unlighthouse-ci
 
       - name: Upload Unlighthouse report to artifact
         uses: actions/upload-artifact@v4
