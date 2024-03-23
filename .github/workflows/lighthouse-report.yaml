@@ -63,6 +63,7 @@ jobs:
           npm run unlighthouse-ci
 
       - name: Upload Unlighthouse report to artifact
+        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: unlighthouse-reports
