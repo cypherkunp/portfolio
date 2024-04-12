@@ -8,10 +8,10 @@ export default defineConfig({
   site: 'devvrat.cc',
   ci: {
     budget: {
-      performance: 90,
-      accessibility: 90,
-      'best-practices': 90,
-      seo: 90,
+      performance: 0.9,
+      accessibility: 0.9,
+      'best-practices': 0.9,
+      seo: 0.9,
     },
   },
   scanner: {

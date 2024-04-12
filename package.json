@@ -1,55 +1,28 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "repository": "@portfolio",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "unlighthouse-ci": "unlighthouse-ci"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "pnpm --filter @repo/ui ui:add"
   },
   "dependencies": {
-    "@radix-ui/react-avatar": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@vercel/analytics": "^1.1.1",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
-    "cmdk": "^0.2.0",
-    "lucide-react": "^0.300.0",
+    "@vercel/speed-insights": "^1.0.10",
+    "eslint": "^8.57.0",
+    "eslint-config-turbo": "^1.13.0",
     "next": "14.0.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "tailwind-merge": "^2.2.0",
-    "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.8.0"
-  },
-  "devDependencies": {
-    "@next/eslint-plugin-next": "^14.1.0",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@unlighthouse/cli": "^0.11.5",
-    "autoprefixer": "^10.0.1",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
-    "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "postcss": "^8",
     "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.9",
-    "puppeteer": "^22.6.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5",
-    "unlighthouse": "^0.11.5"
+    "turbo": "^1.13.0"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
