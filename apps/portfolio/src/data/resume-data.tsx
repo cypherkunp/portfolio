@@ -9,7 +9,7 @@ export const RESUME_DATA = {
   summary:
     'I am a seasoned software architect with 13.5 years of diverse experience in software product development. As a full stack architect, I have successfully taken multiple products from 0 to 1. I have a deep expertise in full stack development using technologies such as Typescript, JavaScript, NextJS, ReactJS, NodeJS and Serverless. I have led and architected several multi-million dollar projects including greenfield and rewrites of legacy products. I lead teams effectively, ensuring an environment where people can do their best work.',
   avatarUrl: 'https://avatars.githubusercontent.com/u/1528663?v=4',
-  personalWebsiteUrl: 'https://jarocki.me',
+  personalWebsiteUrl: 'https://devvrat.cc',
   contact: {
     email: 'devvrat.shukla@gmail.com',
     tel: '',

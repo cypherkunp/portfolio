@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { Button } from '@repo/ui/components/ui/button';
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,7 +12,6 @@ import {
   CommandList,
   CommandSeparator,
 } from '@repo/ui/components/ui/command';
-import { Button } from '@repo/ui/components/ui/button';
 import { CommandIcon } from 'lucide-react';
 
 interface Props {

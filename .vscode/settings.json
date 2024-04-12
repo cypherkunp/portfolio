@@ -36,6 +36,7 @@
     "opentelemetry",
     "pino",
     "prerendered",
+    "tailwindcss",
     "Threadsafe",
     "Turbopack"
   ],
