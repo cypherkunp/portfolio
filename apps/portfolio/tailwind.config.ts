@@ -1,5 +1,5 @@
 import { Config } from 'tailwindcss';
-import { shadcnPlugin } from './src/lib/shadcn-plugin';
+import { shadcnPlugin } from '@repo/ui/lib/shadcn-plugin';
 
 const tailwindConfig = {
   content: [

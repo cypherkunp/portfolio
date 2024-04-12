@@ -34,8 +34,10 @@
     "napi",
     "nextjs",
     "opentelemetry",
+    "Parens",
     "pino",
     "prerendered",
+    "shadcn",
     "tailwindcss",
     "Threadsafe",
     "Turbopack"

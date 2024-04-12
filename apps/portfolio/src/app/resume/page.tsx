@@ -26,15 +26,15 @@ type Project = {
 
 export default function Page() {
   return (
-    <main className="container relative mx-auto scroll-my-12 overflow-auto p-4 print:p-12 md:p-16 font-mono">
-      <section className="mx-auto w-full max-w-3xl space-y-8 bg-white print:space-y-6 p-4">
+    <main className="container relative mx-auto scroll-my-12 overflow-auto p-4 font-mono md:p-16 print:p-12">
+      <section className="mx-auto w-full max-w-3xl space-y-8 bg-white p-4 print:space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex-1 space-y-1.5">
             <h1 className="text-2xl font-bold">{RESUME_DATA.name}</h1>
-            <p className="max-w-md text-pretty font-mono text-sm text-muted-foreground">
+            <p className="text-muted-foreground max-w-md text-pretty font-mono text-sm">
               {RESUME_DATA.about}
             </p>
-            <p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
+            <p className="text-muted-foreground max-w-md items-center text-pretty font-mono text-xs">
               <a
                 className="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"
                 href={RESUME_DATA.locationLink}
@@ -44,7 +44,7 @@ export default function Page() {
                 {RESUME_DATA.location}
               </a>
             </p>
-            <div className="flex gap-x-1 pt-1 font-mono text-sm text-muted-foreground print:hidden">
+            <div className="text-muted-foreground flex gap-x-1 pt-1 font-mono text-sm print:hidden">
               {RESUME_DATA.contact.email ? (
                 <Button className="size-8" variant="outline" size="icon" asChild>
                   <a href={`mailto:${RESUME_DATA.contact.email}`}>
@@ -67,7 +67,7 @@ export default function Page() {
                 </Button>
               ))}
             </div>
-            <div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
+            <div className="text-muted-foreground hidden flex-col gap-x-1 font-mono text-sm print:flex">
               {RESUME_DATA.contact.email ? (
                 <a href={`mailto:${RESUME_DATA.contact.email}`}>
                   <span className="underline">{RESUME_DATA.contact.email}</span>
@@ -81,16 +81,16 @@ export default function Page() {
             </div>
           </div>
 
-          <Avatar className="size-28 md:size-36 rounded-full">
+          <Avatar className="size-28 rounded-full md:size-36">
             <AvatarImage alt={RESUME_DATA.name} src={RESUME_DATA.avatarUrl} />
             <AvatarFallback>{RESUME_DATA.initials}</AvatarFallback>
           </Avatar>
         </div>
         <Section className="gap-y-3">
           <h2 className="text-xl font-bold">About</h2>
-          <ul className="list-disc list-inside flex flex-col gap-y-1 ">
+          <ul className="flex list-inside list-disc flex-col gap-y-1 ">
             {RESUME_DATA.summary.split('. ').map(sentence => (
-              <li className="text-pretty font-mono text-sm text-muted-foreground">{sentence}</li>
+              <li className="text-muted-foreground text-pretty font-mono text-sm">{sentence}</li>
             ))}
           </ul>
         </Section>
@@ -101,7 +101,7 @@ export default function Page() {
               <Card key={work.company} className="border-none">
                 <CardHeader>
                   <div className="flex items-center justify-between gap-x-2 text-base">
-                    <h3 className="inline-flex items-center justify-center gap-x-1 font-semibold leading-none text-muted-foreground">
+                    <h3 className="text-muted-foreground inline-flex items-center justify-center gap-x-1 font-semibold leading-none">
                       <a className="hover:underline" href={work.link}>
                         {work.company}
                       </a>
@@ -114,12 +114,12 @@ export default function Page() {
                         ))}
                       </span>
                     </h3>
-                    <div className="text-sm tabular-nums text-gray-500 min-w-[96px]">
+                    <div className="min-w-[96px] text-sm tabular-nums text-gray-500">
                       {work.start} - {work.end}
                     </div>
                   </div>
 
-                  <h4 className="font-mono text-sm leading-none text-muted-foreground">
+                  <h4 className="text-muted-foreground font-mono text-sm leading-none">
                     {work.title}
                   </h4>
                 </CardHeader>
@@ -135,7 +135,7 @@ export default function Page() {
               <Card key={education.school} className="border-none">
                 <CardHeader>
                   <div className="flex items-center justify-between gap-x-2 text-base">
-                    <h3 className="leading-none text-muted-foreground">{education.school}</h3>
+                    <h3 className="text-muted-foreground leading-none">{education.school}</h3>
                     <div className="text-sm tabular-nums text-gray-500">
                       {education.start} - {education.end}
                     </div>
@@ -151,7 +151,7 @@ export default function Page() {
           <div className="flex flex-wrap gap-1">
             {RESUME_DATA.skills.map(skill => {
               return (
-                <Badge className="bg-slate-800 text-white px-3 py-1 rounded-xl" key={skill}>
+                <Badge className="rounded-xl bg-slate-800 px-3 py-1 text-white" key={skill}>
                   {skill}
                 </Badge>
               );
@@ -162,7 +162,7 @@ export default function Page() {
         {RESUME_DATA.projects.length ? (
           <Section className="print-force-new-page scroll-mb-16">
             <h2 className="text-xl font-bold">Projects</h2>
-            <div className="-mx-3 grid grid-cols-1 gap-3 print:grid-cols-3 print:gap-2 md:grid-cols-2 lg:grid-cols-3">
+            <div className="-mx-3 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 print:grid-cols-3 print:gap-2">
               {RESUME_DATA.projects.map((project: Project) => {
                 return (
                   <ProjectCard
