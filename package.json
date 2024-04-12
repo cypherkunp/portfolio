@@ -15,9 +15,10 @@
     "ui:add": "pnpm --filter @repo/ui ui:add"
   },
   "dependencies": {
-    "next": "14.0.4",
+    "@vercel/speed-insights": "^1.0.10",
     "eslint": "^8.57.0",
     "eslint-config-turbo": "^1.13.0",
+    "next": "14.0.4",
     "prettier": "^3.2.5",
     "turbo": "^1.13.0"
   },
