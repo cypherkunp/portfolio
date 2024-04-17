@@ -96,37 +96,39 @@ export default function Page() {
         </Section>
         <Section className="gap-y-3">
           <h2 className="text-xl font-bold">Work Experience</h2>
-          {RESUME_DATA.work.map(work => {
-            return (
-              <Card key={work.company} className="border-none">
-                <CardHeader>
-                  <div className="flex items-center justify-between gap-x-2 text-base">
-                    <h3 className="text-muted-foreground inline-flex items-center justify-center gap-x-1 font-semibold leading-none">
-                      <a className="hover:underline" href={work.link}>
-                        {work.company}
-                      </a>
+          <div className="space-y-4 md:space-y-6">
+            {RESUME_DATA.work.map(work => {
+              return (
+                <Card key={work.company} className="border-none">
+                  <CardHeader>
+                    <div className="flex items-center justify-between gap-x-2 text-base">
+                      <h3 className="inline-flex items-center justify-center gap-x-1 font-[200] leading-none">
+                        <a className="hover:underline" href={work.link}>
+                          {work.company}
+                        </a>
 
-                      <span className="inline-flex gap-x-1">
-                        {work.badges.map(badge => (
-                          <Badge variant="secondary" className="align-middle text-xs" key={badge}>
-                            {badge}
-                          </Badge>
-                        ))}
-                      </span>
-                    </h3>
-                    <div className="min-w-[96px] text-sm tabular-nums text-gray-500">
-                      {work.start} - {work.end}
+                        <span className="inline-flex gap-x-1">
+                          {work.badges.map(badge => (
+                            <Badge variant="secondary" className="align-middle text-xs" key={badge}>
+                              {badge}
+                            </Badge>
+                          ))}
+                        </span>
+                      </h3>
+                      <div className="min-w-[96px] text-sm tabular-nums text-gray-500">
+                        {work.start} - {work.end}
+                      </div>
                     </div>
-                  </div>
 
-                  <h4 className="text-muted-foreground font-mono text-sm leading-none">
-                    {work.title}
-                  </h4>
-                </CardHeader>
-                <CardContent className="mt-3 text-xs">{work.description}</CardContent>
-              </Card>
-            );
-          })}
+                    <h4 className="text-muted-foreground font-mono text-sm leading-none">
+                      {work.title}
+                    </h4>
+                  </CardHeader>
+                  <CardContent className="mt-3 text-xs">{work.description}</CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </Section>
         <Section className="gap-y-3">
           <h2 className="text-xl font-bold">Education</h2>
@@ -135,7 +137,7 @@ export default function Page() {
               <Card key={education.school} className="border-none">
                 <CardHeader>
                   <div className="flex items-center justify-between gap-x-2 text-base">
-                    <h3 className="text-muted-foreground leading-none">{education.school}</h3>
+                    <h3 className="font-[200] leading-none">{education.school}</h3>
                     <div className="text-sm tabular-nums text-gray-500">
                       {education.start} - {education.end}
                     </div>
