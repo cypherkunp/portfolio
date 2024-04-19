@@ -4,8 +4,9 @@ concurrency:
   group: unlighthouse
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+      - 'release'
   workflow_dispatch:
     inputs:
       logLevel:
