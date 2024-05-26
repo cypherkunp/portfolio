@@ -29,6 +29,7 @@
     "*.tsx": "$(capture).test.ts, $(capture).test.tsx"
   },
   "cSpell.words": [
+    "clsx",
     "Entrypoints",
     "lucide",
     "napi",

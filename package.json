@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=portfolio",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@vercel/speed-insights": "^1.0.10",
-    "next": "14.2.1"
+    "next": "14.2.3"
   },
   "engines": {
     "node": ">=20.0.0"
