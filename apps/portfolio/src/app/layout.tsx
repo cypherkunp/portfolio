@@ -7,7 +7,7 @@ import '@/styles/globals.css';
 import React from 'react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
-import { inter } from '@/lib/font';
+import { geistMono, geistSans } from '@/lib/font';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.className} antialiased`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <body className="bg-warm-black mx-auto flex min-h-screen w-full scroll-my-12 flex-col overflow-auto">
         <div className="medium-up large container sticky top-0 z-[100]">
           <Header>

@@ -10,6 +10,14 @@ const tailwindConfig = {
   ],
   prefix: '',
   plugins: [shadcnPlugin],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
+      },
+    },
+  },
 } as Config;
 
 export default tailwindConfig;
