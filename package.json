@@ -32,7 +32,7 @@
     "prettier-plugin-classnames": "^0.6.6",
     "prettier-plugin-merge": "^0.6.0",
     "prettier-plugin-tailwindcss": "^0.5.9",
-    "turbo": "^1.13.0"
+    "turbo": "^1.13.3"
   },
   "peerDependencies": {
     "typescript": ">=4.2.0"
