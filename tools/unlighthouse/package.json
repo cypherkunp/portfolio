@@ -1,0 +1,15 @@
+{
+  "name": "unlighthouse",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "unlighthouse-ci": "unlighthouse-ci --build-static"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@unlighthouse/cli": "^0.12.2",
+    "puppeteer": "^22.10.0"
+  }
+}

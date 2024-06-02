@@ -37,6 +37,9 @@ jobs:
     name: Generate Unlighthouse Report
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./tools/unlighthouse
     steps:
       - name: Set up Node.js
         uses: actions/setup-node@v4

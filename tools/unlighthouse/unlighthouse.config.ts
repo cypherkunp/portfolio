@@ -1,10 +1,4 @@
-import { defineConfig } from 'unlighthouse';
-
-/**
- * Refer to the documentation for more information:
- * https://unlighthouse.dev/guide/guides/config
- */
-export default defineConfig({
+export default {
   site: 'devvrat.cc',
   ci: {
     budget: {
@@ -16,9 +10,9 @@ export default defineConfig({
   },
   scanner: {
     exclude: ['/.*?pdf', '.*/amp', 'en-*', '.*?mp4'],
-    samples: 1,
+    samples: 3,
     device: 'desktop',
     throttle: false,
   },
   debug: true,
-});
+};
