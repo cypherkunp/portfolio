@@ -9,7 +9,7 @@ type NavLinkProps = {
   text: string;
 };
 
-export function NavLink({ href, text }: NavLinkProps) {
+export default function NavLink({ href, text }: NavLinkProps) {
   const pathname = usePathname();
 
   const linkHref = href === 'home' ? '' : href;
@@ -17,7 +17,7 @@ export function NavLink({ href, text }: NavLinkProps) {
     <Link
       href={`/${linkHref}`}
       className={cn(
-        'text-silver decoration-3 text-2xl underline underline-offset-[12px] hover:text-red-500',
+        'text-silver decoration-3 text-lg font-bold underline underline-offset-4 hover:text-rose-500',
         {
           'active:bg-fluorescent-green': pathname === `/${linkHref}`,
         },

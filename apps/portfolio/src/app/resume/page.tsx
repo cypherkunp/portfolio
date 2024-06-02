@@ -26,8 +26,8 @@ type Project = {
 
 export default function Page() {
   return (
-    <main className="container relative mx-auto scroll-my-12 overflow-auto p-4 font-mono md:p-16 print:p-12">
-      <section className="mx-auto w-full max-w-3xl space-y-8 bg-white p-4 print:space-y-6">
+    <main className="container relative mx-auto scroll-my-12 overflow-auto p-4 font-mono md:p-16 print:p-12 ">
+      <section className="mx-auto w-full max-w-3xl space-y-8 rounded-2xl bg-white p-4 print:space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex-1 space-y-1.5">
             <h1 className="text-2xl font-bold">{RESUME_DATA.name}</h1>
@@ -180,19 +180,6 @@ export default function Page() {
           </Section>
         ) : null}
       </section>
-
-      <CommandMenu
-        links={[
-          {
-            url: RESUME_DATA.personalWebsiteUrl,
-            title: 'Personal Website',
-          },
-          ...RESUME_DATA.contact.social.map(socialMediaLink => ({
-            url: socialMediaLink.url,
-            title: socialMediaLink.name,
-          })),
-        ]}
-      />
     </main>
   );
 }
