@@ -63,9 +63,11 @@ jobs:
         run: |
           npm run unlighthouse-ci
 
-      - name: Upload Unlighthouse report to artifact
+      - name: Deploy Unlighthouse report to GitHub Pages
         if: success() || failure()
-        uses: actions/upload-artifact@v4
+        uses: crazy-max/ghaction-github-pages@v4
         with:
-          name: unlighthouse-reports
-          path: .unlighthouse/
+          target_branch: gh-pages
+          build_dir: .unlighthouse
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
