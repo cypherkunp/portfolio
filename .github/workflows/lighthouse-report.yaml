@@ -35,7 +35,6 @@ permissions:
 jobs:
   unlighthouse:
     name: Generate Unlighthouse Report
-
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -1,4 +1,4 @@
-import MillionLint from '@million/lint';
+const MillionLint = require('@million/lint');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',

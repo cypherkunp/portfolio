@@ -1,4 +1,5 @@
 {
+  "name": "portfolio",
   "repository": "@portfolio",
   "private": true,
   "workspaces": [
@@ -7,7 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --filter=portfolio",
+    "dev": "turbo run dev --filter=portfolio-site",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
@@ -38,6 +39,5 @@
   "peerDependencies": {
     "typescript": ">=4.2.0"
   },
-  "packageManager": "pnpm@9.1.1",
-  "name": "portfolio"
+  "packageManager": "pnpm@9.1.1"
 }
