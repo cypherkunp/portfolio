@@ -1,3 +1,5 @@
+import MillionLint from '@million/lint';
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -7,4 +9,6 @@ const nextConfig = {
   transpilePackages: ['@portfolio/ui'],
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+const nextConfigWithMillionLint = MillionLint.next({ rsc: true })(nextConfig);
+
+module.exports = withBundleAnalyzer(nextConfigWithMillionLint);

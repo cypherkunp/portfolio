@@ -15,6 +15,7 @@
     "ui:add": "pnpm --filter @repo/ui ui:add"
   },
   "dependencies": {
+    "@million/lint": "1.0.0-rc.84",
     "@vercel/speed-insights": "^1.0.10",
     "next": "14.2.3"
   },
