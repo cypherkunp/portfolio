@@ -1,19 +1,55 @@
+'use client';
+import { FloatingDock } from '@repo/ui/components/ui/floating-dock';
+import {
+  IconBrandGithub,
+  IconBrandX,
+  IconExchange,
+  IconHome,
+  IconNewSection,
+  IconTerminal2,
+} from '@tabler/icons-react';
+
 export default function Footer() {
+  const links = [
+    {
+      title: 'Home',
+      icon: <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: '#',
+    },
+
+    {
+      title: 'Products',
+      icon: <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: '#',
+    },
+    {
+      title: 'Components',
+      icon: <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: '#',
+    },
+    {
+      title: 'Changelog',
+      icon: <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: '#',
+    },
+
+    {
+      title: 'Twitter',
+      icon: <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: '#',
+    },
+    {
+      title: 'GitHub',
+      icon: <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />,
+      href: '#',
+    },
+  ];
   return (
-    <div className="pt-100 md:mt-140 container w-full overflow-hidden print:hidden">
-      <footer
-        className="border-1 bg-warm-black shadow-top border-layout relative z-[1] flex h-[36px] w-full flex-col
-          items-center justify-center rounded-t-2xl border border-b-0 px-16 py-6 shadow-slate-300 md:flex-row
-          md:justify-between lg:px-20"
-      >
-        <div className="flex gap-4">
-          <p className="text-silver text-xl">
-            &copy; {new Date().getFullYear()}{' '}
-            <span className="text-fluorescent-green">Devvrat™</span>
-          </p>
-        </div>
-        <div className="flex w-11 gap-4"></div>
-      </footer>
-    </div>
+    <footer className="pt-100 md:mt-140 flex h-[35rem] w-full items-center justify-center print:hidden">
+      <FloatingDock
+        mobileClassName="translate-y-20" // only for demo, remove for production
+        items={links}
+      />
+    </footer>
   );
 }

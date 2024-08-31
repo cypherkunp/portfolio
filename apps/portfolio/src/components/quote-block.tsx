@@ -1,12 +1,11 @@
+import UnderlineText from './underline-text';
+
 export default function QuoteBlock() {
   return (
-    <div className="border-1 border-glow-stroke rounded-xl p-4">
-      <p className="text-silver text-center text-8xl font-semibold ">
-        I develope{' '}
-        <span className="underline decoration-rose-400 underline-offset-[12px]">
-          web applications
-        </span>{' '}
-        that your users love. On time and on budget.
+    <div className="border-1 border-glow-stroke flex flex-col gap-4 rounded-xl ">
+      <p className="text-2xl font-semibold text-white ">Hey, I am Devvrat 👋.</p>
+      <p className="text-xl font-semibold text-white ">
+        I am a full stack developer. <UnderlineText>Product Strategist</UnderlineText>
       </p>
     </div>
   );

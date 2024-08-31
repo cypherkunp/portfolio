@@ -6,6 +6,6 @@
       "@ui/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../../apps/portfolio/src/lib/shadcn-plugin.ts"],
   "exclude": ["node_modules"]
 }

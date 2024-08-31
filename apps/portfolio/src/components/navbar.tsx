@@ -12,7 +12,6 @@ export default function Navbar() {
       </div>
       <div className="flex items-center justify-between gap-10 py-4 md:gap-6">
         <NavButtonLink text="Resume" target="_self" type="secondary" ring={false} href="/resume" />
-        <NavButtonLink text="Blog" target="_self" type="primary" ring={false} href="/blog" />
       </div>
     </>
   );

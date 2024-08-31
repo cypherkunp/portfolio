@@ -8,6 +8,7 @@ import React from 'react';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import { geistMono, geistSans } from '@/lib/font';
+import { Button } from '@repo/ui/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -17,11 +18,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="bg-warm-black mx-auto flex min-h-screen w-full scroll-my-12 flex-col overflow-auto">
-        <Header>
-          <Navbar />
-        </Header>
-        <div className="lg:gap-140 container flex w-full flex-grow flex-col gap-72">{children}</div>
+      <body className="container flex min-h-screen max-w-screen-lg scroll-my-12 flex-col overflow-auto bg-black">
+        {/* <div className="main">
+          <div className="gradient" />
+        </div> */}
+        <div className="lg:gap-140 flex flex-grow flex-col gap-72">{children}</div>
+        <Button>Click me</Button>
         <Footer />
         <SpeedInsights />
       </body>

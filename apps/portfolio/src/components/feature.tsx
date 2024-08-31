@@ -3,7 +3,7 @@ type FeatureProps = {
   children: React.ReactNode;
 };
 
-export default function Feature({ flag = 'disable', children }: FeatureProps) {
+export default function Feature({ flag, children }: FeatureProps) {
   if (flag === 'enable') {
     return <>{children}</>;
   }

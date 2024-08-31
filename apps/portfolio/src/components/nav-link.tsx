@@ -17,7 +17,7 @@ export default function NavLink({ href, text }: NavLinkProps) {
     <Link
       href={`/${linkHref}`}
       className={cn(
-        'text-silver decoration-3 text-lg font-bold underline underline-offset-4 hover:text-rose-500',
+        'decoration-3 text-lg font-bold text-white underline underline-offset-4 hover:text-rose-500',
         {
           'active:bg-fluorescent-green': pathname === `/${linkHref}`,
         },
