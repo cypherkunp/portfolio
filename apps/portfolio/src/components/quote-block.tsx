@@ -1,4 +1,5 @@
 import UnderlineText from './underline-text';
+import { cn } from '@/lib/utils';
 
 export default function QuoteBlock() {
   return (

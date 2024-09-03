@@ -1,13 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/ui/avatar';
-import { Card, CardHeader, CardContent } from '@repo/ui/components/ui/card';
-import { Badge } from '@repo/ui/components/ui/badge';
-import { CommandMenu } from '@/components/command-menu';
-import { Metadata } from 'next';
-import { Section } from '@repo/ui/components/ui/section';
-import { GlobeIcon, MailIcon, PhoneIcon } from 'lucide-react';
-import { Button } from '@repo/ui/components/ui/button';
-import { RESUME_DATA } from '@/data/resume-data';
 import { ProjectCard } from '@/components/project-card';
+import { Section } from '@/components/section';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { RESUME_DATA } from '@/data/resume-data';
+
+import { GlobeIcon, MailIcon, PhoneIcon } from 'lucide-react';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
