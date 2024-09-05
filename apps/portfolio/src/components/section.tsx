@@ -7,5 +7,9 @@ interface SectionProps {
 }
 
 export function Section({ children, className }: SectionProps) {
-  return <section className={cn('flex flex-col gap-y-3 py-[80px]', className)}>{children}</section>;
+  return (
+    <section className={cn('flex w-full flex-col gap-y-3 py-[20px] md:py-[40px]', className)}>
+      {children}
+    </section>
+  );
 }

@@ -1,4 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-  
+
+@keyframes glow-change {
+  0%,
+  100% {
+    box-shadow: 0 0 10px 2px theme('colors.white');
+  }
+  20% {
+    box-shadow: 0 0 10px 2px theme('colors.sky.300');
+  }
+  40% {
+    box-shadow: 0 0 10px 2px theme('colors.green.200');
+  }
+  60% {
+    box-shadow: 0 0 10px 2px theme('colors.emerald.300');
+  }
+  80% {
+    box-shadow: 0 0 10px 2px theme('colors.lime.300');
+  }
+}
+
+.animate-glow-change {
+  animation: glow-change 6s infinite;
+}

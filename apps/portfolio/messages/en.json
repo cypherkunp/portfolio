@@ -1,0 +1,20 @@
+{
+  "Header": {
+    "navbar": {
+      "home": "Home",
+      "about": "About",
+      "handbook": "Handbook",
+      "resume": "Resume",
+      "bookmarks": "Bookmarks",
+      "gallery": "Gallery"
+    }
+  },
+  "HomePage": {
+    "title": "Hi, I'm Devvrat",
+    "highlight": "Full-Stack Developer | Architect",
+    "description": "I am passionate about building next-generation web applications and high-performance development teams",
+    "infoBlocks": {
+      "name": "Devvrat Shukla"
+    }
+  }
+}

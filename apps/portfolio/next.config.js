@@ -1,3 +1,7 @@
+const createNextIntlPlugin = require('next-intl/plugin');
+const withNextIntl = createNextIntlPlugin();
+const { withContentCollections } = require('@content-collections/next');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -7,4 +11,4 @@ const nextConfig = {
   transpilePackages: [],
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withContentCollections(withBundleAnalyzer(withNextIntl(nextConfig)));

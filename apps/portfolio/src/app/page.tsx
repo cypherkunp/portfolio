@@ -1,11 +1,11 @@
-import { ClientOnly } from '@/components/client-only';
-import Feature from '@/components/feature';
-import Marquee from '@/components/marquee';
-import ContentBlock from '@/components/content-block';
-import { RESUME_DATA } from '@/data/resume-data';
-import useCustomCursor from '@/hooks/use-custom-cursor';
 import { Metadata } from 'next';
+import { useTranslations } from 'next-intl';
+import ProfilePic from '@/images/profile.jpg';
+
+import InfoBlock from '@/components/info-block';
+import Feature from '@/components/feature';
 import { Section } from '@/components/section';
+import { RESUME_DATA } from '@/data/resume-data';
 
 export const metadata: Metadata = {
   title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
@@ -13,12 +13,17 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const t = useTranslations('HomePage');
+
   return (
     <main className="flex flex-col items-start justify-start gap-20">
       <Section>
-        <ContentBlock
-          title="Devvrat Shukla"
-          description={'I am a full stack developer. Product Strategist'}
+        <InfoBlock
+          title={t('title')}
+          highlight={t('highlight')}
+          description={t('description')}
+          avatarUrl={ProfilePic.src}
+          avatarAlt={RESUME_DATA.name}
         />
       </Section>
       <Feature flag="enable">

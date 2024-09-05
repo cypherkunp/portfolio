@@ -1,11 +1,5 @@
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from '@repo/ui/components/ui/card';
-import { Badge } from '@repo/ui/components/ui/badge';
+import { Card, CardHeader, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   title: string;
@@ -16,7 +10,7 @@ interface Props {
 
 export function ProjectCard({ title, description, tags, link }: Props) {
   return (
-    <Card className="flex flex-col overflow-hidden border border-muted p-3">
+    <Card className="border-muted flex flex-col overflow-hidden border p-3">
       <CardHeader className="">
         <div className="space-y-1">
           <CardTitle className="text-base">
