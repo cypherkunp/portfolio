@@ -1,3 +1,4 @@
+import PageContainer from '@/components/layout/page-container';
 import { ProjectCard } from '@/components/project-card';
 import { Section } from '@/components/section';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -26,9 +27,9 @@ type Project = {
 
 export default function Page() {
   return (
-    <main className="scroll-my-12 overflow-auto font-mono print:p-12 ">
-      <article className="mt-4 w-full">
-        <Section className="gap-y-3">
+    <PageContainer className="overflow-auto font-mono print:p-12 ">
+      <article className="w-full">
+        <Section className="gap-y-3" isFirstSection>
           <div className="flex items-center justify-between">
             <div className="flex-1 space-y-1.5">
               <h1 className="text-2xl font-bold">{RESUME_DATA.name}</h1>
@@ -194,6 +195,6 @@ export default function Page() {
           </Section>
         ) : null}
       </article>
-    </main>
+    </PageContainer>
   );
 }

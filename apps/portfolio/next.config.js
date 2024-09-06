@@ -1,6 +1,6 @@
 const createNextIntlPlugin = require('next-intl/plugin');
 const withNextIntl = createNextIntlPlugin();
-const { withContentCollections } = require('@content-collections/next');
+const createMDX = require('@next/mdx');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -8,7 +8,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   transpilePackages: [],
 };
 
-module.exports = withContentCollections(withBundleAnalyzer(withNextIntl(nextConfig)));
+const withMDX = createMDX({
+  // Add markdown plugins here, as desired
+});
+
+module.exports = withBundleAnalyzer(withNextIntl(withMDX(nextConfig)));

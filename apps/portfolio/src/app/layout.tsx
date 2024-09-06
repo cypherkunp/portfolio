@@ -7,7 +7,6 @@ import { getLocale, getMessages } from 'next-intl/server';
 import { Footer } from '@/components/footer';
 import { inter } from '@/lib/font';
 import '@/styles/globals.css';
-import React from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
 import Header from '@/components/header';
 
