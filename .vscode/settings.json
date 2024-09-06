@@ -29,16 +29,22 @@
     "*.tsx": "$(capture).test.ts, $(capture).test.tsx"
   },
   "cSpell.words": [
+    "aceternity",
+    "clsx",
     "Entrypoints",
     "lucide",
     "napi",
     "nextjs",
     "opentelemetry",
+    "Parens",
     "pino",
     "prerendered",
+    "shadcn",
+    "tabler",
     "tailwindcss",
     "Threadsafe",
     "Turbopack"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "liveServer.settings.port": 5501
 }

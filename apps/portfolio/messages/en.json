@@ -1,0 +1,24 @@
+{
+  "Header": {
+    "navbar": {
+      "home": "home",
+      "about": "about",
+      "handbook": "handbook",
+      "resume": "resume",
+      "bookmarks": "bookmarks",
+      "gallery": "gallery"
+    }
+  },
+  "Footer": {
+    "handmadeBy": "Handmade by",
+    "name": "Devvrat"
+  },
+  "HomePage": {
+    "title": "Hi, I'm Devvrat",
+    "highlight": "Developer | Architect | Craftsman",
+    "description": "I am passionate about building next-generation web applications and high-performance development teams",
+    "infoBlocks": {
+      "name": "Devvrat Shukla"
+    }
+  }
+}

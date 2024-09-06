@@ -1,5 +1,6 @@
 {
-  "repository": "@portfolio",
+  "name": "portfolio",
+  "repository": "portfolio",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -7,7 +8,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=portfolio-site",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
@@ -15,14 +16,43 @@
     "ui:add": "pnpm --filter @repo/ui ui:add"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^14.1.4",
+    "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
-    "eslint": "^8.57.0",
-    "eslint-config-turbo": "^1.13.0",
-    "next": "14.0.4",
-    "prettier": "^3.2.5",
-    "turbo": "^1.13.0"
+    "next": "14.2.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^14.1.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@unlighthouse/cli": "^0.11.5",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-turbo": "^1.13.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-classnames": "^0.6.6",
+    "prettier-plugin-merge": "^0.6.0",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "puppeteer": "^22.6.0",
+    "turbo": "^2.0.12",
+    "typescript": "^5",
+    "unlighthouse": "^0.11.5"
+  },
+  "peerDependencies": {
+    "typescript": ">=4.2.0"
+  },
+  "packageManager": "pnpm@9.1.1"
 }
