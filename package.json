@@ -27,9 +27,14 @@
     "node": ">=20.0.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.1.0",
-    "@repo/eslint-config": "workspace:*",
     "@repo/utils": "workspace:*",
+    "@vercel/style-guide": "^5.1.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

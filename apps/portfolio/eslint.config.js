@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 const project = resolve(process.cwd(), 'tsconfig.json');
 
 /** @type {import("eslint").Linter.Config} */
-module.exports = {
+export default {
   extends: [
     'eslint:recommended',
     'prettier',
@@ -28,8 +28,12 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ['.env*', '.*.js', 'node_modules/'],
+  ignorePatterns: ['.env*', '.*.js', 'node_modules/', '.next', 'out'],
   overrides: [{ files: ['*.js?(x)', '*.ts?(x)'] }],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project,
+  },
   rules: {
     'import/order': [
       'error',
@@ -46,5 +50,6 @@ module.exports = {
       { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
     ],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
+    '@next/next/no-html-link-for-pages': 'off',
   },
 };

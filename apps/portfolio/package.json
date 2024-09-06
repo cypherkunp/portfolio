@@ -11,7 +11,6 @@
     "unlighthouse-ci": "unlighthouse-ci"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/utils": "workspace:*",
     "@types/node": "^20",
     "eslint-plugin-import": "^2.29.1",
