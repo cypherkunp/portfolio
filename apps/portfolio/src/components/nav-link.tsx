@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { cn } from '@ui/lib/utils';
+import { cn } from '@/lib/utils';
 
 type NavLinkProps = {
   href: string;

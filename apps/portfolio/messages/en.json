@@ -9,6 +9,10 @@
       "gallery": "gallery"
     }
   },
+  "Footer": {
+    "handmadeBy": "Handmade by",
+    "name": "Devvrat"
+  },
   "HomePage": {
     "title": "Hi, I'm Devvrat",
     "highlight": "Developer | Architect | Craftsman",
