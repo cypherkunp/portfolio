@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '@/components/icons';
+import NavConnect from '@/components/nav-connect';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -69,10 +70,6 @@ export function Navbar() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <NavigationMenu>
-        <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/resume" legacyBehavior passHref>
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
@@ -80,6 +77,11 @@ export function Navbar() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavConnect />
         </NavigationMenuList>
       </NavigationMenu>
     </nav>

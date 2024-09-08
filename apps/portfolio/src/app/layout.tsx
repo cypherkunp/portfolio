@@ -4,11 +4,11 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
-import { Footer } from '@/components/footer';
+import { Footer } from '@/components/layout/footer';
 import { inter } from '@/lib/font';
 import '@/styles/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import Header from '@/components/header';
+import Header from '@/components/layout/header';
 
 export const metadata: Metadata = {
   title: 'Portfolio',

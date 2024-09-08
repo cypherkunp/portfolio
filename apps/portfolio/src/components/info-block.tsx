@@ -1,5 +1,3 @@
-import React from 'react';
-import UnderlineText from './underline-text';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { BackgroundGlow } from './background-glow';
 
