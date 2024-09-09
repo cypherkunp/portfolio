@@ -22,7 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${inter.className} antialiased`}>
       <body
-        className="dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] container relative z-10 flex min-h-screen
+        className="dark:bg-grid-small-white/[0.1] bg-grid-small-black/[0.1] container relative z-10 flex min-h-screen
           max-w-screen-md scroll-my-12 flex-col overflow-auto bg-neutral-950"
       >
         <NextIntlClientProvider locale={locale} messages={messages}>

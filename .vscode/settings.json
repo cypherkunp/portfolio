@@ -41,10 +41,12 @@
     "prerendered",
     "Publicis",
     "shadcn",
+    "Stlyed",
     "tabler",
     "tailwindcss",
     "Threadsafe",
-    "Turbopack"
+    "Turbopack",
+    "upabase"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "liveServer.settings.port": 5501

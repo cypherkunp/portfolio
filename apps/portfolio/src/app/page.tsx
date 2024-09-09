@@ -30,7 +30,7 @@ export default function Page() {
           title={t('HomePage.infoBlock.title')}
           highlight={t('HomePage.infoBlock.highlight')}
           description={t('HomePage.infoBlock.description')}
-          avatarUrl={PorfileCircle.src}
+          avatarUrl={ProfilePic.src}
           avatarAlt={t('Common.contact.name')}
         />
       </Section>
@@ -43,6 +43,7 @@ export default function Page() {
       <Section
         title={t('HomePage.clientBlock.title')}
         description={t('HomePage.clientBlock.description')}
+        isLastSection
       >
         <CompanyCarousel />
       </Section>

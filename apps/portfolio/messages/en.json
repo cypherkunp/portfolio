@@ -30,44 +30,44 @@
       "name": "Devvrat Shukla"
     },
     "stackBlock": {
-      "title": "Stack I've Worked With",
+      "title": "Tech Arsenal",
       "description": "I have extensive experience working with a wide range of technologies and frameworks. ",
       "list": [
         {
           "title": "Frontend",
-          "description": "I have extensive experience working with a wide range of technologies and frameworks. "
+          "description": "HTML, CSS, JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components, Styled Components"
         },
         {
           "title": "Backend",
-          "description": "I have extensive experience working with a wide range of technologies and frameworks. "
+          "description": "Node.js, Express, Fastify, REST API, tRPC, GraphQL, AWS Lambda, API Gateway, S3, SQS, SNS"
         },
         {
           "title": "Database",
-          "description": "I have extensive experience working with a wide range of technologies and frameworks. "
+          "description": "PostgreSQL, MongoDB, Supabase, AWS DynamoDB"
         },
         {
           "title": "Cloud",
-          "description": "I have extensive experience working with a wide range of technologies and frameworks. "
+          "description": "AWS, Vercel, Cloudflare, Fly.io"
         },
         {
           "title": "DevOps",
-          "description": "I have extensive experience working with a wide range of technologies and frameworks. "
+          "description": "GitHub Actions, AWS, Docker, Serverless, CDK, SST.dev, Vercel"
         },
         {
           "title": "Design Systems",
-          "description": "I have extensive experience working with a wide range of technologies and frameworks. "
+          "description": "Shadcn UI, Material UI, Radix UI, Tailwind CSS, and building design systems for web"
         }
       ]
     },
     "clientBlock": {
-      "title": "Companies I've Collaborated With",
+      "title": "Collaborations with organizations",
       "description": "Throughout my career, I've had the privilege of working alongside these industry leaders, driving innovation and digital transformation across various sectors",
-      "carousel": [
-        { "name": "Unilever", "icon": "LandmarkIcon", "color": "bg-blue-600" },
-        { "name": "PTC Inc", "icon": "Building2Icon", "color": "bg-green-600" },
-        { "name": "Publicis Sapient", "icon": "LandmarkIcon", "color": "bg-purple-600" },
-        { "name": "Lloyd's Bank", "icon": "PiggyBank", "color": "bg-yellow-600" },
-        { "name": "Saudi Gov", "icon": "LandmarkIcon", "color": "bg-red-600" }
+      "list": [
+        { "name": "Unilever", "icon": "unilever" },
+        { "name": "PTC Inc", "icon": "ptc" },
+        { "name": "Publicis Sapient", "icon": "publicis-sapient" },
+        { "name": "Lloyd's Bank", "icon": "lloyds-bank" },
+        { "name": "DGDA", "icon": "dgda" }
       ]
     }
   },

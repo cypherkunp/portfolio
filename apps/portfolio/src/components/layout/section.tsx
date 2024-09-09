@@ -5,6 +5,7 @@ interface SectionProps {
   children: React.ReactNode;
   className?: string;
   isFirstSection?: boolean;
+  isLastSection?: boolean;
   title?: string;
   description?: string;
 }
@@ -13,6 +14,7 @@ export function Section({
   children,
   className,
   isFirstSection = false,
+  isLastSection = false,
   title,
   description,
 }: SectionProps) {
@@ -20,10 +22,11 @@ export function Section({
     <section
       className={cn(
         'flex w-full flex-col gap-y-1 md:gap-y-0',
-        'pb-[15px] md:pb-[30px]',
         {
           'pt-[15px] md:pt-[30px]': !isFirstSection,
+          'pb-[15px] md:pb-[30px]': !isLastSection,
           'pt-0': isFirstSection,
+          'pb-0': isLastSection,
         },
         className,
       )}

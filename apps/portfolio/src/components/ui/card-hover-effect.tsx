@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -44,7 +45,9 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
             )}
           </AnimatePresence>
           <Card>
-            <CardTitle>{item.title}</CardTitle>
+            <CardTitle>
+              {item.title} <ArrowRightIcon className="ml-[2px] inline-block h-4 w-4" />
+            </CardTitle>
             <CardDescription>{item.description}</CardDescription>
           </Card>
         </Link>
