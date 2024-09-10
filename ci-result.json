@@ -2,15 +2,15 @@
   {
     "path": "/",
     "score": 0.93,
-    "performance": 0.7,
-    "accessibility": 1,
+    "performance": 0.73,
+    "accessibility": 0.98,
     "best-practices": 1,
     "seo": 1
   },
   {
     "path": "/handbook",
-    "score": 0.94,
-    "performance": 0.76,
+    "score": 0.93,
+    "performance": 0.73,
     "accessibility": 0.98,
     "best-practices": 1,
     "seo": 1
@@ -18,7 +18,7 @@
   {
     "path": "/resume",
     "score": 0.92,
-    "performance": 0.75,
+    "performance": 0.76,
     "accessibility": 0.91,
     "best-practices": 1,
     "seo": 1
