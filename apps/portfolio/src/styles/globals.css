@@ -80,3 +80,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+.text-secondary {
+  @apply text-yellow-500;
+}
+
+.text-secondary:hover {
+  @apply text-yellow-700;
+}
+
+.bg-secondary {
+  @apply bg-yellow-500;
+}
+
+.decoration-primary {
+  @apply underline decoration-yellow-500 underline-offset-[8px];
+}
+
+.border-secondary {
+  @apply border-neutral-400;
+}

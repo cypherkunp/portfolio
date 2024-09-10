@@ -38,6 +38,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Navbar() {
   const t = useTranslations('Header.navbar');
+
   return (
     <nav className="flex w-full justify-between">
       <NavigationMenu>
@@ -79,11 +80,6 @@ export function Navbar() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavConnect />
-        </NavigationMenuList>
-      </NavigationMenu>
     </nav>
   );
 }
@@ -110,4 +106,5 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
     );
   },
 );
+
 ListItem.displayName = 'ListItem';

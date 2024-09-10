@@ -3,9 +3,5 @@ type UnderlineTextProps = {
 };
 
 export default function UnderlineText({ children }: UnderlineTextProps) {
-  return (
-    <span className="inline-block underline decoration-rose-400 underline-offset-[8px]">
-      {children}
-    </span>
-  );
+  return <span className="decoration-primary inline-block">{children}</span>;
 }

@@ -23,8 +23,8 @@ export function Section({
       className={cn(
         'flex w-full flex-col gap-y-1 md:gap-y-0',
         {
-          'pt-[15px] md:pt-[30px]': !isFirstSection,
-          'pb-[15px] md:pb-[30px]': !isLastSection,
+          'pt-[25px] md:pt-[30px]': !isFirstSection,
+          'pb-[25px] md:pb-[30px]': !isLastSection,
           'pt-0': isFirstSection,
           'pb-0': isLastSection,
         },
@@ -32,7 +32,7 @@ export function Section({
       )}
     >
       <RenderIf condition={!!title || !!description}>
-        <div className="mb-2 h-[2px] w-10 bg-red-400"></div>
+        <div className="bg-secondary mb-2 h-[2px] w-10" />
         <div className="mx-auto mb-5 w-full md:mb-10">
           <RenderIf condition={!!title}>
             <h2 className="mb-2 text-2xl font-bold tracking-tight">{title}</h2>

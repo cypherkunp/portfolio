@@ -29,14 +29,15 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
         <Link
           href={item.link ?? '#'}
           key={item.link}
-          className="group relative block h-[250px] w-full"
+          className="group relative block h-[200px] w-full md:h-[250px]"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 block h-[250px] w-full rounded-3xl bg-neutral-200 dark:bg-slate-800/[0.8]"
+                className="absolute inset-0 block h-[200px] w-full rounded-3xl bg-neutral-200 md:h-[250px]
+                  dark:bg-slate-800/[0.8]"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.15 } }}
@@ -60,7 +61,8 @@ function Card({ className, children }: CardProps) {
   return (
     <div
       className={cn(
-        'relative z-20 h-[250px] w-full overflow-hidden rounded-2xl border border-transparent bg-black p-2',
+        `relative z-20 h-[200px] w-full overflow-hidden rounded-2xl border border-transparent bg-black p-2
+        md:h-[250px]`,
         'group-hover:border-slate-700 dark:border-white/[0.2]',
         className,
       )}
