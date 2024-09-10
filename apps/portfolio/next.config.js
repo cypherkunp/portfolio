@@ -10,6 +10,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   transpilePackages: [],
+  images: {
+    formats: ['image/webp'],
+    domains: ['api.microlink.io'],
+  },
 };
 
 const withMDX = createMDX({

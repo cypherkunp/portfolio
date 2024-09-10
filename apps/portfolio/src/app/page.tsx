@@ -1,35 +1,62 @@
 import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+
 import ProfilePic from '@/images/profile.jpg';
+import PorfileCircle from '@/images/profile-circle.jpg';
 
 import InfoBlock from '@/components/info-block';
+import ConnectBlock from '@/components/connect-block';
 import Feature from '@/components/feature';
-import { Section } from '@/components/section';
-import { RESUME_DATA } from '@/data/resume-data';
+import { Section } from '@/components/layout/section';
 import PageContainer from '@/components/layout/page-container';
+import CompanyCarousel from '@/components/company-carousel';
+import CompanyBlock from '@/components/company-block';
+import StackBlock from '@/components/stack-block';
+import { FaqBlock } from '@/components/faq-block';
 
-export const metadata: Metadata = {
-  title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
-  description: RESUME_DATA.summary,
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('HomePage');
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
 };
 
 export default function Page() {
-  const t = useTranslations('HomePage');
+  const t = useTranslations();
 
   return (
     <PageContainer>
       <Section isFirstSection>
         <InfoBlock
-          title={t('title')}
-          highlight={t('highlight')}
-          description={t('description')}
+          pointerText={t('HomePage.infoBlock.pointer.text')}
+          title={t('HomePage.infoBlock.title')}
+          highlight={t('HomePage.infoBlock.highlight')}
+          description={t('HomePage.infoBlock.description')}
           avatarUrl={ProfilePic.src}
-          avatarAlt={RESUME_DATA.name}
+          avatarAlt={t('Common.contact.name')}
         />
       </Section>
-      <Feature flag="enable">
-        <section className="w-full"></section>
-      </Feature>
+      <Section
+        title={t('HomePage.stackBlock.title')}
+        description={t('HomePage.stackBlock.description')}
+      >
+        <StackBlock />
+      </Section>
+      <Section
+        title={t('HomePage.clientBlock.title')}
+        description={t('HomePage.clientBlock.description')}
+      >
+        <CompanyBlock />
+      </Section>
+      <Section
+        title={t('HomePage.faqBlock.title')}
+        description={t('HomePage.faqBlock.description')}
+        isLastSection
+      >
+        <FaqBlock />
+      </Section>
     </PageContainer>
   );
 }

@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
-import { RenderIf } from '@/components/render-if';
 import Handbook from '@/content/handbook.mdx';
 import PageContainer from '@/components/layout/page-container';
 

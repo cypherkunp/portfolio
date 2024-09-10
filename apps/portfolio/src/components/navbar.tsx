@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 import { Icons } from '@/components/icons';
+import NavConnect from '@/components/nav-connect';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -37,6 +38,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Navbar() {
   const t = useTranslations('Header.navbar');
+
   return (
     <nav className="flex w-full justify-between">
       <NavigationMenu>
@@ -69,10 +71,6 @@ export function Navbar() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <NavigationMenu>
-        <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/resume" legacyBehavior passHref>
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
@@ -108,4 +106,5 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
     );
   },
 );
+
 ListItem.displayName = 'ListItem';

@@ -1,4 +1,4 @@
-import { PORTFOLIO_BASE_URL } from '@/data/site-data';
+import { PORTFOLIO_BASE_URL } from '@/config/site-data';
 
 export default function robots() {
   return {

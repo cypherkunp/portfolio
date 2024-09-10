@@ -1,4 +1,25 @@
 {
+  "Common": {
+    "contact": {
+      "name": "Devvrat",
+      "email": "devvrat.shukla@gmail.com",
+      "tel": "+44 07354 444 022",
+      "address": "London, UK",
+      "github": "https://github.com/cypherkunp",
+      "linkedin": "https://www.linkedin.com/in/devvratshukla/",
+      "twitter": "https://twitter.com/cypherkunp"
+    },
+    "connectBlock": {
+      "reachOutOn": {
+        "title": "Have a question for me?",
+        "description": "Reach out via <email>email</email> or <twitter>twitter</twitter>"
+      },
+      "findMeOn": {
+        "title": "You can also find me on ",
+        "description": "<linkedin>LinkedIn</linkedin> and <github>GitHub</github>"
+      }
+    }
+  },
   "Header": {
     "navbar": {
       "home": "home",
@@ -6,19 +27,193 @@
       "handbook": "handbook",
       "resume": "resume",
       "bookmarks": "bookmarks",
-      "gallery": "gallery"
+      "gallery": "gallery",
+      "connect": "@connect"
     }
   },
   "Footer": {
-    "handmadeBy": "Handmade by",
-    "name": "Devvrat"
+    "description": "Handmade by <underline>Devvrat</underline>. All rights reserved."
   },
   "HomePage": {
-    "title": "Hi, I'm Devvrat",
-    "highlight": "Developer | Architect | Craftsman",
-    "description": "I am passionate about building next-generation web applications and high-performance development teams",
-    "infoBlocks": {
+    "title": "Devvrat Shukla | Portfolio",
+    "description": "Devvrat Shukla's Portfolio",
+    "infoBlock": {
+      "pointer": {
+        "text": "Hey, What's up?"
+      },
+      "title": "Hi, I'm Devvrat",
+      "highlight": "Developer | Architect | Craftsman",
+      "description": "I am software engineer specializing in web app development. My passion is crafting digital experiences and building high-performance development teams.",
       "name": "Devvrat Shukla"
+    },
+    "stackBlock": {
+      "title": "Tech Arsenal",
+      "description": "I have extensive experience working with a wide range of technologies and frameworks. ",
+      "list": [
+        {
+          "title": "Frontend",
+          "description": "HTML, CSS, JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components, Styled Components"
+        },
+        {
+          "title": "Backend",
+          "description": "Node.js, Express, Fastify, REST API, tRPC, GraphQL, AWS Lambda, API Gateway, S3, SQS, SNS"
+        },
+        {
+          "title": "Database",
+          "description": "PostgreSQL, MongoDB, Supabase, AWS DynamoDB"
+        },
+        {
+          "title": "Cloud",
+          "description": "AWS, Vercel, Cloudflare, Fly.io"
+        },
+        {
+          "title": "DevOps",
+          "description": "GitHub Actions, AWS, Docker, Serverless, CDK, SST.dev, Vercel"
+        },
+        {
+          "title": "Design Systems",
+          "description": "Shadcn UI, Material UI, Radix UI, Tailwind CSS, and Building Design Systems for web"
+        }
+      ]
+    },
+    "clientBlock": {
+      "title": "Collaborations with organizations",
+      "description": "Throughout my career, I've contributed to projects for notable organizations. My work spans multiple sectors, demonstrating adaptability to diverse business needs.",
+      "list": [
+        { "name": "Unilever", "url": "https://www.unilever.com/" },
+        { "name": "PTC Inc", "url": "https://www.ptc.com/" },
+        {
+          "name": "Publicis Sapient",
+          "url": "https://publicissapient.com"
+        },
+        { "name": "Lloyds Bank", "url": "https://www.lloydsbank.com/" },
+        {
+          "name": "DGDA",
+          "url": "https://www.dgda.gov.sa/"
+        }
+      ]
+    },
+    "faqBlock": {
+      "title": "Frequently Asked Questions",
+      "description": "Here are some of the most common questions I receive from potential clients and partners.",
+      "list": [
+        {
+          "question": "Can you manage a team?",
+          "answer": "Yes, I have experience leading teams of 3-10 people."
+        },
+        {
+          "question": "How do you balance hands-on coding with team management responsibilities?",
+          "answer": "I maintain a hybrid approach, allocating about 60% of my time to hands-on coding and 40% to management tasks. I stay involved in critical technical decisions and complex problem-solving while empowering team leads to handle day-to-day coding supervision. I use tools like Jira and Slack to efficiently manage tasks and communication, allowing me to context-switch effectively between coding and leadership roles."
+        },
+        {
+          "question": "How do you foster collaboration between engineering, product, and design teams?",
+          "answer": "I prioritize open communication channels and regular cross-functional meetings. We hold weekly sync-ups where product managers present roadmaps, designers showcase prototypes, and engineers discuss technical feasibility. I encourage pair programming sessions between designers and developers for UI/UX work. We also use collaborative tools like Figma and Confluence to ensure all teams have visibility into ongoing projects and can provide timely feedback."
+        },
+        {
+          "question": "How do you prioritize technical debt versus new feature development in your projects?",
+          "answer": "I advocate for a balanced approach. We dedicate about 20-30% of each sprint to addressing technical debt, focusing on issues that directly impact performance, security, or scalability. For larger refactoring efforts, I work with product managers to allocate dedicated sprints or incorporate them into relevant feature work. We maintain a technical debt backlog, regularly reassessing priorities based on their impact on current and future development."
+        },
+        {
+          "question": "Can you describe your process for mentoring junior developers while maintaining project timelines?",
+          "answer": "Mentoring is integrated into our development process. I pair junior developers with more experienced team members on projects, encouraging knowledge sharing. We have a structured code review process that serves as a learning opportunity. I also set aside time for weekly one-on-one sessions to discuss career growth and address any challenges. To maintain timelines, I factor in mentoring time when estimating project durations and adjust team assignments to balance skill development with delivery deadlines."
+        }
+      ]
+    }
+  },
+  "ResumePage": {
+    "title": "Devvrat Shukla | Resume ",
+    "description": "Devvrat Shukla's Resume",
+    "data": {
+      "labels": {
+        "about": "About",
+        "work": "Work Experience",
+        "education": "Education",
+        "skills": "Skills"
+      },
+      "name": "Devvrat Shukla",
+      "initials": "DS",
+      "location": "London, UK",
+      "locationLink": "",
+      "about": "Lead Experience Engineer",
+      "summary": "I am a seasoned software architect with 14 years of diverse experience in software product development. As a full stack architect, I have successfully taken multiple products from 0 to 1. I have a deep expertise in full stack development using technologies such as Typescript, JavaScript, NextJS, ReactJS, NodeJS and Serverless. I have led and architected several multi-million dollar projects including greenfield and rewrites of legacy products. I lead teams effectively, ensuring an environment where people can do their best work.",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1528663?v=4",
+      "personalWebsiteUrl": "https://devvrat.cc",
+      "contact": {
+        "email": "devvrat.shukla@gmail.com",
+        "tel": ""
+      },
+      "education": [
+        {
+          "school": "University of Pune, India",
+          "degree": "BE (Bachelor of Engineering) in Computer Science",
+          "start": "2006",
+          "end": "2010"
+        }
+      ],
+      "work": [
+        {
+          "company": "Publicis Sapient - London, UK",
+          "link": "https://www.publicissapient.com/",
+          "title": "Lead Experience Engineer",
+          "start": "2019",
+          "end": "2024",
+          "description": "Led and architected several multi-million dollar projects including greenfield and rewrites of legacy products in various domains such as E-commerce, Retail, Finance and Banking."
+        },
+        {
+          "company": "PTC Inc. - Pune, India",
+          "link": "https://www.ptc.com/",
+          "title": "Tech Lead",
+          "start": "2011",
+          "end": "2019",
+          "description": "Led and developed numerous projects based on frontend in React, Angular, Javascirpt and JQuery and backend in NodeJS and Java in various domains such as ALM (Application Lifecycle Management) and IOT"
+        },
+        {
+          "company": "Mphasis - Pune, India",
+          "link": "https://www.mphasis.com/",
+          "title": "Technical Support Associate",
+          "start": "2010",
+          "end": "2011",
+          "description": "Worked on handling and troubleshooting network and remote access-related issues (Cisco VPN Client, strong authentication devices, network connectivity)"
+        }
+      ],
+      "skills": [
+        "Web Development",
+        "JavaScript",
+        "ReactJS",
+        "NextJS",
+        "NodeJS",
+        "StencilJS",
+        "Typescript",
+        "NFRs",
+        "ExpressJS",
+        "HTML & CSS",
+        "Microservices",
+        "RESTApi",
+        "Lambda Functions",
+        "Edge Functions",
+        "CI/CD",
+        "Amazon AWS",
+        "Docker",
+        "Web3",
+        "Cloud Computing"
+      ],
+      "projects": [],
+      "social": {
+        "links": [
+          {
+            "name": "GitHub",
+            "url": "https://github.com/cypherkunp"
+          },
+          {
+            "name": "LinkedIn",
+            "url": "https://www.linkedin.com/in/devvratshukla/"
+          },
+          {
+            "name": "X",
+            "url": "https://twitter.com/cypherkunp"
+          }
+        ]
+      }
     }
   }
 }
