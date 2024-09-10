@@ -1,4 +1,4 @@
-import { PORTFOLIO_BASE_URL } from '@/data/site-data';
+import { PORTFOLIO_BASE_URL } from '@/config/site-data';
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -9,4 +9,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...routes];
 }
- 
