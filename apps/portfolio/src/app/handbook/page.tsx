@@ -1,10 +1,14 @@
 import { Metadata } from 'next';
 import Handbook from '@/content/handbook.mdx';
 import PageContainer from '@/components/layout/page-container';
+import { getTranslations } from 'next-intl/server';
 
-export const metadata: Metadata = {
-  title: 'Handbook',
-  description: "Devvrat's Handbook",
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations('HandbookPage');
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
 };
 
 export default function Page() {

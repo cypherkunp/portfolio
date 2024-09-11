@@ -35,8 +35,8 @@
     "description": "Handmade by <underline>Devvrat</underline>. All rights reserved."
   },
   "HomePage": {
-    "title": "Devvrat Shukla | Portfolio",
-    "description": "Devvrat Shukla's Portfolio",
+    "title": "Devvrat | Portfolio",
+    "description": "Devvrat's Portfolio",
     "infoBlock": {
       "pointer": {
         "text": "Hey, What's up?"
@@ -120,9 +120,13 @@
       ]
     }
   },
+  "HandbookPage": {
+    "title": "Devvrat | Handbook",
+    "description": "Devvrat's Handbook"
+  },
   "ResumePage": {
-    "title": "Devvrat Shukla | Resume ",
-    "description": "Devvrat Shukla's Resume",
+    "title": "Devvrat | Resume ",
+    "description": "Devvrat's Resume",
     "data": {
       "labels": {
         "about": "About",
