@@ -1,10 +1,4 @@
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-
+import { Metadata } from 'next';
 import {
   GithubIcon,
   GlobeIcon,
@@ -13,16 +7,43 @@ import {
   PhoneIcon,
   TwitterIcon,
 } from 'lucide-react';
-import { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import PageContainer from '@/components/layout/page-container';
+import { Section } from '@/components/layout/section';
 import { RenderIf } from '@/components/render-if';
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const t = await getTranslations('ResumePage');
+  const t = await getTranslations();
+
   return {
-    title: t('title'),
-    description: t('description'),
+    title: t('ResumePage.title'),
+    description: t('ResumePage.description'),
+    openGraph: {
+      title: t('ResumePage.title'),
+      description: t('ResumePage.description'),
+      type: 'article',
+      url: t('ResumePage.url'),
+      images: [
+        {
+          url: t('ResumePage.ogImage'),
+          width: 660,
+          height: 240,
+          alt: t('Common.contact.name'),
+        },
+      ],
+    },
+    twitter: {
+      title: t('ResumePage.title'),
+      description: t('ResumePage.description'),
+      images: [t('ResumePage.ogImage')],
+      creator: '@cypherkunp',
+    },
   };
 };
 

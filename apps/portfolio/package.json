@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next  dev --port 3001",
+    "dev": "next dev --port 3333",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3333",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "preview": "next build && next start -p 3333",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "analyze-build": "ANALYZE=true next build",
     "unlighthouse-ci": "unlighthouse-ci"
   },
@@ -15,13 +19,6 @@
     "@types/node": "^20",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-unused-imports": "^3.0.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -36,7 +36,9 @@
   },
   "HomePage": {
     "title": "Devvrat | Portfolio",
-    "description": "Devvrat's Portfolio",
+    "description": "Devvrat's Portfolio Website",
+    "url": "https://devvrat.cc",
+    "ogImage": "https://devvrat.cc/og-home.jpg",
     "infoBlock": {
       "pointer": {
         "text": "Hey, What's up?"
@@ -122,11 +124,15 @@
   },
   "HandbookPage": {
     "title": "Devvrat | Handbook",
-    "description": "Devvrat's Handbook"
+    "description": "Devvrat's User Manual",
+    "url": "https://devvrat.cc/handbook",
+    "ogImage": "https://devvrat.cc/og-home.jpg"
   },
   "ResumePage": {
     "title": "Devvrat | Resume ",
-    "description": "Devvrat's Resume",
+    "description": "Devvrat's Experience Summary",
+    "url": "https://devvrat.cc/resume",
+    "ogImage": "https://devvrat.cc/og-home.jpg",
     "data": {
       "labels": {
         "about": "About",
@@ -218,6 +224,14 @@
           }
         ]
       }
+    }
+  },
+  "NotFoundPage": {
+    "title": "Devvrat | 404",
+    "description": "Page not found",
+    "content": {
+      "title": "404",
+      "description": "Oops! Looks like you've wandered off the map. You must return home."
     }
   }
 }

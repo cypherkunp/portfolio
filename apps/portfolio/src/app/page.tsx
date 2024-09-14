@@ -8,12 +8,34 @@ import InfoBlock from '@/components/info-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
 import StackBlock from '@/components/stack-block';
+import { absoluteUrl } from '@/lib/env.utils';
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  const t = await getTranslations('HomePage');
+  const t = await getTranslations();
+
   return {
-    title: t('title'),
-    description: t('description'),
+    title: t('HomePage.title'),
+    description: t('HomePage.description'),
+    openGraph: {
+      title: t('HomePage.title'),
+      description: t('HomePage.description'),
+      type: 'website',
+      url: t('HomePage.url'),
+      images: [
+        {
+          url: t('HomePage.ogImage'),
+          width: 660,
+          height: 240,
+          alt: t('Common.contact.name'),
+        },
+      ],
+    },
+    twitter: {
+      title: t('HomePage.title'),
+      description: t('HomePage.description'),
+      images: [t('HomePage.ogImage')],
+      creator: '@cypherkunp',
+    },
   };
 };
 

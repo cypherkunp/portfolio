@@ -1,14 +1,15 @@
+import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
-import { Footer } from '@/components/layout/footer';
 import { inter } from '@/lib/font';
-import '@/styles/globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
+import { Footer } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { ThemeProvider } from '@/components/theme-provider';
+
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'Portfolio',

@@ -1,7 +1,7 @@
-import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+
 import { RenderIf } from './render-if';
 
 export default function ConnectBlock() {

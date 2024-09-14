@@ -1,7 +1,6 @@
-import { NotebookTabs } from 'lucide-react';
+import React from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
-import React from 'react';
 
 interface CalloutProps {
   title: string;
