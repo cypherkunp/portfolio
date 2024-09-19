@@ -1,8 +1,9 @@
-import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRightIcon } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface Item {
   title: string;
@@ -47,7 +48,7 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
           </AnimatePresence>
           <Card>
             <CardTitle>
-              {item.title} <ArrowRightIcon className="ml-[2px] inline-block h-4 w-4" />
+              {item.title} <ArrowRightIcon className="ml-[2px] inline-block size-4" />
             </CardTitle>
             <CardDescription>{item.description}</CardDescription>
           </Card>
@@ -61,7 +62,7 @@ function Card({ className, children }: CardProps) {
   return (
     <div
       className={cn(
-        `relative z-20 h-[200px] w-full overflow-hidden rounded-2xl border border-transparent bg-black p-2
+        `bg-tertiary relative z-20 h-[200px] w-full overflow-hidden rounded-2xl border border-transparent p-2	shadow-sm
         md:h-[250px]`,
         'group-hover:border-slate-700 dark:border-white/[0.2]',
         className,
@@ -74,13 +75,15 @@ function Card({ className, children }: CardProps) {
 
 function CardTitle({ className, children }: CardProps) {
   return (
-    <h4 className={cn('mt-4 font-bold tracking-wide text-zinc-100', className)}>{children}</h4>
+    <h4 className={cn('mt-4 text-xl font-bold tracking-wide text-zinc-100', className)}>
+      {children}
+    </h4>
   );
 }
 
 function CardDescription({ className, children }: CardProps) {
   return (
-    <p className={cn('mt-8 text-sm leading-relaxed tracking-wide text-zinc-400', className)}>
+    <p className={cn('mt-8 text-sm leading-relaxed tracking-wide text-zinc-300', className)}>
       {children}
     </p>
   );

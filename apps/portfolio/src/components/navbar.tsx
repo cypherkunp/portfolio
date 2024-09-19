@@ -2,10 +2,9 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '@/components/icons';
-import NavConnect from '@/components/nav-connect';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,8 +14,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
+
 import { RenderIf } from './render-if';
-import { useTranslations } from 'next-intl';
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -40,7 +39,7 @@ export function Navbar() {
   const t = useTranslations('Header.navbar');
 
   return (
-    <nav className="flex w-full justify-between">
+    <nav className="flex w-full items-center justify-center">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

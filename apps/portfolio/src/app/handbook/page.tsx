@@ -35,7 +35,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default function Page() {
   return (
-    <PageContainer className="prose prose-sm md:prose-lg dark:prose-invert prose-neutral">
+    <PageContainer className="prose prose-md dark:prose-invert prose-neutral">
       <Handbook />
     </PageContainer>
   );

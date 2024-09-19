@@ -24,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`${inter.className} antialiased`}>
       <body
         className="dark:bg-grid-small-white/[0.1] bg-grid-small-black/[0.1] container relative z-10 flex min-h-screen
-          max-w-screen-md scroll-my-12 flex-col overflow-auto bg-neutral-950"
+          max-w-screen-md scroll-my-12 flex-col overflow-auto bg-neutral-800"
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
@@ -34,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             disableTransitionOnChange
           >
             <Header />
-            <div className="flex flex-grow flex-col gap-72">{children}</div>
+            <div className="flex grow flex-col gap-72">{children}</div>
             <Footer />
           </ThemeProvider>
         </NextIntlClientProvider>

@@ -35,9 +35,9 @@
   "importOrderMergeDuplicateImports": true,
   "importOrderCombineTypeAndValueImports": true,
   "plugins": [
-    "prettier-plugin-tailwindcss",
+    "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-classnames",
     "prettier-plugin-merge",
-    "@ianvs/prettier-plugin-sort-imports"
+    "prettier-plugin-tailwindcss"
   ]
 }

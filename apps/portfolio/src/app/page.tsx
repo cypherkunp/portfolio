@@ -7,8 +7,8 @@ import { FaqBlock } from '@/components/faq-block';
 import InfoBlock from '@/components/info-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
+import QuotesBlock from '@/components/quotes-block';
 import StackBlock from '@/components/stack-block';
-import { absoluteUrl } from '@/lib/env.utils';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
@@ -62,9 +62,15 @@ export default function Page() {
       <Section
         title={t('HomePage.faqBlock.title')}
         description={t('HomePage.faqBlock.description')}
-        isLastSection
       >
         <FaqBlock />
+      </Section>
+      <Section
+        title={t('HomePage.quotesBlock.title')}
+        description={t('HomePage.quotesBlock.description')}
+        isLastSection
+      >
+        <QuotesBlock />
       </Section>
     </PageContainer>
   );

@@ -82,7 +82,7 @@
 }
 
 .text-secondary {
-  @apply text-yellow-500;
+  @apply text-yellow-400;
 }
 
 .text-secondary:hover {
@@ -90,7 +90,11 @@
 }
 
 .bg-secondary {
-  @apply bg-yellow-500;
+  @apply bg-yellow-400;
+}
+
+.bg-tertiary {
+  @apply bg-blue-900;
 }
 
 .decoration-primary {

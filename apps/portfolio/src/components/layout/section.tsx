@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+
 import { RenderIf } from '../render-if';
 
 interface SectionProps {
@@ -21,10 +22,10 @@ export function Section({
   return (
     <section
       className={cn(
-        'flex w-full flex-col gap-y-1 md:gap-y-0',
+        'flex w-full flex-col gap-y-1 md:gap-y-0 ',
         {
-          'pt-[25px] md:pt-[30px]': !isFirstSection,
-          'pb-[25px] md:pb-[30px]': !isLastSection,
+          'pt-[25px] md:pt-[40px]': !isFirstSection,
+          'pb-[25px] md:pb-[40px]': !isLastSection,
           'pt-0': isFirstSection,
           'pb-0': isLastSection,
         },
@@ -32,14 +33,16 @@ export function Section({
       )}
     >
       <RenderIf condition={!!title || !!description}>
-        <div className="bg-secondary mb-2 h-[2px] w-10" />
-        <div className="mx-auto mb-5 w-full md:mb-10">
-          <RenderIf condition={!!title}>
-            <h2 className="mb-2 text-2xl font-bold tracking-tight">{title}</h2>
-          </RenderIf>
-          <RenderIf condition={!!description}>
-            <p className="text-muted-foreground">{description}</p>
-          </RenderIf>
+        <div className="flex flex-col items-start justify-start ">
+          <div className="bg-secondary mb-2 h-[2px] w-[100px]" />
+          <div className="mx-auto mb-5 w-full  md:mb-10">
+            <RenderIf condition={!!title}>
+              <h2 className="mb-2 text-3xl font-bold tracking-tight">{title}</h2>
+            </RenderIf>
+            <RenderIf condition={!!description}>
+              <p className="text-muted-foreground">{description}</p>
+            </RenderIf>
+          </div>
         </div>
       </RenderIf>
       {children}
