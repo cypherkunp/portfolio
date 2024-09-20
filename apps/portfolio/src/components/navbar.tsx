@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { LucideBookOpenText, LucideBookText, LucideHome, LucideScrollText } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
@@ -39,16 +40,21 @@ export function Navbar() {
   const t = useTranslations('Header.navbar');
 
   return (
-    <nav className="flex w-full items-center justify-center">
+    <nav className="flex w-full items-center justify-between">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <LucideHome className="mr-2 size-4" />
                 {t('home')}
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+      <NavigationMenu>
+        <NavigationMenuList>
           <RenderIf condition={false}>
             <NavigationMenuItem>
               <NavigationMenuTrigger>About</NavigationMenuTrigger>
@@ -66,6 +72,7 @@ export function Navbar() {
           <NavigationMenuItem>
             <Link href="/handbook" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <LucideBookText className="mr-2 size-4" />
                 {t('handbook')}
               </NavigationMenuLink>
             </Link>
@@ -73,10 +80,21 @@ export function Navbar() {
           <NavigationMenuItem>
             <Link href="/resume" legacyBehavior passHref>
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                <LucideScrollText className="mr-2 size-4" />
                 {t('resume')}
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
+          <RenderIf condition={false}>
+            <NavigationMenuItem>
+              <Link href="/posts" legacyBehavior passHref>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                  <LucideBookOpenText className="mr-2 size-4" />
+                  {t('posts')}
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </RenderIf>
         </NavigationMenuList>
       </NavigationMenu>
     </nav>
