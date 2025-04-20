@@ -1,13 +1,14 @@
 import React from 'react';
-import UnderlineText from '../underline-text';
 import { useTranslations } from 'next-intl';
+
 import ConnectBlock from '../connect-block';
+import UnderlineText from '../underline-text';
 
 export function Footer() {
   const t = useTranslations('Footer');
   return (
     <footer
-      className="border-secondary mt-[40px] flex flex-col items-center space-y-12 border-t-[1px] pb-8 pt-6
+      className="border-secondary mt-[40px] flex flex-col items-center space-y-12 border-t pb-8 pt-6
         md:mt-[80px] md:space-y-16"
     >
       <ConnectBlock />

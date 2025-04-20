@@ -12,7 +12,12 @@ const nextConfig = {
   transpilePackages: [],
   images: {
     formats: ['image/webp'],
-    domains: ['api.microlink.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.microlink.io',
+      },
+    ],
   },
 };
 
