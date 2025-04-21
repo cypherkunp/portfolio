@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3333",
+    "dev": "next dev --port 3333 --turbopack",
     "build": "next build",
     "start": "next start -p 3333",
     "lint": "next lint",
@@ -80,7 +80,7 @@
     "sharp": "^0.33.5",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss": "^3.4.0",
+    "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5",
     "vaul": "^0.8.0",
