@@ -1,15 +1,11 @@
 'use client';
 
 import React from 'react';
-import { useTranslations } from 'next-intl';
-import { InfiniteMovingCards } from './ui/infinite-moving-cards';
-import { FlipWords } from './ui/flip-words';
-import { TextGenerateEffect } from './ui/text-generate-effect';
-import { BackgroundLines } from './ui/background-lines';
-import { LinkPreview } from './ui/link-preview';
 import Image from 'next/image';
-
 import CardBackground from '@/images/card-background.jpg';
+import { useTranslations } from 'next-intl';
+
+import { LinkPreview } from './ui/link-preview';
 
 interface Company {
   name: string;
@@ -24,11 +20,11 @@ const CompanyBlock: React.FC = () => {
   return (
     <div className="flex w-full flex-wrap justify-center gap-2 font-bold md:items-center">
       {companies.map((company, index) => (
-        <LinkPreview url={company.url} className="z-99 font-bold">
+        <LinkPreview key={company.url} url={company.url} className="z-99 font-bold">
           <div
             key={index}
             className="relative z-[-99] flex h-[100px] w-[150px] items-center justify-center overflow-hidden rounded-md
-              border-[1px] border-yellow-500 md:h-[100px] md:w-[200px]"
+              border border-yellow-500 md:h-[100px] md:w-[200px]"
           >
             <Image
               priority={false}
