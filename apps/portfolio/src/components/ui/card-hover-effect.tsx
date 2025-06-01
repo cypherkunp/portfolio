@@ -29,7 +29,7 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
       {items.map((item, idx) => (
         <Link
           href={item.link ?? '#'}
-          key={item.link}
+          key={item.title}
           className="group relative block h-[200px] w-full md:h-[250px]"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
