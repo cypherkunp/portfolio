@@ -57,7 +57,7 @@
       "list": [
         {
           "title": "Frontend",
-          "description": "HTML, CSS, JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components, Styled Components"
+          "description": "JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components"
         },
         {
           "title": "Backend",
@@ -77,21 +77,22 @@
         },
         {
           "title": "Design Systems",
-          "description": "Shadcn UI, Material UI, Radix UI, Tailwind CSS, and Building Design Systems for web"
+          "description": "Shadcn UI, Material UI, Radix UI, and Building Design Systems for web"
         }
       ]
     },
     "clientBlock": {
-      "title": "Collaborations with organizations",
+      "title": "Clients",
       "description": "",
       "list": [
         { "name": "Unilever", "url": "https://www.unilever.com/" },
         { "name": "PTC Inc", "url": "https://www.ptc.com/" },
+        { "name": "Lloyds Bank", "url": "https://www.lloydsbank.com/" },
+
         {
           "name": "Publicis Sapient",
           "url": "https://publicissapient.com"
         },
-        { "name": "Lloyds Bank", "url": "https://www.lloydsbank.com/" },
         {
           "name": "DGDA",
           "url": "https://www.dgda.gov.sa/"
@@ -99,7 +100,7 @@
       ]
     },
     "faqBlock": {
-      "title": "Frequently Asked Questions",
+      "title": "FAQs",
       "description": "",
       "list": [
         {

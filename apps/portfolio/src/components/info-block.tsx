@@ -24,10 +24,10 @@ export default function InfoBlock() {
             height={200}
           />
         </FollowerPointerCard>
-        <div className="flex max-w-[350px] flex-col items-start gap-2 py-2 md:items-start">
+        <div className="flex max-w-[350px] flex-col items-start gap-3 py-2 md:items-start">
           <h1 className="text-2xl font-semibold text-white ">{t('HomePage.infoBlock.title')}</h1>
-          <p className="text-md font-bold text-white ">{t('HomePage.infoBlock.highlight')}</p>
-          <p className="md:text-md text-sm text-white md:text-left ">
+          <p className="text-sm font-bold text-white ">{t('HomePage.infoBlock.highlight')}</p>
+          <p className="text-xs text-white md:text-left md:text-sm ">
             {t('HomePage.infoBlock.description')}
           </p>{' '}
         </div>

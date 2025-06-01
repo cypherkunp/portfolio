@@ -4,7 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
-import { inter } from '@/lib/font';
+import { geistMono } from '@/lib/font';
 import { Footer } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={`${inter.className} antialiased`}>
+    <html lang="en" className={`${geistMono.className} antialiased`}>
       <body
         className="container relative z-10 flex min-h-screen
           max-w-screen-md scroll-my-12 flex-col overflow-auto bg-neutral-950"
