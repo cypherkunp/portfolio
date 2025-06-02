@@ -6,5 +6,5 @@ interface PageContainerProps {
 }
 
 export default function PageContainer({ children, className }: PageContainerProps) {
-  return <main className={cn('pt-10 md:pt-20', className)}>{children}</main>;
+  return <main className={cn('pt-5 md:pt-10', className)}>{children}</main>;
 }

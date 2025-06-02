@@ -32,7 +32,7 @@ export default function ConnectBlock() {
 function ReachOutOn({ title, description }: { title: string; description: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <h3 className="text-lg font-semibold">{title}</h3>
+      <h3 className="text-md font-semibold">{title}</h3>
       <p className="text-muted-foreground text-sm">{description}</p>
     </div>
   );
@@ -41,7 +41,7 @@ function ReachOutOn({ title, description }: { title: string; description: React.
 function FindMeOn({ title, description }: { title: string; description: React.ReactNode }) {
   return (
     <div className="space-y-2">
-      <h3 className="text-lg font-semibold">{title}</h3>
+      <h3 className="text-md font-semibold">{title}</h3>
       <RenderIf condition={!!description}>
         <p className="text-muted-foreground text-sm">{description}</p>
       </RenderIf>

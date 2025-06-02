@@ -59,12 +59,7 @@ export default function Page() {
       >
         <CompanyBlock />
       </Section>
-      <Section
-        title={t('HomePage.faqBlock.title')}
-        description={t('HomePage.faqBlock.description')}
-      >
-        <FaqBlock />
-      </Section>
+
       <Section
         title={t('HomePage.quotesBlock.title')}
         description={t('HomePage.quotesBlock.description')}
