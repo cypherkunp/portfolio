@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import CompanyBlock from '@/components/company-block';
-import { FaqBlock } from '@/components/faq-block';
 import InfoBlock from '@/components/info-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
@@ -54,18 +53,11 @@ export default function Page() {
         <StackBlock />
       </Section>
       <Section
+        isLastSection
         title={t('HomePage.clientBlock.title')}
         description={t('HomePage.clientBlock.description')}
       >
         <CompanyBlock />
-      </Section>
-
-      <Section
-        title={t('HomePage.quotesBlock.title')}
-        description={t('HomePage.quotesBlock.description')}
-        isLastSection
-      >
-        <QuotesBlock />
       </Section>
     </PageContainer>
   );

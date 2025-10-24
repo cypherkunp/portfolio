@@ -11,6 +11,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 
 import '@/styles/globals.css';
 
+import { SocialToolbar } from '@/components/social-toolbar';
+
 export const metadata: Metadata = {
   title: 'Portfolio',
   description: 'Portfolio of Devvrat Shukla',
@@ -33,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
+            <SocialToolbar />
             <div className="flex grow flex-col gap-72">{children}</div>
             <Footer />
           </ThemeProvider>

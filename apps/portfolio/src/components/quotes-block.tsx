@@ -54,7 +54,7 @@ export default function QuotesBlock() {
   };
 
   return (
-    <div className={`relative mx-auto w-full ${pacifico.className}`}>
+    <div className={`relative mx-auto w-full `}>
       <div className=" flex h-48 items-center justify-center overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
@@ -72,7 +72,7 @@ export default function QuotesBlock() {
             className="text-center"
           >
             <motion.p
-              className="text-secondary mb-4 text-xl font-bold md:text-3xl md:font-semibold"
+              className="text-secondary mb-4 text-xl font-bold md:text-lg md:font-semibold"
               transition={{
                 type: 'spring',
                 stiffness: 100,
@@ -91,10 +91,8 @@ export default function QuotesBlock() {
                 mass: 0.5,
                 delay: 0.2,
               }}
-              className="text-muted-foreground p-1 text-sm md:text-lg"
-            >
-              - {quotes[currentQuoteIndex].author}
-            </motion.p>
+              className="text-muted-foreground md:text-md p-1 text-sm"
+            ></motion.p>
           </motion.div>
         </AnimatePresence>
       </div>

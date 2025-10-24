@@ -77,7 +77,7 @@ export default function PostsPage() {
 
   return (
     <PageContainer className="mx-auto max-w-screen-md overflow-auto">
-      <div className="mb-8 flex items-center justify-between">
+      <div className=" mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">Posts</h1>
         <div className="flex items-center">
           <Switch
@@ -96,9 +96,9 @@ export default function PostsPage() {
         {filteredPosts.map((post, index) => (
           <div
             key={index}
-            className={`group cursor-pointer rounded-lg border py-4 transition-all 
-              duration-300 hover:border-[#FFB800] hover:bg-[#FFB800]/5
-              ${selectedPost === index ? 'border-blue-500' : 'border-transparent'}`}
+            className={`group cursor-pointer py-4 transition-all
+              duration-300
+              ${selectedPost === index ? 'text-blue-500' : ''}`}
             onMouseEnter={handleHover}
             onClick={() => {
               handleClick();

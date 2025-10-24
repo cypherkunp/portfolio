@@ -19,6 +19,12 @@ const nextConfig = {
       },
     ],
   },
+  // Next.js 16 features
+  cacheComponents: true,
+  reactCompiler: true,
+  turbopack: {
+    // Turbopack is now default in v16
+  },
 };
 
 const withMDX = createMDX({

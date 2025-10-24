@@ -126,7 +126,7 @@
       ]
     },
     "quotesBlock": {
-      "title": "Words to Live By",
+      "title": "",
       "description": "",
       "content": [
         {
@@ -134,18 +134,9 @@
           "author": "@cypherkunp"
         },
         {
-          "quote": "\"Proximity is power.\"",
-          "author": "Tony Robbins"
-        },
-        {
           "quote": "\"Stay hungry, stay foolish.\"",
           "author": "Steve Jobs"
         },
-        {
-          "quote": "\"Out of your vulnerabilities will come your strength.\"",
-          "author": "Sigmund Freud"
-        },
-
         {
           "quote": "\"No is no to one thing. Yes is no to a lot of things.\"",
           "author": "Jason Fried"
@@ -154,14 +145,7 @@
           "quote": "\"Think progress, not perfection.\"",
           "author": "Ryan Holiday"
         },
-        {
-          "quote": "\"The reasonable man adapts himself to the world: the unreasonable one persists in trying to adapt the world to himself. Therefore all progress depends on the unreasonable man.\"",
-          "author": "George Bernard Shaw"
-        },
-        {
-          "quote": "Madness, as you know, is like gravity. All it takes is a little push.",
-          "author": "The Joker"
-        },
+
         {
           "quote": "\"Success is not final, failure is not fatal: it is the courage to continue that counts.\"",
           "author": "Winston Churchill"
@@ -169,10 +153,6 @@
         {
           "quote": "\"Code never lies, comments sometimes do.\"",
           "author": "Ron Jeffries"
-        },
-        {
-          "quote": "\"If you need a machine and don't buy it, then you will ultimately find that you have paid for it and don't have it.\"",
-          "author": "Henry Ford"
         }
       ]
     }
