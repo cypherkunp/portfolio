@@ -1,13 +1,16 @@
-const createNextIntlPlugin = require('next-intl/plugin');
-const withNextIntl = createNextIntlPlugin();
-const createMDX = require('@next/mdx');
+import type { NextConfig } from 'next';
+import withBundleAnalyzerPlugin from '@next/bundle-analyzer';
+import createNextIntlPlugin from 'next-intl/plugin';
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import createMDX from '@next/mdx';
+
+const withNextIntl = createNextIntlPlugin();
+
+const withBundleAnalyzer = withBundleAnalyzerPlugin({
   enabled: process.env.ANALYZE === 'true',
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   transpilePackages: [],
   images: {
@@ -31,4 +34,4 @@ const withMDX = createMDX({
   // Add markdown plugins here, as desired
 });
 
-module.exports = withBundleAnalyzer(withNextIntl(withMDX(nextConfig)));
+export default withBundleAnalyzer(withNextIntl(withMDX(nextConfig)));

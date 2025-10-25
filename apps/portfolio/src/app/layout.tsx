@@ -6,7 +6,6 @@ import { getLocale, getMessages } from 'next-intl/server';
 
 import { geistMono } from '@/lib/font';
 import { Footer } from '@/components/layout/footer';
-import Header from '@/components/layout/header';
 import { ThemeProvider } from '@/components/theme-provider';
 
 import '@/styles/globals.css';
@@ -23,7 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={`${geistMono.className} antialiased`}>
+    <html lang="en" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
       <body
         className="container relative z-10 flex min-h-screen
           max-w-screen-md scroll-my-12 flex-col overflow-auto bg-neutral-950"
