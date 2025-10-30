@@ -24,8 +24,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
       <body
-        className="container relative z-10 flex min-h-screen
-          max-w-screen-md scroll-my-12 flex-col overflow-auto bg-neutral-950"
+        className="container relative z-10 mx-auto flex
+          min-h-screen max-w-2xl scroll-my-12 flex-col overflow-auto bg-neutral-950"
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
