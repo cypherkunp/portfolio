@@ -51,36 +51,6 @@
       "description": "I am software engineer specializing in web app development. My passion is crafting digital experiences and building high-performance development teams.",
       "name": "Devvrat Shukla"
     },
-    "stackBlock": {
-      "title": "Tech Arsenal",
-      "description": "",
-      "list": [
-        {
-          "title": "Frontend",
-          "description": "JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components"
-        },
-        {
-          "title": "Backend",
-          "description": "Node.js, Express, Fastify, REST API, tRPC, GraphQL, AWS Lambda, API Gateway, S3, SQS, SNS"
-        },
-        {
-          "title": "Database",
-          "description": "PostgreSQL, MongoDB, Supabase, AWS DynamoDB"
-        },
-        {
-          "title": "Cloud",
-          "description": "AWS, Vercel, Cloudflare, Fly.io"
-        },
-        {
-          "title": "DevOps",
-          "description": "GitHub Actions, AWS, Docker, Serverless, CDK, SST.dev, Vercel"
-        },
-        {
-          "title": "Design Systems",
-          "description": "Shadcn UI, Material UI, Radix UI, and Building Design Systems for web"
-        }
-      ]
-    },
     "clientBlock": {
       "title": "Clients",
       "description": "",
@@ -267,6 +237,38 @@
     "content": {
       "title": "404",
       "description": "Oops! Looks like you've wandered off the map. You must return home."
+    }
+  },
+  "Blocks": {
+    "stackBlock": {
+      "title": "Tech Arsenal",
+      "description": "",
+      "list": [
+        {
+          "title": "Frontend",
+          "description": "JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components"
+        },
+        {
+          "title": "Backend",
+          "description": "Node.js, Express, Fastify, REST API, tRPC, GraphQL, AWS Lambda, API Gateway, S3, SQS, SNS"
+        },
+        {
+          "title": "Database",
+          "description": "PostgreSQL, MongoDB, Supabase, AWS DynamoDB"
+        },
+        {
+          "title": "Cloud",
+          "description": "AWS, Vercel, Cloudflare, Fly.io"
+        },
+        {
+          "title": "DevOps",
+          "description": "GitHub Actions, AWS, Docker, Serverless, CDK, SST.dev, Vercel"
+        },
+        {
+          "title": "Design Systems",
+          "description": "Shadcn UI, Material UI, Radix UI, and Building Design Systems for web"
+        }
+      ]
     }
   }
 }

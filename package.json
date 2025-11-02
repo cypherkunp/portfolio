@@ -8,11 +8,12 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --filter=portfolio-site",
+    "dev": "turbo run dev --filter=www",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "ui:add": "pnpm --filter @repo/ui ui:add",
     "prepare": "husky"
   },

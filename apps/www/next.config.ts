@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   reactCompiler: true,
   turbopack: {
-    // Turbopack is now default in v16
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json', '.md'],
   },
 };
 

@@ -2,12 +2,10 @@ import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-import CompanyBlock from '@/components/company-block';
 import InfoBlock from '@/components/info-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
-import QuotesBlock from '@/components/quotes-block';
-import StackBlock from '@/components/stack-block';
+import PostsBlock from '@/components/posts-block';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
@@ -46,18 +44,13 @@ export default function Page() {
       <Section isFirstSection>
         <InfoBlock />
       </Section>
-      <Section
-        title={t('HomePage.stackBlock.title')}
-        description={t('HomePage.stackBlock.description')}
-      >
-        <StackBlock />
-      </Section>
+
       <Section
         isLastSection
         title={t('HomePage.clientBlock.title')}
         description={t('HomePage.clientBlock.description')}
       >
-        <CompanyBlock />
+        <PostsBlock />
       </Section>
     </PageContainer>
   );

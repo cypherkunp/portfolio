@@ -1,7 +1,7 @@
 import React from 'react';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
+import ExternalLink from './external-link';
 import { RenderIf } from './render-if';
 
 export default function ConnectBlock() {
@@ -13,15 +13,15 @@ export default function ConnectBlock() {
         <ReachOutOn
           title={t('connectBlock.reachOutOn.title')}
           description={t.rich('connectBlock.reachOutOn.description', {
-            email: text => <SocialLink href={t('contact.email')} text={text as string} />,
-            twitter: text => <SocialLink href={t('contact.twitter')} text={text as string} />,
+            email: text => <ExternalLink href={t('contact.email')} text={text as string} />,
+            twitter: text => <ExternalLink href={t('contact.twitter')} text={text as string} />,
           })}
         />
         <FindMeOn
           title={t('connectBlock.findMeOn.title')}
           description={t.rich('connectBlock.findMeOn.description', {
-            linkedin: text => <SocialLink href={t('contact.linkedin')} text={text as string} />,
-            github: text => <SocialLink href={t('contact.github')} text={text as string} />,
+            linkedin: text => <ExternalLink href={t('contact.linkedin')} text={text as string} />,
+            github: text => <ExternalLink href={t('contact.github')} text={text as string} />,
           })}
         />
       </div>
@@ -46,18 +46,5 @@ function FindMeOn({ title, description }: { title: string; description: React.Re
         <p className="text-muted-foreground text-sm">{description}</p>
       </RenderIf>
     </div>
-  );
-}
-
-function SocialLink({ href, text }: { href: string; text: string }) {
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-secondary inline-block text-sm transition-colors"
-    >
-      {text}
-    </Link>
   );
 }

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import PageContainer from '@/components/layout/page-container';
-import Handbook from '@/content/handbook.mdx';
+import Handbook from '@/content/posts/handbook.mdx';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();

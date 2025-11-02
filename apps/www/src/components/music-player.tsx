@@ -22,25 +22,28 @@ import SongList from './song-list';
 
 const songs: Song[] = [
   {
-    id: 1,
+    id: '1',
     title: 'Sunny Days',
     artist: 'Happy Tunes',
+    album: '',
     duration: 187,
     cover: '/placeholder.svg?height=400&width=400',
     url: '/songs/song1.mp3',
   },
   {
-    id: 2,
+    id: '2',
     title: 'Midnight Dreams',
     artist: 'Chill Vibes',
+    album: '',
     duration: 214,
     cover: '/placeholder.svg?height=400&width=400',
     url: '/songs/song2.mp3',
   },
   {
-    id: 3,
+    id: '3',
     title: 'Mountain Echo',
     artist: 'Nature Sounds',
+    album: '',
     duration: 176,
     cover: '/placeholder.svg?height=400&width=400',
     url: '/songs/song3.mp3',

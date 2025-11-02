@@ -19,6 +19,7 @@ import { FaqBlock } from '@/components/faq-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
 import { RenderIf } from '@/components/render-if';
+import StackBlock from '@/components/stack-block';
 import SteelCard from '@/components/steel-card';
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -53,85 +54,11 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default function Page() {
   const th = useTranslations();
   const t = useTranslations('ResumePage.data');
+  const stackBlock = useTranslations('Blocks.stackBlock');
 
   return (
     <PageContainer className="mx-auto max-w-screen-md overflow-auto print:p-12">
-      <Section className="space-y-2" isFirstSection>
-        <SteelCard>
-          <div className="flex items-center justify-between">
-            <div className="space-y-1.5 ">
-              <h1 className="font-mono text-xl font-bold text-white">{t('name')}</h1>
-              <p className="text-muted-foreground max-w-md text-pretty font-mono text-sm">
-                {t('about')}
-              </p>
-              <p className="text-muted-foreground max-w-md items-center text-pretty font-mono text-xs">
-                <a
-                  className="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"
-                  href={t('locationLink')}
-                  target="_blank"
-                >
-                  <GlobeIcon className="size-3" />
-                  {t('location')}
-                </a>
-              </p>
-              <div className="text-muted-foreground flex gap-x-1 pt-1 font-mono text-sm print:hidden">
-                {t('contact.email') && (
-                  <Button className="size-8" variant="outline" size="icon" asChild>
-                    <a href={`mailto:${t('contact.email')}`}>
-                      <MailIcon className="size-4" />
-                    </a>
-                  </Button>
-                )}
-                {t('contact.tel') && (
-                  <Button className="size-8" variant="outline" size="icon" asChild>
-                    <a href={`tel:${t('contact.tel')}`}>
-                      <PhoneIcon className="size-4" />
-                    </a>
-                  </Button>
-                )}
-                {t.raw('social.links').map((social: any) => (
-                  <Button
-                    key={social.name}
-                    className="size-8"
-                    variant="outline"
-                    size="icon"
-                    asChild
-                  >
-                    <a href={social.url}>
-                      <RenderIf condition={social.name === 'GitHub'}>
-                        <GithubIcon className="size-4" />
-                      </RenderIf>
-                      <RenderIf condition={social.name === 'LinkedIn'}>
-                        <LinkedinIcon className="size-4" />
-                      </RenderIf>
-                      <RenderIf condition={social.name === 'X'}>
-                        <TwitterIcon className="size-4" />
-                      </RenderIf>
-                    </a>
-                  </Button>
-                ))}
-              </div>
-              <div className="text-muted-foreground hidden flex-col gap-x-1 font-mono text-sm print:flex">
-                {t('contact.email') && (
-                  <a href={`mailto:${t('contact.email')}`}>
-                    <span className="underline">{t('contact.email')}</span>
-                  </a>
-                )}
-                {t('contact.tel') && (
-                  <a href={`tel:${t('contact.tel')}`}>
-                    <span className="underline">{t('contact.tel')}</span>
-                  </a>
-                )}
-              </div>
-            </div>
-            <Avatar className="size-36 rounded-full shadow-sm shadow-gray-700 md:size-36">
-              <AvatarImage alt={t('name')} src={ProfilePic.src} className="grayscale" />
-              <AvatarFallback>{t('initials')}</AvatarFallback>
-            </Avatar>
-          </div>
-        </SteelCard>
-      </Section>
-      <Section title={t('labels.about')}>
+      <Section title={t('labels.about')} isFirstSection>
         <ul className="flex list-inside list-disc flex-col  ">
           {t('summary')
             .split('. ')
@@ -141,6 +68,9 @@ export default function Page() {
               </li>
             ))}
         </ul>
+      </Section>
+      <Section className="space-y-2" title={stackBlock('title')}>
+        <StackBlock />
       </Section>
       <Section title={t('labels.work')}>
         {t.raw('work').map((work: any) => {
