@@ -1,26 +1,14 @@
 import { Metadata } from 'next';
-import ProfilePic from '@/images/profile.jpg';
-import {
-  GithubIcon,
-  GlobeIcon,
-  LinkedinIcon,
-  MailIcon,
-  PhoneIcon,
-  TwitterIcon,
-} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { FaqBlock } from '@/components/faq-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
 import { RenderIf } from '@/components/render-if';
 import StackBlock from '@/components/stack-block';
-import SteelCard from '@/components/steel-card';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
@@ -57,7 +45,7 @@ export default function Page() {
   const stackBlock = useTranslations('Blocks.stackBlock');
 
   return (
-    <PageContainer className="mx-auto max-w-screen-md overflow-auto print:p-12">
+    <PageContainer className="mx-auto max-w-3xl overflow-auto print:p-12">
       <Section title={t('labels.about')} isFirstSection>
         <ul className="flex list-inside list-disc flex-col  ">
           {t('summary')

@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
+import { SocialToolbar } from './social-toolbar';
 import { Cover } from './ui/cover';
 
 export default function InfoBlock() {

@@ -2,43 +2,36 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Home, Instagram, MapPin, MoreVertical, Twitter, X, Youtube } from 'lucide-react';
+import { Github, Instagram, Linkedin, Mail, MoreVertical, Twitter, X } from 'lucide-react';
 
 const socialLinks = [
   {
-    name: 'Home',
-    icon: Home,
+    name: 'GitHub',
+    icon: Github,
     target: '_self',
-    href: '/',
+    href: 'https://github.com/cypherkunp',
     color: 'hover:text-blue-400',
   },
   {
     name: 'Twitter/X',
     icon: Twitter,
     target: '_blank',
-    href: 'https://twitter.com',
+    href: 'https://x.com/devvrathq',
     color: 'hover:text-gray-300',
   },
   {
-    name: 'Instagram',
-    icon: Instagram,
+    name: 'LinkedIn',
+    icon: Linkedin,
     target: '_blank',
-    href: 'https://instagram.com',
+    href: 'https://www.linkedin.com/in/devvratshukla/',
     color: 'hover:text-pink-400',
   },
   {
-    name: 'YouTube',
-    icon: Youtube,
+    name: 'Email',
+    icon: Mail,
     target: '_blank',
-    href: 'https://youtube.com',
-    color: 'hover:text-red-400',
-  },
-  {
-    name: 'Pinterest',
-    icon: MapPin,
-    target: '_blank',
-    href: 'https://pinterest.com',
-    color: 'hover:text-red-300',
+    href: 'mailto:devvrat.shukla@gmail.com',
+    color: 'hover:text-green-400',
   },
 ];
 

@@ -34,7 +34,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             enableSystem
             disableTransitionOnChange
           >
-            <SocialToolbar />
             <div className="flex grow flex-col gap-72">{children}</div>
             <Footer />
           </ThemeProvider>

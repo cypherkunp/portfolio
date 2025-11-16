@@ -20,7 +20,9 @@
     "@repo/utils": "workspace:*",
     "@types/node": "^20",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-unused-imports": "^3.0.0"
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "unist-util-visit": "^5.0.0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
