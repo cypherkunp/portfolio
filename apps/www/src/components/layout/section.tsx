@@ -37,7 +37,7 @@ export function Section({
           <div className="mx-auto mb-4 w-full md:mb-6">
             <RenderIf condition={!!title}>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold tracking-tight">{title}</h2>
+                <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
               </div>
             </RenderIf>
 

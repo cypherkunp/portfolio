@@ -4,7 +4,7 @@ import path from 'path';
 type Metadata = {
   title: string;
   publishedOn: string;
-  summary: string;
+  version: string;
   image?: string;
   tags: string[];
 };
@@ -20,7 +20,7 @@ function parseFrontmatter(fileContent: string) {
   const frontMatterBlock = match[1];
   const content = fileContent.replace(frontmatterRegex, '').trim();
   const frontMatterLines = frontMatterBlock.trim().split('\n');
-  const metadata: Partial<Metadata> = {};
+  const raw: Record<string, unknown> = {};
 
   let i = 0;
   while (i < frontMatterLines.length) {
@@ -38,7 +38,7 @@ function parseFrontmatter(fileContent: string) {
       frontMatterLines[i + 1].trim().startsWith('-')
     ) {
       const [key] = line.split(':');
-      const keyName = key.trim() as keyof Metadata;
+      const keyName = key.trim();
       const arrayItems: string[] = [];
 
       // Collect array items
@@ -53,37 +53,49 @@ function parseFrontmatter(fileContent: string) {
         i++;
       }
 
-      metadata[keyName] = arrayItems as any;
+      raw[keyName] = arrayItems;
       continue;
     }
 
     // Handle regular key-value pairs
     if (line.includes(':')) {
       const [key, ...valueArr] = line.split(': ');
-      const keyName = key.trim() as keyof Metadata;
+      const keyName = key.trim();
       let value = valueArr.join(': ').trim();
       value = value.replace(/^['"](.*)['"]$/, '$1');
 
-      // Skip tags here as it should be handled as an array above
-      if (keyName !== 'tags') {
-        metadata[keyName] = value as any;
-      }
+      raw[keyName] = value;
     }
 
     i++;
   }
 
-  // Ensure tags is always an array
-  if (!metadata.tags || !Array.isArray(metadata.tags)) {
-    metadata.tags = [];
+  // Validate and normalize against schema
+  const errors: string[] = [];
+  const title = typeof raw.title === 'string' ? raw.title.trim() : '';
+  const publishedOn = typeof raw.publishedOn === 'string' ? raw.publishedOn.trim() : '';
+  const version =
+    raw.version == null
+      ? ''
+      : typeof raw.version === 'string'
+        ? raw.version.trim()
+        : String(raw.version).trim();
+  const tags: string[] = Array.isArray(raw.tags)
+    ? (raw.tags as unknown[]).map(v => String(v).trim()).filter(Boolean)
+    : [];
+
+  if (!title) errors.push('title');
+  if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(publishedOn)) errors.push('publishedOn');
+  if (!version) errors.push('version');
+  if (tags.length === 0) errors.push('tags');
+
+  if (errors.length) {
+    throw new Error(`Missing/invalid frontmatter fields: ${errors.join(', ')}`);
   }
 
-  // Validate required fields
-  if (!metadata.title || !metadata.publishedOn || !metadata.summary) {
-    throw new Error(`Missing required frontmatter fields: title, publishedOn, or summary`);
-  }
+  const metadata: Metadata = { title, publishedOn, version, tags };
 
-  return { metadata: metadata as Metadata, content };
+  return { metadata, content };
 }
 
 function getMDXFiles(dir: string): string[] {

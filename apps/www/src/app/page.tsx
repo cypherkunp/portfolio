@@ -44,11 +44,10 @@ export default function Page() {
       <Section isFirstSection>
         <InfoBlock />
       </Section>
-
       <Section
         isLastSection
-        title={t('HomePage.clientBlock.title')}
-        description={t('HomePage.clientBlock.description')}
+        title={t('Blocks.posts.title')}
+        description={t('Blocks.posts.description')}
       >
         <PostsBlock />
       </Section>

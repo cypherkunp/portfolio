@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
-import { SocialToolbar } from './social-toolbar';
 import { Cover } from './ui/cover';
 
 export default function InfoBlock() {
@@ -15,7 +14,7 @@ export default function InfoBlock() {
     <Cover className="p-2">
       <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-start md:gap-16">
         <FollowerPointerCard
-          title={<Pointer title={t('HomePage.infoBlock.pointer.text')} avatar={ProfilePic.src} />}
+          title={<Pointer title={t('Blocks.infoBlock.pointer.text')} avatar={ProfilePic.src} />}
         >
           <Image
             src={ProfilePic.src}
@@ -26,10 +25,10 @@ export default function InfoBlock() {
           />
         </FollowerPointerCard>
         <div className="flex max-w-[350px] flex-col items-start gap-3 py-2 md:items-start">
-          <h1 className="text-2xl font-semibold text-white ">{t('HomePage.infoBlock.title')}</h1>
-          <p className="text-sm font-bold text-white ">{t('HomePage.infoBlock.highlight')}</p>
+          <h1 className="text-2xl font-semibold text-white ">{t('Blocks.infoBlock.title')}</h1>
+          <p className="text-sm font-bold text-white ">{t('Blocks.infoBlock.highlight')}</p>
           <p className="text-xs text-white md:text-left md:text-sm ">
-            {t('HomePage.infoBlock.description')}
+            {t('Blocks.infoBlock.description')}
           </p>{' '}
         </div>
       </div>

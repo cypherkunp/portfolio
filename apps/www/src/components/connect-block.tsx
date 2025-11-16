@@ -8,7 +8,7 @@ export default function ConnectBlock() {
   const t = useTranslations('Common');
 
   return (
-    <div className="text-foreground w-full px-4 sm:px-6 lg:px-8">
+    <div className="text-foreground w-full">
       <div className="mx-auto flex flex-col items-start justify-between space-y-6 sm:flex-row sm:items-center sm:space-y-0">
         <ReachOutOn
           title={t('connectBlock.reachOutOn.title')}

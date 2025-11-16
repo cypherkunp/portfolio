@@ -10,24 +10,25 @@ export default async function PostsBlock() {
   }
 
   const sortedPosts = [...allBlogs].sort((a, b) => {
-    if (new Date(a.metadata.publishedOn) > new Date(b.metadata.publishedOn)) {
-      return -1;
-    }
-    return 1;
+    const da = new Date(a.metadata.publishedOn);
+    const db = new Date(b.metadata.publishedOn);
+    if (isNaN(da.getTime()) && isNaN(db.getTime())) return 0;
+    if (isNaN(da.getTime())) return 1;
+    if (isNaN(db.getTime())) return -1;
+    return db.getTime() - da.getTime();
   });
 
   return (
     <div>
       {sortedPosts.map(post => (
         <Link key={post.slug} className="mb-4 flex flex-col space-y-1" href={`/posts/${post.slug}`}>
-          <div className="flex w-full flex-col space-x-0 md:flex-row md:space-x-2">
-            <p className="w-[100px] tabular-nums text-neutral-600 dark:text-neutral-400">
-              {formatDate(post.metadata.publishedOn, false)}
-            </p>
-            <p className="tracking-tight text-neutral-900 dark:text-neutral-100">
-              {post.metadata.title}
-            </p>
-          </div>
+          <p className="tracking-tight text-neutral-900 dark:text-neutral-100">
+            {post.metadata.title}
+          </p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            {formatDate(post.metadata.publishedOn, false)} | v{post.metadata.version} |{' '}
+            {Array.isArray(post.metadata.tags) ? post.metadata.tags.join(', ') : ''}
+          </p>
         </Link>
       ))}
     </div>
