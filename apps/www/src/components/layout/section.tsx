@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
-
-import { RenderIf } from '../render-if';
+import { RenderIf } from '@/components/render-if';
+import UnderlineText from '@/components/underline-text';
 
 interface SectionProps {
   children: React.ReactNode;
@@ -33,18 +33,16 @@ export function Section({
       )}
     >
       <RenderIf condition={!!title || !!description}>
-        <div className="flex flex-col items-center justify-start ">
-          <div className="mx-auto mb-4 w-full md:mb-6">
-            <RenderIf condition={!!title}>
-              <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-              </div>
-            </RenderIf>
+        <div className="mb-4 flex w-full flex-col items-start justify-start gap-4">
+          <RenderIf condition={!!title}>
+            <h2 className="text-lg font-bold tracking-tight">
+              <UnderlineText>{title}</UnderlineText>
+            </h2>
+          </RenderIf>
 
-            <RenderIf condition={!!description}>
-              <p className="text-muted-foreground">{description}</p>
-            </RenderIf>
-          </div>
+          <RenderIf condition={!!description}>
+            <p className="text-muted-foreground">{description}</p>
+          </RenderIf>
         </div>
       </RenderIf>
       {children}
