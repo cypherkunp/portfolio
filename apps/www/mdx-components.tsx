@@ -94,3 +94,7 @@ declare global {
 export function useMDXComponents(): MDXProvidedComponents {
   return components;
 }
+
+export function getMDXComponents(): MDXProvidedComponents {
+  return components;
+}
