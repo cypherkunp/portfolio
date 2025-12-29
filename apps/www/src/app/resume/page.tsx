@@ -45,7 +45,7 @@ export default function Page() {
   const stackBlock = useTranslations('Blocks.stackBlock');
 
   return (
-    <PageContainer className="mx-auto max-w-3xl overflow-auto print:p-12">
+    <PageContainer className="w-full overflow-auto print:p-12">
       <Section title={t('labels.about')} isFirstSection>
         <ul className="flex list-inside list-disc flex-col  ">
           {t('summary')

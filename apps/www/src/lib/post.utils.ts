@@ -33,6 +33,11 @@ export function getBlogPosts() {
   });
 }
 
+export function getAllTags() {
+  const tags = Array.from(new Set(getBlogPosts().flatMap(post => post.metadata.tags)));
+  return tags.sort((a: string, b: string) => a.localeCompare(b));
+}
+
 export function formatDate(date: string, includeRelative = false) {
   if (!date.includes('T')) {
     date = `${date}T00:00:00`;
