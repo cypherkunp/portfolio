@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import InfoBlock from '@/components/info-block';
+import Header from '@/components/layout/header';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
 import PostsBlock from '@/components/posts-block';
@@ -41,14 +42,11 @@ export default function Page() {
 
   return (
     <PageContainer>
+      <Header />
       <Section isFirstSection>
         <InfoBlock />
       </Section>
-      <Section
-        isLastSection
-        title={t('Blocks.posts.title')}
-        description={t('Blocks.posts.description')}
-      >
+      <Section isLastSection title={t('Blocks.posts.title')}>
         <PostsBlock />
       </Section>
     </PageContainer>

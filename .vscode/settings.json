@@ -50,5 +50,7 @@
     "upabase"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "liveServer.settings.port": 5501
+  "liveServer.settings.port": 5501,
+  // CSS validation settings for Tailwind CSS
+  "css.lint.unknownAtRules": "ignore"
 }

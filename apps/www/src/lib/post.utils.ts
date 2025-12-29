@@ -40,8 +40,8 @@ export function formatDate(date: string, includeRelative = false) {
   const targetDate = new Date(date);
 
   const fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
     day: 'numeric',
+    month: 'numeric',
     year: 'numeric',
   });
 
@@ -53,4 +53,15 @@ export function formatDate(date: string, includeRelative = false) {
   // For static generation, we skip relative time calculation
   // If relative time is needed, it should be calculated on the client side
   return fullDate;
+}
+
+export function getTimeSortedPosts() {
+  return [...getBlogPosts()].sort((a, b) => {
+    const postA = new Date(a.metadata.publishedOn);
+    const postB = new Date(b.metadata.publishedOn);
+    if (isNaN(postA.getTime()) && isNaN(postB.getTime())) return 0;
+    if (isNaN(postA.getTime())) return 1;
+    if (isNaN(postB.getTime())) return -1;
+    return postB.getTime() - postA.getTime();
+  });
 }

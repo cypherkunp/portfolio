@@ -1,5 +1,6 @@
 ---
-alwaysApply: true
+globs: *.md*
+alwaysApply: false
 ---
 
 ## Sentence structure

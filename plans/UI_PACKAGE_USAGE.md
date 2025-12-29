@@ -11,9 +11,9 @@ The UI components are now centralized in `packages/ui` as a shared design system
 Import components directly from the UI package:
 
 ```typescript
-import { Button } from '@repo/ui/components/button'
-import { Card, CardHeader, CardTitle, CardContent } from '@repo/ui/components/card'
-import { Input } from '@repo/ui/components/input'
+import { Button } from '@repo/ui/components/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/card';
+import { Input } from '@repo/ui/components/input';
 ```
 
 ### Method 2: Named Exports
@@ -21,7 +21,8 @@ import { Input } from '@repo/ui/components/input'
 You can also import multiple components at once:
 
 ```typescript
-import { Button, Card, Input, Dialog } from '@repo/ui'
+import { Button, Card, Dialog, Input } from '@repo/ui';
+
 // Note: Some components with naming conflicts may need direct imports
 ```
 
@@ -31,10 +32,9 @@ For cleaner imports, you can import from component folders:
 
 ```typescript
 // Button with variants
-import { Button, buttonVariants } from '@repo/ui/components/button'
-
+import { Button, buttonVariants } from '@repo/ui/components/button';
 // Form components
-import { Form, FormField, FormItem, FormLabel, FormControl } from '@repo/ui/components/form'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@repo/ui/components/form';
 ```
 
 ## Add Styles
@@ -43,7 +43,7 @@ Import the UI package styles in your app's main CSS file or layout:
 
 ```typescript
 // app/layout.tsx or globals.css
-import '@repo/ui/styles.css'
+import '@repo/ui/styles.css';
 ```
 
 This will include all the CSS variables and Tailwind utilities needed for the components.
@@ -55,14 +55,14 @@ This will include all the CSS variables and Tailwind utilities needed for the co
 Make sure your Tailwind config includes the UI package:
 
 ```typescript
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: "class",
+  darkMode: 'class',
   content: [
-    "./src/**/*.{ts,tsx,mdx}",
+    './src/**/*.{ts,tsx,mdx}',
     // Add this line to include UI package components
-    "../../packages/ui/src/**/*.{ts,tsx}",
+    '../../packages/ui/src/**/*.{ts,tsx}',
   ],
   // ... rest of config
 };

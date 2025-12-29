@@ -3,16 +3,15 @@
     "contact": {
       "name": "Devvrat",
       "email": "devvrat.shukla@gmail.com",
-      "tel": "+44 07354 444 022",
       "address": "London, UK",
       "github": "https://github.com/cypherkunp",
       "linkedin": "https://www.linkedin.com/in/devvratshukla/",
-      "twitter": "https://twitter.com/cypherkunp"
+      "twitter": "https://x.com/devvrathq"
     },
     "connectBlock": {
       "reachOutOn": {
         "title": "Have a question for me?",
-        "description": "Reach out via <email>email</email> or <twitter>twitter</twitter>"
+        "description": "Reach out via <email>Email</email> or <twitter>Twitter</twitter>"
       },
       "findMeOn": {
         "title": "You can also find me on ",

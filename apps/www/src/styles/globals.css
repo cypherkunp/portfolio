@@ -198,7 +198,7 @@
 }
 
 .text-secondary:hover {
-  @apply text-yellow-700;
+  @apply text-yellow-500;
 }
 
 .bg-secondary {

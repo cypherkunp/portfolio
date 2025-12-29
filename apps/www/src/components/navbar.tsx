@@ -1,127 +1,102 @@
 'use client';
 
-import * as React from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { LucideBookOpenText, LucideBookText, LucideHome, LucideScrollText } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
+import { Button } from '@/components/ui/button';
 
-import { RenderIf } from './render-if';
+export interface NavItem {
+  href: string;
+  label: string;
+}
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: 'Bookmarks',
-    href: '/about/bookmarks',
-    description: 'Random stuff I find useful',
-  },
-  {
-    title: 'Gallery',
-    href: '/about/gallery',
-    description: 'Few of my clicks',
-  },
-  {
-    title: 'Setup',
-    href: '/about/setup',
-    description: 'My desk setup',
-  },
-];
+export interface NavbarProps {
+  items: NavItem[];
+  logo?: React.ReactNode;
+  className?: string;
+}
 
-export function Navbar() {
-  const t = useTranslations('Header.navbar');
+export function Navbar({ items, logo = 'Logo', className }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <nav className="flex w-full items-center justify-between">
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <LucideHome className="mr-2 size-4" />
-                {t('home')}
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <RenderIf condition={false}>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>About</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                  {components.map(component => (
-                    <ListItem key={component.title} title={component.title} href={component.href}>
-                      {component.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </RenderIf>
-          <NavigationMenuItem>
-            <Link href="/handbook" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <LucideBookText className="mr-2 size-4" />
-                {t('handbook')}
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="/resume" legacyBehavior passHref>
-              <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
-                <LucideScrollText className="mr-2 size-4" />
-                {t('resume')}
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <RenderIf condition={false}>
-            <NavigationMenuItem>
-              <Link href="/posts" legacyBehavior passHref>
-                <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
-                  <LucideBookOpenText className="mr-2 size-4" />
-                  {t('posts')}
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </RenderIf>
-        </NavigationMenuList>
-      </NavigationMenu>
+    <nav className={cn('w-full', className)}>
+      <div className="mx-auto px-0">
+        <div className="flex h-16 items-center justify-between">
+          <div className="hidden md:flex md:items-center md:gap-8">
+            {items.map(item => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'hover:text-foreground relative inline-flex flex-col py-2 text-sm font-medium transition-colors',
+                    isActive ? 'text-foreground' : 'text-muted-foreground',
+                    'group',
+                  )}
+                >
+                  {item.label}
+                  {/* Animated underline */}
+                  <span
+                    className={cn(
+                      'bg-primary absolute bottom-0 h-0.5 transition-all duration-300',
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full',
+                    )}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+        </div>
+
+        {/* Mobile Navbar */}
+        {isOpen && (
+          <div className="border-border border-t md:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {items.map(item => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      'flex rounded-md px-3 py-2 text-base font-medium transition-colors',
+                      isActive
+                        ? 'bg-accent text-accent-foreground'
+                        : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                    )}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span className="relative inline-flex flex-col">
+                      {item.label}
+                      {/* Active indicator for mobile - underline only spans text width */}
+                      {isActive && <span className="bg-primary h-0.5" />}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }
-
-const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              `hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block
-              select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors`,
-              className,
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    );
-  },
-);
-
-ListItem.displayName = 'ListItem';
