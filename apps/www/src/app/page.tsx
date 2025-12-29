@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import InfoBlock from '@/components/info-block';
+import { Footer } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
@@ -32,7 +33,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       title: t('HomePage.title'),
       description: t('HomePage.description'),
       images: [t('HomePage.ogImage')],
-      creator: '@cypherkunp',
+      creator: '@devvrathq',
     },
   };
 };
@@ -42,7 +43,6 @@ export default function Page() {
 
   return (
     <PageContainer>
-      <Header />
       <Section isFirstSection>
         <InfoBlock />
       </Section>

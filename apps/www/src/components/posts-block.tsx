@@ -17,7 +17,7 @@ export default async function PostsBlock() {
             <p className="text-sm text-neutral-600 dark:text-neutral-400">
               {formatDate(post.metadata.publishedOn, false)}
             </p>
-            <p className="decoration-primary tracking-tight text-neutral-900 underline dark:text-neutral-100">
+            <p className="hover:decoration-tertiary tracking-tight text-neutral-900 hover:underline hover:underline-offset-8 dark:text-neutral-100">
               {post.metadata.title}
             </p>
           </div>

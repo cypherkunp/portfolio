@@ -210,18 +210,9 @@
 }
 
 .decoration-primary {
-  @apply underline decoration-yellow-500 underline-offset-[8px];
+  @apply underline decoration-yellow-500 underline-offset-8;
 }
 
 .border-secondary {
   @apply border-neutral-400;
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

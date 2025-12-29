@@ -1,18 +1,22 @@
 import { useTranslations } from 'next-intl';
 
-import ConnectBlock from '../connect-block';
-import UnderlineText from '../underline-text';
+import { cn } from '@/lib/utils';
+import ConnectBlock from '@/components/connect-block';
+import UnderlineText from '@/components/underline-text';
 
-export function Footer() {
+export function Footer({ className }: { className?: string }) {
   const t = useTranslations('Footer');
   return (
     <footer
-      className="border-secondary  mt-[40px] flex flex-col items-center space-y-12 border-t pb-8 pt-6
-        md:mt-[80px] md:space-y-16"
+      className={cn(
+        `border-secondary flex flex-col items-center space-y-12 border-t pb-8 pt-6
+        md:space-y-16`,
+        className,
+      )}
     >
       <ConnectBlock />
 
-      <div className=" flex flex-col items-start justify-start">
+      <div className="pointer-events-none flex flex-col items-start justify-start">
         <p className="text-sm text-neutral-500 ">
           {t.rich('description', {
             underline: chunks => <UnderlineText>{chunks}</UnderlineText>,

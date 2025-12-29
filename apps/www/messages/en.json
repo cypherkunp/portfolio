@@ -20,18 +20,11 @@
     }
   },
   "Header": {
-    "navbar": {
-      "home": "I'm Home",
-      "handbook": "Handbook",
-      "resume": "Resume",
-      "posts": "Posts",
-      "others": {
-        "about": "About",
-        "bookmarks": "bookmarks",
-        "gallery": "gallery",
-        "connect": "@connect"
-      }
-    }
+    "navbar": [
+      { "href": "/", "label": "Home" },
+      { "href": "/about", "label": "About" },
+      { "href": "/resume", "label": "Resume" }
+    ]
   },
   "Footer": {
     "description": "Handmade by <underline>Devvrat</underline>. All rights reserved."
