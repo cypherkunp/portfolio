@@ -128,8 +128,8 @@ export default function Page() {
         </div>
       </Section>
       <Section
-        title={th('HomePage.faqBlock.title')}
-        description={th('HomePage.faqBlock.description')}
+        title={th('Blocks.faqBlock.title')}
+        description={th('Blocks.faqBlock.description')}
         isLastSection
       >
         <FaqBlock />

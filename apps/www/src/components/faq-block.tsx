@@ -9,7 +9,7 @@ interface Faq {
 }
 
 export function FaqBlock() {
-  const t = useTranslations('HomePage.faqBlock');
+  const t = useTranslations('Blocks.faqBlock');
   const faqData = t.raw('list') as unknown as Faq[];
 
   return (
