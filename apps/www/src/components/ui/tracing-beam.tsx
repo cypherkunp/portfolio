@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 
@@ -37,7 +37,7 @@ export const TracingBeam = ({
   });
 
   return (
-    <motion.div ref={ref} className={cn('relative mx-auto h-full w-full max-w-4xl', className)}>
+    <motion.div ref={ref} className={cn('relative mx-auto size-full max-w-4xl', className)}>
       <div className="absolute -left-4 top-3 md:-left-20">
         <motion.div
           transition={{
@@ -47,7 +47,7 @@ export const TracingBeam = ({
           animate={{
             boxShadow: scrollYProgress.get() > 0 ? 'none' : 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
           }}
-          className="border-netural-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm"
+          className="border-netural-200 ml-[27px] flex size-4 items-center justify-center rounded-full border shadow-sm"
         >
           <motion.div
             transition={{
@@ -58,7 +58,7 @@ export const TracingBeam = ({
               backgroundColor: scrollYProgress.get() > 0 ? 'white' : 'var(--emerald-500)',
               borderColor: scrollYProgress.get() > 0 ? 'white' : 'var(--emerald-600)',
             }}
-            className="h-2 w-2 rounded-full border border-neutral-300 bg-white"
+            className="size-2 rounded-full border border-neutral-300 bg-white"
           />
         </motion.div>
         <svg
