@@ -60,12 +60,9 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.438.0",
     "mini-svg-data-uri": "^1.4.4",
-    "next": "^16.0.0",
     "next-themes": "^0.3.0",
     "qss": "^3.0.0",
-    "react": "^19.0.0",
     "react-day-picker": "9.11.1",
-    "react-dom": "^19.0.0",
     "react-hook-form": "^7.65.0",
     "react-resizable-panels": "^2.1.9",
     "recharts": "^2.15.4",
@@ -85,6 +82,7 @@
     "typescript": "^5"
   },
   "peerDependencies": {
+    "next": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

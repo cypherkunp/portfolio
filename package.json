@@ -17,6 +17,11 @@
     "ui:add": "pnpm --filter @repo/ui ui:add",
     "prepare": "husky"
   },
+  "dependencies": {
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.1",
