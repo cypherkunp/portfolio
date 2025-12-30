@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
+import { SparklesCore } from '@repo/ui/components/sparkles';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
-import { SparklesCore } from '@repo/ui/components/sparkles';
 
 export const Cover = ({
   children,
@@ -192,11 +192,11 @@ export const Beam = ({
             y2: 0,
           }}
           transition={{
-            duration: hovered ? 0.5 : duration ?? 2,
+            duration: hovered ? 0.5 : (duration ?? 2),
             ease: 'linear',
             repeat: Infinity,
             delay: hovered ? Math.random() * (1 - 0.2) + 0.2 : 0,
-            repeatDelay: hovered ? Math.random() * (2 - 1) + 1 : delay ?? 1,
+            repeatDelay: hovered ? Math.random() * (2 - 1) + 1 : (delay ?? 1),
           }}
         >
           <stop stopColor="#2EB9DF" stopOpacity="0" />

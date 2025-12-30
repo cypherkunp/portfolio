@@ -1,10 +1,8 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: "class",
-  content: [
-    "./src/**/*.{ts,tsx}",
-  ],
+  darkMode: 'class',
+  content: ['./src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
     container: {
