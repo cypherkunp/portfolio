@@ -7,8 +7,6 @@
     "dev": "next dev --port 3333",
     "build": "next build",
     "start": "next start -p 3333",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
     "preview": "next build && next start -p 3333",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
