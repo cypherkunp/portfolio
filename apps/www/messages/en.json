@@ -22,8 +22,7 @@
   "Header": {
     "navbar": [
       { "href": "/", "label": "Home" },
-      { "href": "/about", "label": "About" },
-      { "href": "/resume", "label": "Resume" }
+      { "href": "/about", "label": "About" }
     ]
   },
   "Footer": {

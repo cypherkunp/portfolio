@@ -3,8 +3,6 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import InfoBlock from '@/components/info-block';
-import { Footer } from '@/components/layout/footer';
-import Header from '@/components/layout/header';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
 import PostsBlock from '@/components/posts-block';

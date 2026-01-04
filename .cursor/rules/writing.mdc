@@ -1,6 +1,6 @@
 ---
 globs: *.md*
-alwaysApply: false
+alwaysApply: true
 ---
 
 ## Sentence structure
