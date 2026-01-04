@@ -1,0 +1,125 @@
+---
+title: 'MCPs with love'
+publishedOn: '2026-01-04'
+version: '1'
+tags:
+  - 'claude-code'
+  - 'agent'
+  - 'mcp'
+---
+
+# MCPs with love
+
+Here is an exhautive list of MCP severs that i have found to be useful in my daily workflow.
+
+## Playwright MCP
+
+- A Model Context Protocol (MCP) server that provides browser automation capabilities using Playwright.
+- Enables LLMs to interact with web pages through structured accessibility snapshots, bypassing the need for screenshots or visually-tuned models.
+- Playwright MCP by Microsoft -> https://github.com/microsoft/playwright-mcp
+
+- claude mcp add playwright npx @playwright/mcp@latest
+
+## Context7 MCP
+
+- Context7 MCP pulls up-to-date, version-specific documentation and code examples straight from the source and places them directly into your prompt.
+- No tab-switching, no hallucinated APIs that don't exist, no outdated code generation.
+- Context7 MCP by Upstash -> https://github.com/upstash/context7-mcp
+
+<br />
+
+<code>
+  Claude Code Remote Server Connection claude mcp add --transport http context7
+  https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_API_KEY" Claude Code Local Server
+  Connection claude mcp add context7 -- npx -y @upstash/context7-mcp --api-key YOUR_API_KEY
+</code>
+
+<Callout className="mt-2" title="How to use the Context7 MCP Server">
+  You can ask your AI assistant to "bootstrap a new tanstack start project - use context7 mcp
+  server", "setup authentication with supabase - use context7 mcp server"
+  <br />
+  <strong>
+    Get a free API key at [context7.com/dashboard](https://context7.com/dashboard) for higher rate
+    limits.
+  </strong>
+</Callout>
+
+## Chrome DevTools MCP Server
+
+- Lets your coding agent control and inspect a live Chrome browser.
+- Gives coding agents access to Chrome DevTools for
+  - Reliable automation
+  - In-depth debugging
+  - Performance analysis
+- Chrome DevTools MCP by ChromeDevTools -> https://github.com/ChromeDevTools/chrome-devtools-mcp
+
+<code>claude mcp add chrome-devtools npx chrome-devtools-mcp@latest</code>
+
+<Callout className="mt-6" title="How to use the Chrome DevTools MCP Server">
+  You can ask your AI assistant to "fix the console errors being reported on the landing page - use
+  chrome devtools mcp server", "analyze performance of my website - use chrome devtools mcp server"
+</Callout>
+
+## NextJs MCP Server
+
+- Next.js MCP server that enables coding agents to access your NextJS 16+ application's internals in real-time.
+- Next.js 16+ includes a built-in MCP endpoint at `/_next/mcp` that runs within your development server.
+- NextJs MCP Server by Vercel -> https://github.com/vercel/next-devtools-mcp
+
+<code>claude mcp add next-devtools npx next-devtools-mcp@latest</code>
+
+<Callout className="mt-6" title="How to use the NextJs MCP Server">
+  You can ask your AI assistant to "Migrate my nextjs project to the latest version of Next.js - use
+  nextjs mcp server" or "Fix the build error in my nextjs project - use nextjs mcp server".
+</Callout>
+
+## Shadcn MCP Server
+
+- Use the shadcn MCP server to browse, search, and install components from registries.
+- You can browse available components, search for specific ones, and install them directly into your project using natural language.
+- Shadcn MCP Server by Shadcn -> https://ui.shadcn.com/docs/mcp
+
+<code>pnpm dlx shadcn@latest mcp init --client claude</code>
+
+<Callout className="mt-6" title="How to use the Shadcn MCP Server">
+  You can ask your AI assistant to "Build a landing page using components from the acme registry -
+  use shadcn mcp server" or "Find me a login form from the shadcn registry - use shadcn mcp server".
+  Registries are configured in your project's `components.json` file.
+</Callout>
+
+## Grep MCP severs
+
+- Grep MCP server based on Grep App -> https://grep.app/
+- The Grep MCP server lets you search code snippets from all the public GitHub repositories grepped by grep.
+- AI agents use it to send queries and get back code snippets that match patterns or regular expressions.
+- Grep a million GitHub repositories via MCP -> https://vercel.com/blog/grep-a-million-github-repositories-via-mcp
+
+<code>claude mcp add --transport http grep https://mcp.grep.app </code>
+
+<Callout className="mt-6" title="How to use the Grep MCP Server">
+  You can ask your AI assistant to "What's the right way for this MCP tool to return an error
+  message to the client? - use grep mcp server".
+</Callout>
+
+## Figma MCP Server
+
+- The Figma MCP Server brings Figma directly into your workflow by providing important design information and context to AI agents generating code from Figma design files.
+- Figma MCP Server by Figma ->https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/
+- Figma MCP Catalog -> https://www.figma.com/mcp-catalog/
+
+<code>claude mcp add --transport http figma https://mcp.figma.com/mcp </code>
+
+<Callout className="mt-6" title="How to use the Figma MCP Server">
+
+You can ask your AI assistant to "What's the color of the primary button? - use figma mcp server".
+
+</Callout>
+
+### MCP Directories
+
+- Official MCP Registry -> https://registry.modelcontextprotocol.io/
+- Everything MCP -> https://www.pulsemcp.com/servers
+
+### Notes
+
+- When installing MCP server to calude code, install it to the root of the project.
