@@ -1,0 +1,6 @@
+{
+  "permissions": {
+    "allow": ["WebSearch", "mcp__next-devtools__nextjs_index", "mcp__next-devtools__nextjs_call"]
+  },
+  "enabledMcpjsonServers": ["playwright", "chrome-devtools", "next-devtools", "shadcn"]
+}
