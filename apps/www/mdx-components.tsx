@@ -2,6 +2,10 @@ import { ComponentPropsWithoutRef } from 'react';
 import Link from 'next/link';
 import { highlight } from 'sugar-high';
 
+import { cn } from '@/lib/utils';
+import { CodeBlockCommand } from '@/components/code-block-command';
+import { CopyButton } from '@/components/copy-button';
+
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
 type ListProps = ComponentPropsWithoutRef<'ul'>;
@@ -55,9 +59,97 @@ const components = {
       </a>
     );
   },
-  code: ({ children, ...props }: ComponentPropsWithoutRef<'code'>) => {
-    const codeHTML = highlight(children as string);
-    return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
+  pre: (props: ComponentPropsWithoutRef<'pre'>) => {
+    return <pre className="overflow-x-auto rounded-lg bg-neutral-900 p-4 text-sm" {...props} />;
+  },
+  code: ({
+    className,
+    __raw__,
+    __src__,
+    __npm__,
+    __yarn__,
+    __pnpm__,
+    __bun__,
+    children,
+    ...props
+  }: React.ComponentProps<'code'> & {
+    __raw__?: string;
+    __src__?: string;
+    __npm__?: string;
+    __yarn__?: string;
+    __pnpm__?: string;
+    __bun__?: string;
+  }) => {
+    // npm command.
+    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__;
+    if (isNpmCommand) {
+      return (
+        <CodeBlockCommand
+          __npm__={__npm__}
+          __yarn__={__yarn__}
+          __pnpm__={__pnpm__}
+          __bun__={__bun__}
+        />
+      );
+    }
+
+    // Code block (has language-* className).
+    const isCodeBlock = className?.includes('language-');
+    if (isCodeBlock) {
+      // Extract string content from children
+      const codeContent =
+        typeof children === 'string'
+          ? children
+          : Array.isArray(children)
+            ? children.map(c => (typeof c === 'string' ? c : String(c))).join('')
+            : children != null
+              ? String(children)
+              : '';
+
+      const trimmedContent = codeContent.trim();
+
+      if (trimmedContent) {
+        try {
+          const highlightedCode = highlight(trimmedContent);
+          return (
+            <code
+              className={cn('relative font-mono text-sm', className)}
+              dangerouslySetInnerHTML={{ __html: highlightedCode }}
+            />
+          );
+        } catch {
+          // Fallback if highlighting fails
+          return (
+            <code className={cn('relative font-mono text-sm', className)}>{trimmedContent}</code>
+          );
+        }
+      }
+    }
+
+    // Inline Code.
+    if (typeof children === 'string') {
+      return (
+        <code
+          className={cn(
+            'bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] outline-none',
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    }
+
+    // Default codeblock.
+    return (
+      <>
+        {__raw__ && <CopyButton value={__raw__} src={__src__} />}
+        <code className={className} {...props}>
+          {children}
+        </code>
+      </>
+    );
   },
   Table: ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
     <table>
