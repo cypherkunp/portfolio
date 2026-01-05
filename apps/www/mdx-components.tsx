@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Callout } from '@/components/callout';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
+import { Terminal } from '@/components/terminal';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
@@ -35,14 +36,14 @@ const components = {
   ul: (props: ListProps) => (
     <ul className="list-disc space-y-1 pl-5 text-gray-800 dark:text-zinc-300" {...props} />
   ),
-  li: (props: ListItemProps) => <li className="pl-1" {...props} />,
+  li: (props: ListItemProps) => <li className="break-words pl-1" {...props} />,
   em: (props: ComponentPropsWithoutRef<'em'>) => <em className="font-medium" {...props} />,
   strong: (props: ComponentPropsWithoutRef<'strong'>) => (
     <strong className="font-medium" {...props} />
   ),
   a: ({ href, children, ...props }: AnchorProps) => {
     const className =
-      'text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';
+      'break-words text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';
     if (href?.startsWith('/')) {
       return (
         <Link href={href} className={className} {...props}>
@@ -183,6 +184,7 @@ const components = {
     />
   ),
   Callout,
+  Terminal,
 };
 
 declare global {
