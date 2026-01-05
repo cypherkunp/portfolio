@@ -18,7 +18,7 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
 - Enables LLMs to interact with web pages through structured accessibility snapshots, bypassing the need for screenshots or visually-tuned models.
 - Playwright MCP by Microsoft -> https://github.com/microsoft/playwright-mcp
 
-- claude mcp add playwright npx @playwright/mcp@latest
+<Terminal command="claude mcp add playwright npx @playwright/mcp@latest --scope project" />
 
 ## Context7 MCP
 
@@ -28,21 +28,17 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
 
 <br />
 
-<code>
-  Claude Code Remote Server Connection claude mcp add --transport http context7
-  https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_API_KEY" Claude Code Local Server
-  Connection claude mcp add context7 -- npx -y @upstash/context7-mcp --api-key YOUR_API_KEY
-</code>
+<Terminal command='claude mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: YOUR_API_KEY" --scope project' />
 
-<Callout className="mt-2" title="How to use the Context7 MCP Server">
-  You can ask your AI assistant to "bootstrap a new tanstack start project - use context7 mcp
-  server", "setup authentication with supabase - use context7 mcp server"
-  <br />
-  <strong>
-    Get a free API key at [context7.com/dashboard](https://context7.com/dashboard) for higher rate
-    limits.
-  </strong>
-</Callout>
+#### Prompt examples to use the Context7 MCP Server
+
+- "bootstrap a new tanstack start project - use context7 mcp
+  server"
+- "setup authentication with supabase - use context7 mcp server"
+
+<br />
+Get a free API key at [context7.com/dashboard](https://context7.com/dashboard) for higher rate
+limits.
 
 ## Chrome DevTools MCP Server
 
@@ -53,12 +49,12 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
   - Performance analysis
 - Chrome DevTools MCP by ChromeDevTools -> https://github.com/ChromeDevTools/chrome-devtools-mcp
 
-<code>claude mcp add chrome-devtools npx chrome-devtools-mcp@latest</code>
+<Terminal command="claude mcp add chrome-devtools npx chrome-devtools-mcp@latest --scope project" />
 
-<Callout className="mt-6" title="How to use the Chrome DevTools MCP Server">
-  You can ask your AI assistant to "fix the console errors being reported on the landing page - use
-  chrome devtools mcp server", "analyze performance of my website - use chrome devtools mcp server"
-</Callout>
+#### Prompt examples to use the Chrome DevTools MCP Server
+
+- "fix the console errors being reported on the landing page - use chrome devtools mcp server"
+- "analyze performance of my website - use chrome devtools mcp server"
 
 ## NextJs MCP Server
 
@@ -66,12 +62,12 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
 - Next.js 16+ includes a built-in MCP endpoint at `/_next/mcp` that runs within your development server.
 - NextJs MCP Server by Vercel -> https://github.com/vercel/next-devtools-mcp
 
-<code>claude mcp add next-devtools npx next-devtools-mcp@latest</code>
+<Terminal command="claude mcp add next-devtools npx next-devtools-mcp@latest --scope project" />
 
-<Callout className="mt-6" title="How to use the NextJs MCP Server">
-  You can ask your AI assistant to "Migrate my nextjs project to the latest version of Next.js - use
-  nextjs mcp server" or "Fix the build error in my nextjs project - use nextjs mcp server".
-</Callout>
+#### Prompt examples to use the NextJs MCP Server
+
+- "Migrate my nextjs project to the latest version of Next.js - use nextjs mcp server"
+- "Fix the build error in my nextjs project - use nextjs mcp server"
 
 ## Shadcn MCP Server
 
@@ -79,13 +75,15 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
 - You can browse available components, search for specific ones, and install them directly into your project using natural language.
 - Shadcn MCP Server by Shadcn -> https://ui.shadcn.com/docs/mcp
 
-<code>pnpm dlx shadcn@latest mcp init --client claude</code>
+<Terminal command="pnpm dlx shadcn@latest mcp init --client claude --scope project" />
 
-<Callout className="mt-6" title="How to use the Shadcn MCP Server">
-  You can ask your AI assistant to "Build a landing page using components from the acme registry -
-  use shadcn mcp server" or "Find me a login form from the shadcn registry - use shadcn mcp server".
-  Registries are configured in your project's `components.json` file.
-</Callout>
+#### Prompt examples to use the Shadcn MCP Server
+
+- "Build a landing page using components from the acme registry - use shadcn mcp server"
+- "Find me a login form from the shadcn registry - use shadcn mcp server"
+
+<br />
+Registries are configured in your project's `components.json` file.
 
 ## Grep MCP severs
 
@@ -94,12 +92,11 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
 - AI agents use it to send queries and get back code snippets that match patterns or regular expressions.
 - Grep a million GitHub repositories via MCP -> https://vercel.com/blog/grep-a-million-github-repositories-via-mcp
 
-<code>claude mcp add --transport http grep https://mcp.grep.app </code>
+<Terminal command="claude mcp add --transport http grep https://mcp.grep.app --scope project" />
 
-<Callout className="mt-6" title="How to use the Grep MCP Server">
-  You can ask your AI assistant to "What's the right way for this MCP tool to return an error
-  message to the client? - use grep mcp server".
-</Callout>
+#### Prompt examples to use the Grep MCP Server
+
+- "What's the right way for this MCP tool to return an error message to the client? - use grep mcp server"
 
 ## Figma MCP Server
 
@@ -107,19 +104,21 @@ Here is an exhautive list of MCP severs that i have found to be useful in my dai
 - Figma MCP Server by Figma ->https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/
 - Figma MCP Catalog -> https://www.figma.com/mcp-catalog/
 
-<code>claude mcp add --transport http figma https://mcp.figma.com/mcp </code>
+<Terminal command="claude mcp add --transport http figma https://mcp.figma.com/mcp --scope project" />
 
-<Callout className="mt-6" title="How to use the Figma MCP Server">
+#### Prompt examples to use the Figma MCP Server
 
-You can ask your AI assistant to "What's the color of the primary button? - use figma mcp server".
+- "What's the color of the primary button? - use figma mcp server"
 
-</Callout>
+---
 
 ### MCP Directories
 
 - Official MCP Registry -> https://registry.modelcontextprotocol.io/
 - Everything MCP -> https://www.pulsemcp.com/servers
 
-### Notes
-
-- When installing MCP server to calude code, install it to the root of the project.
+<Callout className="mt-8" title="How to install MCP servers to Claude Code">
+  When installing MCP server to calude code, install it via the project config (`.mcp.json`). To
+  create one, use the `--scope project` flag when adding MCP servers, then commit the generated
+  .mcp.json to version control.
+</Callout>
