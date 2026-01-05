@@ -47,16 +47,13 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
       className={cn('border-border/50 relative my-6 overflow-hidden rounded-lg border', className)}
     >
       {/* Header */}
-      <div className="border-border/50 flex items-center gap-2 border-b bg-neutral-800/50 px-3 py-1.5">
-        <div className="bg-foreground flex size-4 items-center justify-center rounded-[1px] opacity-70">
-          <IconTerminal className="text-background size-3" />
+      <div className="border-border/50 flex items-center justify-between border-b bg-neutral-800/50 px-3 py-1.5">
+        <div className="flex items-center gap-2">
+          <div className="bg-foreground flex size-4 items-center justify-center rounded-[1px] opacity-70">
+            <IconTerminal className="text-background size-3" />
+          </div>
+          <span className="text-foreground/90 text-sm">{title}</span>
         </div>
-        <span className="text-foreground/90 text-sm">{title}</span>
-      </div>
-
-      {/* Content */}
-      <div className="relative overflow-x-auto bg-neutral-900 px-8 py-6">
-        <code className="font-mono text-sm" dangerouslySetInnerHTML={{ __html: highlightedCode }} />
 
         {/* Copy Button */}
         <TooltipProvider>
@@ -65,7 +62,7 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
               <Button
                 size="icon"
                 variant="ghost"
-                className="absolute right-2 top-2 z-10 size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100"
+                className="size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100"
                 onClick={handleCopy}
               >
                 <span className="sr-only">Copy</span>
@@ -75,6 +72,11 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
             <TooltipContent>{hasCopied ? 'Copied' : 'Copy to Clipboard'}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
+      </div>
+
+      {/* Content */}
+      <div className="relative overflow-x-auto bg-neutral-900 px-8 py-6">
+        <code className="font-mono text-sm" dangerouslySetInnerHTML={{ __html: highlightedCode }} />
       </div>
     </div>
   );
