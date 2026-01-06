@@ -85,6 +85,7 @@
     "recharts": "^2.15.4",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
+    "shiki": "^3.20.0",
     "sonner": "^1.7.4",
     "sugar-high": "^0.9.4",
     "tailwind-merge": "^2.6.0",

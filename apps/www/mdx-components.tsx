@@ -16,7 +16,7 @@ type AnchorProps = ComponentPropsWithoutRef<'a'>;
 type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>;
 
 const components = {
-  h1: (props: HeadingProps) => <h1 className="mb-4 pt-12 text-xl" {...props} />,
+  h1: (props: HeadingProps) => <h1 className="mb-4 pt-4 text-xl" {...props} />,
   h2: (props: HeadingProps) => (
     <h2
       className="decoration-primary mb-3 mt-8 text-lg text-gray-800 underline dark:text-zinc-200"
@@ -36,14 +36,14 @@ const components = {
   ul: (props: ListProps) => (
     <ul className="list-disc space-y-1 pl-5 text-gray-800 dark:text-zinc-300" {...props} />
   ),
-  li: (props: ListItemProps) => <li className="break-words pl-1" {...props} />,
+  li: (props: ListItemProps) => <li className="wrap-break-words pl-1" {...props} />,
   em: (props: ComponentPropsWithoutRef<'em'>) => <em className="font-medium" {...props} />,
   strong: (props: ComponentPropsWithoutRef<'strong'>) => (
     <strong className="font-medium" {...props} />
   ),
   a: ({ href, children, ...props }: AnchorProps) => {
     const className =
-      'break-words text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';
+      'wrap-break-words text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';
     if (href?.startsWith('/')) {
       return (
         <Link href={href} className={className} {...props}>

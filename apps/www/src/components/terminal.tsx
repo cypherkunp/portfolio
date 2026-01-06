@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { IconCheck, IconCopy, IconTerminal } from '@tabler/icons-react';
-import { highlight } from 'sugar-high';
+import { codeToHtml } from 'shiki';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,7 @@ interface TerminalProps {
 
 export function Terminal({ command, title = 'Terminal', className }: TerminalProps) {
   const [hasCopied, setHasCopied] = React.useState(false);
+  const [highlightedCode, setHighlightedCode] = React.useState<string>('');
 
   React.useEffect(() => {
     if (hasCopied) {
@@ -27,20 +28,31 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
     }
   }, [hasCopied]);
 
+  React.useEffect(() => {
+    const highlight = async () => {
+      try {
+        const trimmedCommand = command.trim();
+        const html = await codeToHtml(trimmedCommand, {
+          lang: 'bash',
+          theme: 'github-dark',
+        });
+        // Extract just the code content from shiki's HTML output
+        const match = html.match(/<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/);
+        const codeContent = match ? match[1] : trimmedCommand;
+        setHighlightedCode(codeContent);
+      } catch {
+        // Fallback to plain text if highlighting fails
+        setHighlightedCode(command.trim());
+      }
+    };
+
+    highlight();
+  }, [command]);
+
   const handleCopy = () => {
     copyToClipboardWithMeta(command);
     setHasCopied(true);
   };
-
-  // Apply syntax highlighting
-  const trimmedCommand = command.trim();
-  let highlightedCode: string;
-  try {
-    highlightedCode = highlight(trimmedCommand);
-  } catch {
-    // Fallback to plain text if highlighting fails
-    highlightedCode = trimmedCommand;
-  }
 
   return (
     <div
@@ -62,7 +74,7 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
               <Button
                 size="icon"
                 variant="ghost"
-                className="size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100"
+                className="hover:bg-primary size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100"
                 onClick={handleCopy}
               >
                 <span className="sr-only">Copy</span>
@@ -75,8 +87,13 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
       </div>
 
       {/* Content */}
-      <div className="relative overflow-x-auto bg-neutral-900 px-8 py-6">
-        <code className="font-mono text-sm" dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+      <div className="  bg-neutral-900 px-8 py-6">
+        <pre className="m-0">
+          <code
+            className="text-wrap font-mono text-sm"
+            dangerouslySetInnerHTML={{ __html: highlightedCode }}
+          />
+        </pre>
       </div>
     </div>
   );
