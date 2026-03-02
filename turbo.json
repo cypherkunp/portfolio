@@ -1,5 +1,5 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://v2-8-12.turborepo.dev/schema.json",
   "globalEnv": ["NEXT_PUBLIC_APP_URL", "GITHUB_ACCESS_TOKEN"],
   "tasks": {
     "build": {
