@@ -1,6 +1,11 @@
 {
   "permissions": {
-    "allow": ["WebSearch", "mcp__next-devtools__nextjs_index", "mcp__next-devtools__nextjs_call"]
+    "allow": [
+      "WebSearch",
+      "mcp__next-devtools__nextjs_index",
+      "mcp__next-devtools__nextjs_call",
+      "Bash(pnpm:*)"
+    ]
   },
   "enabledMcpjsonServers": ["playwright", "chrome-devtools", "next-devtools", "shadcn"]
 }

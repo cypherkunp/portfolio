@@ -1,3 +1,4 @@
+import path from 'path';
 import type { NextConfig } from 'next';
 import withBundleAnalyzerPlugin from '@next/bundle-analyzer';
 import { createMDX } from 'fumadocs-mdx/next';
@@ -25,6 +26,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   reactCompiler: true,
   turbopack: {
+    root: path.resolve(__dirname, '../..'),
     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json', '.md'],
   },
 };
