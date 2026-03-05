@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
+import AppsBlock from '@/components/apps-block';
 import InfoBlock from '@/components/info-block';
 import PageContainer from '@/components/layout/page-container';
 import { Section } from '@/components/layout/section';
@@ -44,8 +45,11 @@ export default function Page() {
       <Section isFirstSection>
         <InfoBlock />
       </Section>
-      <Section isLastSection title={t('Blocks.posts.title')}>
+      <Section title={t('Blocks.posts.title')}>
         <PostsBlock />
+      </Section>
+      <Section isLastSection title={t('Blocks.apps.title')}>
+        <AppsBlock />
       </Section>
     </PageContainer>
   );
