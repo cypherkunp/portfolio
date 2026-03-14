@@ -151,6 +151,25 @@
       "title": "Posts",
       "description": "I write about my experiences and learnings in the software engineering field."
     },
+    "apps": {
+      "title": "Apps",
+      "musicPlayer": {
+        "name": "Music Player",
+        "description": "Listen to a curated playlist."
+      },
+      "inspirations": {
+        "name": "Inspirations",
+        "description": "Collection of ideas and references that inspire."
+      },
+      "bookmarks": {
+        "name": "Bookmarks",
+        "description": "Saved links and resources."
+      },
+      "photos": {
+        "name": "Photos",
+        "description": "Photo gallery and visual snapshots."
+      }
+    },
     "infoBlock": {
       "pointer": {
         "text": "Hey, What's up?"
