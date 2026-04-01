@@ -60,49 +60,45 @@ export default function MusicPlayer() {
   const [showMobilePlaylist, setShowMobilePlaylist] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isRepeatRef = useRef(isRepeat);
+  const isShuffleRef = useRef(isShuffle);
+
+  isRepeatRef.current = isRepeat;
+  isShuffleRef.current = isShuffle;
+
+  const getAudio = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+      audioRef.current.volume = volume;
+
+      audioRef.current.addEventListener('timeupdate', () => {
+        if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
+      });
+
+      audioRef.current.addEventListener('ended', () => {
+        if (isRepeatRef.current) {
+          loadAndPlay(undefined);
+        } else {
+          skipNext();
+        }
+      });
+
+      audioRef.current.addEventListener('error', () => {
+        setIsPlaying(false);
+      });
+    }
+    return audioRef.current;
+  };
 
   useEffect(() => {
-    audioRef.current = new Audio(currentSong.url);
-    audioRef.current.volume = volume;
-
-    const updateProgress = () => {
-      if (audioRef.current) {
-        setCurrentTime(audioRef.current.currentTime);
-      }
-    };
-
-    const handleEnded = () => {
-      if (isRepeat) {
-        playCurrentSong();
-      } else {
-        playNextSong();
-      }
-    };
-
-    audioRef.current.addEventListener('timeupdate', updateProgress);
-    audioRef.current.addEventListener('ended', handleEnded);
-
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
-        audioRef.current.removeEventListener('timeupdate', updateProgress);
-        audioRef.current.removeEventListener('ended', handleEnded);
+        audioRef.current.src = '';
+        audioRef.current = null;
       }
     };
-  }, [currentSong, isRepeat]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(error => {
-          console.error('Error playing audio:', error);
-          setIsPlaying(false);
-        });
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  }, [isPlaying]);
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -110,19 +106,34 @@ export default function MusicPlayer() {
     }
   }, [volume, isMuted]);
 
-  const playCurrentSong = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(error => {
-        console.error('Error playing audio:', error);
-        setIsPlaying(false);
-      });
-      setIsPlaying(true);
+  const loadAndPlay = (song: Song | undefined) => {
+    const audio = getAudio();
+    const target = song ?? currentSong;
+
+    if (song) setCurrentSong(song);
+
+    if (audio.src !== new URL(target.url, window.location.origin).href) {
+      audio.src = target.url;
     }
+
+    audio.currentTime = song ? 0 : 0;
+    audio.play().catch(() => setIsPlaying(false));
+    setIsPlaying(true);
+    setCurrentTime(0);
   };
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    const audio = getAudio();
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      if (!audio.src || audio.src === window.location.origin + '/') {
+        audio.src = currentSong.url;
+      }
+      audio.play().catch(() => setIsPlaying(false));
+      setIsPlaying(true);
+    }
   };
 
   const handleProgressChange = (value: number[]) => {
@@ -136,41 +147,27 @@ export default function MusicPlayer() {
   const handleVolumeChange = (value: number[]) => {
     const newVolume = value[0];
     setVolume(newVolume);
-    if (newVolume > 0 && isMuted) {
-      setIsMuted(false);
-    }
+    if (audioRef.current) audioRef.current.volume = newVolume;
+    if (newVolume > 0 && isMuted) setIsMuted(false);
   };
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
+    setIsMuted(prev => {
+      if (audioRef.current) audioRef.current.volume = prev ? volume : 0;
+      return !prev;
+    });
   };
 
-  const playPreviousSong = () => {
-    let index = songs.findIndex(song => song.id === currentSong.id);
-    if (isShuffle) {
-      index = Math.floor(Math.random() * songs.length);
-    } else {
-      index = index <= 0 ? songs.length - 1 : index - 1;
-    }
-    setCurrentSong(songs[index]);
-    setIsPlaying(true);
+  const getNextIndex = (direction: -1 | 1) => {
+    const idx = songs.findIndex(s => s.id === currentSong.id);
+    if (isShuffleRef.current) return Math.floor(Math.random() * songs.length);
+    if (direction === -1) return idx <= 0 ? songs.length - 1 : idx - 1;
+    return idx >= songs.length - 1 ? 0 : idx + 1;
   };
 
-  const playNextSong = () => {
-    let index = songs.findIndex(song => song.id === currentSong.id);
-    if (isShuffle) {
-      index = Math.floor(Math.random() * songs.length);
-    } else {
-      index = index >= songs.length - 1 ? 0 : index + 1;
-    }
-    setCurrentSong(songs[index]);
-    setIsPlaying(true);
-  };
-
-  const selectSong = (song: Song) => {
-    setCurrentSong(song);
-    setIsPlaying(true);
-  };
+  const skipPrev = () => loadAndPlay(songs[getNextIndex(-1)]);
+  const skipNext = () => loadAndPlay(songs[getNextIndex(1)]);
+  const selectSong = (song: Song) => loadAndPlay(song);
 
   return (
     <div className="flex h-full flex-col lg:flex-row">
@@ -220,7 +217,7 @@ export default function MusicPlayer() {
           </Button>
 
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="h-10 w-10" onClick={playPreviousSong}>
+            <Button variant="ghost" size="icon" className="h-10 w-10" onClick={skipPrev}>
               <SkipBack className="h-5 w-5" />
             </Button>
 
@@ -233,7 +230,7 @@ export default function MusicPlayer() {
               {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="ml-0.5 h-6 w-6" />}
             </Button>
 
-            <Button variant="ghost" size="icon" className="h-10 w-10" onClick={playNextSong}>
+            <Button variant="ghost" size="icon" className="h-10 w-10" onClick={skipNext}>
               <SkipForward className="h-5 w-5" />
             </Button>
           </div>
@@ -288,7 +285,7 @@ export default function MusicPlayer() {
         )}
       >
         <div className="flex h-full flex-col p-4 lg:p-6">
-          <h3 className="text-muted-foreground mb-4 text-xs font-semibold uppercase tracking-wider">
+          <h3 className="text-muted-foreground mb-4 text-xs font-semibold tracking-wider uppercase">
             Playlist
           </h3>
           <ul className="space-y-1 overflow-y-auto">
