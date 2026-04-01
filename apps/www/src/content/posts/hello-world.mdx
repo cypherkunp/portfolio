@@ -1,0 +1,22 @@
+---
+title: 'Hello world'
+summary: 'The tech behind this site and why it runs on Vercel.'
+publishedOn: '2025-01-01'
+version: '1'
+tags:
+  - 'blog'
+  - 'architecture'
+  - 'nextjs'
+---
+
+# Hello world
+
+This site is a **Next.js 16** app on the **App Router** with **React 19**. Pages lean on **React Server Components** so most UI ships as server HTML; **client components** show up only where the browser has to react to input or animation. **TypeScript** is the default language end to end, which keeps props, loaders, and content types aligned as the surface grows.
+
+Styling is **Tailwind CSS 4** on top of **Radix** primitives (the same foundation **shadcn/ui** uses): accessible focus and keyboard behavior without hand-rolling a design system. Blog posts and docs are **MDX**; **Fumadocs** ties that content into navigation, search, and generation without locking you into a closed CMS.
+
+**ESLint**, **Prettier**, and **Husky** handle linting, formatting, and pre-commit checks. **Turborepo** with **pnpm** caches build steps so repeated runs stay fast locally and in CI.
+
+## Why this site uses Vercel
+
+**Vercel** ships the same runtime **Next.js** targets in production, so App Router features, edge middleware, and caching behave the way the framework docs describe. Preview deployments per branch make it obvious what changed before anything hits production. Static and dynamic routes sit behind a global **Edge** network without operating separate origin servers or TLS termination yourself. For a personal site that should stay fast, boring, and cheap to own, that tradeoff wins over self-hosting or generic Node PaaS where you assemble the pieces by hand.

@@ -14,7 +14,9 @@ const browserCollections = {
     'claude-code-mcp.mdx': () =>
       import('../src/content/posts/claude-code-mcp.mdx?collection=blogPosts'),
     'handbook.mdx': () => import('../src/content/posts/handbook.mdx?collection=blogPosts'),
-    'post1.mdx': () => import('../src/content/posts/post1.mdx?collection=blogPosts'),
+    'hello-world.mdx': () => import('../src/content/posts/hello-world.mdx?collection=blogPosts'),
+    'site-architecture.mdx': () =>
+      import('../src/content/posts/site-architecture.mdx?collection=blogPosts'),
   }),
 };
 export default browserCollections;

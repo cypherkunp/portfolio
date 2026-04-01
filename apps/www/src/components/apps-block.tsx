@@ -1,14 +1,9 @@
-'use client';
-
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { cn } from '@/lib/utils';
-
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
-
 const APP_IDS = ['musicPlayer', 'inspirations', 'bookmarks', 'photos'] as const;
-const APP_LETTERS: Record<(typeof APP_IDS)[number], string> = {
+const APP_ABBR: Record<(typeof APP_IDS)[number], string> = {
   musicPlayer: 'MP',
   inspirations: 'IN',
   bookmarks: 'BM',
@@ -25,37 +20,21 @@ export default function AppsBlock() {
   const t = useTranslations('Blocks.apps');
 
   return (
-    <div className="hidden md:block">
-      <TooltipProvider delayDuration={300}>
-        <div className="border-border bg-card rounded-xl border p-4">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {APP_IDS.map(id => (
-              <Tooltip key={id}>
-                <TooltipTrigger asChild>
-                  <Link
-                    href={APP_HREFS[id]}
-                    className="flex flex-col items-center gap-2 transition-colors"
-                  >
-                    <span
-                      className={cn(
-                        'bg-muted text-foreground hover:bg-primary hover:text-primary-foreground flex size-14 items-center justify-center rounded-lg text-lg font-bold tracking-tight transition-colors',
-                      )}
-                    >
-                      {APP_LETTERS[id]}
-                    </span>
-                    <span className="text-muted-foreground line-clamp-2 text-center text-sm tracking-tight">
-                      {t(`${id}.name`)}
-                    </span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" className="max-w-[200px]">
-                  {t(`${id}.description`)}
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
-      </TooltipProvider>
+    <div>
+      {APP_IDS.map(id => (
+        <Link key={id} href={APP_HREFS[id]} className="group mb-4 flex items-center gap-2">
+          <span className="w-8 shrink-0 text-sm text-neutral-600 dark:text-neutral-400">
+            {APP_ABBR[id]}
+          </span>
+          <span className="group-hover:decoration-primary tracking-tight text-neutral-900 group-hover:underline group-hover:underline-offset-8 dark:text-neutral-100">
+            {t(`${id}.name`)}
+          </span>
+          <span className="hidden text-sm text-neutral-600 sm:inline dark:text-neutral-500">
+            {t(`${id}.description`)}
+          </span>
+          <ArrowUpRight className="ml-auto size-4 shrink-0 text-neutral-600 opacity-0 transition-opacity group-hover:opacity-100 dark:text-neutral-400" />
+        </Link>
+      ))}
     </div>
   );
 }

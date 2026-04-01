@@ -1,0 +1,87 @@
+---
+title: 'How this site is wired (and where the apps go next)'
+summary: 'Libraries, stack choices, and a few sharp technical picks. No folder tour.'
+publishedOn: '2026-04-01'
+version: '1'
+tags:
+  - 'architecture'
+  - 'monorepo'
+  - 'nextjs'
+  - 'roadmap'
+---
+
+# How this site is wired (and where the apps go next)
+
+Bullets on purpose.
+Stack and libraries first; roadmap last.
+
+## Core stack
+
+- **Next.js 16** with **App Router** and **React 19**.
+- **TypeScript** across UI, content loaders, and config.
+- **pnpm** workspaces + **Turborepo** for cached builds and shared packages.
+- **Node 24+** as the baseline runtime.
+
+## UI and styling
+
+- **Tailwind CSS 4** with **@tailwindcss/postcss** and **@tailwindcss/typography** for prose.
+- **Radix UI** primitives end to end (dialogs, menus, tabs, tooltips, and the rest).
+- **shadcn-style** workflow: **class-variance-authority**, **clsx**, **tailwind-merge** for predictable class composition.
+- **next-themes** for light/dark without flash-heavy hacks.
+- Icons from **lucide-react** and **Tabler**.
+- Motion via **motion** (the Framer successor).
+- **tsParticles** when you want particle layers without hand-writing canvas loops.
+
+## Content and MDX
+
+- **Fumadocs** (**fumadocs-core**, **fumadocs-mdx**) for typed collections, slugs, and the Next integration.
+- **remark-gfm** and **remark-frontmatter** in the remark pipeline.
+- **reading-duration** for time-to-read style signals.
+- Code in articles: **Shiki** for terminal-style blocks; **sugar-high** for lighter inline highlights in MDX.
+
+## Forms, data shapes, and charts
+
+- **react-hook-form** + **@hookform/resolvers** + **Zod** for validated forms.
+- **date-fns** for dates; **react-day-picker** for calendars.
+- **Recharts** when a chart belongs on the page.
+- **cmdk** for command palettes; **vaul** for drawers; **embla-carousel-react** for carousels.
+
+## i18n and URL state
+
+- **next-intl** for locales and copy outside hard-coded strings.
+- Query-string UI state: **nuqs** is the pick when a feature needs it; it isn’t wired into every page yet.
+
+## Performance and observability
+
+- **sharp** as the image pipeline; **WebP** as the preferred output format in production config.
+- **@next/bundle-analyzer** behind `ANALYZE=true` when bundle weight gets noisy.
+- **Unlighthouse** (with **Puppeteer**) for CI-style Lighthouse runs on real routes.
+- **@vercel/analytics** and **@vercel/speed-insights** when deployed on Vercel.
+
+## Tooling and hygiene
+
+- **ESLint 9** flat config + **typescript-eslint** + React hooks plugins.
+- **Prettier** with Tailwind class sorting and import sorting plugins.
+- **Husky** + **pretty-quick** on pre-commit; **commitlint** for Conventional Commits.
+- **Changesets** for versioned releases when packages ship.
+
+## Roadmap: more apps on the same bones
+
+You’re not trying to weld every side project into one mega-router.
+
+- Stand up new surfaces that **reuse the same UI package** so buttons, spacing, and motion stay familiar.
+- **Share Zod shapes and small utils** across products when two flows need the same contract.
+- Keep the personal site as the **front door**; link or embed experiments once each app earns a stable URL.
+- Let **Fumadocs / MDX** stay the content engine for writing; separate products can still deep-link back to posts.
+
+## Extras worth a second look
+
+- **React Compiler** is on in Next config; fewer manual `useMemo`/`useCallback` gymnastics over time.
+- **cacheComponents** is enabled; lean into the Next 16 caching story instead of fighting the defaults.
+- **Turbopack** is pointed at the **workspace root** so MDX and TS resolve consistently in dev.
+- **Fumadocs MDX** wraps Next via a dedicated plugin; MD files sit in `pageExtensions` beside TSX.
+- **client-only** / **server-only** imports where boundaries matter; keeps accidental leaks obvious.
+- **Microlink** allowed for remote images when you proxy or preview external links.
+
+Short closing: the stack is **boring on purpose** where it counts (Next, TypeScript, Radix).
+The fun is in **motion**, **particles**, **syntax color**, and **room to add more apps** without a rewrite.
