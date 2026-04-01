@@ -47,11 +47,11 @@ export default function Page() {
   return (
     <PageContainer className="w-full overflow-auto print:p-12">
       <Section title={t('labels.about')} isFirstSection>
-        <ul className="flex list-inside list-disc flex-col  ">
+        <ul className="flex list-inside list-disc flex-col">
           {t('summary')
             .split('. ')
             .map((sentence, index) => (
-              <li key={index} className="text-pretty text-sm">
+              <li key={index} className="text-sm text-pretty">
                 {sentence}
               </li>
             ))}
@@ -65,11 +65,8 @@ export default function Page() {
           return (
             <Card key={work.company} className="mb-10 space-y-2 border-none !bg-neutral-950">
               <CardHeader className="mb-8 !p-0">
-                <div
-                  className="flex flex-col items-start justify-start text-base md:flex-row md:items-center
-                      md:justify-between"
-                >
-                  <h3 className="text-md inline-flex items-center justify-center gap-x-1 font-normal leading-none">
+                <div className="flex flex-col items-start justify-start text-base md:flex-row md:items-center md:justify-between">
+                  <h3 className="text-md inline-flex items-center justify-center gap-x-1 leading-none font-normal">
                     <a className="hover:underline" href={work.link}>
                       {work.company}
                     </a>
@@ -84,7 +81,7 @@ export default function Page() {
                       </span>
                     </RenderIf>
                   </h3>
-                  <div className="min-w-[96px] text-sm tabular-nums text-gray-500">
+                  <div className="min-w-[96px] text-sm text-gray-500 tabular-nums">
                     {work.start} - {work.end}
                   </div>
                 </div>
@@ -101,12 +98,9 @@ export default function Page() {
           return (
             <Card key={education.school} className="space-y-4 border-none !bg-neutral-950">
               <CardHeader className="mb-8 !p-0">
-                <div
-                  className="flex flex-col items-start justify-start gap-x-2 text-base md:flex-row md:items-center
-                    md:justify-between"
-                >
-                  <h3 className="font-[200] leading-none">{education.school}</h3>
-                  <div className="text-sm tabular-nums text-gray-500">
+                <div className="flex flex-col items-start justify-start gap-x-2 text-base md:flex-row md:items-center md:justify-between">
+                  <h3 className="leading-none font-[200]">{education.school}</h3>
+                  <div className="text-sm text-gray-500 tabular-nums">
                     {education.start} - {education.end}
                   </div>
                 </div>

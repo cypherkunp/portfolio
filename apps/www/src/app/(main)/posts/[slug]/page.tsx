@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { blog } from '@/lib/source';
 import PageContainer from '@/components/layout/page-container';
 
-import { getMDXComponents } from '../../../../mdx-components';
+import { getMDXComponents } from '../../../../../mdx-components';
 
 async function PostContent({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

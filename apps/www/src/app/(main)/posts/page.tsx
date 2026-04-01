@@ -77,7 +77,7 @@ export default function PostsPage() {
 
   return (
     <PageContainer className="mx-auto max-w-screen-md overflow-auto">
-      <div className=" mb-8 flex items-center justify-between">
+      <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">Posts</h1>
         <div className="flex items-center">
           <Switch
@@ -96,9 +96,7 @@ export default function PostsPage() {
         {filteredPosts.map((post, index) => (
           <div
             key={index}
-            className={`group cursor-pointer py-4 transition-all
-              duration-300
-              ${selectedPost === index ? 'text-blue-500' : ''}`}
+            className={`group cursor-pointer py-4 transition-all duration-300 ${selectedPost === index ? 'text-blue-500' : ''}`}
             onMouseEnter={handleHover}
             onClick={() => {
               handleClick();
@@ -133,7 +131,7 @@ export default function PostsPage() {
           <button
             key={index}
             onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-            className={`whitespace-nowrap rounded-full px-3 py-1 text-xs transition-colors ${
+            className={`rounded-full px-3 py-1 text-xs whitespace-nowrap transition-colors ${
               selectedTag === tag
                 ? 'bg-[#FFB800] text-black'
                 : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
