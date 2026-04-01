@@ -4,7 +4,7 @@ import React, { useEffect, useId, useMemo, useState } from 'react';
 import type { Container, SingleOrMultiple } from '@tsparticles/engine';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import { motion, useAnimation } from 'motion/react';
+import { motion } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 
@@ -30,22 +30,21 @@ export const SparklesCore = (props: ParticlesProps) => {
       setInit(true);
     });
   }, []);
-  const controls = useAnimation();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const particlesLoaded = async (container?: Container) => {
     if (container) {
-      controls.start({
-        opacity: 1,
-        transition: {
-          duration: 1,
-        },
-      });
+      setIsLoaded(true);
     }
   };
 
   const generatedId = useId();
   return (
-    <motion.div animate={controls} className={cn('opacity-0', className)}>
+    <motion.div
+      animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 1 }}
+      className={cn('opacity-0', className)}
+    >
       {init && (
         <Particles
           id={id || generatedId}

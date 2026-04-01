@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { featureAppsSupport } from '@/flags';
 import { getTranslations } from 'next-intl/server';
@@ -37,23 +38,33 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-export default async function Page() {
+async function AppsSectionGuard() {
   const t = await getTranslations();
   const showApps = await featureAppsSupport();
+
+  if (!showApps) return null;
+
+  return (
+    <Section isLastSection title={t('Blocks.apps.title')}>
+      <AppsBlock />
+    </Section>
+  );
+}
+
+export default async function Page() {
+  const t = await getTranslations();
 
   return (
     <PageContainer>
       <Section isFirstSection>
         <InfoBlock />
       </Section>
-      <Section title={t('Blocks.posts.title')} isLastSection={!showApps}>
+      <Section title={t('Blocks.posts.title')}>
         <PostsBlock />
       </Section>
-      {showApps && (
-        <Section isLastSection title={t('Blocks.apps.title')}>
-          <AppsBlock />
-        </Section>
-      )}
+      <Suspense>
+        <AppsSectionGuard />
+      </Suspense>
     </PageContainer>
   );
 }
