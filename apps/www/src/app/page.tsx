@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
+import { featureAppsSupport } from '@/flags';
 import { getTranslations } from 'next-intl/server';
 
 import AppsBlock from '@/components/apps-block';
@@ -37,20 +37,23 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-export default function Page() {
-  const t = useTranslations();
+export default async function Page() {
+  const t = await getTranslations();
+  const showApps = await featureAppsSupport();
 
   return (
     <PageContainer>
       <Section isFirstSection>
         <InfoBlock />
       </Section>
-      <Section title={t('Blocks.posts.title')}>
+      <Section title={t('Blocks.posts.title')} isLastSection={!showApps}>
         <PostsBlock />
       </Section>
-      <Section isLastSection title={t('Blocks.apps.title')}>
-        <AppsBlock />
-      </Section>
+      {showApps && (
+        <Section isLastSection title={t('Blocks.apps.title')}>
+          <AppsBlock />
+        </Section>
+      )}
     </PageContainer>
   );
 }

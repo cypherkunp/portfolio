@@ -69,6 +69,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "flags": "^4.0.5",
     "fumadocs-core": "^16.6.12",
     "fumadocs-mdx": "^14.2.9",
     "input-otp": "^1.4.2",
