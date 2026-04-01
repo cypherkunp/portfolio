@@ -26,7 +26,7 @@ export default function AppsBlock() {
           <span className="w-8 shrink-0 text-sm text-neutral-600 dark:text-neutral-400">
             {APP_ABBR[id]}
           </span>
-          <span className="group-hover:decoration-primary tracking-tight text-neutral-900 group-hover:underline group-hover:underline-offset-8 dark:text-neutral-100">
+          <span className="group-hover:decoration-tertiary tracking-tight text-neutral-900 group-hover:underline group-hover:underline-offset-8 dark:text-neutral-100">
             {t(`${id}.name`)}
           </span>
           <span className="hidden text-sm text-neutral-600 sm:inline dark:text-neutral-500">
