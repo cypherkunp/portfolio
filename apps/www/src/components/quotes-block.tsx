@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 
 import { pacifico } from '@/lib/font';
@@ -54,8 +54,8 @@ export default function QuotesBlock() {
   };
 
   return (
-    <div className={`relative mx-auto w-full `}>
-      <div className=" flex h-48 items-center justify-center overflow-hidden">
+    <div className={`relative mx-auto w-full`}>
+      <div className="flex h-48 items-center justify-center overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentQuoteIndex}

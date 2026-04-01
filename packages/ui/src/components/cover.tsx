@@ -2,7 +2,7 @@
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { SparklesCore } from '@repo/ui/components/sparkles';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 
@@ -39,7 +39,7 @@ export const Cover = ({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
-      className="group/cover relative  inline-block rounded-sm bg-neutral-100 p-2 transition  duration-200 hover:bg-neutral-900 dark:bg-neutral-900"
+      className="group/cover relative inline-block rounded-sm bg-neutral-100 p-2 transition duration-200 hover:bg-neutral-900 dark:bg-neutral-900"
     >
       <AnimatePresence>
         {hovered && (
@@ -138,9 +138,9 @@ export const Cover = ({
       >
         {children}
       </motion.span>
-      <CircleIcon className="absolute right-[2px] top-[2px]" />
-      <CircleIcon className="absolute bottom-[2px] right-[2px]" delay={0.4} />
-      <CircleIcon className="absolute left-[2px] top-[2px]" delay={0.8} />
+      <CircleIcon className="absolute top-[2px] right-[2px]" />
+      <CircleIcon className="absolute right-[2px] bottom-[2px]" delay={0.4} />
+      <CircleIcon className="absolute top-[2px] left-[2px]" delay={0.8} />
       <CircleIcon className="absolute bottom-[2px] left-[2px]" delay={1.6} />
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRightIcon } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 
@@ -37,8 +37,7 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 block h-[150px] w-full rounded-3xl bg-neutral-200 md:h-[220px]
-                  dark:bg-slate-800/[0.8]"
+                className="absolute inset-0 block h-[150px] w-full rounded-3xl bg-neutral-200 md:h-[220px] dark:bg-slate-800/[0.8]"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.15 } }}
@@ -62,8 +61,7 @@ function Card({ className, children }: CardProps) {
   return (
     <div
       className={cn(
-        `light relative z-20 h-[150px] w-full overflow-hidden rounded-2xl border border-transparent p-1	shadow-sm
-        md:h-[220px]`,
+        `light relative z-20 h-[150px] w-full overflow-hidden rounded-2xl border border-transparent p-1 shadow-sm md:h-[220px]`,
         'group-hover:border-slate-700 dark:border-white/[0.2]',
         className,
       )}

@@ -56,7 +56,7 @@ pnpm --filter www unlighthouse-ci  # Run Lighthouse tests
 ## Key Configuration
 
 - **Node**: >= 24.0.0 (check `.nvmrc`)
-- **Package Manager**: PNPM 9.1.1
+- **Package Manager**: PNPM 10.31.0
 - **Dev Port**: 3333
 
 ## Environment Variables

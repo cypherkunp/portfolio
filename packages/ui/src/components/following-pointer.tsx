@@ -1,7 +1,7 @@
 // Core component that receives mouse positions and renders pointer and content
 
 import React, { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useMotionValue } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 
@@ -126,7 +126,7 @@ export const FollowPointer = ({
           opacity: 0,
         }}
         className={
-          'min-w-max whitespace-nowrap rounded-full bg-neutral-200 px-2 py-2 text-xs text-white'
+          'min-w-max rounded-full bg-neutral-200 px-2 py-2 text-xs whitespace-nowrap text-white'
         }
       >
         {title || `William Shakespeare`}

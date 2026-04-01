@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform, useVelocity } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 
@@ -38,7 +38,7 @@ export const TracingBeam = ({
 
   return (
     <motion.div ref={ref} className={cn('relative mx-auto h-full w-full max-w-4xl', className)}>
-      <div className="absolute -left-4 top-3 md:-left-20">
+      <div className="absolute top-3 -left-4 md:-left-20">
         <motion.div
           transition={{
             duration: 0.2,
@@ -65,7 +65,7 @@ export const TracingBeam = ({
           viewBox={`0 0 20 ${svgHeight}`}
           width="20"
           height={svgHeight} // Set the SVG height
-          className=" ml-4 block"
+          className="ml-4 block"
           aria-hidden="true"
         >
           <motion.path

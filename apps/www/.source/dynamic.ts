@@ -10,6 +10,6 @@ const create = await dynamic<
   }
 >(
   Config,
-  { environment: 'next', outDir: '.source', configPath: 'source.config.ts' },
+  { configPath: 'source.config.ts', environment: 'next', outDir: '.source' },
   { doc: { passthroughs: ['extractedReferences'] } },
 );
