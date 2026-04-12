@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 
 import { Colophon } from '@/components/layout/colophon';
-import { Footer } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import { siteShellClassName } from '@/components/layout/site-shell';
 
@@ -31,8 +30,7 @@ export function ToolSubpageLayout({
         ) : null}
         <div className={cn('min-h-0 w-full flex-1', flush ? '' : 'pb-6')}>{children}</div>
       </div>
-      <Footer className="mt-10 md:mt-20" />
-      <Colophon />
+      <Colophon className="mt-10 md:mt-20" />
     </div>
   );
 }
