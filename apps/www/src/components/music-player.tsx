@@ -16,43 +16,15 @@ import {
 
 import type { Song } from '@/lib/types';
 import { cn, formatTime } from '@/lib/utils';
+import { songs } from '@/config/songs';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-
-const songs: Song[] = [
-  {
-    id: '1',
-    title: 'Sunny Days',
-    artist: 'Happy Tunes',
-    album: '',
-    duration: 187,
-    cover: '/placeholder.svg?height=400&width=400',
-    url: '/songs/song1.mp3',
-  },
-  {
-    id: '2',
-    title: 'Midnight Dreams',
-    artist: 'Chill Vibes',
-    album: '',
-    duration: 214,
-    cover: '/placeholder.svg?height=400&width=400',
-    url: '/songs/song2.mp3',
-  },
-  {
-    id: '3',
-    title: 'Mountain Echo',
-    artist: 'Nature Sounds',
-    album: '',
-    duration: 176,
-    cover: '/placeholder.svg?height=400&width=400',
-    url: '/songs/song3.mp3',
-  },
-];
 
 export default function MusicPlayer() {
   const [currentSong, setCurrentSong] = useState<Song>(songs[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.7);
   const [isMuted, setIsMuted] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
@@ -70,9 +42,22 @@ export default function MusicPlayer() {
     if (!audioRef.current) {
       audioRef.current = new Audio();
       audioRef.current.volume = volume;
+      audioRef.current.preload = 'metadata';
 
       audioRef.current.addEventListener('timeupdate', () => {
         if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
+      });
+
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        if (audioRef.current && isFinite(audioRef.current.duration)) {
+          setDuration(audioRef.current.duration);
+        }
+      });
+
+      audioRef.current.addEventListener('durationchange', () => {
+        if (audioRef.current && isFinite(audioRef.current.duration)) {
+          setDuration(audioRef.current.duration);
+        }
       });
 
       audioRef.current.addEventListener('ended', () => {
@@ -112,11 +97,13 @@ export default function MusicPlayer() {
 
     if (song) setCurrentSong(song);
 
-    if (audio.src !== new URL(target.url, window.location.origin).href) {
+    const targetHref = new URL(target.url, window.location.origin).href;
+    if (audio.src !== targetHref) {
+      setDuration(0);
       audio.src = target.url;
     }
 
-    audio.currentTime = song ? 0 : 0;
+    audio.currentTime = 0;
     audio.play().catch(() => setIsPlaying(false));
     setIsPlaying(true);
     setCurrentTime(0);
@@ -195,13 +182,13 @@ export default function MusicPlayer() {
           </span>
           <Slider
             value={[currentTime]}
-            max={currentSong.duration}
+            max={duration || 1}
             step={1}
             onValueChange={handleProgressChange}
             className="flex-1"
           />
           <span className="text-muted-foreground w-10 text-xs tabular-nums">
-            {formatTime(currentSong.duration)}
+            {formatTime(duration)}
           </span>
         </div>
 
@@ -326,7 +313,7 @@ export default function MusicPlayer() {
                   <p className="text-muted-foreground truncate text-xs">{song.artist}</p>
                 </div>
                 <span className="text-muted-foreground text-xs tabular-nums">
-                  {formatTime(song.duration)}
+                  {currentSong.id === song.id && duration > 0 ? formatTime(duration) : '--:--'}
                 </span>
               </li>
             ))}
