@@ -109,7 +109,7 @@ export function PhotoGallery() {
               {group.label}
             </h2>
 
-            <div className="grid grid-cols-2 gap-1 sm:grid-cols-3">
+            <div className="grid grid-flow-dense grid-cols-2 gap-1 sm:grid-cols-3">
               {group.photos.map((photo, i) => {
                 const isPortrait = photo.height > photo.width;
 

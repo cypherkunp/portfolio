@@ -324,7 +324,7 @@ function PackageTable({
         )}
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-border">
+      <div className="max-w-full overflow-x-auto rounded-lg border border-border">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">

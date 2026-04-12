@@ -77,9 +77,9 @@ export default function PostsPage() {
 
   return (
     <PageContainer className="mx-auto max-w-screen-md overflow-auto">
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-4xl font-bold">Posts</h1>
-        <div className="flex items-center">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-3xl font-bold sm:text-4xl">Posts</h1>
+        <div className="flex shrink-0 items-center">
           <Switch
             id="sound-toggle"
             checked={soundEnabled}
@@ -103,11 +103,13 @@ export default function PostsPage() {
               setSelectedPost(index);
             }}
           >
-            <div className="mb-2 flex items-start justify-between">
-              <h2 className="text-xl font-semibold transition-colors group-hover:text-[#FFB800]">
+            <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+              <h2 className="min-w-0 text-xl font-semibold transition-colors group-hover:text-[#FFB800]">
                 {post.title}
               </h2>
-              <span className="text-sm font-bold text-neutral-400">{post.date}</span>
+              <span className="shrink-0 text-sm font-bold text-neutral-400 tabular-nums sm:text-right">
+                {post.date}
+              </span>
             </div>
             <p className="mb-2 text-neutral-400">{post.description}</p>
             <div className="flex items-center gap-2 text-sm">

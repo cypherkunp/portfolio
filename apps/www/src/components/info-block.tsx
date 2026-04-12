@@ -28,7 +28,7 @@ export default function InfoBlock() {
         <div className="flex max-w-[350px] flex-col items-start gap-3 py-2 md:items-start">
           <h1 className="text-2xl font-semibold text-white ">{t('Blocks.infoBlock.title')}</h1>
           <p className="text-sm font-bold text-white ">{t('Blocks.infoBlock.highlight')}</p>
-          <p className="text-xs text-white md:text-left md:text-sm ">
+          <p className="text-base leading-relaxed text-white md:text-left md:text-sm">
             {t('Blocks.infoBlock.description')}
           </p>{' '}
         </div>
