@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { highlight } from 'sugar-high';
 
@@ -14,6 +15,14 @@ type ListProps = ComponentPropsWithoutRef<'ul'>;
 type ListItemProps = ComponentPropsWithoutRef<'li'>;
 type AnchorProps = ComponentPropsWithoutRef<'a'>;
 type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>;
+type MdxImageProps = ComponentPropsWithoutRef<'img'>;
+
+function parseImageDimension(value: string | number | undefined): number | undefined {
+  if (value === undefined) return undefined;
+  if (typeof value === 'number') return Number.isFinite(value) && value > 0 ? value : undefined;
+  const n = parseInt(value, 10);
+  return Number.isFinite(n) && n > 0 ? n : undefined;
+}
 
 const components = {
   h1: (props: HeadingProps) => <h1 className="mb-4 pt-4 text-xl" {...props} />,
@@ -41,6 +50,21 @@ const components = {
   strong: (props: ComponentPropsWithoutRef<'strong'>) => (
     <strong className="font-medium" {...props} />
   ),
+  img: ({ src, alt, width, height, className }: MdxImageProps) => {
+    if (!src || typeof src !== 'string') return null;
+    const w = parseImageDimension(width);
+    const h = parseImageDimension(height);
+    return (
+      <Image
+        src={src}
+        alt={alt ?? ''}
+        width={w ?? 800}
+        height={h ?? 450}
+        className={cn('my-4 h-auto max-w-full rounded-lg', className)}
+        sizes="(max-width: 768px) 100vw, 42rem"
+      />
+    );
+  },
   a: ({ href, children, ...props }: AnchorProps) => {
     const className =
       'wrap-break-words text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';

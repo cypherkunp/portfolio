@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Clock, Play, Search } from 'lucide-react';
 
@@ -94,9 +95,11 @@ export default function PlaylistView({
               >
                 <div className="text-center">{indexOfFirstSong + index + 1}</div>
                 <div className="flex items-center gap-3">
-                  <img
+                  <Image
                     src={song.cover || '/placeholder.svg'}
                     alt={song.title}
+                    width={40}
+                    height={40}
                     className="h-10 w-10 object-cover"
                   />
                   <div>
@@ -106,7 +109,7 @@ export default function PlaylistView({
                 </div>
                 <div className="text-zinc-400">{song.album}</div>
                 <div className="text-zinc-400">2 days ago</div>
-                <div className="text-right text-zinc-400">{formatTime(song.duration)}</div>
+                <div className="text-right text-zinc-400">{formatTime(song.duration ?? 0)}</div>
               </div>
             ))}
           </div>

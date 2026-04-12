@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,10 +26,12 @@ export default function SongList({ songs, currentSong, onSelect }: SongListProps
                 currentSong.id === song.id ? 'bg-muted' : ''
               }`}
             >
-              <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded">
-                <img
+              <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded">
+                <Image
                   src={song.cover || '/placeholder.svg'}
                   alt={song.title}
+                  width={40}
+                  height={40}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -35,7 +39,7 @@ export default function SongList({ songs, currentSong, onSelect }: SongListProps
                 <p className="truncate font-medium">{song.title}</p>
                 <p className="text-muted-foreground truncate text-xs">{song.artist}</p>
               </div>
-              <div className="text-muted-foreground text-xs">{formatTime(song.duration)}</div>
+              <div className="text-muted-foreground text-xs">{formatTime(song.duration ?? 0)}</div>
             </li>
           ))}
         </ul>

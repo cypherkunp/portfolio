@@ -15,6 +15,8 @@ import {
   VolumeX,
 } from 'lucide-react';
 
+import Image from 'next/image';
+
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -61,7 +63,7 @@ export default function PlayerBar({
         audio.pause();
       }
 
-      setDuration(currentSong.duration);
+      setDuration(currentSong.duration ?? 0);
     }
 
     const updateProgress = () => {
@@ -122,9 +124,11 @@ export default function PlayerBar({
         <div className="flex w-1/4 min-w-[180px] items-center">
           {currentSong ? (
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src={currentSong.cover || '/placeholder.svg'}
                 alt={currentSong.title}
+                width={56}
+                height={56}
                 className="h-14 w-14 object-cover"
               />
               <div className="overflow-hidden">

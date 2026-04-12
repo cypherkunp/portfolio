@@ -22,6 +22,7 @@ export default function InfoBlock() {
             className="size-[200px] rounded-full object-cover md:size-[200px] md:rounded-md"
             width={200}
             height={200}
+            priority
           />
         </FollowerPointerCard>
         <div className="flex max-w-[350px] flex-col items-start gap-3 py-2 md:items-start">
@@ -40,8 +41,8 @@ const Pointer = ({ title, avatar }: { title: string; avatar: string }) => (
   <div className="flex items-center space-x-2 rounded-full bg-sky-500 ">
     <Image
       src={avatar}
-      height="20"
-      width="20"
+      height={20}
+      width={20}
       alt="thumbnail"
       className="rounded-full border-2 border-white"
     />

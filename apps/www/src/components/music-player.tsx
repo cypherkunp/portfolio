@@ -14,6 +14,8 @@ import {
   VolumeX,
 } from 'lucide-react';
 
+import Image from 'next/image';
+
 import type { Song } from '@/lib/types';
 import { cn, formatTime } from '@/lib/utils';
 import { songs } from '@/config/songs';
@@ -162,10 +164,13 @@ export default function MusicPlayer() {
       <div className="flex flex-col items-center justify-center px-4 py-6 lg:flex-1 lg:px-12 lg:py-0">
         {/* Album art */}
         <div className="bg-muted relative aspect-square w-full max-w-xs overflow-hidden rounded-xl shadow-2xl lg:max-w-md">
-          <img
+          <Image
             src={currentSong.cover || '/placeholder.svg'}
             alt={`${currentSong.title} cover`}
-            className="h-full w-full object-cover transition-all duration-500 hover:scale-105"
+            fill
+            sizes="(max-width: 1024px) 100vw, 448px"
+            className="object-cover transition-all duration-500 hover:scale-105"
+            priority
           />
         </div>
 
@@ -286,20 +291,22 @@ export default function MusicPlayer() {
                 )}
               >
                 <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded">
-                  <img
+                  <Image
                     src={song.cover || '/placeholder.svg'}
                     alt={song.title}
+                    width={40}
+                    height={40}
                     className="h-full w-full object-cover"
                   />
                   {currentSong.id === song.id && isPlaying && (
                     <div className="bg-primary/80 absolute inset-0 flex items-center justify-center">
                       <span className="flex gap-0.5">
-                        {[0, 1, 2].map(i => (
+                        {[10, 14, 12].map((barHeight, i) => (
                           <span
                             key={i}
                             className="inline-block w-0.5 animate-pulse rounded-full bg-white"
                             style={{
-                              height: `${8 + Math.random() * 8}px`,
+                              height: `${barHeight}px`,
                               animationDelay: `${i * 0.15}s`,
                             }}
                           />

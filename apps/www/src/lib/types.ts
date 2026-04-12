@@ -6,4 +6,6 @@ export interface Song {
   cover: string;
   url: string;
   lyrics?: string;
+  /** Seconds; optional when loaded from audio metadata only */
+  duration?: number;
 }

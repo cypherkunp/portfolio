@@ -33,8 +33,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </NextIntlClientProvider>
 
         <SpeedInsights />
+        <Analytics />
       </body>
-      <Analytics />
     </html>
   );
 }
