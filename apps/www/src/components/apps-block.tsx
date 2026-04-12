@@ -2,18 +2,20 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-const APP_IDS = ['musicPlayer', 'inspirations', 'bookmarks', 'photos'] as const;
+const APP_IDS = ['musicPlayer', 'inspirations', 'bookmarks', 'photos', 'packageAnalyzer'] as const;
 const APP_ABBR: Record<(typeof APP_IDS)[number], string> = {
   musicPlayer: 'MP',
   inspirations: 'IN',
   bookmarks: 'BM',
   photos: 'PH',
+  packageAnalyzer: 'PA',
 };
 const APP_HREFS: Record<(typeof APP_IDS)[number], string> = {
   musicPlayer: '/music',
   inspirations: '/inspirations',
   bookmarks: '/bookmarks',
   photos: '/photos',
+  packageAnalyzer: '/analyzer',
 };
 
 export default function AppsBlock() {

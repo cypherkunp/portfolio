@@ -168,6 +168,10 @@
       "photos": {
         "name": "Photos",
         "description": "Photo gallery and visual snapshots."
+      },
+      "packageAnalyzer": {
+        "name": "Package Analyzer",
+        "description": "Analyze npm dependencies and check for updates."
       }
     },
     "infoBlock": {
