@@ -12,6 +12,9 @@ const withBundleAnalyzer = withBundleAnalyzerPlugin({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  experimental: {
+    viewTransition: true,
+  },
   transpilePackages: [],
   images: {
     formats: ['image/webp'],
