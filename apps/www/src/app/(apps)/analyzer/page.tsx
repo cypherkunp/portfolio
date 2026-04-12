@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AnalyzerPage() {
   return (
-    <ToolSubpageLayout title="Package Analyzer" contentMaxWidth="max-w-5xl">
+    <ToolSubpageLayout title="Package Analyzer">
       <PackageAnalyzer />
     </ToolSubpageLayout>
   );

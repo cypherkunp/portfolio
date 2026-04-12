@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function MusicPage() {
   return (
-    <ToolSubpageLayout title="Music" contentMaxWidth="max-w-full" flush>
+    <ToolSubpageLayout flush>
       <MusicPlayer />
     </ToolSubpageLayout>
   );

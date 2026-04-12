@@ -76,7 +76,7 @@ export default function PostsPage() {
     : posts;
 
   return (
-    <PageContainer className="mx-auto max-w-screen-md overflow-auto">
+    <PageContainer className="w-full overflow-auto">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-3xl font-bold sm:text-4xl">Posts</h1>
         <div className="flex shrink-0 items-center">
