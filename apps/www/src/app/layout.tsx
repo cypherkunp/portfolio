@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
-      <body className="relative z-10 flex min-h-screen flex-col overflow-auto bg-neutral-950">
+      <body className="bg-app-dots relative z-10 flex min-h-screen flex-col overflow-auto">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
             attribute="class"
