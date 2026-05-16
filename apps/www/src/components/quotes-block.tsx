@@ -5,10 +5,15 @@ import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon } from 'lucide-react
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 
-import { pacifico } from '@/lib/font';
 import { Button } from '@/components/ui/button';
 
 import { RenderIf } from './render-if';
+
+interface InspirationItem {
+  id: string;
+  quote: string;
+  author?: string;
+}
 
 const quoteVariants = {
   initial: { y: 50, opacity: 0, rotateX: -15 },
@@ -23,8 +28,8 @@ const authorVariants = {
 };
 
 export default function QuotesBlock() {
-  const t = useTranslations('HomePage.quotesBlock');
-  const quotes = t.raw('content');
+  const t = useTranslations('Blocks.quotesBlock');
+  const quotes = t.raw('content') as InspirationItem[];
 
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -53,12 +58,16 @@ export default function QuotesBlock() {
     setIsPlaying(prev => !prev);
   };
 
+  if (quotes.length === 0) return null;
+
+  const current = quotes[currentQuoteIndex % quotes.length];
+
   return (
     <div className={`relative mx-auto w-full`}>
       <div className="flex h-48 items-center justify-center overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentQuoteIndex}
+            key={current.id}
             variants={quoteVariants}
             initial="initial"
             animate="animate"
@@ -80,7 +89,7 @@ export default function QuotesBlock() {
                 mass: 1,
               }}
             >
-              {quotes[currentQuoteIndex].quote}
+              {current.quote}
             </motion.p>
             <motion.p
               variants={authorVariants}
@@ -92,7 +101,9 @@ export default function QuotesBlock() {
                 delay: 0.2,
               }}
               className="text-muted-foreground md:text-md p-1 text-sm"
-            ></motion.p>
+            >
+              {current.author ?? ''}
+            </motion.p>
           </motion.div>
         </AnimatePresence>
       </div>

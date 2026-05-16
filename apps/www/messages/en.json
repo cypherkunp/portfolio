@@ -21,9 +21,18 @@
   },
   "Header": {
     "navbar": [
-      { "href": "/", "label": "Home" },
-      { "href": "/about", "label": "About" },
-      { "href": "/connect", "label": "Connect" }
+      {
+        "href": "/",
+        "label": "Home"
+      },
+      {
+        "href": "/about",
+        "label": "About"
+      },
+      {
+        "href": "/connect",
+        "label": "Connect"
+      }
     ]
   },
   "Colophon": {
@@ -242,10 +251,18 @@
       "title": "Clients",
       "description": "",
       "list": [
-        { "name": "Unilever", "url": "https://www.unilever.com/" },
-        { "name": "PTC Inc", "url": "https://www.ptc.com/" },
-        { "name": "Lloyds Bank", "url": "https://www.lloydsbank.com/" },
-
+        {
+          "name": "Unilever",
+          "url": "https://www.unilever.com/"
+        },
+        {
+          "name": "PTC Inc",
+          "url": "https://www.ptc.com/"
+        },
+        {
+          "name": "Lloyds Bank",
+          "url": "https://www.lloydsbank.com/"
+        },
         {
           "name": "Publicis Sapient",
           "url": "https://publicissapient.com"
@@ -285,31 +302,228 @@
     "quotesBlock": {
       "title": "",
       "description": "",
+      "emptyState": "Nothing pinned here yet.",
+      "tagFilters": [
+        {
+          "id": "all",
+          "label": "All"
+        },
+        {
+          "id": "craft",
+          "label": "Craft"
+        },
+        {
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "id": "engineering",
+          "label": "Engineering"
+        },
+        {
+          "id": "design",
+          "label": "Design"
+        },
+        {
+          "id": "leadership",
+          "label": "Leadership"
+        },
+        {
+          "id": "mindset",
+          "label": "Mindset"
+        },
+        {
+          "id": "life",
+          "label": "Life"
+        }
+      ],
       "content": [
         {
-          "quote": "\"I was born and raised in a city called ’Authenticity’.\"",
-          "author": "@cypherkunp"
+          "id": "1",
+          "quote": "I was born and raised in a city called Authenticity.",
+          "author": "@cypherkunp",
+          "tag": "life",
+          "variant": "highlight"
         },
         {
-          "quote": "\"Stay hungry, stay foolish.\"",
-          "author": "Steve Jobs"
+          "id": "2",
+          "quote": "Stay hungry, stay foolish.",
+          "author": "Steve Jobs",
+          "source": "Stanford, 2005",
+          "tag": "mindset"
         },
         {
-          "quote": "\"No is no to one thing. Yes is no to a lot of things.\"",
-          "author": "Jason Fried"
+          "id": "3",
+          "quote": "No is no to one thing. Yes is no to a lot of things.",
+          "author": "Jason Fried",
+          "source": "Rework",
+          "tag": "product",
+          "variant": "accent"
         },
         {
-          "quote": "\"Think progress, not perfection.\"",
-          "author": "Ryan Holiday"
-        },
-
-        {
-          "quote": "\"Success is not final, failure is not fatal: it is the courage to continue that counts.\"",
-          "author": "Winston Churchill"
+          "id": "4",
+          "quote": "Think progress, not perfection.",
+          "author": "Ryan Holiday",
+          "tag": "mindset"
         },
         {
-          "quote": "\"Code never lies, comments sometimes do.\"",
-          "author": "Ron Jeffries"
+          "id": "5",
+          "quote": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+          "author": "Winston Churchill",
+          "tag": "life"
+        },
+        {
+          "id": "6",
+          "quote": "Code never lies, comments sometimes do.",
+          "author": "Ron Jeffries",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "7",
+          "quote": "The most dangerous phrase in the language is, \"we've always done it this way.\"",
+          "author": "Grace Hopper",
+          "tag": "leadership"
+        },
+        {
+          "id": "8",
+          "quote": "Make it work, make it right, make it fast.",
+          "author": "Kent Beck",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "9",
+          "quote": "Design is not just what it looks like and feels like. Design is how it works.",
+          "author": "Steve Jobs",
+          "tag": "design",
+          "variant": "primary"
+        },
+        {
+          "id": "10",
+          "quote": "Simplicity is the ultimate sophistication.",
+          "author": "Leonardo da Vinci",
+          "tag": "design"
+        },
+        {
+          "id": "11",
+          "quote": "You can have brilliant ideas, but if you can't get them across, your ideas won't get you anywhere.",
+          "author": "Lee Iacocca",
+          "tag": "leadership"
+        },
+        {
+          "id": "12",
+          "quote": "Premature optimization is the root of all evil.",
+          "author": "Donald Knuth",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "13",
+          "quote": "Move slow and fix things. Speed comes from compounding small, correct decisions.",
+          "tag": "craft",
+          "variant": "highlight"
+        },
+        {
+          "id": "14",
+          "quote": "A user interface is like a joke. If you have to explain it, it's not that good.",
+          "author": "Martin LeBlanc",
+          "tag": "design"
+        },
+        {
+          "id": "15",
+          "quote": "Strong opinions, loosely held.",
+          "author": "Bob Sutton",
+          "tag": "mindset"
+        },
+        {
+          "id": "16",
+          "quote": "Ship, then iterate. Perfect is the enemy of done.",
+          "tag": "product",
+          "variant": "accent"
+        },
+        {
+          "id": "17",
+          "quote": "You are not paid to write code. You are paid to solve problems. Code is sometimes the answer.",
+          "tag": "engineering"
+        },
+        {
+          "id": "18",
+          "quote": "Taste is a muscle. Train it daily.",
+          "author": "@cypherkunp",
+          "tag": "craft",
+          "variant": "highlight"
+        },
+        {
+          "id": "19",
+          "quote": "The best teams I've worked on weren't the smartest. They were the kindest, fastest to recover, and slowest to assume malice.",
+          "tag": "leadership"
+        },
+        {
+          "id": "20",
+          "quote": "Do less, but do it better.",
+          "author": "Dieter Rams",
+          "tag": "design",
+          "variant": "primary"
+        },
+        {
+          "id": "21",
+          "quote": "If you are not embarrassed by the first version of your product, you've launched too late.",
+          "author": "Reid Hoffman",
+          "tag": "product"
+        },
+        {
+          "id": "22",
+          "quote": "Read the source. The truth is in the code, not the docs.",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "23",
+          "quote": "Constraints aren't the enemy of creativity. They're the reason it exists.",
+          "tag": "craft"
+        },
+        {
+          "id": "24",
+          "quote": "Default to action. The plan reveals itself in motion.",
+          "tag": "mindset",
+          "variant": "accent"
+        },
+        {
+          "id": "25",
+          "quote": "Hire for taste, train for skill.",
+          "tag": "leadership"
+        },
+        {
+          "id": "26",
+          "quote": "You become what you repeatedly do. Excellence, then, is not an act, but a habit.",
+          "author": "Will Durant",
+          "source": "paraphrasing Aristotle",
+          "tag": "life"
+        },
+        {
+          "id": "27",
+          "quote": "The details are not the details. They make the design.",
+          "author": "Charles Eames",
+          "tag": "design"
+        },
+        {
+          "id": "28",
+          "quote": "Write the API you wish existed. Then build the smallest thing that makes it real.",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "29",
+          "quote": "Build for the user who has never used software before, and the user who has used everything.",
+          "tag": "product"
+        },
+        {
+          "id": "30",
+          "quote": "Do work that doesn't need a meeting to be appreciated.",
+          "author": "@cypherkunp",
+          "tag": "craft",
+          "variant": "highlight"
         }
       ]
     }
