@@ -1,0 +1,155 @@
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import ProfilePic from '@/images/profile.jpg';
+import { Camera, Github, Globe, Linkedin, Mail, MapPin, Twitter } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+
+import { ContactCard } from '@/components/contacts/contact-card';
+import { CopyContactLink } from '@/components/contacts/copy-contact-link';
+import PageContainer from '@/components/layout/page-container';
+import { Section } from '@/components/layout/section';
+import UnderlineText from '@/components/underline-text';
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslations();
+
+  return {
+    title: t('ContactsPage.title'),
+    description: t('ContactsPage.description'),
+    openGraph: {
+      title: t('ContactsPage.title'),
+      description: t('ContactsPage.description'),
+      type: 'profile',
+      url: t('ContactsPage.url'),
+      images: [
+        {
+          url: t('ContactsPage.ogImage'),
+          width: 660,
+          height: 240,
+          alt: t('Common.contact.name'),
+        },
+      ],
+    },
+    twitter: {
+      title: t('ContactsPage.title'),
+      description: t('ContactsPage.description'),
+      images: [t('ContactsPage.ogImage')],
+      creator: '@devvrathq',
+    },
+  };
+};
+
+export default async function ContactsPage() {
+  const t = await getTranslations();
+
+  const name = t('Common.contact.name');
+  const email = t('Common.contact.email');
+  const address = t('Common.contact.address');
+  const github = t('Common.contact.github');
+  const linkedin = t('Common.contact.linkedin');
+  const twitter = t('Common.contact.twitter');
+  const portfolio = t('ContactsPage.url').replace(/\/contacts$/, '');
+
+  const githubHandle = github.replace(/^https?:\/\/(www\.)?github\.com\//, '');
+  const linkedinHandle = linkedin
+    .replace(/^https?:\/\/(www\.)?linkedin\.com\//, 'linkedin.com/')
+    .replace(/\/$/, '');
+  const twitterHandle = `@${twitter.replace(/^https?:\/\/(www\.)?(x\.com|twitter\.com)\//, '')}`;
+  const portfolioHandle = portfolio.replace(/^https?:\/\/(www\.)?/, '');
+
+  return (
+    <PageContainer>
+      <Section isFirstSection>
+        <div className="flex flex-col items-center gap-6 text-center">
+          <div className="from-secondary via-primary rounded-full bg-linear-to-tr to-yellow-200 p-[2px]">
+            <div className="bg-background rounded-full p-[3px]">
+              <Image
+                src={ProfilePic}
+                alt={name}
+                width={120}
+                height={120}
+                priority
+                className="size-[112px] rounded-full object-cover md:size-[120px]"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              <UnderlineText>{name}</UnderlineText>
+            </h1>
+            <p className="text-muted-foreground max-w-md text-base leading-relaxed md:text-sm">
+              {t('ContactsPage.hero.role')}
+              <span className="text-foreground/40 mx-2">/</span>
+              <span className="text-foreground/80">{t('ContactsPage.hero.bio')}</span>
+            </p>
+          </div>
+
+          <span
+            className="border-secondary/40 bg-secondary/10 text-secondary inline-flex items-center gap-2 rounded-full
+              border px-3 py-1 font-mono text-xs"
+          >
+            <span className="relative flex size-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
+              <span className="relative inline-flex size-1.5 rounded-full bg-yellow-400" />
+            </span>
+            {t('ContactsPage.hero.status')}
+          </span>
+        </div>
+      </Section>
+
+      <Section>
+        <div className="flex flex-col gap-3">
+          <ContactCard
+            icon={Mail}
+            label={t('ContactsPage.labels.email')}
+            value={email}
+            href={`mailto:${email}`}
+            external={false}
+          />
+          <ContactCard
+            icon={Twitter}
+            label={t('ContactsPage.labels.twitter')}
+            value={twitterHandle}
+            href={twitter}
+          />
+          <ContactCard
+            icon={Linkedin}
+            label={t('ContactsPage.labels.linkedin')}
+            value={linkedinHandle}
+            href={linkedin}
+          />
+          <ContactCard
+            icon={Github}
+            label={t('ContactsPage.labels.github')}
+            value={githubHandle}
+            href={github}
+          />
+          <ContactCard icon={MapPin} label={t('ContactsPage.labels.location')} value={address} />
+          <ContactCard
+            icon={Globe}
+            label={t('ContactsPage.labels.portfolio')}
+            value={portfolioHandle}
+            href={portfolio}
+            external={false}
+          />
+          <ContactCard
+            icon={Camera}
+            label={t('ContactsPage.labels.photos')}
+            value="/photos"
+            href="/photos"
+            external={false}
+          />
+        </div>
+      </Section>
+
+      <Section isLastSection>
+        <CopyContactLink
+          url={t('ContactsPage.url')}
+          triggerLabel={t('ContactsPage.share.trigger')}
+          copiedLabel={t('ContactsPage.share.copied')}
+        />
+      </Section>
+    </PageContainer>
+  );
+}

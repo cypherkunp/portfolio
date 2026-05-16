@@ -22,7 +22,8 @@
   "Header": {
     "navbar": [
       { "href": "/", "label": "Home" },
-      { "href": "/about", "label": "About" }
+      { "href": "/about", "label": "About" },
+      { "href": "/contacts", "label": "Contacts" }
     ]
   },
   "Colophon": {
@@ -39,6 +40,30 @@
     "description": "Devvrat's User Manual",
     "url": "https://devvrat.cc/handbook",
     "ogImage": "https://devvrat.cc/og-home.jpg"
+  },
+  "ContactsPage": {
+    "title": "Devvrat | Contacts",
+    "description": "Reach out, follow along, or grab a copy of my contact card.",
+    "url": "https://devvrat.cc/contacts",
+    "ogImage": "https://devvrat.cc/og-home.jpg",
+    "hero": {
+      "role": "Lead Experience Engineer",
+      "bio": "Building the web with TypeScript, React and a soft spot for design systems.",
+      "status": "Available for work"
+    },
+    "labels": {
+      "email": "Email me",
+      "twitter": "Follow on X",
+      "linkedin": "Professional profile",
+      "github": "Code on GitHub",
+      "location": "Based in",
+      "portfolio": "Personal portfolio",
+      "photos": "Snapshots"
+    },
+    "share": {
+      "trigger": "Copy contact link",
+      "copied": "Link copied"
+    }
   },
   "ResumePage": {
     "title": "Devvrat | Resume ",
