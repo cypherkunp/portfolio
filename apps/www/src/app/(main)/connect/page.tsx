@@ -14,16 +14,16 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
 
   return {
-    title: t('ContactsPage.title'),
-    description: t('ContactsPage.description'),
+    title: t('ConnectPage.title'),
+    description: t('ConnectPage.description'),
     openGraph: {
-      title: t('ContactsPage.title'),
-      description: t('ContactsPage.description'),
+      title: t('ConnectPage.title'),
+      description: t('ConnectPage.description'),
       type: 'profile',
-      url: t('ContactsPage.url'),
+      url: t('ConnectPage.url'),
       images: [
         {
-          url: t('ContactsPage.ogImage'),
+          url: t('ConnectPage.ogImage'),
           width: 660,
           height: 240,
           alt: t('Common.contact.name'),
@@ -31,15 +31,15 @@ export const generateMetadata = async (): Promise<Metadata> => {
       ],
     },
     twitter: {
-      title: t('ContactsPage.title'),
-      description: t('ContactsPage.description'),
-      images: [t('ContactsPage.ogImage')],
+      title: t('ConnectPage.title'),
+      description: t('ConnectPage.description'),
+      images: [t('ConnectPage.ogImage')],
       creator: '@devvrathq',
     },
   };
 };
 
-export default async function ContactsPage() {
+export default async function ConnectPage() {
   const t = await getTranslations();
 
   const name = t('Common.contact.name');
@@ -48,7 +48,7 @@ export default async function ContactsPage() {
   const github = t('Common.contact.github');
   const linkedin = t('Common.contact.linkedin');
   const twitter = t('Common.contact.twitter');
-  const portfolio = t('ContactsPage.url').replace(/\/contacts$/, '');
+  const portfolio = t('ConnectPage.url').replace(/\/connect$/, '');
 
   const githubHandle = github.replace(/^https?:\/\/(www\.)?github\.com\//, '');
   const linkedinHandle = linkedin
@@ -79,9 +79,9 @@ export default async function ContactsPage() {
               <UnderlineText>{name}</UnderlineText>
             </h1>
             <p className="text-muted-foreground max-w-md text-base leading-relaxed md:text-sm">
-              {t('ContactsPage.hero.role')}
+              {t('ConnectPage.hero.role')}
               <span className="text-foreground/40 mx-2">/</span>
-              <span className="text-foreground/80">{t('ContactsPage.hero.bio')}</span>
+              <span className="text-foreground/80">{t('ConnectPage.hero.bio')}</span>
             </p>
           </div>
 
@@ -93,7 +93,7 @@ export default async function ContactsPage() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
               <span className="relative inline-flex size-1.5 rounded-full bg-yellow-400" />
             </span>
-            {t('ContactsPage.hero.status')}
+            {t('ConnectPage.hero.status')}
           </span>
         </div>
       </Section>
@@ -102,40 +102,40 @@ export default async function ContactsPage() {
         <div className="flex flex-col gap-3">
           <ContactCard
             icon={Mail}
-            label={t('ContactsPage.labels.email')}
+            label={t('ConnectPage.labels.email')}
             value={email}
             href={`mailto:${email}`}
             external={false}
           />
           <ContactCard
             icon={Twitter}
-            label={t('ContactsPage.labels.twitter')}
+            label={t('ConnectPage.labels.twitter')}
             value={twitterHandle}
             href={twitter}
           />
           <ContactCard
             icon={Linkedin}
-            label={t('ContactsPage.labels.linkedin')}
+            label={t('ConnectPage.labels.linkedin')}
             value={linkedinHandle}
             href={linkedin}
           />
           <ContactCard
             icon={Github}
-            label={t('ContactsPage.labels.github')}
+            label={t('ConnectPage.labels.github')}
             value={githubHandle}
             href={github}
           />
-          <ContactCard icon={MapPin} label={t('ContactsPage.labels.location')} value={address} />
+          <ContactCard icon={MapPin} label={t('ConnectPage.labels.location')} value={address} />
           <ContactCard
             icon={Globe}
-            label={t('ContactsPage.labels.portfolio')}
+            label={t('ConnectPage.labels.portfolio')}
             value={portfolioHandle}
             href={portfolio}
             external={false}
           />
           <ContactCard
             icon={Camera}
-            label={t('ContactsPage.labels.photos')}
+            label={t('ConnectPage.labels.photos')}
             value="/photos"
             href="/photos"
             external={false}
@@ -145,9 +145,9 @@ export default async function ContactsPage() {
 
       <Section isLastSection>
         <CopyContactLink
-          url={t('ContactsPage.url')}
-          triggerLabel={t('ContactsPage.share.trigger')}
-          copiedLabel={t('ContactsPage.share.copied')}
+          url={t('ConnectPage.url')}
+          triggerLabel={t('ConnectPage.share.trigger')}
+          copiedLabel={t('ConnectPage.share.copied')}
         />
       </Section>
     </PageContainer>

@@ -23,7 +23,7 @@
     "navbar": [
       { "href": "/", "label": "Home" },
       { "href": "/about", "label": "About" },
-      { "href": "/contacts", "label": "Contacts" }
+      { "href": "/connect", "label": "Connect" }
     ]
   },
   "Colophon": {
@@ -41,10 +41,10 @@
     "url": "https://devvrat.cc/handbook",
     "ogImage": "https://devvrat.cc/og-home.jpg"
   },
-  "ContactsPage": {
-    "title": "Devvrat | Contacts",
-    "description": "Reach out, follow along, or grab a copy of my contact card.",
-    "url": "https://devvrat.cc/contacts",
+  "ConnectPage": {
+    "title": "Devvrat | Connect",
+    "description": "Reach out, follow along, or copy the link to this page.",
+    "url": "https://devvrat.cc/connect",
     "ogImage": "https://devvrat.cc/og-home.jpg",
     "hero": {
       "role": "Lead Experience Engineer",
@@ -61,7 +61,7 @@
       "photos": "Snapshots"
     },
     "share": {
-      "trigger": "Copy contact link",
+      "trigger": "Copy link",
       "copied": "Link copied"
     }
   },

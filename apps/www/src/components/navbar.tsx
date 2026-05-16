@@ -23,8 +23,8 @@ export function Navbar({ items, logo = 'Logo', className }: NavbarProps) {
   return (
     <nav className={cn('w-full', className)}>
       <div className="mx-auto px-0">
-        <div className="flex h-16 items-center justify-between">
-          <div className=" flex gap-8 md:items-center md:gap-8">
+        <div className="flex h-14 items-center justify-between md:h-16">
+          <div className="flex gap-4 sm:gap-6 md:items-center md:gap-8">
             {items.map(item => {
               const isActive = pathname === item.href;
               return (
@@ -32,7 +32,8 @@ export function Navbar({ items, logo = 'Logo', className }: NavbarProps) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'hover:text-foreground relative inline-flex min-h-11 min-w-[44px] items-center py-2 text-lg font-medium transition-colors',
+                    `hover:text-foreground relative inline-flex min-h-11 min-w-[44px] items-center py-2 text-sm
+                    font-medium transition-colors md:text-lg`,
                     isActive ? 'text-foreground decoration-primary' : 'text-muted-foreground',
                     'group',
                   )}

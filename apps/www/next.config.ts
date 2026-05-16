@@ -12,6 +12,9 @@ const withBundleAnalyzer = withBundleAnalyzerPlugin({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+  redirects: async () => [
+    { source: '/contacts', destination: '/connect', permanent: true },
+  ],
   experimental: {
     viewTransition: true,
   },
