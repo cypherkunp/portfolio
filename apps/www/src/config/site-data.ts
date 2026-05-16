@@ -1,1 +1,1 @@
-export const PORTFOLIO_BASE_URL = 'https://devvrat.cc';
+export const PORTFOLIO_BASE_URL = 'https://devvrat.uk';
