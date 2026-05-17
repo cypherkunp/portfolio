@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import MusicPlayer from '@/components/music-player';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
+import MusicPlayer from '@/components/music-player';
 
 export const metadata: Metadata = {
   title: 'Music',

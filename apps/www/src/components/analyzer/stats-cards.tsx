@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'motion/react';
 import { AlertTriangle, Calendar, CheckCircle, Package } from 'lucide-react';
+import { motion } from 'motion/react';
 
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -21,7 +21,12 @@ const cardVariants = {
   }),
 };
 
-export function StatsCards({ totalPackages, outdatedCount, upToDateCount, averageAge }: StatsCardsProps) {
+export function StatsCards({
+  totalPackages,
+  outdatedCount,
+  upToDateCount,
+  averageAge,
+}: StatsCardsProps) {
   const stats = [
     {
       label: 'Total packages',
@@ -65,14 +70,16 @@ export function StatsCards({ totalPackages, outdatedCount, upToDateCount, averag
         >
           <Card className="border-border bg-card">
             <CardContent className="flex items-center gap-3 p-4">
-              <div className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${stat.iconBg}`}>
+              <div
+                className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${stat.iconBg}`}
+              >
                 <stat.icon className={`size-5 ${stat.accent}`} />
               </div>
               <div className="flex flex-col">
                 <span className={`text-xl font-bold tabular-nums ${stat.accent}`}>
                   {stat.value}
                 </span>
-                <span className="text-[11px] text-muted-foreground">{stat.label}</span>
+                <span className="text-muted-foreground text-[11px]">{stat.label}</span>
               </div>
             </CardContent>
           </Card>

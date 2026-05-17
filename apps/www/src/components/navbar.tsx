@@ -32,8 +32,7 @@ export function Navbar({ items, logo = 'Logo', className }: NavbarProps) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    `hover:text-foreground relative inline-flex min-h-11 min-w-[44px] items-center py-2 text-sm
-                    font-medium transition-colors md:text-lg`,
+                    `hover:text-foreground relative inline-flex min-h-11 min-w-[44px] items-center py-2 text-sm font-medium transition-colors md:text-lg`,
                     isActive ? 'text-foreground decoration-primary' : 'text-muted-foreground',
                     'group',
                   )}

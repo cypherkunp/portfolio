@@ -11,8 +11,7 @@ import { Section } from '@/components/layout/section';
 import UnderlineText from '@/components/underline-text';
 
 /** Matches desktop hero width: avatar ring (~8.125rem) + md gap + text column (28rem / max-w-md). */
-const CONNECT_COLUMN =
-  'mx-auto w-full max-w-[min(100%,calc(8.125rem+2.5rem+28rem))]';
+const CONNECT_COLUMN = 'mx-auto w-full max-w-[min(100%,calc(8.125rem+2.5rem+28rem))]';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
@@ -65,10 +64,7 @@ export default async function ConnectPage() {
     <PageContainer>
       <div className={CONNECT_COLUMN}>
         <Section isFirstSection>
-          <div
-            className="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:justify-start md:gap-10
-              md:text-left"
-          >
+          <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:justify-start md:gap-10 md:text-left">
             <div className="from-secondary via-primary shrink-0 rounded-full bg-linear-to-tr to-yellow-200 p-[2px]">
               <div className="bg-background rounded-full p-[3px]">
                 <Image
@@ -94,10 +90,7 @@ export default async function ConnectPage() {
                 </p>
               </div>
 
-              <span
-                className="border-secondary/40 bg-secondary/10 text-secondary inline-flex items-center gap-2 rounded-full
-                  border px-3 py-1 font-mono text-xs"
-              >
+              <span className="border-secondary/40 bg-secondary/10 text-secondary inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs">
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
                   <span className="relative inline-flex size-1.5 rounded-full bg-yellow-400" />

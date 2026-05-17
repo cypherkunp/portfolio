@@ -9,14 +9,11 @@ interface CompanyCardProps {
 
 const CompanyCard: React.FC<CompanyCardProps> = ({ name, Icon }) => (
   <Card className={'group relative overflow-hidden !bg-neutral-800'}>
-    <CardContent className="md:py-15 flex flex-col items-center justify-center gap-y-4 px-0 py-10">
+    <CardContent className="flex flex-col items-center justify-center gap-y-4 px-0 py-10 md:py-15">
       <Icon className="h-2 w-2 md:h-6 md:w-6" />
       <p className="text-xs font-semibold text-white lg:text-lg">{name}</p>
     </CardContent>
-    <div
-      className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 transition-opacity
-        duration-300 group-hover:opacity-100"
-    />
+    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
   </Card>
 );
 

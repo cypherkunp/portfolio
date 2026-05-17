@@ -11,8 +11,7 @@ export default function Header({ className }: { className?: string }) {
   return (
     <header
       className={cn(
-        `border-layout flex w-full flex-col items-start justify-between bg-neutral-950 p-0 md:flex-row
-        md:pb-6 print:hidden`,
+        `border-layout flex w-full flex-col items-start justify-between bg-neutral-950 p-0 md:flex-row md:pb-6 print:hidden`,
         className,
       )}
     >

@@ -22,7 +22,7 @@ export function Section({
   return (
     <section
       className={cn(
-        'flex w-full flex-col gap-y-1 md:gap-y-0 ',
+        'flex w-full flex-col gap-y-1 md:gap-y-0',
         {
           'pt-[25px] md:pt-[40px]': !isFirstSection,
           'pb-[25px] md:pb-[40px]': !isLastSection,

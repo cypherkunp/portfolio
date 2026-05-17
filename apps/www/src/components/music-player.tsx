@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import {
   ChevronDown,
   ChevronUp,
@@ -14,11 +15,9 @@ import {
   VolumeX,
 } from 'lucide-react';
 
-import Image from 'next/image';
-
+import { songs } from '@/config/songs';
 import type { Song } from '@/lib/types';
 import { cn, formatTime } from '@/lib/utils';
-import { songs } from '@/config/songs';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 
@@ -159,11 +158,11 @@ export default function MusicPlayer() {
   const selectSong = (song: Song) => loadAndPlay(song);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col text-foreground lg:flex-row lg:gap-0">
+    <div className="text-foreground flex min-h-0 flex-1 flex-col lg:flex-row lg:gap-0">
       {/* Now playing panel */}
       <div className="flex flex-col items-center px-4 py-6 lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:py-8">
         {/* Album art */}
-        <div className="relative aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border/90 bg-neutral-900/70 shadow-lg shadow-black/20 lg:max-w-md">
+        <div className="border-border/90 relative aspect-square w-full max-w-xs overflow-hidden rounded-xl border bg-neutral-900/70 shadow-lg shadow-black/20 lg:max-w-md">
           <Image
             src={currentSong.cover || '/placeholder.svg'}
             alt={`${currentSong.title} cover`}
@@ -184,7 +183,7 @@ export default function MusicPlayer() {
 
         {/* Progress */}
         <div className="mt-5 flex w-full max-w-xs items-center gap-3 lg:mt-7 lg:max-w-md">
-          <span className="w-10 text-right text-xs tabular-nums text-neutral-500">
+          <span className="w-10 text-right text-xs text-neutral-500 tabular-nums">
             {formatTime(currentTime)}
           </span>
           <Slider
@@ -197,7 +196,7 @@ export default function MusicPlayer() {
             rangeClassName="bg-primary"
             thumbClassName="h-4 w-4 border-primary bg-primary shadow-sm shadow-primary/30"
           />
-          <span className="w-10 text-xs tabular-nums text-neutral-500">{formatTime(duration)}</span>
+          <span className="w-10 text-xs text-neutral-500 tabular-nums">{formatTime(duration)}</span>
         </div>
 
         {/* Transport controls */}
@@ -227,7 +226,7 @@ export default function MusicPlayer() {
             <Button
               variant="default"
               size="icon"
-              className="h-14 w-14 rounded-full shadow-md shadow-primary/15"
+              className="shadow-primary/15 h-14 w-14 rounded-full shadow-md"
               onClick={togglePlay}
             >
               {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="ml-0.5 h-6 w-6" />}
@@ -281,7 +280,7 @@ export default function MusicPlayer() {
         {/* Mobile playlist toggle */}
         <Button
           variant="ghost"
-          className="mt-6 w-full max-w-xs border border-border/60 bg-neutral-900/40 text-neutral-200 hover:bg-neutral-800/70 hover:text-neutral-50 lg:hidden"
+          className="border-border/60 mt-6 w-full max-w-xs border bg-neutral-900/40 text-neutral-200 hover:bg-neutral-800/70 hover:text-neutral-50 lg:hidden"
           onClick={() => setShowMobilePlaylist(!showMobilePlaylist)}
         >
           {showMobilePlaylist ? (
@@ -299,7 +298,7 @@ export default function MusicPlayer() {
       {/* Playlist panel - always visible on desktop, toggleable on mobile */}
       <div
         className={cn(
-          'overflow-hidden border-border transition-all duration-300 lg:flex lg:w-88 lg:shrink-0 lg:flex-col lg:justify-center lg:border-l lg:border-t-0',
+          'border-border overflow-hidden transition-all duration-300 lg:flex lg:w-88 lg:shrink-0 lg:flex-col lg:justify-center lg:border-t-0 lg:border-l',
           'border-t lg:max-h-none',
           showMobilePlaylist ? 'max-h-[min(52vh,28rem)]' : 'max-h-0 lg:max-h-none',
         )}
@@ -330,7 +329,7 @@ export default function MusicPlayer() {
                     className="h-full w-full object-cover"
                   />
                   {currentSong.id === song.id && isPlaying && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-primary/85">
+                    <div className="bg-primary/85 absolute inset-0 flex items-center justify-center">
                       <span className="flex gap-0.5">
                         {[10, 14, 12].map((barHeight, i) => (
                           <span
@@ -350,7 +349,7 @@ export default function MusicPlayer() {
                   <p className="truncate text-sm font-medium text-neutral-100">{song.title}</p>
                   <p className="truncate text-xs text-neutral-500">{song.artist}</p>
                 </div>
-                <span className="text-xs tabular-nums text-neutral-500">
+                <span className="text-xs text-neutral-500 tabular-nums">
                   {currentSong.id === song.id && duration > 0 ? formatTime(duration) : '--:--'}
                 </span>
               </li>

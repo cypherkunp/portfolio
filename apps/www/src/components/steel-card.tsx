@@ -14,10 +14,10 @@ export default function SteelCard({ children }: { children: React.ReactNode }) {
       {/* Content container */}
       <div className="relative h-full font-sans">
         {/* Punched holes */}
-        <Bolt className="absolute left-2 top-2" />
-        <Bolt className="absolute right-2 top-2" />
+        <Bolt className="absolute top-2 left-2" />
+        <Bolt className="absolute top-2 right-2" />
         <Bolt className="absolute bottom-2 left-2" />
-        <Bolt className="absolute bottom-2 right-2" />
+        <Bolt className="absolute right-2 bottom-2" />
 
         {/* Content */}
         <div className="px-4 py-10 text-neutral-950 md:px-12 md:py-4">{children}</div>

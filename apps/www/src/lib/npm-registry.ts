@@ -49,9 +49,7 @@ export async function fetchPackageInfo(
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10_000);
 
-  const combinedSignal = signal
-    ? AbortSignal.any([signal, controller.signal])
-    : controller.signal;
+  const combinedSignal = signal ? AbortSignal.any([signal, controller.signal]) : controller.signal;
 
   try {
     const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent(packageName)}`, {

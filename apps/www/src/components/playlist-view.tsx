@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Clock, Play, Search } from 'lucide-react';
 
 import type { Song } from '@/lib/types';
@@ -54,7 +54,7 @@ export default function PlaylistView({
         </div>
         <div className="flex-1">
           <p className="text-xs font-bold uppercase">Playlist</p>
-          <h1 className="mb-6 mt-2 text-5xl font-bold">Songs Of AI</h1>
+          <h1 className="mt-2 mb-6 text-5xl font-bold">Songs Of AI</h1>
           <div className="text-sm text-zinc-400">
             <span className="font-semibold text-white">Your Library</span> • {songs.length} songs
           </div>
@@ -63,7 +63,7 @@ export default function PlaylistView({
 
       {/* Search Bar */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-zinc-400" />
+        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-zinc-400" />
         <Input
           placeholder="Search songs or artists..."
           className="border-zinc-700 bg-zinc-800 pl-10 text-white"

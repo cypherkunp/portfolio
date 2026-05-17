@@ -26,8 +26,8 @@ export default function InfoBlock() {
           />
         </FollowerPointerCard>
         <div className="flex max-w-[350px] flex-col items-start gap-3 py-2 md:items-start">
-          <h1 className="text-2xl font-semibold text-white ">{t('Blocks.infoBlock.title')}</h1>
-          <p className="text-sm font-bold text-white ">{t('Blocks.infoBlock.highlight')}</p>
+          <h1 className="text-2xl font-semibold text-white">{t('Blocks.infoBlock.title')}</h1>
+          <p className="text-sm font-bold text-white">{t('Blocks.infoBlock.highlight')}</p>
           <p className="text-base leading-relaxed text-white md:text-left md:text-sm">
             {t('Blocks.infoBlock.description')}
           </p>{' '}
@@ -38,7 +38,7 @@ export default function InfoBlock() {
 }
 
 const Pointer = ({ title, avatar }: { title: string; avatar: string }) => (
-  <div className="flex items-center space-x-2 rounded-full bg-sky-500 ">
+  <div className="flex items-center space-x-2 rounded-full bg-sky-500">
     <Image
       src={avatar}
       height={20}
@@ -46,6 +46,6 @@ const Pointer = ({ title, avatar }: { title: string; avatar: string }) => (
       alt="thumbnail"
       className="rounded-full border-2 border-white"
     />
-    <p className="pr-2 ">{title}</p>
+    <p className="pr-2">{title}</p>
   </div>
 );

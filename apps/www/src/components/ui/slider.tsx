@@ -15,7 +15,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, S
   ({ className, trackClassName, rangeClassName, thumbClassName, ...props }, ref) => (
     <SliderPrimitive.Root
       ref={ref}
-      className={cn('relative flex w-full touch-none select-none items-center', className)}
+      className={cn('relative flex w-full touch-none items-center select-none', className)}
       {...props}
     >
       <SliderPrimitive.Track
@@ -28,7 +28,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, S
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb
         className={cn(
-          'border-primary bg-background ring-offset-background focus-visible:ring-ring block h-5 w-5 rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+          'border-primary bg-background ring-offset-background focus-visible:ring-ring block h-5 w-5 rounded-full border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
           thumbClassName,
         )}
       />

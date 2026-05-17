@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 
-import UnderlineText from '@/components/underline-text';
 import { cn } from '@/lib/utils';
+import UnderlineText from '@/components/underline-text';
 
 export function Colophon({ className }: { className?: string }) {
   const t = useTranslations('Colophon');
@@ -13,7 +13,7 @@ export function Colophon({ className }: { className?: string }) {
       )}
     >
       <div className="flex flex-col items-start justify-start">
-        <p className="text-sm text-neutral-500 ">
+        <p className="text-sm text-neutral-500">
           {t.rich('description', {
             underline: chunks => <UnderlineText>{chunks}</UnderlineText>,
           })}

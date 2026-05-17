@@ -28,12 +28,12 @@ const components = {
   h1: (props: HeadingProps) => <h1 className="mb-4 pt-4 text-xl" {...props} />,
   h2: (props: HeadingProps) => (
     <h2
-      className="decoration-primary mb-3 mt-8 text-lg text-gray-800 underline dark:text-zinc-200"
+      className="decoration-primary mt-8 mb-3 text-lg text-gray-800 underline dark:text-zinc-200"
       {...props}
     />
   ),
   h3: (props: HeadingProps) => (
-    <h3 className="text-md mb-3 mt-8 text-gray-800 dark:text-zinc-200" {...props} />
+    <h3 className="text-md mt-8 mb-3 text-gray-800 dark:text-zinc-200" {...props} />
   ),
   h4: (props: HeadingProps) => <h4 className="text-md" {...props} />,
   p: (props: ParagraphProps) => (
@@ -88,7 +88,7 @@ const components = {
       </a>
     );
   },
-  hr: ({ ...props }: React.ComponentProps<'hr'>) => <hr className=" my-4  md:my-8" {...props} />,
+  hr: ({ ...props }: React.ComponentProps<'hr'>) => <hr className="my-4 md:my-8" {...props} />,
   pre: (props: ComponentPropsWithoutRef<'pre'>) => {
     return <pre className="overflow-x-auto rounded-lg bg-neutral-900 p-4 text-sm" {...props} />;
   },
@@ -203,7 +203,7 @@ const components = {
   ),
   blockquote: (props: BlockquoteProps) => (
     <blockquote
-      className="border-l-3 ml-[0.075em] border-gray-300 pl-4 text-gray-700 dark:border-zinc-600 dark:text-zinc-300"
+      className="ml-[0.075em] border-l-3 border-gray-300 pl-4 text-gray-700 dark:border-zinc-600 dark:text-zinc-300"
       {...props}
     />
   ),

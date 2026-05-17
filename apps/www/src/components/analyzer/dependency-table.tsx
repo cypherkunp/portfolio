@@ -1,6 +1,5 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
 import {
   AlertTriangle,
   ArrowDown,
@@ -14,14 +13,14 @@ import {
   ExternalLink,
   Search,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 
-import type { PackageEntry, SortColumn, SortDirection } from '@/hooks/use-package-analyzer';
 import { cn } from '@/lib/utils';
+import type { PackageEntry, SortColumn, SortDirection } from '@/hooks/use-package-analyzer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Table,
   TableBody,
@@ -30,6 +29,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface DependencyTableProps {
   dependencies: PackageEntry[];
@@ -52,7 +52,11 @@ interface DependencyTableProps {
   onCollapseAll: () => void;
 }
 
-function SortIcon({ column, activeColumn, direction }: {
+function SortIcon({
+  column,
+  activeColumn,
+  direction,
+}: {
   column: SortColumn;
   activeColumn: SortColumn;
   direction: SortDirection;
@@ -60,12 +64,21 @@ function SortIcon({ column, activeColumn, direction }: {
   if (column !== activeColumn || !direction) {
     return <ArrowUpDown className="size-3 opacity-40" />;
   }
-  return direction === 'asc'
-    ? <ArrowUp className="size-3 text-yellow-400" />
-    : <ArrowDown className="size-3 text-yellow-400" />;
+  return direction === 'asc' ? (
+    <ArrowUp className="size-3 text-yellow-400" />
+  ) : (
+    <ArrowDown className="size-3 text-yellow-400" />
+  );
 }
 
-function SortableHeader({ label, column, activeColumn, direction, onSort, className }: {
+function SortableHeader({
+  label,
+  column,
+  activeColumn,
+  direction,
+  onSort,
+  className,
+}: {
   label: string;
   column: SortColumn;
   activeColumn: SortColumn;
@@ -77,7 +90,7 @@ function SortableHeader({ label, column, activeColumn, direction, onSort, classN
     <TableHead className={className}>
       <button
         onClick={() => onSort(column)}
-        className="inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
+        className="hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
       >
         {label}
         <SortIcon column={column} activeColumn={activeColumn} direction={direction} />
@@ -114,24 +127,18 @@ function PackageRow({
   return (
     <>
       <TableRow
-        className={cn(
-          'cursor-pointer transition-colors',
-          isExpanded && 'bg-muted/30',
-        )}
+        className={cn('cursor-pointer transition-colors', isExpanded && 'bg-muted/30')}
         onClick={onToggle}
       >
         <TableCell className="w-10 pr-0">
           <Button variant="ghost" size="icon" className="size-7">
-            {isExpanded
-              ? <ChevronDown className="size-4" />
-              : <ChevronRight className="size-4" />
-            }
+            {isExpanded ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
           </Button>
         </TableCell>
         <TableCell>
           <div className="flex flex-col gap-0.5">
             <span className="font-mono text-sm font-medium">{pkg.name}</span>
-            <span className="text-xs text-muted-foreground md:hidden">
+            <span className="text-muted-foreground text-xs md:hidden">
               {pkg.configuredVersion} → {pkg.latestVersion}
             </span>
           </div>
@@ -151,13 +158,15 @@ function PackageRow({
         </TableCell>
         <TableCell className="hidden text-center lg:table-cell">
           {pkg.openIssues > 0 ? (
-            <Badge variant="outline" className="text-xs">{pkg.openIssues}</Badge>
+            <Badge variant="outline" className="text-xs">
+              {pkg.openIssues}
+            </Badge>
           ) : (
-            <span className="text-xs text-muted-foreground">—</span>
+            <span className="text-muted-foreground text-xs">—</span>
           )}
         </TableCell>
         <TableCell className="hidden xl:table-cell">
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-xs">
             {formatRelativeDate(pkg.lastPublished)}
           </span>
         </TableCell>
@@ -168,7 +177,7 @@ function PackageRow({
               target="_blank"
               rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
-              className="inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="text-muted-foreground hover:bg-muted hover:text-foreground inline-flex size-7 items-center justify-center rounded-md transition-colors"
               title="View on npm"
             >
               <ExternalLink className="size-3.5" />
@@ -179,7 +188,7 @@ function PackageRow({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={e => e.stopPropagation()}
-                className="inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="text-muted-foreground hover:bg-muted hover:text-foreground inline-flex size-7 items-center justify-center rounded-md transition-colors"
                 title="View on GitHub"
               >
                 <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
@@ -202,36 +211,36 @@ function PackageRow({
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="border-b border-border bg-muted/20 px-6 py-4">
+                <div className="border-border bg-muted/20 border-b px-6 py-4">
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     {pkg.description && (
                       <div className="md:col-span-2 lg:col-span-4">
-                        <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                        <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
                           Description
                         </span>
-                        <p className="mt-1 text-sm text-foreground">{pkg.description}</p>
+                        <p className="text-foreground mt-1 text-sm">{pkg.description}</p>
                       </div>
                     )}
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
                         Current version
                       </span>
                       <p className="mt-1 font-mono text-sm">{pkg.configuredVersion}</p>
                     </div>
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
                         Latest version
                       </span>
                       <p className="mt-1 font-mono text-sm">{pkg.latestVersion}</p>
                     </div>
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
                         Issues
                       </span>
                       <p className="mt-1 text-sm">{pkg.openIssues}</p>
                     </div>
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
                         Last published
                       </span>
                       <p className="mt-1 text-sm">{formatDate(pkg.lastPublished)}</p>
@@ -252,13 +261,27 @@ function LoadingSkeleton() {
     <>
       {Array.from({ length: 5 }).map((_, i) => (
         <TableRow key={i}>
-          <TableCell className="w-10 pr-0"><Skeleton className="size-7" /></TableCell>
-          <TableCell><Skeleton className="h-4 w-32" /></TableCell>
-          <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-16" /></TableCell>
-          <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-20" /></TableCell>
-          <TableCell className="hidden lg:table-cell"><Skeleton className="mx-auto h-4 w-8" /></TableCell>
-          <TableCell className="hidden xl:table-cell"><Skeleton className="h-4 w-24" /></TableCell>
-          <TableCell><Skeleton className="h-4 w-12" /></TableCell>
+          <TableCell className="w-10 pr-0">
+            <Skeleton className="size-7" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-4 w-32" />
+          </TableCell>
+          <TableCell className="hidden md:table-cell">
+            <Skeleton className="h-4 w-16" />
+          </TableCell>
+          <TableCell className="hidden md:table-cell">
+            <Skeleton className="h-4 w-20" />
+          </TableCell>
+          <TableCell className="hidden lg:table-cell">
+            <Skeleton className="mx-auto h-4 w-8" />
+          </TableCell>
+          <TableCell className="hidden xl:table-cell">
+            <Skeleton className="h-4 w-24" />
+          </TableCell>
+          <TableCell>
+            <Skeleton className="h-4 w-12" />
+          </TableCell>
         </TableRow>
       ))}
     </>
@@ -318,13 +341,13 @@ function PackageTable({
           Collapse all
         </Button>
         {showingFiltered && (
-          <span className="ml-auto text-xs text-muted-foreground">
+          <span className="text-muted-foreground ml-auto text-xs">
             {packages.length} of {total} packages
           </span>
         )}
       </div>
 
-      <div className="max-w-full overflow-x-auto rounded-lg border border-border">
+      <div className="border-border max-w-full overflow-x-auto rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
@@ -376,11 +399,10 @@ function PackageTable({
               <LoadingSkeleton />
             ) : packages.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="py-12 text-center text-muted-foreground">
+                <TableCell colSpan={7} className="text-muted-foreground py-12 text-center">
                   {searchQuery
                     ? `No packages found matching "${searchQuery}"`
-                    : 'No packages in this category'
-                  }
+                    : 'No packages in this category'}
                 </TableCell>
               </TableRow>
             ) : (
@@ -429,7 +451,7 @@ export function DependencyTable({
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-xs flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
           <Input
             placeholder="Search packages..."
             value={searchQuery}
@@ -439,7 +461,7 @@ export function DependencyTable({
         </div>
 
         {isLoading && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2 text-sm">
             <div className="size-2 animate-pulse rounded-full bg-yellow-400" />
             Analyzing packages... {fetchedCount} / {totalPackages}
           </div>

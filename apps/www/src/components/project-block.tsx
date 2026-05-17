@@ -47,7 +47,7 @@ const ProjectBlock: React.FC = () => {
               <IconComponent className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-bold leading-tight text-neutral-900 dark:text-neutral-100">
+              <h3 className="text-sm leading-tight font-bold text-neutral-900 dark:text-neutral-100">
                 {project.name}
               </h3>
               {project.description && (

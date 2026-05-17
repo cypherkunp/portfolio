@@ -55,7 +55,10 @@ function parsePackageJson(text: string): ParsedPackageJson {
   const deps = json.dependencies as Record<string, string> | undefined;
   const devDeps = json.devDependencies as Record<string, string> | undefined;
 
-  if ((!deps || Object.keys(deps).length === 0) && (!devDeps || Object.keys(devDeps).length === 0)) {
+  if (
+    (!deps || Object.keys(deps).length === 0) &&
+    (!devDeps || Object.keys(devDeps).length === 0)
+  ) {
     throw new Error('empty');
   }
 
@@ -76,7 +79,12 @@ function parsePackageJson(text: string): ParsedPackageJson {
   };
 }
 
-function comparePackages(a: PackageEntry, b: PackageEntry, column: SortColumn, direction: SortDirection): number {
+function comparePackages(
+  a: PackageEntry,
+  b: PackageEntry,
+  column: SortColumn,
+  direction: SortDirection,
+): number {
   if (!direction) return 0;
   const mul = direction === 'asc' ? 1 : -1;
 
@@ -190,7 +198,7 @@ export function usePackageAnalyzer() {
         fetchCount++;
         setFetchedCount(fetchCount);
       },
-      (errorType) => {
+      errorType => {
         if (controller.signal.aborted) return;
         hadError = true;
         setPhase('error');
@@ -221,7 +229,7 @@ export function usePackageAnalyzer() {
       }
 
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         const content = e.target?.result as string;
         processFile(content, file.name);
       };
@@ -285,7 +293,10 @@ export function usePackageAnalyzer() {
   );
 
   const filteredDeps = useMemo(() => filterAndSort(dependencies), [filterAndSort, dependencies]);
-  const filteredDevDeps = useMemo(() => filterAndSort(devDependencies), [filterAndSort, devDependencies]);
+  const filteredDevDeps = useMemo(
+    () => filterAndSort(devDependencies),
+    [filterAndSort, devDependencies],
+  );
 
   const totalPackages = totalDeps + totalDevDeps;
   const outdatedCount = useMemo(

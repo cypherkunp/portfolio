@@ -87,10 +87,10 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
       </div>
 
       {/* Content */}
-      <div className="  bg-neutral-900 px-8 py-6">
+      <div className="bg-neutral-900 px-8 py-6">
         <pre className="m-0">
           <code
-            className="text-wrap font-mono text-sm"
+            className="font-mono text-sm text-wrap"
             dangerouslySetInnerHTML={{ __html: highlightedCode }}
           />
         </pre>

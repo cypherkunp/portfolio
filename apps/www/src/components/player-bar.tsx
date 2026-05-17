@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import {
   Laptop,
   LayoutList,
@@ -14,8 +15,6 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-
-import Image from 'next/image';
 
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
@@ -118,7 +117,7 @@ export default function PlayerBar({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 border-t border-zinc-800 bg-zinc-900 px-4 py-3">
+    <div className="fixed right-0 bottom-0 left-0 border-t border-zinc-800 bg-zinc-900 px-4 py-3">
       <div className="mx-auto flex max-w-screen-xl items-center justify-between">
         {/* Now playing */}
         <div className="flex w-1/4 min-w-[180px] items-center">

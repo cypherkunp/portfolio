@@ -1,8 +1,8 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
 import { FileJson, Upload, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -52,13 +52,11 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3"
+        className="border-border bg-card flex items-center gap-3 rounded-lg border px-4 py-3"
       >
         <FileJson className="size-5 text-yellow-400" />
-        <span className="font-mono text-sm text-foreground">{fileName}</span>
-        {isAnalyzing && (
-          <span className="text-xs text-muted-foreground">Analyzing...</span>
-        )}
+        <span className="text-foreground font-mono text-sm">{fileName}</span>
+        {isAnalyzing && <span className="text-muted-foreground text-xs">Analyzing...</span>}
         <Button
           variant="ghost"
           size="icon"
@@ -90,7 +88,7 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
             'group relative cursor-pointer overflow-hidden rounded-xl border-2 border-dashed transition-all duration-300',
             isDragOver
               ? 'border-yellow-400 bg-yellow-400/5'
-              : 'border-border hover:border-yellow-400/50 hover:bg-card/50',
+              : 'border-border hover:bg-card/50 hover:border-yellow-400/50',
           )}
         >
           <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 md:py-24">
@@ -108,12 +106,10 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
             </motion.div>
 
             <div className="flex flex-col items-center gap-2 text-center">
-              <h3 className="text-lg font-semibold text-foreground">
-                Drop your package.json here
-              </h3>
-              <p className="max-w-sm text-sm text-muted-foreground">
-                Drag and drop your package.json file, or click to browse.
-                We'll analyze your dependencies and show what's outdated.
+              <h3 className="text-foreground text-lg font-semibold">Drop your package.json here</h3>
+              <p className="text-muted-foreground max-w-sm text-sm">
+                Drag and drop your package.json file, or click to browse. We'll analyze your
+                dependencies and show what's outdated.
               </p>
             </div>
 
@@ -122,7 +118,7 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
                 variant="outline"
                 size="sm"
                 className="gap-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400/10 hover:text-yellow-400"
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   inputRef.current?.click();
                 }}

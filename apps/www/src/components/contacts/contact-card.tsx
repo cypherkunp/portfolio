@@ -22,7 +22,7 @@ export function ContactCard({
 }: ContactCardProps) {
   const content = (
     <>
-      <span className="bg-secondary/10 text-secondary flex size-10 shrink-0 items-center justify-center rounded-md transition-colors group-hover:bg-secondary/20">
+      <span className="bg-secondary/10 text-secondary group-hover:bg-secondary/20 flex size-10 shrink-0 items-center justify-center rounded-md transition-colors">
         <Icon className="size-4" />
       </span>
       <div className="flex min-w-0 flex-1 flex-col">
@@ -30,10 +30,7 @@ export function ContactCard({
         <span className="text-foreground truncate text-sm font-medium">{value}</span>
       </div>
       {href ? (
-        <ArrowUpRight
-          className="text-muted-foreground ml-2 size-4 shrink-0 opacity-0 transition-all
-            group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
-        />
+        <ArrowUpRight className="text-muted-foreground ml-2 size-4 shrink-0 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
       ) : null}
     </>
   );

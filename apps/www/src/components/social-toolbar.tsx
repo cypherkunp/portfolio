@@ -56,7 +56,7 @@ export function SocialToolbar() {
   return (
     <>
       {/* Mobile Version - Top Sticky */}
-      <div className="z-50 mt-4 rounded-lg  bg-black/10 backdrop-blur-lg">
+      <div className="z-50 mt-4 rounded-lg bg-black/10 backdrop-blur-lg">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
             {visibleIcons.map(social => {

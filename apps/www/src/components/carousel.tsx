@@ -46,7 +46,7 @@ export default function Component() {
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="absolute bottom-4 right-4 flex space-x-2">
+      <div className="absolute right-4 bottom-4 flex space-x-2">
         <Button
           variant="outline"
           size="icon"

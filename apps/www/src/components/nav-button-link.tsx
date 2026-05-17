@@ -16,8 +16,7 @@ export default function NavButtonLink({ text, target, type, ring, href }: NavBut
     <Link
       target={target}
       className={cn(
-        `text-warm-black active:bg-warm-black md:hover:bg-warm-black ease duration-600 group inline-flex
-        items-center justify-center gap-4 rounded-md px-4 py-1 font-bold`,
+        `text-warm-black active:bg-warm-black md:hover:bg-warm-black ease group inline-flex items-center justify-center gap-4 rounded-md px-4 py-1 font-bold duration-600`,
         {
           'bg-fluorescent-green': type === 'primary',
           'bg-warm-white': type === 'secondary',
@@ -29,11 +28,8 @@ export default function NavButtonLink({ text, target, type, ring, href }: NavBut
       )}
       href={href}
     >
-      <span className="text-navLink ">{text}</span>
-      <div
-        className="ease relative top-[-1px] flex translate-x-0 justify-center leading-[100%] transition-transform
-          duration-300 md:group-hover:translate-x-[2px]"
-      >
+      <span className="text-navLink">{text}</span>
+      <div className="ease relative top-[-1px] flex translate-x-0 justify-center leading-[100%] transition-transform duration-300 md:group-hover:translate-x-[2px]">
         <ArrowIcon />
       </div>
     </Link>
