@@ -11,7 +11,8 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "analyze-build": "ANALYZE=true next build",
-    "unlighthouse-ci": "unlighthouse-ci"
+    "unlighthouse-ci": "unlighthouse-ci",
+    "fetch:bookmarks": "node scripts/fetch-bookmarks-og.mjs"
   },
   "devDependencies": {
     "@repo/ui": "workspace:*",
