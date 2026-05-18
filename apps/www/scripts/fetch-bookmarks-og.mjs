@@ -16,7 +16,7 @@ import process from 'node:process';
 const CONFIG_FILE = path.resolve('src/content/bookmarks.config.json');
 const OG_FILE = path.resolve('src/content/bookmarks.og.json');
 const UA =
-  'Mozilla/5.0 (compatible; PortfolioBookmarksBot/1.0; +https://devvrat.uk/bookmarks)';
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 const force = process.argv.includes('--force');
 
 function decodeEntities(text) {
@@ -107,7 +107,7 @@ async function fetchOg(url) {
     if (!res.ok) return null;
     const ct = res.headers.get('content-type') ?? '';
     if (!ct.includes('html')) return null;
-    const html = (await res.text()).slice(0, 200_000);
+    const html = (await res.text()).slice(0, 1_500_000);
     const finalUrl = res.url || url;
 
     const title = pickTitle(html) ?? new URL(finalUrl).hostname.replace(/^www\./, '');

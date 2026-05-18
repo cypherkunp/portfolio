@@ -7,7 +7,7 @@
       "image": null,
       "siteName": "paulgraham.com",
       "favicon": "http://ycombinator.com/arc/arc.png",
-      "fetchedAt": "2026-05-17T12:51:11.059Z"
+      "fetchedAt": "2026-05-18T18:20:24.032Z"
     },
     "https://www.cs.virginia.edu/~robins/YouAndYourResearch.html": {
       "title": "You and Your Research",
@@ -15,7 +15,7 @@
       "image": null,
       "siteName": "cs.virginia.edu",
       "favicon": "https://www.cs.virginia.edu/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:11.768Z"
+      "fetchedAt": "2026-05-18T18:20:25.205Z"
     },
     "https://grugbrain.dev/": {
       "title": "The Grug Brained Developer",
@@ -23,7 +23,7 @@
       "image": null,
       "siteName": "grugbrain.dev",
       "favicon": "https://grugbrain.dev/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:12.072Z"
+      "fetchedAt": "2026-05-18T18:20:25.591Z"
     },
     "https://dauntbooks.co.uk/shops/marylebone/": {
       "title": "Daunt Books Marylebone",
@@ -31,7 +31,7 @@
       "image": "https://dauntbooks.co.uk/wp-content/uploads/2019/06/marylebone_1.jpg",
       "siteName": "Daunt Books",
       "favicon": "https://dauntbooks.co.uk/wp-content/themes/winston/images/favicon.png",
-      "fetchedAt": "2026-05-17T12:51:12.247Z"
+      "fetchedAt": "2026-05-18T18:20:25.862Z"
     },
     "https://www.barbican.org.uk/whats-on/conservatory": {
       "title": "barbican.org.uk",
@@ -47,7 +47,7 @@
       "image": "https://www.kew.org/sites/default/files/styles/social/public/2022-08/Teaser%20image%20%281%29.png.webp?itok=HVeGs6nv",
       "siteName": "Kew",
       "favicon": "https://www.kew.org/themes/custom/kew_gardens/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:12.747Z"
+      "fetchedAt": "2026-05-18T18:20:26.478Z"
     },
     "https://www.rbkc.gov.uk/museums/leighton-house": {
       "title": "Leighton House",
@@ -55,39 +55,39 @@
       "image": "https://www.rbkc.gov.uk/museums/sites/museums/files/2021-07/LEIGHTON-HOUSE-MUSEUM_038.jpg",
       "siteName": "RBKC Museums",
       "favicon": "https://www.rbkc.gov.uk/museums/themes/custom/rbkcmuseums/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:12.909Z"
+      "fetchedAt": "2026-05-18T18:20:26.845Z"
     },
     "https://www.youtube.com/@t3dotgg": {
-      "title": "youtube.com",
-      "description": null,
-      "image": null,
-      "siteName": "youtube.com",
-      "favicon": "https://www.youtube.com/s/desktop/b232f2cf/img/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:13.725Z"
+      "title": "Theo - t3․gg",
+      "description": "Software dev, AI nerd, TypeScript sympathizer, creator of T3 Chat and the T3 Stack.\n",
+      "image": "https://yt3.googleusercontent.com/Y6jut5A-dhWRlv7W81kGxVFPtZGjZN97IhBP75uLnx2AVV7ZEJUUUxBKHlFw9GcwILxkz1E_cLc=s900-c-k-c0x00ffffff-no-rj",
+      "siteName": "YouTube",
+      "favicon": "https://www.youtube.com/s/desktop/a79e727c/img/favicon.ico",
+      "fetchedAt": "2026-05-18T18:20:27.558Z"
     },
     "https://www.youtube.com/@ThePrimeagen": {
-      "title": "youtube.com",
-      "description": null,
-      "image": null,
-      "siteName": "youtube.com",
-      "favicon": "https://www.youtube.com/s/desktop/b232f2cf/img/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:14.402Z"
+      "title": "ThePrimeagen",
+      "description": "Vim - Rust - TypeScript",
+      "image": "https://yt3.googleusercontent.com/ytc/AIdro_laY82JAzs_2edBDxrxLgLWshhMK04SpAqOfoEzexOBZg=s900-c-k-c0x00ffffff-no-rj",
+      "siteName": "YouTube",
+      "favicon": "https://www.youtube.com/s/desktop/a79e727c/img/favicon.ico",
+      "fetchedAt": "2026-05-18T18:20:28.393Z"
     },
     "https://www.youtube.com/@Fireship": {
-      "title": "youtube.com",
-      "description": null,
-      "image": null,
-      "siteName": "youtube.com",
-      "favicon": "https://www.youtube.com/s/desktop/b232f2cf/img/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:14.884Z"
+      "title": "Fireship",
+      "description": "High-intensity ⚡ code tutorials and tech news to help you ship your app faster. New videos every week covering the topics every programmer should know. \n\nThe original home of #100SecondsOfCode #TheCodeReport and #CodeThisNotThat. Created by Jeff Delaney. \n\nWant more Fireship?\n\n🗞️ Newsletter – https://bytes.dev\n🧠 Courses – https://fireship.dev\n",
+      "image": "https://yt3.googleusercontent.com/3fPNbkf_xPyCleq77ZhcxyeorY97NtMHVNUbaAON_RBDH9ydL4hJkjxC8x_4mpuopkB8oI7Ct6Y=s900-c-k-c0x00ffffff-no-rj",
+      "siteName": "YouTube",
+      "favicon": "https://www.youtube.com/s/desktop/a79e727c/img/favicon.ico",
+      "fetchedAt": "2026-05-18T18:20:28.960Z"
     },
     "https://www.youtube.com/@developedbyed": {
-      "title": "youtube.com",
-      "description": null,
-      "image": null,
-      "siteName": "youtube.com",
-      "favicon": "https://www.youtube.com/s/desktop/b232f2cf/img/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:15.439Z"
+      "title": "developedbyed",
+      "description": "Hello my gorgeous friends on the internet, welcome to DevelopedByEd, your go-to channel for learning how to code, design, and become more creative in the tech world!\n\nI’m Ed, a self-taught full stack engineer and designer from Romania, and I've been teaching code since 2018. I make learning fun and simple, covering topics such as web development, web design, UI/UX, game development, tech-related news, 3D modelling, and more!\n\nWhether you're a beginner or an experienced developer, I have coding courses and tutorials suitable for any level. I specialize in front-end, full-stack, and design, and I'm dedicated to sharing my knowledge and expertise with you! \n\nAnd the best part? You can use any of the amazing projects you see in my tutorials or courses in your portfolios!\n\nSo, if you want to kickstart your tech career, head over to https://developedbyed.com and find affordable courses that will take you to the next level! 💻\n",
+      "image": "https://yt3.googleusercontent.com/fwO10Ay61s_CaO2UweJGalew89tUD3X65vA4Uj2UN9wbgg2MJM5591khoyrUir8FpYrBD0crsw=s900-c-k-c0x00ffffff-no-rj",
+      "siteName": "YouTube",
+      "favicon": "https://www.youtube.com/s/desktop/a79e727c/img/favicon.ico",
+      "fetchedAt": "2026-05-18T18:20:29.401Z"
     },
     "https://vercel.com/geist/introduction": {
       "title": "Geist",
@@ -95,15 +95,15 @@
       "image": "https://k2mkucxia43oc7fa.public.blob.vercel-storage.com/front/design/geist-og.jpg",
       "siteName": "Vercel",
       "favicon": "https://vercel.com/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:15.565Z"
+      "fetchedAt": "2026-05-18T18:20:29.681Z"
     },
     "https://linear.app/method": {
       "title": "Linear Method – Practices for building",
-      "description": "The quality of a product is driven by both the talent of its creators and how they feel while they're crafting it. To bring back the right focus, these are the foundational and evolving ideas Linear is built on.",
+      "description": "The quality of a product is driven by both the talent of its creators and how they feel while they’re crafting it. To bring back the right focus, these are the foundational and evolving ideas Linear is built on.",
       "image": "https://linear.app/api/og/method?title=Practices+for+building&v=3",
       "siteName": "Linear",
       "favicon": "https://linear.app/favicon.ico",
-      "fetchedAt": "2026-05-17T12:51:16.268Z"
+      "fetchedAt": "2026-05-18T18:20:30.144Z"
     },
     "https://stripe.press/": {
       "title": "Stripe Press — Ideas for progress",
@@ -111,7 +111,7 @@
       "image": "https://images.stripeassets.com/fzn2n1nzq965/13zaWB3aiz08hqNr69CMW4/772586e910faef5d26d15e01edb9c010/social.png?q=80",
       "siteName": "press.stripe.com",
       "favicon": "https://images.stripeassets.com/fzn2n1nzq965/1hgcBNd12BfT9VLgbId7By/01d91920114b124fb4cf6d448f9f06eb/favicon.svg",
-      "fetchedAt": "2026-05-17T12:51:17.090Z"
+      "fetchedAt": "2026-05-18T18:20:32.025Z"
     }
   }
 }
