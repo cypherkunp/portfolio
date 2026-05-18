@@ -56,7 +56,6 @@ async function CollectionView({ id }: { id: string }) {
       bookmarks={enriched.bookmarks}
       shareUrl={`/bookmarks/${id}`}
       heading={enriched.name}
-      subheading={enriched.description}
     />
   );
 }

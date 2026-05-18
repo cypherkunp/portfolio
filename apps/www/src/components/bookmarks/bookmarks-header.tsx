@@ -6,11 +6,10 @@ interface BookmarksHeaderProps {
 }
 
 export function BookmarksHeader({ collections, activeCollectionId }: BookmarksHeaderProps) {
-  const total = collections.reduce((n, c) => n + c.bookmarks.length, 0);
   const active = activeCollectionId ? collections.find(c => c.id === activeCollectionId) : null;
 
   return (
-    <header className="flex flex-col gap-5 px-1 py-6 sm:gap-6 sm:py-10">
+    <header className="px-1 py-5 sm:py-8">
       <h1 className="text-2xl font-light tracking-tight text-neutral-100 sm:text-4xl">
         {active ? (
           <>
@@ -23,10 +22,6 @@ export function BookmarksHeader({ collections, activeCollectionId }: BookmarksHe
           </>
         )}
       </h1>
-      <p className="max-w-2xl text-sm leading-relaxed text-neutral-400 sm:text-base">
-        {active?.description ??
-          `${total} bookmarks across ${collections.length} collections — articles, places, channels, and design systems I steal from. Each collection has its own shareable link.`}
-      </p>
     </header>
   );
 }

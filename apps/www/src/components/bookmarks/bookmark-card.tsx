@@ -71,7 +71,7 @@ export function BookmarkCard({
       {/* Cover */}
       <div
         className={cn(
-          'relative aspect-[16/9] w-full overflow-hidden bg-linear-to-br',
+          'relative aspect-video w-full overflow-hidden bg-linear-to-br',
           ACCENT_BG[accent],
         )}
       >
@@ -123,41 +123,38 @@ export function BookmarkCard({
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col gap-2 p-4 sm:p-5">
+      <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4">
         <h3 className="line-clamp-2 text-sm font-medium tracking-tight text-neutral-100 sm:text-base">
           {og.title}
         </h3>
-        {(bookmark.description || og.description) && (
-          <p className="line-clamp-2 text-xs leading-relaxed text-neutral-500 sm:text-[13px]">
-            {bookmark.description ?? og.description}
-          </p>
-        )}
 
-        <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-          <div className="flex flex-wrap gap-1">
-            {bookmark.tags?.slice(0, 3).map(tag => (
-              <button
-                key={tag}
-                onClick={e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onTagClick?.(tag);
-                }}
-                className="relative z-20 rounded-full border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[10px] text-neutral-500 transition-colors hover:border-neutral-700 hover:text-neutral-300"
+        {(bookmark.tags?.length || (showCollection && collectionName && collectionId)) && (
+          <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+            <div className="flex flex-wrap gap-1">
+              {bookmark.tags?.slice(0, 2).map(tag => (
+                <button
+                  key={tag}
+                  onClick={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onTagClick?.(tag);
+                  }}
+                  className="relative z-20 rounded-full border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[10px] text-neutral-500 transition-colors hover:border-neutral-700 hover:text-neutral-300"
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+            {showCollection && collectionName && collectionId && (
+              <Link
+                href={`/bookmarks/${collectionId}`}
+                className="relative z-20 truncate text-[10px] text-neutral-600 hover:text-neutral-400"
               >
-                {tag}
-              </button>
-            ))}
+                {collectionName}
+              </Link>
+            )}
           </div>
-          {showCollection && collectionName && collectionId && (
-            <Link
-              href={`/bookmarks/${collectionId}`}
-              className="relative z-20 truncate text-[10px] text-neutral-600 hover:text-neutral-400"
-            >
-              {collectionName}
-            </Link>
-          )}
-        </div>
+        )}
       </div>
     </article>
   );

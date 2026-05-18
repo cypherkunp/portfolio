@@ -29,7 +29,6 @@ interface BookmarksShellProps {
   bookmarks: Bookmark[];
   shareUrl: string;
   heading?: string;
-  subheading?: string;
 }
 
 const ICON_MAP: Record<string, typeof Library> = {
@@ -65,7 +64,6 @@ export function BookmarksShell({
   bookmarks,
   shareUrl,
   heading,
-  subheading,
 }: BookmarksShellProps) {
   const [view, setView] = useState<ViewMode>('grid');
   const [query, setQuery] = useState('');
@@ -108,8 +106,8 @@ export function BookmarksShell({
   const active = activeCollectionId ? collections.find(c => c.id === activeCollectionId) : null;
 
   return (
-    <div className="mt-2 border-t border-neutral-900 pt-6 sm:pt-10">
-      <div className="grid gap-6 md:grid-cols-[220px_1fr] md:gap-10">
+    <div className="mt-2 overflow-x-clip border-t border-neutral-900 pt-5 sm:pt-10">
+      <div className="grid gap-5 md:grid-cols-[220px_1fr] md:gap-10">
         {/* Sidebar */}
         <aside className="md:sticky md:top-6 md:self-start">
           <div className="mb-3 flex items-center justify-between px-1">
@@ -157,37 +155,36 @@ export function BookmarksShell({
         {/* Main */}
         <section className="min-w-0">
           {/* Toolbar */}
-          <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex min-w-0 flex-1 items-center gap-2">
-              <div className="relative flex-1 sm:max-w-xs">
-                <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-neutral-600" />
-                <input
-                  value={query}
-                  onChange={e => setQuery(e.target.value)}
-                  placeholder={`Search ${active ? active.name.toLowerCase() : 'all bookmarks'}…`}
-                  className="w-full rounded-full border border-neutral-800 bg-neutral-950 py-1.5 pr-3 pl-9 text-xs text-neutral-200 placeholder:text-neutral-600 focus:border-neutral-600 focus:outline-none"
-                />
-              </div>
+          <div className="mb-5 flex items-center gap-2">
+            <div className="relative min-w-0 flex-1 sm:max-w-xs">
+              <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-neutral-600" />
+              <input
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder={`Search ${active ? active.name.toLowerCase() : 'bookmarks'}…`}
+                className="w-full rounded-full border border-neutral-800 bg-neutral-950 py-1.5 pr-3 pl-9 text-xs text-neutral-200 placeholder:text-neutral-600 focus:border-neutral-600 focus:outline-none"
+              />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="hidden shrink-0 rounded-full border border-neutral-800 bg-neutral-950 p-0.5 sm:flex">
+              <ViewToggleButton
+                active={view === 'grid'}
+                onClick={() => setView('grid')}
+                aria-label="Grid view"
+              >
+                <LayoutGrid className="size-3.5" />
+              </ViewToggleButton>
+              <ViewToggleButton
+                active={view === 'list'}
+                onClick={() => setView('list')}
+                aria-label="List view"
+              >
+                <ListIcon className="size-3.5" />
+              </ViewToggleButton>
+            </div>
+
+            <div className="shrink-0">
               <ShareButton url={shareUrl} label={active ? `Share "${active.name}"` : 'Share'} />
-              <div className="flex rounded-full border border-neutral-800 bg-neutral-950 p-0.5">
-                <ViewToggleButton
-                  active={view === 'grid'}
-                  onClick={() => setView('grid')}
-                  aria-label="Grid view"
-                >
-                  <LayoutGrid className="size-3.5" />
-                </ViewToggleButton>
-                <ViewToggleButton
-                  active={view === 'list'}
-                  onClick={() => setView('list')}
-                  aria-label="List view"
-                >
-                  <ListIcon className="size-3.5" />
-                </ViewToggleButton>
-              </div>
             </div>
           </div>
 
@@ -216,7 +213,6 @@ export function BookmarksShell({
           {heading && (
             <div className="mb-4 hidden md:block">
               <h2 className="text-lg font-medium text-neutral-100">{heading}</h2>
-              {subheading && <p className="text-xs text-neutral-500">{subheading}</p>}
             </div>
           )}
 
@@ -233,40 +229,65 @@ export function BookmarksShell({
                 Reset filters
               </button>
             </div>
-          ) : view === 'grid' ? (
-            <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
-              {filtered.map(b => {
-                const collection = collections.find(c => c.id === b.collectionId);
-                return (
-                  <BookmarkCard
-                    key={`${b.collectionId}:${b.id}`}
-                    bookmark={b}
-                    accent={collection?.accent ?? 'default'}
-                    onTagClick={t => setActiveTag(t)}
-                    showCollection={!activeCollectionId}
-                    collectionName={collection?.name}
-                    collectionId={collection?.id}
-                  />
-                );
-              })}
-            </div>
           ) : (
-            <ul className="divide-y divide-neutral-900 overflow-hidden rounded-2xl border border-neutral-900 bg-neutral-950/30">
-              {filtered.map(b => {
-                const collection = collections.find(c => c.id === b.collectionId);
-                return (
-                  <BookmarkRow
-                    key={`${b.collectionId}:${b.id}`}
-                    bookmark={b}
-                    accent={collection?.accent ?? 'default'}
-                    onTagClick={t => setActiveTag(t)}
-                    showCollection={!activeCollectionId}
-                    collectionName={collection?.name}
-                    collectionId={collection?.id}
-                  />
-                );
-              })}
-            </ul>
+            <>
+              {/* Mobile: always list */}
+              <ul className="divide-y divide-neutral-900 overflow-hidden rounded-2xl border border-neutral-900 bg-neutral-950/30 sm:hidden">
+                {filtered.map(b => {
+                  const collection = collections.find(c => c.id === b.collectionId);
+                  return (
+                    <BookmarkRow
+                      key={`${b.collectionId}:${b.id}`}
+                      bookmark={b}
+                      accent={collection?.accent ?? 'default'}
+                      onTagClick={t => setActiveTag(t)}
+                      showCollection={!activeCollectionId}
+                      collectionName={collection?.name}
+                      collectionId={collection?.id}
+                    />
+                  );
+                })}
+              </ul>
+
+              {/* sm+: respect view toggle */}
+              <div className="hidden sm:block">
+                {view === 'grid' ? (
+                  <div className="grid gap-5 md:grid-cols-2">
+                    {filtered.map(b => {
+                      const collection = collections.find(c => c.id === b.collectionId);
+                      return (
+                        <BookmarkCard
+                          key={`${b.collectionId}:${b.id}`}
+                          bookmark={b}
+                          accent={collection?.accent ?? 'default'}
+                          onTagClick={t => setActiveTag(t)}
+                          showCollection={!activeCollectionId}
+                          collectionName={collection?.name}
+                          collectionId={collection?.id}
+                        />
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <ul className="divide-y divide-neutral-900 overflow-hidden rounded-2xl border border-neutral-900 bg-neutral-950/30">
+                    {filtered.map(b => {
+                      const collection = collections.find(c => c.id === b.collectionId);
+                      return (
+                        <BookmarkRow
+                          key={`${b.collectionId}:${b.id}`}
+                          bookmark={b}
+                          accent={collection?.accent ?? 'default'}
+                          onTagClick={t => setActiveTag(t)}
+                          showCollection={!activeCollectionId}
+                          collectionName={collection?.name}
+                          collectionId={collection?.id}
+                        />
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
+            </>
           )}
         </section>
       </div>

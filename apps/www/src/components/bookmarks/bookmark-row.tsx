@@ -52,13 +52,13 @@ export function BookmarkRow({
         aria-label={og.title}
       />
 
-      <div className="flex items-start gap-3 px-4 py-3 transition-colors group-hover:bg-neutral-900/40 sm:px-5 sm:py-4">
+      <div className="flex items-center gap-3 px-3 py-2.5 transition-colors group-hover:bg-neutral-900/40 sm:px-5 sm:py-3">
         <span
-          className={cn('mt-1.5 size-1.5 shrink-0 rounded-full', ACCENT_DOT[accent])}
+          className={cn('size-1.5 shrink-0 rounded-full', ACCENT_DOT[accent])}
           aria-hidden
         />
 
-        <div className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded border border-neutral-800/80 bg-neutral-950">
+        <div className="flex size-5 shrink-0 items-center justify-center overflow-hidden rounded border border-neutral-800/80 bg-neutral-950">
           {og.favicon ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -66,26 +66,22 @@ export function BookmarkRow({
               alt=""
               loading="lazy"
               referrerPolicy="no-referrer"
-              className="size-4"
+              className="size-3.5"
             />
           ) : (
             <span className="text-[10px] text-neutral-500">{domain.charAt(0).toUpperCase()}</span>
           )}
         </div>
 
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <h3 className="truncate text-sm font-medium text-neutral-200 group-hover:text-neutral-100">
-              {og.title}
-            </h3>
-            <span className="hidden truncate text-[11px] text-neutral-600 sm:inline">{domain}</span>
-          </div>
-          <p className="mt-0.5 line-clamp-1 text-xs text-neutral-500">
-            {bookmark.description ?? og.description ?? domain}
-          </p>
-        </div>
+        <h3 className="min-w-0 flex-1 truncate text-sm font-medium text-neutral-200 group-hover:text-neutral-100">
+          {og.title}
+        </h3>
 
-        <div className="hidden items-center gap-1 sm:flex">
+        <span className="hidden shrink-0 truncate text-[11px] text-neutral-600 sm:inline">
+          {domain}
+        </span>
+
+        <div className="hidden shrink-0 items-center gap-1 sm:flex">
           {bookmark.tags?.slice(0, 2).map(tag => (
             <button
               key={tag}
@@ -109,7 +105,7 @@ export function BookmarkRow({
           )}
         </div>
 
-        <ArrowUpRight className="mt-0.5 size-3.5 shrink-0 text-neutral-700 transition-colors group-hover:text-neutral-400" />
+        <ArrowUpRight className="size-3.5 shrink-0 text-neutral-700 transition-colors group-hover:text-neutral-400" />
       </div>
     </li>
   );
