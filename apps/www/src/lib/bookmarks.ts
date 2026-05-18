@@ -1,25 +1,35 @@
 import 'server-only';
 
 import { fetchOg, type OgData } from '@/lib/og';
-import bookmarksJson from '@/content/bookmarks.json';
+import bookmarksConfig from '@/content/bookmarks.config.json';
+import bookmarksOg from '@/content/bookmarks.og.json';
 
 export type BookmarkAccent = 'default' | 'highlight' | 'accent' | 'primary' | 'mono';
 
-export interface BookmarkRaw {
+/** Hand-edited shape — no OG data. */
+export interface BookmarkInput {
   id: string;
   url: string;
   description?: string;
   tags?: string[];
   addedAt: string;
-  og: OgData | null;
 }
 
-export interface BookmarkCollection {
+export interface BookmarkCollectionInput {
   id: string;
   name: string;
   description?: string;
   icon: string;
   accent: BookmarkAccent;
+  bookmarks: BookmarkInput[];
+}
+
+/** Bookmark merged with optional cached OG data — `og` may be null until enriched. */
+export interface BookmarkRaw extends BookmarkInput {
+  og: OgData | null;
+}
+
+export interface BookmarkCollection extends Omit<BookmarkCollectionInput, 'bookmarks'> {
   bookmarks: BookmarkRaw[];
 }
 
@@ -28,9 +38,17 @@ export interface Bookmark extends Omit<BookmarkRaw, 'og'> {
   collectionId: string;
 }
 
-interface BookmarksFile {
-  collections: BookmarkCollection[];
+interface BookmarksConfigFile {
+  collections: BookmarkCollectionInput[];
 }
+
+interface BookmarksOgFile {
+  entries: Record<string, OgData>;
+}
+
+const config = bookmarksConfig as BookmarksConfigFile;
+const ogCache: Record<string, OgData> =
+  (bookmarksOg as BookmarksOgFile).entries ?? {};
 
 function fallbackOg(url: string): OgData {
   let domain = '';
@@ -49,6 +67,10 @@ function fallbackOg(url: string): OgData {
   };
 }
 
+function mergeOg(b: BookmarkInput): BookmarkRaw {
+  return { ...b, og: ogCache[b.url] ?? null };
+}
+
 async function enrichBookmark(b: BookmarkRaw, collectionId: string): Promise<Bookmark> {
   if (b.og && b.og.title) {
     return { ...b, og: b.og, collectionId };
@@ -62,7 +84,10 @@ async function enrichBookmark(b: BookmarkRaw, collectionId: string): Promise<Boo
 }
 
 export function getCollections(): BookmarkCollection[] {
-  return (bookmarksJson as BookmarksFile).collections;
+  return config.collections.map(c => ({
+    ...c,
+    bookmarks: c.bookmarks.map(mergeOg),
+  }));
 }
 
 export function getCollection(id: string): BookmarkCollection | undefined {

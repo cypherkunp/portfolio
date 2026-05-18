@@ -1,0 +1,139 @@
+{
+  "$schema": "Hand-edited. Add collections and bookmarks here. Run `pnpm --filter www fetch:bookmarks` to refresh `bookmarks.og.json`.",
+  "collections": [
+    {
+      "id": "reading-list",
+      "name": "Reading List",
+      "description": "Long-form articles I keep coming back to.",
+      "icon": "book-open",
+      "accent": "highlight",
+      "bookmarks": [
+        {
+          "id": "do-things-that-dont-scale",
+          "url": "https://paulgraham.com/ds.html",
+          "description": "Paul Graham on recruiting your first users by hand.",
+          "tags": ["startup", "essay"],
+          "addedAt": "2025-04-12"
+        },
+        {
+          "id": "you-and-your-research",
+          "url": "https://www.cs.virginia.edu/~robins/YouAndYourResearch.html",
+          "description": "Richard Hamming on what makes great work.",
+          "tags": ["career", "essay"],
+          "addedAt": "2025-03-02"
+        },
+        {
+          "id": "the-grug-brained-developer",
+          "url": "https://grugbrain.dev/",
+          "description": "Self-aware satire on complexity in software.",
+          "tags": ["engineering", "humor"],
+          "addedAt": "2025-02-18"
+        }
+      ]
+    },
+    {
+      "id": "london-spots",
+      "name": "Places to Visit in London",
+      "description": "Bookmarked corners of the city I want to drag friends to.",
+      "icon": "map-pin",
+      "accent": "accent",
+      "bookmarks": [
+        {
+          "id": "daunt-books",
+          "url": "https://dauntbooks.co.uk/shops/marylebone/",
+          "description": "Edwardian bookshop on Marylebone High Street.",
+          "tags": ["books", "marylebone"],
+          "addedAt": "2025-05-01"
+        },
+        {
+          "id": "barbican-conservatory",
+          "url": "https://www.barbican.org.uk/whats-on/conservatory",
+          "description": "Brutalist jungle hiding inside the Barbican.",
+          "tags": ["architecture", "free"],
+          "addedAt": "2025-04-20"
+        },
+        {
+          "id": "kew-gardens",
+          "url": "https://www.kew.org/kew-gardens",
+          "description": "Glasshouses, palms, and a treetop walkway.",
+          "tags": ["nature", "weekend"],
+          "addedAt": "2025-03-15"
+        },
+        {
+          "id": "leighton-house",
+          "url": "https://www.rbkc.gov.uk/museums/leighton-house",
+          "description": "Frederic Leighton's Arab Hall in Holland Park.",
+          "tags": ["museum", "kensington"],
+          "addedAt": "2025-02-10"
+        }
+      ]
+    },
+    {
+      "id": "youtube-dev-channels",
+      "name": "YouTube Dev Channels",
+      "description": "Channels I learn the most from.",
+      "icon": "youtube",
+      "accent": "primary",
+      "bookmarks": [
+        {
+          "id": "theo",
+          "url": "https://www.youtube.com/@t3dotgg",
+          "description": "Theo on TypeScript, Next.js, and web infra.",
+          "tags": ["typescript", "nextjs"],
+          "addedAt": "2025-05-04"
+        },
+        {
+          "id": "primeagen",
+          "url": "https://www.youtube.com/@ThePrimeagen",
+          "description": "ThePrimeagen on tools, careers, and rants.",
+          "tags": ["tools", "career"],
+          "addedAt": "2025-04-22"
+        },
+        {
+          "id": "fireship",
+          "url": "https://www.youtube.com/@Fireship",
+          "description": "100-second explainers and weekly news.",
+          "tags": ["web", "explainer"],
+          "addedAt": "2025-04-10"
+        },
+        {
+          "id": "developedbyed",
+          "url": "https://www.youtube.com/@developedbyed",
+          "description": "Long-form builds with attention to design.",
+          "tags": ["frontend", "design"],
+          "addedAt": "2025-03-28"
+        }
+      ]
+    },
+    {
+      "id": "design-systems",
+      "name": "Design Systems I Steal From",
+      "description": "Public design systems worth reading end to end.",
+      "icon": "palette",
+      "accent": "mono",
+      "bookmarks": [
+        {
+          "id": "vercel-geist",
+          "url": "https://vercel.com/geist/introduction",
+          "description": "Vercel's Geist — opinionated, restrained, fast.",
+          "tags": ["dark", "minimal"],
+          "addedAt": "2025-05-08"
+        },
+        {
+          "id": "linear-design",
+          "url": "https://linear.app/method",
+          "description": "Linear's method and visual language.",
+          "tags": ["product", "principles"],
+          "addedAt": "2025-04-15"
+        },
+        {
+          "id": "stripe-press",
+          "url": "https://stripe.press/",
+          "description": "Stripe Press — typography and detail done right.",
+          "tags": ["typography", "print"],
+          "addedAt": "2025-03-20"
+        }
+      ]
+    }
+  ]
+}
