@@ -2,8 +2,8 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import type { NpmPackageInfo } from '@/lib/npm-registry';
-import { fetchPackagesSequentially } from '@/lib/npm-registry';
+import type { NpmPackageInfo } from '@/lib/npm-registry-client';
+import { streamPackagesFromApi } from '@/lib/npm-registry-client';
 
 export type ErrorType = 'parse' | 'empty' | 'api' | 'rate-limit';
 export type SortColumn = 'name' | 'currentVersion' | 'latestVersion' | 'issues' | 'lastPublished';
@@ -170,35 +170,40 @@ export function usePackageAnalyzer() {
     setTotalDeps(parsed.dependencies.length);
     setTotalDevDeps(parsed.devDependencies.length);
 
-    const allPackages = [
-      ...parsed.dependencies.map(p => ({ ...p, isDev: false })),
-      ...parsed.devDependencies.map(p => ({ ...p, isDev: true })),
-    ];
+    const isDevByName = new Map<string, boolean>();
+    for (const p of parsed.dependencies) isDevByName.set(p.name, false);
+    for (const p of parsed.devDependencies) {
+      if (!isDevByName.has(p.name)) isDevByName.set(p.name, true);
+    }
 
+    const allPackages = [...parsed.dependencies, ...parsed.devDependencies];
     let fetchCount = 0;
     let hadError = false;
 
-    await fetchPackagesSequentially(
-      allPackages,
-      (info, _index) => {
+    await streamPackagesFromApi({
+      packages: allPackages,
+      signal: controller.signal,
+      onResult: row => {
         if (controller.signal.aborted) return;
 
+        fetchCount++;
+        setFetchedCount(fetchCount);
+
+        if (!row.ok) return; // Per-package errors are silently dropped from the table.
+
         const entry: PackageEntry = {
-          ...info,
-          isOutdated: isOutdated(info.configuredVersion, info.latestVersion),
+          ...row.info,
+          configuredVersion: row.configuredVersion,
+          isOutdated: isOutdated(row.configuredVersion, row.info.latestVersion),
         };
 
-        const pkg = allPackages[fetchCount];
-        if (pkg.isDev) {
+        if (isDevByName.get(row.name)) {
           setDevDependencies(prev => [...prev, entry]);
         } else {
           setDependencies(prev => [...prev, entry]);
         }
-
-        fetchCount++;
-        setFetchedCount(fetchCount);
       },
-      errorType => {
+      onError: errorType => {
         if (controller.signal.aborted) return;
         hadError = true;
         setPhase('error');
@@ -206,8 +211,7 @@ export function usePackageAnalyzer() {
         setDependencies([]);
         setDevDependencies([]);
       },
-      controller.signal,
-    );
+    });
 
     if (!controller.signal.aborted && !hadError) {
       setPhase('done');
