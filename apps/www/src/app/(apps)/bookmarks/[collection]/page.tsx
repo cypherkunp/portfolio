@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { assertAppEnabled } from '@/flags';
 
 import { getCollection, getCollections, getEnrichedCollection } from '@/lib/bookmarks';
+import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
 import { BookmarksShell } from '@/components/bookmarks/bookmarks-shell';
 import { BookmarksSkeleton } from '@/components/bookmarks/bookmarks-skeleton';
@@ -28,8 +28,6 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
 }
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
-  await assertAppEnabled('bookmarks');
-
   const { collection: id } = await params;
   const exists = getCollection(id);
   if (!exists) notFound();
@@ -37,14 +35,16 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const collections = getCollections();
 
   return (
-    <ToolSubpageLayout flush>
-      <div className="pb-16">
-        <BookmarksHeader collections={collections} activeCollectionId={id} />
-        <Suspense fallback={<BookmarksSkeleton />}>
-          <CollectionView id={id} />
-        </Suspense>
-      </div>
-    </ToolSubpageLayout>
+    <AppEnabledGate id="bookmarks">
+      <ToolSubpageLayout flush>
+        <div className="pb-16">
+          <BookmarksHeader collections={collections} activeCollectionId={id} />
+          <Suspense fallback={<BookmarksSkeleton />}>
+            <CollectionView id={id} />
+          </Suspense>
+        </div>
+      </ToolSubpageLayout>
+    </AppEnabledGate>
   );
 }
 

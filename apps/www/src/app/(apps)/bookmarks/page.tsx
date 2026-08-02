@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { assertAppEnabled } from '@/flags';
 
 import { getAllEnrichedBookmarks, getCollections } from '@/lib/bookmarks';
+import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
 import { BookmarksShell } from '@/components/bookmarks/bookmarks-shell';
 import { BookmarksSkeleton } from '@/components/bookmarks/bookmarks-skeleton';
@@ -13,20 +13,20 @@ export const metadata: Metadata = {
   description: 'Collections of links worth sharing — articles, places, channels, design.',
 };
 
-export default async function BookmarksPage() {
-  await assertAppEnabled('bookmarks');
-
+export default function BookmarksPage() {
   const collections = getCollections();
 
   return (
-    <ToolSubpageLayout flush>
-      <div className="pb-16">
-        <BookmarksHeader collections={collections} />
-        <Suspense fallback={<BookmarksSkeleton />}>
-          <AllBookmarks />
-        </Suspense>
-      </div>
-    </ToolSubpageLayout>
+    <AppEnabledGate id="bookmarks">
+      <ToolSubpageLayout flush>
+        <div className="pb-16">
+          <BookmarksHeader collections={collections} />
+          <Suspense fallback={<BookmarksSkeleton />}>
+            <AllBookmarks />
+          </Suspense>
+        </div>
+      </ToolSubpageLayout>
+    </AppEnabledGate>
   );
 }
 

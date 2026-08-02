@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { assertAppEnabled } from '@/flags';
 
+import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 import MusicPlayer from '@/components/music-player';
 
@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   description: 'Music player',
 };
 
-export default async function MusicPage() {
-  await assertAppEnabled('musicPlayer');
-
+export default function MusicPage() {
   return (
-    <ToolSubpageLayout flush>
-      <MusicPlayer />
-    </ToolSubpageLayout>
+    <AppEnabledGate id="musicPlayer">
+      <ToolSubpageLayout flush>
+        <MusicPlayer />
+      </ToolSubpageLayout>
+    </AppEnabledGate>
   );
 }

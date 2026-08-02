@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { assertAppEnabled } from '@/flags';
 import ProfilePic from '@/images/profile.jpg';
 import { Bookmark, Grid3x3, MapPin, Tag } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { PHOTOS } from '@/config/photos';
+import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 import { PhotoGrid } from '@/components/photos/photo-grid';
 
@@ -17,9 +17,7 @@ export const metadata: Metadata = {
 const HANDLE = 'devvrat';
 const INSTAGRAM_URL = 'https://instagram.com/cypherkunp';
 
-export default async function PhotosPage() {
-  await assertAppEnabled('photos');
-
+async function PhotosContent() {
   const t = await getTranslations();
   const location = t('Common.contact.address');
 
@@ -102,5 +100,13 @@ export default async function PhotosPage() {
         <PhotoGrid />
       </div>
     </ToolSubpageLayout>
+  );
+}
+
+export default function PhotosPage() {
+  return (
+    <AppEnabledGate id="photos">
+      <PhotosContent />
+    </AppEnabledGate>
   );
 }
