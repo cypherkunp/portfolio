@@ -1,0 +1,138 @@
+---
+title: 'Build better agent skills, not more of them'
+publishedOn: '2026-08-02'
+version: '1'
+tags:
+  - 'agent'
+  - 'skills'
+---
+
+# Build better agent skills, not more of them
+
+Adding skills feels productive. Then you hit **Skill Hell**. Dozens of skills. No clear picture of how they fit. No idea which ones are good.
+
+Agents get expensive. Unpredictable. Hard to maintain. More skills make things worse.
+
+The fix is not more skills. It is better ones.
+
+Here is a simple framework.
+
+## 1. Pick the right trigger
+
+How a skill gets invoked matters more than most people think. Two options.
+
+### User invoked
+
+You tell the agent which skill to use.
+
+- Predictable behaviour
+- Lower token usage
+- Smaller context window
+- Easier to debug
+- Tradeoff: you have to remember the skill name
+
+### Model invoked
+
+The model picks the skill from the description you wrote.
+
+- Feels more natural
+- Less manual work
+- Fits complex workflows
+- Tradeoff: more tokens, less predictable, sometimes the model skips it
+
+Reliability and cost > flexibility → pick user invoked.
+
+Flexibility > control → pick model invoked.
+
+## 2. Keep the structure simple
+
+Most good skills have two parts.
+
+- **Steps**: what the agent should do
+- **Reference**: the supporting info needed to do it
+
+Keep them separate. Easier to read. Easier to update.
+
+### Keep skills small
+
+Every instruction costs context and tokens.
+
+Smaller skills are:
+
+- Faster
+- Cheaper to run
+- Easier to review
+- Easier to update
+
+If it is not needed every run, it does not belong in the main file.
+
+### Use context pointers
+
+Do not dump big templates into the skill. Point the agent at another file when it needs that info.
+
+```text
+If you need the deployment template, load deployment-template.md.
+```
+
+Load supporting info on demand. Same idea as lazy loading data.
+
+## 3. Guide the model
+
+Well written skills still go wrong. Models rush to an answer. They skip steps.
+
+Two techniques that work.
+
+### Leading words
+
+A few phrases change how the model approaches the task. No long essay required.
+
+- Vertical slice
+- Think step by step
+- Evidence first
+- Verify before acting
+
+### Make the model do more work
+
+Models want to jump to the final answer. Force a process instead.
+
+For a planning skill:
+
+1. Gather requirements
+2. Ask clarifying questions
+3. Validate assumptions
+4. Produce the final plan
+
+Break the workflow into stages. The model thinks harder before it writes.
+
+## 4. Prune regularly
+
+Skills rot. Extra content piles up. Quality drops.
+
+Review often. Delete what no longer earns its place.
+
+### Sediment
+
+Old instructions and outdated examples stick around after many edits. If it is no longer true, remove it.
+
+### No ops
+
+Some lines sound useful and change nothing.
+
+Example: if the model already writes good commit messages, do not spend three paragraphs telling it to write good commit messages.
+
+Every line should change behaviour.
+
+### Duplication
+
+Do not repeat the same rule across skills. One source of truth. Less drift. Less maintenance.
+
+## Takeaway
+
+Focused skills beat big skill collections.
+
+- Right trigger
+- Small structure
+- Clear guidance
+- Regular pruning
+
+Best skill is not the longest one. It is the one that gets the right outcome with the least context.

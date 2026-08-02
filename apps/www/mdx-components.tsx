@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { highlight } from 'sugar-high';
@@ -8,6 +8,7 @@ import { Callout } from '@/components/callout';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
 import { Terminal } from '@/components/terminal';
+import UnderlineText from '@/components/underline-text';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
@@ -24,31 +25,73 @@ function parseImageDimension(value: string | number | undefined): number | undef
   return Number.isFinite(n) && n > 0 ? n : undefined;
 }
 
+function getCodeText(children: ReactNode): string {
+  if (typeof children === 'string') return children;
+  if (Array.isArray(children)) {
+    return children.map(child => (typeof child === 'string' ? child : String(child ?? ''))).join('');
+  }
+  if (children == null) return '';
+  return String(children);
+}
+
+const headingClass = {
+  h1: 'mt-0 mb-6 scroll-m-20 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl',
+  h2: 'mt-10 mb-4 scroll-m-20 text-lg font-bold tracking-tight text-foreground first:mt-0',
+  h3: 'mt-8 mb-2 scroll-m-20 text-xl font-semibold tracking-tight text-foreground',
+  h4: 'mt-6 mb-2 scroll-m-20 text-lg font-semibold tracking-tight text-foreground',
+  h5: 'mt-6 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-foreground',
+  h6: 'mt-4 mb-2 scroll-m-20 text-sm font-semibold tracking-tight text-muted-foreground',
+} as const;
+
+const bodyText = 'text-base leading-relaxed text-foreground/90';
+const listBase = cn(
+  'my-4 list-inside space-y-2 pl-4',
+  bodyText,
+  'marker:font-normal marker:text-foreground/60',
+  '[&_ol]:my-2 [&_ul]:my-2 [&_ol]:pl-4 [&_ul]:pl-4',
+);
+
 const components = {
-  h1: (props: HeadingProps) => <h1 className="mb-4 pt-4 text-xl" {...props} />,
-  h2: (props: HeadingProps) => (
-    <h2
-      className="decoration-primary mt-8 mb-3 text-lg text-gray-800 underline dark:text-zinc-200"
-      {...props}
-    />
+  h1: ({ className, ...props }: HeadingProps) => (
+    <h1 className={cn(headingClass.h1, className)} {...props} />
   ),
-  h3: (props: HeadingProps) => (
-    <h3 className="text-md mt-8 mb-3 text-gray-800 dark:text-zinc-200" {...props} />
+  h2: ({ className, children, ...props }: HeadingProps) => (
+    <h2 className={cn(headingClass.h2, className)} {...props}>
+      <UnderlineText>{children}</UnderlineText>
+    </h2>
   ),
-  h4: (props: HeadingProps) => <h4 className="text-md" {...props} />,
-  p: (props: ParagraphProps) => (
-    <p className="text-md leading-snug text-gray-800 dark:text-zinc-300" {...props} />
+  h3: ({ className, ...props }: HeadingProps) => (
+    <h3 className={cn(headingClass.h3, className)} {...props} />
   ),
-  ol: (props: ListProps) => (
-    <ol className="list-decimal space-y-2 pl-5 text-gray-800 dark:text-zinc-300" {...props} />
+  h4: ({ className, ...props }: HeadingProps) => (
+    <h4 className={cn(headingClass.h4, className)} {...props} />
   ),
-  ul: (props: ListProps) => (
-    <ul className="list-disc space-y-1 pl-5 text-gray-800 dark:text-zinc-300" {...props} />
+  h5: ({ className, ...props }: HeadingProps) => (
+    <h5 className={cn(headingClass.h5, className)} {...props} />
   ),
-  li: (props: ListItemProps) => <li className="wrap-break-words pl-1" {...props} />,
-  em: (props: ComponentPropsWithoutRef<'em'>) => <em className="font-medium" {...props} />,
-  strong: (props: ComponentPropsWithoutRef<'strong'>) => (
-    <strong className="font-medium" {...props} />
+  h6: ({ className, ...props }: HeadingProps) => (
+    <h6 className={cn(headingClass.h6, className)} {...props} />
+  ),
+  p: ({ className, ...props }: ParagraphProps) => (
+    <p className={cn('my-4', bodyText, className)} {...props} />
+  ),
+  ol: ({ className, ...props }: ListProps) => (
+    <ol className={cn(listBase, 'list-decimal', className)} {...props} />
+  ),
+  ul: ({ className, ...props }: ListProps) => (
+    <ul className={cn(listBase, 'list-disc', className)} {...props} />
+  ),
+  li: ({ className, ...props }: ListItemProps) => (
+    <li className={cn('wrap-break-words', className)} {...props} />
+  ),
+  em: ({ className, ...props }: ComponentPropsWithoutRef<'em'>) => (
+    <em className={cn('italic', className)} {...props} />
+  ),
+  strong: ({ className, ...props }: ComponentPropsWithoutRef<'strong'>) => (
+    <strong className={cn('font-semibold text-foreground', className)} {...props} />
+  ),
+  del: ({ className, ...props }: ComponentPropsWithoutRef<'del'>) => (
+    <del className={cn('text-muted-foreground line-through', className)} {...props} />
   ),
   img: ({ src, alt, width, height, className }: MdxImageProps) => {
     if (!src || typeof src !== 'string') return null;
@@ -60,38 +103,52 @@ const components = {
         alt={alt ?? ''}
         width={w ?? 800}
         height={h ?? 450}
-        className={cn('my-4 h-auto max-w-full rounded-lg', className)}
+        className={cn('my-6 h-auto max-w-full rounded-lg', className)}
         sizes="(max-width: 768px) 100vw, 42rem"
       />
     );
   },
-  a: ({ href, children, ...props }: AnchorProps) => {
-    const className =
-      'wrap-break-words text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800';
+  a: ({ href, children, className, ...props }: AnchorProps) => {
+    const linkClass = cn(
+      'wrap-break-words font-medium text-blue-500 underline-offset-4 hover:underline',
+      'dark:text-sky-400 dark:decoration-sky-400/40 hover:dark:text-sky-300',
+      className,
+    );
     if (href?.startsWith('/')) {
       return (
-        <Link href={href} className={className} {...props}>
+        <Link href={href} className={linkClass} {...props}>
           {children}
         </Link>
       );
     }
     if (href?.startsWith('#')) {
       return (
-        <a href={href} className={className} {...props}>
+        <a href={href} className={linkClass} {...props}>
           {children}
         </a>
       );
     }
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={className} {...props}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={linkClass} {...props}>
         {children}
       </a>
     );
   },
-  hr: ({ ...props }: React.ComponentProps<'hr'>) => <hr className="my-4 md:my-8" {...props} />,
-  pre: (props: ComponentPropsWithoutRef<'pre'>) => {
-    return <pre className="overflow-x-auto rounded-lg bg-neutral-900 p-4 text-sm" {...props} />;
-  },
+  hr: ({ className, ...props }: ComponentPropsWithoutRef<'hr'>) => (
+    <hr className={cn('my-8 border-border', className)} {...props} />
+  ),
+  pre: ({ className, children, ...props }: ComponentPropsWithoutRef<'pre'>) => (
+    <pre
+      className={cn(
+        'my-6 overflow-x-auto rounded-lg border border-border bg-neutral-950 p-4 text-sm text-neutral-100',
+        'dark:border-neutral-800',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </pre>
+  ),
   code: ({
     className,
     __raw__,
@@ -102,7 +159,7 @@ const components = {
     __bun__,
     children,
     ...props
-  }: React.ComponentProps<'code'> & {
+  }: ComponentPropsWithoutRef<'code'> & {
     __raw__?: string;
     __src__?: string;
     __npm__?: string;
@@ -110,8 +167,7 @@ const components = {
     __pnpm__?: string;
     __bun__?: string;
   }) => {
-    // npm command.
-    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__;
+    const isNpmCommand = Boolean(__npm__ && __yarn__ && __pnpm__ && __bun__);
     if (isNpmCommand) {
       return (
         <CodeBlockCommand
@@ -123,45 +179,33 @@ const components = {
       );
     }
 
-    // Code block (has language-* className).
     const isCodeBlock = className?.includes('language-');
     if (isCodeBlock) {
-      // Extract string content from children
-      const codeContent =
-        typeof children === 'string'
-          ? children
-          : Array.isArray(children)
-            ? children.map(c => (typeof c === 'string' ? c : String(c))).join('')
-            : children != null
-              ? String(children)
-              : '';
+      const trimmedContent = getCodeText(children).trim();
+      if (!trimmedContent) return null;
 
-      const trimmedContent = codeContent.trim();
-
-      if (trimmedContent) {
-        try {
-          const highlightedCode = highlight(trimmedContent);
-          return (
-            <code
-              className={cn('relative font-mono text-sm', className)}
-              dangerouslySetInnerHTML={{ __html: highlightedCode }}
-            />
-          );
-        } catch {
-          // Fallback if highlighting fails
-          return (
-            <code className={cn('relative font-mono text-sm', className)}>{trimmedContent}</code>
-          );
-        }
+      try {
+        const highlightedCode = highlight(trimmedContent);
+        return (
+          <code
+            className={cn('relative font-mono text-sm text-neutral-100', className)}
+            dangerouslySetInnerHTML={{ __html: highlightedCode }}
+          />
+        );
+      } catch {
+        return (
+          <code className={cn('relative font-mono text-sm text-neutral-100', className)}>
+            {trimmedContent}
+          </code>
+        );
       }
     }
 
-    // Inline Code.
     if (typeof children === 'string') {
       return (
         <code
           className={cn(
-            'bg-muted relative rounded-md px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] outline-none',
+            'relative rounded-md bg-muted px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] text-foreground',
             className,
           )}
           {...props}
@@ -171,39 +215,74 @@ const components = {
       );
     }
 
-    // Default codeblock.
     return (
       <>
-        {__raw__ && <CopyButton value={__raw__} src={__src__} />}
-        <code className={className} {...props}>
+        {__raw__ ? <CopyButton value={__raw__} src={__src__} /> : null}
+        <code className={cn('font-mono text-sm', className)} {...props}>
           {children}
         </code>
       </>
     );
   },
+  table: ({ className, ...props }: ComponentPropsWithoutRef<'table'>) => (
+    <div className="my-6 w-full overflow-x-auto">
+      <table
+        className={cn('w-full min-w-md border-collapse text-left text-sm', className)}
+        {...props}
+      />
+    </div>
+  ),
+  thead: ({ className, ...props }: ComponentPropsWithoutRef<'thead'>) => (
+    <thead className={cn('border-b border-border bg-muted/40', className)} {...props} />
+  ),
+  tbody: ({ className, ...props }: ComponentPropsWithoutRef<'tbody'>) => (
+    <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
+  ),
+  tr: ({ className, ...props }: ComponentPropsWithoutRef<'tr'>) => (
+    <tr className={cn('border-b border-border', className)} {...props} />
+  ),
+  th: ({ className, ...props }: ComponentPropsWithoutRef<'th'>) => (
+    <th
+      className={cn('px-3 py-2 font-semibold text-foreground', className)}
+      {...props}
+    />
+  ),
+  td: ({ className, ...props }: ComponentPropsWithoutRef<'td'>) => (
+    <td className={cn('px-3 py-2 align-top text-foreground/90', className)} {...props} />
+  ),
   Table: ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
-    <table>
-      <thead>
-        <tr>
-          {data.headers.map((header, index) => (
-            <th key={index}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.rows.map((row, index) => (
-          <tr key={index}>
-            {row.map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td>
+    <div className="my-6 w-full overflow-x-auto">
+      <table className="w-full min-w-md border-collapse text-left text-sm">
+        <thead className="border-b border-border bg-muted/40">
+          <tr>
+            {data.headers.map((header, index) => (
+              <th key={index} className="px-3 py-2 font-semibold text-foreground">
+                {header}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.rows.map((row, index) => (
+            <tr key={index} className="border-b border-border">
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex} className="px-3 py-2 align-top text-foreground/90">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   ),
-  blockquote: (props: BlockquoteProps) => (
+  blockquote: ({ className, ...props }: BlockquoteProps) => (
     <blockquote
-      className="ml-[0.075em] border-l-3 border-gray-300 pl-4 text-gray-700 dark:border-zinc-600 dark:text-zinc-300"
+      className={cn(
+        'my-6 border-l-4 border-border pl-4 text-foreground/80 italic',
+        '[&_p]:my-2 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0',
+        className,
+      )}
       {...props}
     />
   ),
