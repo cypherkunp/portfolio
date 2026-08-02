@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getCollection, getCollections, getEnrichedCollection } from '@/lib/bookmarks';
-import { AppEnabledGate } from '@/components/app-enabled-gate';
+import { AppEnabledGate, appPageMetadata } from '@/components/app-enabled-gate';
 import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
 import { BookmarksShell } from '@/components/bookmarks/bookmarks-shell';
 import { BookmarksSkeleton } from '@/components/bookmarks/bookmarks-skeleton';
@@ -20,11 +20,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { collection: id } = await params;
   const c = getCollection(id);
-  if (!c) return { title: 'Bookmarks' };
-  return {
+  if (!c) return appPageMetadata('bookmarks', { title: 'Bookmarks' });
+  return appPageMetadata('bookmarks', {
     title: `${c.name} · Bookmarks`,
     description: c.description ?? `Bookmarked links — ${c.name}`,
-  };
+  });
 }
 
 export default async function CollectionPage({ params }: CollectionPageProps) {

@@ -9,7 +9,6 @@ import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
 import { References } from '@/components/references';
 import { Terminal } from '@/components/terminal';
-import UnderlineText from '@/components/underline-text';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
@@ -29,7 +28,9 @@ function parseImageDimension(value: string | number | undefined): number | undef
 function getCodeText(children: ReactNode): string {
   if (typeof children === 'string') return children;
   if (Array.isArray(children)) {
-    return children.map(child => (typeof child === 'string' ? child : String(child ?? ''))).join('');
+    return children
+      .map(child => (typeof child === 'string' ? child : String(child ?? '')))
+      .join('');
   }
   if (children == null) return '';
   return String(children);
@@ -37,7 +38,7 @@ function getCodeText(children: ReactNode): string {
 
 const headingClass = {
   h1: 'mt-0 mb-6 scroll-m-20 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl',
-  h2: 'mt-10 mb-4 scroll-m-20 text-lg font-bold tracking-tight text-foreground first:mt-0',
+  h2: 'decoration-primary mt-10 mb-4 scroll-m-20 text-lg font-bold tracking-tight text-foreground first:mt-0',
   h3: 'mt-8 mb-2 scroll-m-20 text-xl font-semibold tracking-tight text-foreground',
   h4: 'mt-6 mb-2 scroll-m-20 text-lg font-semibold tracking-tight text-foreground',
   h5: 'mt-6 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-foreground',
@@ -56,10 +57,8 @@ const components = {
   h1: ({ className, ...props }: HeadingProps) => (
     <h1 className={cn(headingClass.h1, className)} {...props} />
   ),
-  h2: ({ className, children, ...props }: HeadingProps) => (
-    <h2 className={cn(headingClass.h2, className)} {...props}>
-      <UnderlineText>{children}</UnderlineText>
-    </h2>
+  h2: ({ className, ...props }: HeadingProps) => (
+    <h2 className={cn(headingClass.h2, className)} {...props} />
   ),
   h3: ({ className, ...props }: HeadingProps) => (
     <h3 className={cn(headingClass.h3, className)} {...props} />
@@ -89,7 +88,7 @@ const components = {
     <em className={cn('italic', className)} {...props} />
   ),
   strong: ({ className, ...props }: ComponentPropsWithoutRef<'strong'>) => (
-    <strong className={cn('font-semibold text-foreground', className)} {...props} />
+    <strong className={cn('text-foreground font-semibold', className)} {...props} />
   ),
   del: ({ className, ...props }: ComponentPropsWithoutRef<'del'>) => (
     <del className={cn('text-muted-foreground line-through', className)} {...props} />
@@ -136,12 +135,12 @@ const components = {
     );
   },
   hr: ({ className, ...props }: ComponentPropsWithoutRef<'hr'>) => (
-    <hr className={cn('my-8 border-border', className)} {...props} />
+    <hr className={cn('border-border my-8', className)} {...props} />
   ),
   pre: ({ className, children, ...props }: ComponentPropsWithoutRef<'pre'>) => (
     <pre
       className={cn(
-        'my-6 overflow-x-auto rounded-lg border border-border bg-neutral-950 p-4 text-sm text-neutral-100',
+        'border-border my-6 overflow-x-auto rounded-lg border bg-neutral-950 p-4 text-sm text-neutral-100',
         'dark:border-neutral-800',
         className,
       )}
@@ -206,7 +205,7 @@ const components = {
       return (
         <code
           className={cn(
-            'relative rounded-md bg-muted px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] text-foreground',
+            'bg-muted text-foreground relative rounded-md px-[0.35rem] py-[0.15rem] font-mono text-[0.85em]',
             className,
           )}
           {...props}
@@ -234,30 +233,27 @@ const components = {
     </div>
   ),
   thead: ({ className, ...props }: ComponentPropsWithoutRef<'thead'>) => (
-    <thead className={cn('border-b border-border bg-muted/40', className)} {...props} />
+    <thead className={cn('border-border bg-muted/40 border-b', className)} {...props} />
   ),
   tbody: ({ className, ...props }: ComponentPropsWithoutRef<'tbody'>) => (
     <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
   ),
   tr: ({ className, ...props }: ComponentPropsWithoutRef<'tr'>) => (
-    <tr className={cn('border-b border-border', className)} {...props} />
+    <tr className={cn('border-border border-b', className)} {...props} />
   ),
   th: ({ className, ...props }: ComponentPropsWithoutRef<'th'>) => (
-    <th
-      className={cn('px-3 py-2 font-semibold text-foreground', className)}
-      {...props}
-    />
+    <th className={cn('text-foreground px-3 py-2 font-semibold', className)} {...props} />
   ),
   td: ({ className, ...props }: ComponentPropsWithoutRef<'td'>) => (
-    <td className={cn('px-3 py-2 align-top text-foreground/90', className)} {...props} />
+    <td className={cn('text-foreground/90 px-3 py-2 align-top', className)} {...props} />
   ),
   Table: ({ data }: { data: { headers: string[]; rows: string[][] } }) => (
     <div className="my-6 w-full overflow-x-auto">
       <table className="w-full min-w-md border-collapse text-left text-sm">
-        <thead className="border-b border-border bg-muted/40">
+        <thead className="border-border bg-muted/40 border-b">
           <tr>
             {data.headers.map((header, index) => (
-              <th key={index} className="px-3 py-2 font-semibold text-foreground">
+              <th key={index} className="text-foreground px-3 py-2 font-semibold">
                 {header}
               </th>
             ))}
@@ -265,9 +261,9 @@ const components = {
         </thead>
         <tbody>
           {data.rows.map((row, index) => (
-            <tr key={index} className="border-b border-border">
+            <tr key={index} className="border-border border-b">
               {row.map((cell, cellIndex) => (
-                <td key={cellIndex} className="px-3 py-2 align-top text-foreground/90">
+                <td key={cellIndex} className="text-foreground/90 px-3 py-2 align-top">
                   {cell}
                 </td>
               ))}
@@ -280,7 +276,7 @@ const components = {
   blockquote: ({ className, ...props }: BlockquoteProps) => (
     <blockquote
       className={cn(
-        'my-6 border-l-4 border-border pl-4 text-foreground/80 italic',
+        'border-border text-foreground/80 my-6 border-l-4 pl-4 italic',
         '[&_p]:my-2 [&_p:first-child]:mt-0 [&_p:last-child]:mb-0',
         className,
       )}

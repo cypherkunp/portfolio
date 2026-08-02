@@ -1,6 +1,10 @@
 import { notFound } from 'next/navigation';
-import { flag } from 'flags/next';
 import { vercelAdapter } from '@flags-sdk/vercel';
+import { flag } from 'flags/next';
+
+import { resolveFlagDefaultValue } from '@/lib/flag-defaults';
+
+export { resolveFlagDefaultValue } from '@/lib/flag-defaults';
 
 const booleanOptions = [
   { value: false, label: 'Off' },
@@ -11,8 +15,8 @@ function createAppFlag(key: string, description: string) {
   return flag<boolean>({
     key,
     description,
-    // Visible in local dev when FLAGS isn't linked; Production uses Vercel Flags.
-    defaultValue: process.env.NODE_ENV === 'development',
+    // Off unless Vercel Flags says otherwise, or FEATURE_APPS_DEV_DEFAULT=true locally.
+    defaultValue: resolveFlagDefaultValue(),
     options: [...booleanOptions],
     adapter: vercelAdapter(),
   });
@@ -89,8 +93,12 @@ export async function getEnabledApps(): Promise<AppFlagId[]> {
   return results.filter((id): id is AppFlagId => id !== null);
 }
 
+export async function isAppEnabled(id: AppFlagId): Promise<boolean> {
+  return appFlagsById[id]();
+}
+
 /** 404 when a given app flag is off. */
 export async function assertAppEnabled(id: AppFlagId): Promise<void> {
-  const enabled = await appFlagsById[id]();
+  const enabled = await isAppEnabled(id);
   if (!enabled) notFound();
 }
