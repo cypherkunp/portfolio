@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { assertAppEnabled } from '@/flags';
 import ProfilePic from '@/images/profile.jpg';
 import { Bookmark, Grid3x3, MapPin, Tag } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
@@ -17,6 +18,8 @@ const HANDLE = 'devvrat';
 const INSTAGRAM_URL = 'https://instagram.com/cypherkunp';
 
 export default async function PhotosPage() {
+  await assertAppEnabled('photos');
+
   const t = await getTranslations();
   const location = t('Common.contact.address');
 

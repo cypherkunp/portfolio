@@ -30,8 +30,9 @@
         "label": "About"
       },
       {
-        "href": "/connect",
-        "label": "Connect"
+        "href": "https://devvrat.uk",
+        "label": "Connect",
+        "external": true
       }
     ]
   },
@@ -49,30 +50,6 @@
     "description": "Devvrat's User Manual",
     "url": "https://devvrat.uk/handbook",
     "ogImage": "https://devvrat.uk/og-home.jpg"
-  },
-  "ConnectPage": {
-    "title": "Devvrat | Connect",
-    "description": "Reach out, follow along, or copy the link to this page.",
-    "url": "https://devvrat.uk/connect",
-    "ogImage": "https://devvrat.uk/og-home.jpg",
-    "hero": {
-      "role": "Lead Experience Engineer",
-      "bio": "Building the web with TypeScript, React and a soft spot for design systems.",
-      "status": "Available for work"
-    },
-    "labels": {
-      "email": "Email me",
-      "twitter": "Follow on X",
-      "linkedin": "Professional profile",
-      "github": "Code on GitHub",
-      "location": "Based in",
-      "portfolio": "Personal portfolio",
-      "photos": "Snapshots"
-    },
-    "share": {
-      "trigger": "Copy link",
-      "copied": "Link copied"
-    }
   },
   "ResumePage": {
     "title": "Devvrat | Resume ",

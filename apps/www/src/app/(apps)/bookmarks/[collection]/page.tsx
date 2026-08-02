@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { assertAppEnabled } from '@/flags';
 
 import { getCollection, getCollections, getEnrichedCollection } from '@/lib/bookmarks';
 import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
@@ -27,6 +28,8 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
 }
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
+  await assertAppEnabled('bookmarks');
+
   const { collection: id } = await params;
   const exists = getCollection(id);
   if (!exists) notFound();

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { assertAppEnabled } from '@/flags';
 
 import { InspirationGrid } from '@/components/inspirations/inspiration-grid';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
   description: 'A pinboard of quotes, ideas, and small truths I keep coming back to.',
 };
 
-export default function InspirationsPage() {
+export default async function InspirationsPage() {
+  await assertAppEnabled('inspirations');
+
   return (
     <ToolSubpageLayout flush>
       <div className="pb-16">

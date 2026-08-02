@@ -1,16 +1,17 @@
 import Link from 'next/link';
+import type { AppFlagId } from '@/flags';
 import { ArrowUpRight } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-const APP_IDS = ['musicPlayer', 'inspirations', 'bookmarks', 'photos', 'packageAnalyzer'] as const;
-const APP_ABBR: Record<(typeof APP_IDS)[number], string> = {
+const APP_ABBR: Record<AppFlagId, string> = {
   musicPlayer: 'MP',
   inspirations: 'IN',
   bookmarks: 'BM',
   photos: 'PH',
   packageAnalyzer: 'PA',
 };
-const APP_HREFS: Record<(typeof APP_IDS)[number], string> = {
+
+const APP_HREFS: Record<AppFlagId, string> = {
   musicPlayer: '/music',
   inspirations: '/inspirations',
   bookmarks: '/bookmarks',
@@ -18,12 +19,18 @@ const APP_HREFS: Record<(typeof APP_IDS)[number], string> = {
   packageAnalyzer: '/analyzer',
 };
 
-export default function AppsBlock() {
-  const t = useTranslations('Blocks.apps');
+interface AppsBlockProps {
+  enabledApps: AppFlagId[];
+}
+
+export default async function AppsBlock({ enabledApps }: AppsBlockProps) {
+  const t = await getTranslations('Blocks.apps');
+
+  if (enabledApps.length === 0) return null;
 
   return (
     <div>
-      {APP_IDS.map(id => (
+      {enabledApps.map(id => (
         <Link key={id} href={APP_HREFS[id]} className="group mb-4 flex items-center gap-2">
           <span className="w-8 shrink-0 text-sm text-neutral-600 dark:text-neutral-400">
             {APP_ABBR[id]}

@@ -12,7 +12,10 @@ const withBundleAnalyzer = withBundleAnalyzerPlugin({
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
-  redirects: async () => [{ source: '/contacts', destination: '/connect', permanent: true }],
+  redirects: async () => [
+    { source: '/connect', destination: 'https://devvrat.uk', permanent: true },
+    { source: '/contacts', destination: 'https://devvrat.uk', permanent: true },
+  ],
   experimental: {
     viewTransition: true,
   },

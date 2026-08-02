@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { assertAppEnabled } from '@/flags';
 
 import { getAllEnrichedBookmarks, getCollections } from '@/lib/bookmarks';
 import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
   description: 'Collections of links worth sharing — articles, places, channels, design.',
 };
 
-export default function BookmarksPage() {
+export default async function BookmarksPage() {
+  await assertAppEnabled('bookmarks');
+
   const collections = getCollections();
 
   return (

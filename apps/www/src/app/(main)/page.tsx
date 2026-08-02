@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import { featureAppsSupport } from '@/flags';
+import { featureAppsSupport, getEnabledApps } from '@/flags';
 import { getTranslations } from 'next-intl/server';
 
 import AppsBlock from '@/components/apps-block';
@@ -40,13 +40,16 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 async function AppsSectionGuard() {
   const t = await getTranslations();
-  const showApps = await featureAppsSupport();
+  const [showApps, enabledApps] = await Promise.all([
+    featureAppsSupport(),
+    getEnabledApps(),
+  ]);
 
-  if (!showApps) return null;
+  if (!showApps || enabledApps.length === 0) return null;
 
   return (
     <Section isLastSection title={t('Blocks.apps.title')}>
-      <AppsBlock />
+      <AppsBlock enabledApps={enabledApps} />
     </Section>
   );
 }

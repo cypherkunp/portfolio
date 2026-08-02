@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { assertAppEnabled } from '@/flags';
 
 import { PackageAnalyzer } from '@/components/analyzer/package-analyzer';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
     'Analyze your package.json dependencies — find outdated packages, check versions, and inspect your project health.',
 };
 
-export default function AnalyzerPage() {
+export default async function AnalyzerPage() {
+  await assertAppEnabled('packageAnalyzer');
+
   return (
     <ToolSubpageLayout title="Package Analyzer">
       <PackageAnalyzer />
