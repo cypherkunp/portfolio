@@ -7,6 +7,6 @@ const create = browser<typeof Config, import("fumadocs-mdx/runtime/types").Inter
   }
 }>();
 const browserCollections = {
-  blogPosts: create.doc("blogPosts", {"claude-code-mcp.mdx": () => import("../src/content/posts/claude-code-mcp.mdx?collection=blogPosts"), "handbook.mdx": () => import("../src/content/posts/handbook.mdx?collection=blogPosts"), "hello-world.mdx": () => import("../src/content/posts/hello-world.mdx?collection=blogPosts"), "site-architecture.mdx": () => import("../src/content/posts/site-architecture.mdx?collection=blogPosts"), }),
+  blogPosts: create.doc("blogPosts", {"claude-code-mcp.mdx": () => import("../src/content/posts/claude-code-mcp.mdx?collection=blogPosts"), "handbook.mdx": () => import("../src/content/posts/handbook.mdx?collection=blogPosts"), "hello-world.mdx": () => import("../src/content/posts/hello-world.mdx?collection=blogPosts"), }),
 };
 export default browserCollections;

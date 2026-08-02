@@ -1,5 +1,4 @@
 // @ts-nocheck
-import * as __fd_glob_3 from "../src/content/posts/site-architecture.mdx?collection=blogPosts"
 import * as __fd_glob_2 from "../src/content/posts/hello-world.mdx?collection=blogPosts"
 import * as __fd_glob_1 from "../src/content/posts/handbook.mdx?collection=blogPosts"
 import * as __fd_glob_0 from "../src/content/posts/claude-code-mcp.mdx?collection=blogPosts"
@@ -11,4 +10,4 @@ const create = server<typeof Config, import("fumadocs-mdx/runtime/types").Intern
   }
 }>({"doc":{"passthroughs":["extractedReferences"]}});
 
-export const blogPosts = await create.doc("blogPosts", "src/content/posts", {"claude-code-mcp.mdx": __fd_glob_0, "handbook.mdx": __fd_glob_1, "hello-world.mdx": __fd_glob_2, "site-architecture.mdx": __fd_glob_3, });
+export const blogPosts = await create.doc("blogPosts", "src/content/posts", {"claude-code-mcp.mdx": __fd_glob_0, "handbook.mdx": __fd_glob_1, "hello-world.mdx": __fd_glob_2, });
