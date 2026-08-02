@@ -59,7 +59,7 @@ Write valid CommonMark / MDX. Broken markdown ships broken HTML.
 - Blockquotes (`>`) only for real quotes.
 - Links: `[label](https://example.com)`. Never paste a bare URL as the only link text when a label fits.
 - Bold and italic for emphasis inside a sentence. Not for structure.
-- Do not mix HTML and markdown for the same job. Use existing MDX components (`Terminal`, etc.) when the post needs them.
+- Do not mix HTML and markdown for the same job. Use existing MDX components (`Terminal`, `References`, etc.) when the post needs them.
 - Frontmatter is YAML. Keep it valid. Quoting strings is fine.
 
 ## Structure
@@ -68,9 +68,34 @@ Write valid CommonMark / MDX. Broken markdown ships broken HTML.
 2. Give the answer early. Do not bury it.
 3. Break the rest into sections with bullets.
 4. End with a direct takeaway. No summary essay closer.
+5. Always close with a `<References />` block after the takeaway.
+
+## References (required)
+
+Every new post ends with `<References />`. It is registered in `mdx-components.tsx`. No import needed.
+
+Place it after the takeaway:
+
+```mdx
+<References
+  items={[
+    { author: 'Author Name', url: 'https://example.com/post' },
+    { author: 'Speaker Name', url: 'https://www.youtube.com/watch?v=VIDEO_ID' },
+  ]}
+/>
+```
+
+Rules:
+
+- Each item is `{ author, url }`. Author is a person or org name. URL is the blog post or YouTube video.
+- Numbered list renders as `Author - url`. Keep author names short and real.
+- Include every source the post draws on. Talks, essays, docs, videos.
+- If there are no external sources, still add the block with an empty array only when the post is pure original writing with zero citations. Prefer finding the real sources.
+- Do not invent authors or URLs. Ask if sources are unclear.
 
 ## Before you write
 
 1. Read `apps/www/src/content/posts/handbook.mdx` for tone.
-2. Skim one nearby post in `apps/www/src/content/posts/` for MDX patterns (`Terminal` components, spacing, links).
+2. Skim one nearby post in `apps/www/src/content/posts/` for MDX patterns (`Terminal`, `References`, spacing, links).
 3. Draft the body first. Iterate the title last so it makes a clear promise.
+4. Collect source authors and URLs before shipping. Wire them into `<References />` at the end.

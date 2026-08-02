@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Callout } from '@/components/callout';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
+import { References } from '@/components/references';
 import { Terminal } from '@/components/terminal';
 import UnderlineText from '@/components/underline-text';
 
@@ -287,6 +288,7 @@ const components = {
     />
   ),
   Callout,
+  References,
   Terminal,
 };
 
