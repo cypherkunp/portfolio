@@ -12,7 +12,8 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "analyze-build": "ANALYZE=true next build",
     "unlighthouse-ci": "unlighthouse-ci",
-    "fetch:bookmarks": "node scripts/fetch-bookmarks-og.mjs"
+    "fetch:bookmarks": "node scripts/fetch-bookmarks-og.mjs",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\""
   },
   "devDependencies": {
     "@repo/ui": "workspace:*",

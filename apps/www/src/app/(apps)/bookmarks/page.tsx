@@ -2,16 +2,20 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
 import { getAllEnrichedBookmarks, getCollections } from '@/lib/bookmarks';
-import { AppEnabledGate } from '@/components/app-enabled-gate';
+import { AppEnabledGate, appPageMetadata } from '@/components/app-enabled-gate';
 import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
 import { BookmarksShell } from '@/components/bookmarks/bookmarks-shell';
 import { BookmarksSkeleton } from '@/components/bookmarks/bookmarks-skeleton';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
-export const metadata: Metadata = {
+const pageMetadata = {
   title: 'Bookmarks',
   description: 'Collections of links worth sharing — articles, places, channels, design.',
-};
+} satisfies Metadata;
+
+export function generateMetadata(): Promise<Metadata> {
+  return appPageMetadata('bookmarks', pageMetadata);
+}
 
 export default function BookmarksPage() {
   const collections = getCollections();

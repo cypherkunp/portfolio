@@ -79,12 +79,7 @@ function cleanGithubUrl(repoField: unknown): string | null {
   return url;
 }
 
-// Names allowed by npm: scoped or unscoped, lowercased, limited charset.
-const VALID_NAME = /^(?:@[a-z0-9][\w.-]*\/)?[a-z0-9][\w.-]*$/i;
-
-export function isValidPackageName(name: string): boolean {
-  return typeof name === 'string' && name.length > 0 && name.length <= 214 && VALID_NAME.test(name);
-}
+export { isValidPackageName } from '@/lib/npm-api';
 
 interface CacheEntry {
   info: NpmPackageInfo;
@@ -191,8 +186,7 @@ export async function fetchPackagesBatch(
         onResult(name, { ok: true, info });
       } catch (err) {
         if (signal?.aborted) return;
-        const code =
-          err instanceof NpmRegistryError ? (err.message as NpmFetchErrorType) : 'api';
+        const code = err instanceof NpmRegistryError ? (err.message as NpmFetchErrorType) : 'api';
         onResult(name, { ok: false, error: code });
       }
     }

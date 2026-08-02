@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
 
-import { AppEnabledGate } from '@/components/app-enabled-gate';
+import { AppEnabledGate, appPageMetadata } from '@/components/app-enabled-gate';
 import { InspirationGrid } from '@/components/inspirations/inspiration-grid';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
-export const metadata: Metadata = {
+const pageMetadata = {
   title: 'Inspirations',
   description: 'A pinboard of quotes, ideas, and small truths I keep coming back to.',
-};
+} satisfies Metadata;
+
+export function generateMetadata(): Promise<Metadata> {
+  return appPageMetadata('inspirations', pageMetadata);
+}
 
 export default function InspirationsPage() {
   return (

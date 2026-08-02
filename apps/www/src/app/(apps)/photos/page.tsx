@@ -5,14 +5,18 @@ import { Bookmark, Grid3x3, MapPin, Tag } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import { PHOTOS } from '@/config/photos';
-import { AppEnabledGate } from '@/components/app-enabled-gate';
+import { AppEnabledGate, appPageMetadata } from '@/components/app-enabled-gate';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 import { PhotoGrid } from '@/components/photos/photo-grid';
 
-export const metadata: Metadata = {
+const pageMetadata = {
   title: 'Photos',
   description: 'A visual journal of moments captured through my lens.',
-};
+} satisfies Metadata;
+
+export function generateMetadata(): Promise<Metadata> {
+  return appPageMetadata('photos', pageMetadata);
+}
 
 const HANDLE = 'devvrat';
 const INSTAGRAM_URL = 'https://instagram.com/cypherkunp';

@@ -1,5 +1,7 @@
 import 'server-only';
 
+import { assertSafeFetchUrl, UnsafeUrlError } from '@/lib/safe-url';
+
 export interface OgData {
   title: string;
   description: string | null;
@@ -9,8 +11,14 @@ export interface OgData {
   fetchedAt: string | null;
 }
 
-const UA =
-  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+/** Honest bot UA — do not impersonate a browser. */
+export const OG_USER_AGENT =
+  'Mozilla/5.0 (compatible; PortfolioBookmarksBot/1.0; +https://devvrat.uk/bookmarks)';
+
+/** Cap HTML read to keep memory bounded under concurrent fetches. */
+export const OG_HTML_MAX_CHARS = 200_000;
+
+const MAX_REDIRECTS = 5;
 
 function decodeEntities(text: string): string {
   return text
@@ -72,6 +80,29 @@ export interface FetchOgOptions {
   timeoutMs?: number;
 }
 
+async function fetchWithSafeRedirects(
+  startUrl: string,
+  init: RequestInit & { next?: { revalidate: number | false } },
+): Promise<Response | null> {
+  let current = await assertSafeFetchUrl(startUrl);
+
+  for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
+    const res = await fetch(current.toString(), { ...init, redirect: 'manual' });
+
+    if (res.status >= 300 && res.status < 400) {
+      const location = res.headers.get('location');
+      if (!location) return null;
+      const nextUrl = new URL(location, current).toString();
+      current = await assertSafeFetchUrl(nextUrl);
+      continue;
+    }
+
+    return res;
+  }
+
+  return null;
+}
+
 export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<OgData | null> {
   const { force = false, timeoutMs = 8000 } = opts;
   const controller = new AbortController();
@@ -80,11 +111,10 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
   try {
     const init: RequestInit & { next?: { revalidate: number | false } } = {
       headers: {
-        'User-Agent': UA,
+        'User-Agent': OG_USER_AGENT,
         Accept: 'text/html,application/xhtml+xml',
         'Accept-Language': 'en;q=0.9',
       },
-      redirect: 'follow',
       signal: controller.signal,
     };
     if (!force) {
@@ -93,12 +123,12 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
       init.cache = 'no-store';
     }
 
-    const res = await fetch(url, init);
-    if (!res.ok) return null;
+    const res = await fetchWithSafeRedirects(url, init);
+    if (!res || !res.ok) return null;
     const ct = res.headers.get('content-type') ?? '';
     if (!ct.includes('html')) return null;
 
-    const html = (await res.text()).slice(0, 1_500_000);
+    const html = (await res.text()).slice(0, OG_HTML_MAX_CHARS);
     const finalUrl = res.url || url;
 
     const title = pickTitle(html) ?? new URL(finalUrl).hostname.replace(/^www\./, '');
@@ -118,7 +148,8 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
       favicon,
       fetchedAt: null,
     };
-  } catch {
+  } catch (err) {
+    if (err instanceof UnsafeUrlError) return null;
     return null;
   } finally {
     clearTimeout(timer);

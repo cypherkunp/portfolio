@@ -2,26 +2,13 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-import {
-  fetchPackagesBatch,
-  isValidPackageName,
-  type NpmPackageInfo,
-} from '@/lib/npm-registry';
+import { dedupePackagesByName, NpmBodySchema } from '@/lib/npm-api';
+import { fetchPackagesBatch, type NpmPackageInfo } from '@/lib/npm-registry';
+import { clientIp, consumeRateLimit } from '@/lib/rate-limit';
+import { isAllowedRequestOrigin } from '@/lib/request-origin';
 
-const MAX_PACKAGES = 1500;
-
-const PackageInput = z.object({
-  name: z
-    .string()
-    .min(1)
-    .max(214)
-    .refine(isValidPackageName, { message: 'invalid npm package name' }),
-  version: z.string().max(64).default(''),
-});
-
-const Body = z.object({
-  packages: z.array(PackageInput).min(1).max(MAX_PACKAGES),
-});
+const RATE_LIMIT = { limit: 10, windowMs: 60_000 } as const;
+const FETCH_CONCURRENCY = 6;
 
 export type NpmStreamRow =
   | {
@@ -38,20 +25,32 @@ export type NpmStreamRow =
     };
 
 export async function POST(request: Request) {
-  let parsed: z.infer<typeof Body>;
+  if (!isAllowedRequestOrigin(request)) {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+  }
+
+  const ip = clientIp(request);
+  const limited = consumeRateLimit(`npm:${ip}`, RATE_LIMIT);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: 'rate-limit' },
+      {
+        status: 429,
+        headers: { 'Retry-After': String(limited.retryAfterSec) },
+      },
+    );
+  }
+
+  let parsed: z.infer<typeof NpmBodySchema>;
   try {
     const json = await request.json();
-    parsed = Body.parse(json);
+    parsed = NpmBodySchema.parse(json);
   } catch (err) {
     const message = err instanceof z.ZodError ? err.issues : 'invalid body';
     return NextResponse.json({ error: 'invalid request', details: message }, { status: 400 });
   }
 
-  // Dedupe by name; keep the first configured version we saw for each.
-  const versionByName = new Map<string, string>();
-  for (const p of parsed.packages) {
-    if (!versionByName.has(p.name)) versionByName.set(p.name, p.version);
-  }
+  const versionByName = dedupePackagesByName(parsed.packages);
   const uniqueNames = Array.from(versionByName.keys());
 
   const encoder = new TextEncoder();
@@ -75,12 +74,11 @@ export async function POST(request: Request) {
               write({ ok: false, name, configuredVersion, error: result.error });
             }
           },
-          { signal: abortController.signal, concurrency: 10 },
+          { signal: abortController.signal, concurrency: FETCH_CONCURRENCY },
         );
       } catch (err) {
         // Surface a final error frame; client treats unknown errors as 'api'.
-        const message =
-          err instanceof Error && err.name === 'AbortError' ? 'aborted' : 'api';
+        const message = err instanceof Error && err.name === 'AbortError' ? 'aborted' : 'api';
         write({ ok: false, name: '', configuredVersion: '', error: message as 'api' });
       } finally {
         controller.close();

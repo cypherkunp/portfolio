@@ -1,22 +1,25 @@
-import { Suspense, type ReactNode } from 'react';
-import { assertAppEnabled, type AppFlagId } from '@/flags';
+import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import { assertAppEnabled, isAppEnabled, type AppFlagId } from '@/flags';
 
 interface AppEnabledGateProps {
   id: AppFlagId;
   children: ReactNode;
-  fallback?: ReactNode;
 }
 
-async function AssertEnabled({ id, children }: { id: AppFlagId; children: ReactNode }) {
+/**
+ * Asserts the app flag before rendering children.
+ * Deliberately not Suspense-wrapped: disabled apps must 404 before child work starts.
+ */
+export async function AppEnabledGate({ id, children }: AppEnabledGateProps) {
   await assertAppEnabled(id);
   return children;
 }
 
-/** Wraps flag checks so Cache Components can stream instead of blocking the route. */
-export function AppEnabledGate({ id, children, fallback = null }: AppEnabledGateProps) {
-  return (
-    <Suspense fallback={fallback}>
-      <AssertEnabled id={id}>{children}</AssertEnabled>
-    </Suspense>
-  );
+/** Keep gated routes out of search indexes when the flag is off. */
+export async function appPageMetadata(id: AppFlagId, metadata: Metadata): Promise<Metadata> {
+  if (!(await isAppEnabled(id))) {
+    return { title: 'Not Found', robots: { index: false, follow: false } };
+  }
+  return metadata;
 }
