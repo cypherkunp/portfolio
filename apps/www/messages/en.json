@@ -68,7 +68,7 @@
       "location": "London, UK",
       "locationLink": "",
       "about": "Lead Experience Engineer",
-      "summary": "I am a seasoned software architect with 15 years of diverse experience in software product development. As a full stack architect, I have successfully taken multiple products from zero to one. I have a deep expertise in full stack development using technologies such as Typescript, JavaScript, NextJS, ReactJS, NodeJS and Serverless. I have led and architected several multi-million dollar projects including greenfield and rewrites of legacy products. I lead teams effectively, ensuring an environment where people can do their best work.",
+      "summary": "I am a seasoned software architect with 16 years of diverse experience in software product development. As a full stack architect, I have successfully taken multiple products from zero to one. I have a deep expertise in full stack development using technologies such as Typescript, JavaScript, NextJS, ReactJS, NodeJS and Serverless. I have led and architected several multi-million dollar projects including greenfield and rewrites of legacy products. I lead teams effectively, ensuring an environment where people can do their best work.",
       "avatarUrl": "https://avatars.githubusercontent.com/u/1528663?v=4",
       "personalWebsiteUrl": "https://devvrat.uk",
       "contact": {
@@ -128,7 +128,14 @@
         "Amazon AWS",
         "Docker",
         "Web3",
-        "Cloud Computing"
+        "Cloud Computing",
+        "LLMs",
+        "AI Agents",
+        "AI Chatbots",
+        "AI Agent Skills",
+        "RAG",
+        "Prompt Engineering",
+        "Vercel AI SDK"
       ],
       "projects": [],
       "social": {
@@ -252,27 +259,31 @@
     },
     "faqBlock": {
       "title": "FAQs",
-      "description": "",
+      "description": "Straight answers if you're deciding whether to reach out.",
       "list": [
         {
-          "question": "Can you manage a team?",
-          "answer": "Yes, I have experience leading teams of 3-10 people."
+          "question": "What kind of work do you take on?",
+          "answer": "Full-stack product work: greenfield apps, legacy rewrites, and architecture on TypeScript / React / Next.js / Node stacks. I'm strongest when the problem needs both shipping code and system design."
         },
         {
-          "question": "How do you balance hands-on coding with team management responsibilities?",
-          "answer": "I maintain a hybrid approach, allocating about 60% of my time to hands-on coding and 40% to management tasks. I stay involved in critical technical decisions and complex problem-solving while empowering team leads to handle day-to-day coding supervision. I use tools like Jira and Slack to efficiently manage tasks and communication, allowing me to context-switch effectively between coding and leadership roles."
+          "question": "Are you available for hire?",
+          "answer": "Yes. Open to full-time roles. Email with context and timeline; I'll reply with a clear yes or no."
         },
         {
-          "question": "How do you foster collaboration between engineering, product, and design teams?",
-          "answer": "I prioritize open communication channels and regular cross-functional meetings. We hold weekly sync-ups where product managers present roadmaps, designers showcase prototypes, and engineers discuss technical feasibility. I encourage pair programming sessions between designers and developers for UI/UX work. We also use collaborative tools like Figma and Confluence to ensure all teams have visibility into ongoing projects and can provide timely feedback."
+          "question": "Where are you based?",
+          "answer": "London, UK. Remote-first, and I've shipped with teams across UK, US, and India time zones."
         },
         {
-          "question": "How do you prioritize technical debt versus new feature development in your projects?",
-          "answer": "I advocate for a balanced approach. We dedicate about 20-30% of each sprint to addressing technical debt, focusing on issues that directly impact performance, security, or scalability. For larger refactoring efforts, I work with product managers to allocate dedicated sprints or incorporate them into relevant feature work. We maintain a technical debt backlog, regularly reassessing priorities based on their impact on current and future development."
+          "question": "Do you still write code, or is it mostly leadership?",
+          "answer": "Both. I've led teams of 3–10, but I stay in the codebase for architecture, hard bugs, and critical-path features. Split is roughly 60% hands-on / 40% leadership depending on the engagement."
         },
         {
-          "question": "Can you describe your process for mentoring junior developers while maintaining project timelines?",
-          "answer": "Mentoring is integrated into our development process. I pair junior developers with more experienced team members on projects, encouraging knowledge sharing. We have a structured code review process that serves as a learning opportunity. I also set aside time for weekly one-on-one sessions to discuss career growth and address any challenges. To maintain timelines, I factor in mentoring time when estimating project durations and adjust team assignments to balance skill development with delivery deadlines."
+          "question": "What's your preferred stack?",
+          "answer": "TypeScript, React, Next.js, Node.js, and serverless on AWS. Docker, CI/CD, microservices, and edge / lambda when the product needs them."
+        },
+        {
+          "question": "How should I get in touch?",
+          "answer": "Email works best: devvrat.shukla@gmail.com. LinkedIn or X if you want a shorter intro first."
         }
       ]
     },

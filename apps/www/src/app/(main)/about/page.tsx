@@ -46,7 +46,7 @@ export default function Page() {
 
   return (
     <PageContainer className="w-full overflow-auto print:p-12">
-      <Section title={t('labels.about')} isFirstSection>
+      <Section isFirstSection>
         <ul className="flex list-inside list-disc flex-col">
           {t('summary')
             .split('. ')
@@ -114,7 +114,11 @@ export default function Page() {
         <div className="flex flex-wrap gap-1">
           {t.raw('skills').map((skill: string) => {
             return (
-              <Badge className="bg-grey-800 rounded-xl px-3 py-1 text-white" key={skill}>
+              <Badge
+                variant="outline"
+                className="rounded-xl border-neutral-500 px-3 py-1 font-normal text-white"
+                key={skill}
+              >
                 {skill}
               </Badge>
             );
