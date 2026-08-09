@@ -42,20 +42,20 @@
   "HomePage": {
     "title": "Devvrat | Portfolio",
     "description": "Devvrat's Portfolio Website",
-    "url": "https://devvrat.uk",
-    "ogImage": "https://devvrat.uk/og-home.jpg"
+    "url": "https://devvrat.cc",
+    "ogImage": "https://devvrat.cc/og-home.jpg"
   },
   "HandbookPage": {
     "title": "Devvrat | Handbook",
     "description": "Devvrat's User Manual",
-    "url": "https://devvrat.uk/handbook",
-    "ogImage": "https://devvrat.uk/og-home.jpg"
+    "url": "https://devvrat.cc/handbook",
+    "ogImage": "https://devvrat.cc/og-home.jpg"
   },
   "ResumePage": {
     "title": "Devvrat | Resume ",
     "description": "Devvrat's Experience Summary",
-    "url": "https://devvrat.uk/resume",
-    "ogImage": "https://devvrat.uk/og-home.jpg",
+    "url": "https://devvrat.cc/resume",
+    "ogImage": "https://devvrat.cc/og-home.jpg",
     "data": {
       "labels": {
         "about": "About",
@@ -70,7 +70,7 @@
       "about": "Lead Experience Engineer",
       "summary": "I am a seasoned software architect with 16 years of diverse experience in software product development. As a full stack architect, I have successfully taken multiple products from zero to one. I have a deep expertise in full stack development using technologies such as Typescript, JavaScript, NextJS, ReactJS, NodeJS and Serverless. I have led and architected several multi-million dollar projects including greenfield and rewrites of legacy products. I lead teams effectively, ensuring an environment where people can do their best work.",
       "avatarUrl": "https://avatars.githubusercontent.com/u/1528663?v=4",
-      "personalWebsiteUrl": "https://devvrat.uk",
+      "personalWebsiteUrl": "https://devvrat.cc",
       "contact": {
         "email": "devvrat.shukla@gmail.com",
         "tel": ""
