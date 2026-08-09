@@ -38,7 +38,7 @@ function getCodeText(children: ReactNode): string {
 const headingClass = {
   h1: 'mt-0 mb-6 scroll-m-20 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl',
   h2: 'mt-10 mb-4 scroll-m-20 text-lg font-bold tracking-tight text-foreground first:mt-0',
-  h3: 'mt-8 mb-2 scroll-m-20 text-xl font-semibold tracking-tight text-foreground',
+  h3: 'mt-8 mb-2 scroll-m-20 text-base font-bold tracking-tight text-foreground',
   h4: 'mt-6 mb-2 scroll-m-20 text-lg font-semibold tracking-tight text-foreground',
   h5: 'mt-6 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-foreground',
   h6: 'mt-4 mb-2 scroll-m-20 text-sm font-semibold tracking-tight text-muted-foreground',

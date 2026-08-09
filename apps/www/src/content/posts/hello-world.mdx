@@ -1,6 +1,6 @@
 ---
 title: 'Hello world'
-summary: 'The tech behind this site and why it runs on Vercel.'
+summary: 'The stack behind this site and why each piece is here.'
 publishedOn: '2025-01-01'
 version: '1'
 tags:
@@ -11,12 +11,102 @@ tags:
 
 # Hello world
 
-This site is a **Next.js 16** app on the **App Router** with **React 19**. Pages lean on **React Server Components** so most UI ships as server HTML; **client components** show up only where the browser has to react to input or animation. **TypeScript** is the default language end to end, which keeps props, loaders, and content types aligned as the surface grows.
+This site is a personal portfolio. I care about shipping fast, keeping the surface small, and not fighting the framework.
 
-Styling is **Tailwind CSS 4** on top of **Radix** primitives (the same foundation **shadcn/ui** uses): accessible focus and keyboard behavior without hand-rolling a design system. Blog posts and docs are **MDX**; **Fumadocs** ties that content into navigation, search, and generation without locking you into a closed CMS.
+Every choice below is a tradeoff. Here is what I picked and why.
 
-**ESLint**, **Prettier**, and **Husky** handle linting, formatting, and pre-commit checks. **Turborepo** with **pnpm** caches build steps so repeated runs stay fast locally and in CI.
+## Framework: Next.js 16 + React 19
 
-## Why this site uses Vercel
+**Next.js** on the **App Router**. **React 19**. **TypeScript** end to end.
 
-**Vercel** ships the same runtime **Next.js** targets in production, so App Router features, edge middleware, and caching behave the way the framework docs describe. Preview deployments per branch make it obvious what changed before anything hits production. Static and dynamic routes sit behind a global **Edge** network without operating separate origin servers or TLS termination yourself. For a personal site that should stay fast, boring, and cheap to own, that tradeoff wins over self-hosting or generic Node PaaS where you assemble the pieces by hand.
+Pages default to **React Server Components**. Most UI ships as HTML from the server. Client components only show up where the browser has to react: forms, animation, theme toggles.
+
+Why this over a static generator or a SPA:
+
+- App Router + RSC keep most routes cheap to serve
+- File-based routing matches how I already think about pages
+- TypeScript keeps props, loaders, and MDX frontmatter aligned as the surface grows
+- I already ship product work on this stack; context switching costs more than the learning curve
+
+Simplicity > novelty. I did not pick the newest shiny alternative. I picked the one I can maintain without drama.
+
+## UI: Tailwind 4 + Radix + shadcn
+
+Styling is **Tailwind CSS 4**. Primitives come from **Radix**. Components live in a shared `packages/ui` package built on **shadcn/ui**.
+
+Why this combo:
+
+- Tailwind keeps styles next to the markup. No CSS module archaeology
+- Radix gives accessible focus, keyboard, and dialog behaviour without hand-rolling it
+- shadcn means I own the component source. No black-box design system to fight
+- A shared UI package lets the site stay thin while components stay reusable
+
+UX > DX > difficulty of implementation. Accessible defaults first. Pretty second.
+
+## Content: MDX + Fumadocs
+
+Blog posts and docs are **MDX**. **Fumadocs** wires them into navigation, search, and codegen.
+
+Why not a CMS:
+
+- Content lives in git. Diffs are real. Reviews are normal PRs
+- MDX lets me drop React components into a post when prose is not enough
+- Fumadocs handles the boring parts: routes, sidebar, search index
+- No vendor lock-in on a closed CMS for a personal site
+
+If I need a CMS later, I can add one. I do not need one today.
+
+## Monorepo: Turborepo + pnpm
+
+The repo is a **pnpm** workspace with **Turborepo**.
+
+```text
+apps/www          → the site
+packages/ui       → shared components
+packages/utils    → shared helpers
+tools/unlighthouse → performance checks
+```
+
+Why a monorepo for a personal site:
+
+- Shared UI without publishing packages to a registry
+- Turbo caches builds so repeated runs stay fast locally and in CI
+- pnpm keeps `node_modules` honest and installs predictable
+- One place for ESLint, Prettier, Husky, and commitlint
+
+Iteration velocity matters. Caching and shared packages remove friction I would otherwise pay on every change.
+
+## Quality gates
+
+**ESLint**, **Prettier**, **Husky**, and **commitlint** sit in the path before code lands.
+
+- Lint catches the dumb mistakes
+- Format removes style bikesheds
+- Pre-commit hooks keep main clean without relying on memory
+- Conventional commits keep history readable
+
+Polish is part of the MVP. These tools are cheap. Skipping them is expensive later.
+
+## Hosting: Vercel
+
+**Vercel** runs production.
+
+Why Vercel over self-hosting or a generic Node PaaS:
+
+- Same runtime Next.js targets in production. App Router, middleware, and caching behave like the docs say
+- Preview deployments per branch. You see the change before it hits production
+- Static and dynamic routes sit behind a global Edge network without me operating TLS, origins, or CDN config
+- Cheap to own for a personal site. Fast by default. Boring in the right ways
+
+I could self-host. I do not want to operate infrastructure for a portfolio. That tradeoff loses.
+
+## What I optimised for
+
+- Ship the site, not the platform
+- Prefer server HTML; reach for the client only when needed
+- Own UI source; share it across the monorepo
+- Keep content in git
+- Cache builds; gate quality at commit time
+- Host where Next.js is a first-class citizen
+
+That is the stack. Nothing exotic. Each piece earns its place.
