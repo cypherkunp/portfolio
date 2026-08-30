@@ -27,10 +27,6 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'api.microlink.io',
       },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
     ],
   },
   // Next.js 16 features

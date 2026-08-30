@@ -2,34 +2,25 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  Heart,
-  MapPin,
-  MessageCircle,
-  X,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
-import { PHOTOS, type Photo } from '@/config/photos';
+import type { Photo } from '@/lib/photo';
 import { cn } from '@/lib/utils';
 
 function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-GB', {
+  const value = dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`;
+  return new Date(value).toLocaleString('en-us', {
     day: 'numeric',
-    month: 'short',
+    month: 'numeric',
     year: 'numeric',
   });
 }
 
 interface PhotoGridProps {
-  photos?: Photo[];
+  photos: Photo[];
 }
 
-export function PhotoGrid({ photos = PHOTOS }: PhotoGridProps) {
+export function PhotoGrid({ photos }: PhotoGridProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Set<string>>(new Set());
   const lightboxRef = useRef<HTMLDivElement>(null);
@@ -79,6 +70,10 @@ export function PhotoGrid({ photos = PHOTOS }: PhotoGridProps) {
     };
   }, [selectedIndex, close, next, prev]);
 
+  if (photos.length === 0) {
+    return <p className="text-sm text-neutral-500">Drop images into src/images/photos.</p>;
+  }
+
   return (
     <>
       <div className="grid grid-cols-3 gap-px sm:gap-0.5">
@@ -105,16 +100,14 @@ export function PhotoGrid({ photos = PHOTOS }: PhotoGridProps) {
 
             <div
               aria-hidden
-              className="absolute inset-0 flex items-center justify-center gap-5 bg-black/55 text-sm font-semibold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+              className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/55 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             >
-              <span className="flex items-center gap-1.5">
-                <Heart className="h-4 w-4 fill-white" />
-                {((Number(photo.id) * 73) % 900) + 12}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <MessageCircle className="h-4 w-4 fill-white" />
-                {((Number(photo.id) * 17) % 60) + 1}
-              </span>
+              <span className="text-sm text-neutral-300 tabular-nums">{formatDate(photo.date)}</span>
+              {photo.location ? (
+                <span className="px-3 text-center text-sm tracking-tight text-white">
+                  {photo.location}
+                </span>
+              ) : null}
             </div>
           </button>
         ))}
@@ -143,17 +136,15 @@ export function PhotoGrid({ photos = PHOTOS }: PhotoGridProps) {
           aria-label={selected.alt}
         >
           <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-4 lg:px-8">
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="text-sm text-neutral-400 tabular-nums">
+                {formatDate(selected.date)}
+              </span>
               {selected.location && (
-                <span className="flex items-center gap-1.5 text-xs text-neutral-400">
-                  <MapPin className="h-3 w-3" />
+                <span className="truncate tracking-tight text-neutral-100">
                   {selected.location}
                 </span>
               )}
-              <span className="flex items-center gap-1.5 text-xs text-neutral-500">
-                <Calendar className="h-3 w-3" />
-                {formatDate(selected.date)}
-              </span>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-xs text-neutral-500 tabular-nums">
