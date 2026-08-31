@@ -14,7 +14,7 @@ Landing (`/`) is the source of truth: Geist Mono, `#0a0a0a` blueprint grid (`.bg
 
 Use `ToolSubpageLayout` + `PageContainer` + `Section` (title via `UnderlineText`). Copy the Posts/Apps row: `mb-4 flex items-center gap-2`, muted `w-8` meta, name with `hover:underline hover:underline-offset-8`, optional aside hidden below `sm`, `ArrowUpRight` on hover.
 
-Nested routes: one muted parent link above `Section`, not breadcrumbs or a custom header.
+Nested routes: shadcn `Breadcrumb` primitives (`BreadcrumbLink asChild` + Next `Link`, `BreadcrumbPage` for current). Page title is a separate yellow-underlined `h2`.
 
 ## Do not
 

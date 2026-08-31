@@ -3,22 +3,13 @@
 import { useState } from 'react';
 
 interface BookmarkThumbProps {
-  src: string | null;
-  title: string;
+  src: string;
 }
 
-function Letter({ title }: { title: string }) {
-  return (
-    <span className="flex size-8 items-center justify-center text-sm text-neutral-600 dark:text-neutral-400">
-      {title.charAt(0).toUpperCase() || '·'}
-    </span>
-  );
-}
-
-export function BookmarkThumb({ src, title }: BookmarkThumbProps) {
+export function BookmarkThumb({ src }: BookmarkThumbProps) {
   const [failed, setFailed] = useState(false);
 
-  if (!src || failed) return <Letter title={title} />;
+  if (failed) return null;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element

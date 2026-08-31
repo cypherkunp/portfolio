@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getCollection, getCollections } from '@/lib/bookmarks';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { BookmarkList } from '@/components/bookmarks/bookmark-list';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
+import UnderlineText from '@/components/underline-text';
 
 interface CollectionPageProps {
   params: Promise<{ collection: string }>;
@@ -36,20 +36,23 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
         <PageContainer>
-          <Link
-            href="/bookmarks"
-            className="mb-4 inline-block text-sm text-neutral-600 hover:underline hover:underline-offset-8 dark:text-neutral-400"
-          >
-            Bookmarks
-          </Link>
-          <Section
-            isFirstSection
-            isLastSection
-            title={collection.name}
-            description={collection.description || undefined}
-          >
+          <section className="flex w-full flex-col">
+            <header className="mb-4 flex w-full flex-col gap-4">
+              <Breadcrumbs
+                items={[
+                  { label: 'Bookmarks', href: '/bookmarks' },
+                  { label: collection.name },
+                ]}
+              />
+              <h2 className="text-lg font-bold tracking-tight pb-2">
+                <UnderlineText>{collection.name}</UnderlineText>
+              </h2>
+              {collection.description ? (
+                <p className="text-muted-foreground text-sm">{collection.description}</p>
+              ) : null}
+            </header>
             <BookmarkList bookmarks={collection.bookmarks} />
-          </Section>
+          </section>
         </PageContainer>
       </ToolSubpageLayout>
     </AppEnabledGate>

@@ -3,6 +3,12 @@ import { ArrowUpRight } from 'lucide-react';
 import type { Bookmark } from '@/lib/bookmarks';
 import { hostnameOf } from '@/lib/bookmarks';
 import { BookmarkThumb } from '@/components/bookmarks/bookmark-thumb';
+import {
+  catalogArrowClassName,
+  catalogAsideClassName,
+  catalogRowClassName,
+  catalogTitleClassName,
+} from '@/components/bookmarks/catalog-row';
 
 interface BookmarkListProps {
   bookmarks: Bookmark[];
@@ -25,20 +31,16 @@ export function BookmarkList({ bookmarks }: BookmarkListProps) {
             href={bookmark.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mb-4 flex items-center gap-2"
+            className={catalogRowClassName}
           >
-            <span className="w-8 shrink-0">
-              <BookmarkThumb src={bookmark.image} title={title} />
-            </span>
-            <span className="group-hover:decoration-tertiary tracking-tight text-neutral-900 group-hover:underline group-hover:underline-offset-8 dark:text-neutral-100">
-              {title}
-            </span>
-            {title !== host ? (
-              <span className="hidden text-sm text-neutral-600 sm:inline dark:text-neutral-500">
-                {host}
+            {bookmark.image ? (
+              <span className="size-8 shrink-0">
+                <BookmarkThumb src={bookmark.image} />
               </span>
             ) : null}
-            <ArrowUpRight className="ml-auto size-4 shrink-0 text-neutral-600 opacity-0 transition-opacity group-hover:opacity-100 dark:text-neutral-400" />
+            <span className={catalogTitleClassName}>{title}</span>
+            {title !== host ? <span className={catalogAsideClassName}>{host}</span> : null}
+            <ArrowUpRight className={catalogArrowClassName} />
           </a>
         );
       })}
