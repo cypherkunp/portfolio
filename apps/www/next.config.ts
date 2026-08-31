@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
     viewTransition: true,
   },
   transpilePackages: [],
+  serverExternalPackages: ['exifr'],
   images: {
     formats: ['image/webp'],
     remotePatterns: [
