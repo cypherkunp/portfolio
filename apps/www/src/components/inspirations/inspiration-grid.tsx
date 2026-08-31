@@ -4,11 +4,9 @@ import { useState } from 'react';
 import { Check, Copy, Pin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Empty, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 type InspirationVariant = 'default' | 'highlight' | 'accent' | 'primary' | 'mono';
 type InspirationTag =
@@ -27,11 +25,6 @@ interface InspirationItem {
   source?: string;
   tag: InspirationTag;
   variant?: InspirationVariant;
-}
-
-interface TagFilter {
-  id: InspirationTag | 'all';
-  label: string;
 }
 
 function quoteClassName(quote: string) {
@@ -88,13 +81,8 @@ function InspirationCard({ item, isCopied, onCopy }: InspirationCardProps) {
 export function InspirationGrid() {
   const t = useTranslations('Blocks.quotesBlock');
   const items = t.raw('content') as InspirationItem[];
-  const tagFilters = t.raw('tagFilters') as TagFilter[];
   const emptyMessage = t('emptyState');
-
-  const [activeTag, setActiveTag] = useState<InspirationTag | 'all'>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
-
-  const filtered = activeTag === 'all' ? items : items.filter(i => i.tag === activeTag);
 
   async function copy(item: InspirationItem) {
     const suffix = item.author ? ` — ${item.author}` : '';
@@ -107,50 +95,26 @@ export function InspirationGrid() {
     }
   }
 
-  return (
-    <div className="flex flex-col gap-6">
-      <ToggleGroup
-        type="single"
-        variant="default"
-        value={activeTag}
-        onValueChange={value => {
-          if (value) setActiveTag(value as InspirationTag | 'all');
-        }}
-        className="w-full flex-wrap justify-start"
-        aria-label="Filter quotes"
-      >
-        {tagFilters.map(filter => (
-          <ToggleGroupItem
-            key={filter.id}
-            value={filter.id}
-            className={cn(
-              'min-h-11 text-muted-foreground hover:bg-transparent hover:text-foreground data-[state=on]:bg-transparent data-[state=on]:text-foreground data-[state=on]:shadow-none',
-              activeTag === filter.id && 'decoration-primary',
-            )}
-          >
-            {filter.label}
-          </ToggleGroupItem>
-        ))}
-      </ToggleGroup>
+  if (items.length === 0) {
+    return (
+      <Empty>
+        <EmptyHeader>
+          <EmptyTitle>{emptyMessage}</EmptyTitle>
+        </EmptyHeader>
+      </Empty>
+    );
+  }
 
-      {filtered.length === 0 ? (
-        <Empty>
-          <EmptyHeader>
-            <EmptyTitle>{emptyMessage}</EmptyTitle>
-          </EmptyHeader>
-        </Empty>
-      ) : (
-        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-          {filtered.map(item => (
-            <InspirationCard
-              key={item.id}
-              item={item}
-              isCopied={copiedId === item.id}
-              onCopy={copy}
-            />
-          ))}
-        </div>
-      )}
+  return (
+    <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+      {items.map(item => (
+        <InspirationCard
+          key={item.id}
+          item={item}
+          isCopied={copiedId === item.id}
+          onCopy={copy}
+        />
+      ))}
     </div>
   );
 }
