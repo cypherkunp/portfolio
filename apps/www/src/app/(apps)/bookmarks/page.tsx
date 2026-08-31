@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 
 import { getCollections } from '@/lib/bookmarks';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
-import { BookmarksPageHeader } from '@/components/bookmarks/bookmarks-page-header';
-import { CollectionTable } from '@/components/bookmarks/collection-table';
+import { CollectionList } from '@/components/bookmarks/collection-list';
+import PageContainer from '@/components/layout/page-container';
+import { Section } from '@/components/layout/section';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
 export const metadata: Metadata = {
@@ -17,12 +18,16 @@ export default function BookmarksPage() {
   return (
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
-        <div className="pb-16">
-          <BookmarksPageHeader title="Links worth keeping." />
-          <div className="mt-2 border-t border-neutral-900 px-1 pt-6 sm:pt-10">
-            <CollectionTable collections={collections} />
-          </div>
-        </div>
+        <PageContainer>
+          <Section
+            isFirstSection
+            isLastSection
+            title="Bookmarks"
+            description="Collections of links worth keeping."
+          >
+            <CollectionList collections={collections} />
+          </Section>
+        </PageContainer>
       </ToolSubpageLayout>
     </AppEnabledGate>
   );

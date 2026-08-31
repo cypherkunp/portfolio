@@ -127,6 +127,7 @@ You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, 
 
 - Use Shadcn UI, Radix, and Tailwind for components and styling.
 - Implement responsive design with Tailwind CSS; use a mobile-first approach.
+- Follow `.impeccable.md`. Landing (`/`) is the visual source of truth: Geist Mono, blueprint grid, yellow underline, Posts/Apps list rows for text catalogs. Do not add tables, card grids, or italic-accent headlines on catalog pages.
 
 ### Performance optimization
 

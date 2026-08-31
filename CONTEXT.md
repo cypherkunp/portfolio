@@ -2,6 +2,8 @@
 
 Personal site: writing, photos, inspirations, and curated links.
 
+Visual language: `.impeccable.md`. Landing (`/`) is the source of truth.
+
 ## Bookmarks
 
 **Collection**:

@@ -9,7 +9,7 @@ interface BookmarkThumbProps {
 
 function Letter({ title }: { title: string }) {
   return (
-    <span className="flex size-10 items-center justify-center rounded bg-neutral-900 text-xs font-medium text-neutral-500">
+    <span className="flex size-8 items-center justify-center text-sm text-neutral-600 dark:text-neutral-400">
       {title.charAt(0).toUpperCase() || '·'}
     </span>
   );
@@ -25,13 +25,13 @@ export function BookmarkThumb({ src, title }: BookmarkThumbProps) {
     <img
       src={src}
       alt=""
-      width={40}
-      height={40}
+      width={32}
+      height={32}
       loading="lazy"
       decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
-      className="size-10 rounded object-cover"
+      className="size-8 rounded-sm object-cover"
     />
   );
 }

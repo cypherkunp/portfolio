@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { getCollection, getCollections } from '@/lib/bookmarks';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
-import { BookmarkTable } from '@/components/bookmarks/bookmark-table';
-import { BookmarksPageHeader } from '@/components/bookmarks/bookmarks-page-header';
+import { BookmarkList } from '@/components/bookmarks/bookmark-list';
+import PageContainer from '@/components/layout/page-container';
+import { Section } from '@/components/layout/section';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
 interface CollectionPageProps {
@@ -33,16 +35,22 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   return (
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
-        <div className="pb-16">
-          <BookmarksPageHeader
+        <PageContainer>
+          <Link
+            href="/bookmarks"
+            className="mb-4 inline-block text-sm text-neutral-600 hover:underline hover:underline-offset-8 dark:text-neutral-400"
+          >
+            Bookmarks
+          </Link>
+          <Section
+            isFirstSection
+            isLastSection
             title={collection.name}
-            description={collection.description}
-            backHref="/bookmarks"
-          />
-          <div className="mt-2 border-t border-neutral-900 px-1 pt-6 sm:pt-10">
-            <BookmarkTable bookmarks={collection.bookmarks} />
-          </div>
-        </div>
+            description={collection.description || undefined}
+          >
+            <BookmarkList bookmarks={collection.bookmarks} />
+          </Section>
+        </PageContainer>
       </ToolSubpageLayout>
     </AppEnabledGate>
   );

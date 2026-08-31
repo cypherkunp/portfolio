@@ -34,6 +34,7 @@ UI and Styling
 
 - Use Shadcn UI, Radix, and Tailwind for components and styling.
 - Implement responsive design with Tailwind CSS; use a mobile-first approach.
+- Follow `.impeccable.md`. Landing (`/`) is the visual source of truth.
 
 Performance Optimization
 
