@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 /**
- * Reads `src/content/bookmarks.config.json` (hand-edited) and writes
- * Open Graph metadata to `src/content/bookmarks.og.json` (URL-keyed cache).
+ * Fills empty `title` / `image` on bookmark objects in
+ * `src/content/bookmarks.config.json`. Never overwrites fields you set.
  *
- * Idempotent — pass `--force` to re-fetch URLs that are already cached.
- * Stale URLs (no longer in config) are pruned automatically.
+ * After fetch:
+ *   Needs you  — no title. Type it by hand. Exit 1.
+ *   No image   — title exists, image is null. Warning, exit 0.
+ *
+ * `--force` retries empty image/title fields only. Still won't clobber
+ * a non-empty title or image.
  *
  * Run: pnpm --filter www fetch:bookmarks
  */
@@ -14,7 +18,8 @@ import path from 'node:path';
 import process from 'node:process';
 
 const CONFIG_FILE = path.resolve('src/content/bookmarks.config.json');
-const OG_FILE = path.resolve('src/content/bookmarks.og.json');
+const SCHEMA =
+  'Hand-edited. Add a collection (id, name, description) and bookmark `{ url }` objects. Run `pnpm --filter www fetch:bookmarks` to fill title and image. Fields you set are never overwritten.';
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 const force = process.argv.includes('--force');
@@ -66,31 +71,6 @@ function pickTitle(html) {
   return m?.[1] ? decodeEntities(m[1].trim()) : null;
 }
 
-function pickFavicon(html, base) {
-  const re =
-    /<link[^>]+rel\s*=\s*["'](?:icon|shortcut icon|apple-touch-icon)["'][^>]*?href\s*=\s*["']([^"']+)["'][^>]*>/i;
-  const m = html.match(re);
-  return absolutize(m?.[1] ?? '/favicon.ico', base);
-}
-
-function fallbackOg(url) {
-  const domain = (() => {
-    try {
-      return new URL(url).hostname.replace(/^www\./, '');
-    } catch {
-      return url;
-    }
-  })();
-  return {
-    title: domain,
-    description: null,
-    image: null,
-    siteName: domain,
-    favicon: `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
-    fetchedAt: new Date().toISOString(),
-  };
-}
-
 async function fetchOg(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 10_000);
@@ -110,23 +90,13 @@ async function fetchOg(url) {
     const html = (await res.text()).slice(0, 1_500_000);
     const finalUrl = res.url || url;
 
-    const title = pickTitle(html) ?? new URL(finalUrl).hostname.replace(/^www\./, '');
-    const description = pickMeta(html, ['og:description', 'twitter:description', 'description']);
+    const title = pickTitle(html);
     const image = absolutize(
       pickMeta(html, ['og:image', 'og:image:url', 'twitter:image', 'twitter:image:src']),
       finalUrl,
     );
-    const siteName = pickMeta(html, ['og:site_name', 'application-name']);
-    const favicon = pickFavicon(html, finalUrl);
 
-    return {
-      title,
-      description,
-      image,
-      siteName: siteName ?? new URL(finalUrl).hostname.replace(/^www\./, ''),
-      favicon,
-      fetchedAt: new Date().toISOString(),
-    };
+    return { title, image };
   } catch (err) {
     console.warn(`  ! ${url} — ${err instanceof Error ? err.message : 'fetch failed'}`);
     return null;
@@ -135,62 +105,121 @@ async function fetchOg(url) {
   }
 }
 
-async function readJson(file, fallback) {
-  try {
-    return JSON.parse(await fs.readFile(file, 'utf8'));
-  } catch (err) {
-    if (err.code === 'ENOENT') return fallback;
-    throw err;
-  }
+function asBookmark(raw) {
+  if (typeof raw === 'string') return { url: raw };
+  return { url: raw.url, title: raw.title, image: raw.image };
+}
+
+function hasTitle(bookmark) {
+  return typeof bookmark.title === 'string' && bookmark.title.trim().length > 0;
+}
+
+function hasImage(bookmark) {
+  return typeof bookmark.image === 'string' && bookmark.image.length > 0;
+}
+
+function imageCheckedEmpty(bookmark) {
+  return bookmark.image === null;
+}
+
+function needsFetch(bookmark) {
+  if (!hasTitle(bookmark)) return true;
+  if (hasImage(bookmark)) return false;
+  if (imageCheckedEmpty(bookmark)) return force;
+  return true;
+}
+
+function toWrittenBookmark(bookmark) {
+  const out = { url: bookmark.url };
+  if (hasTitle(bookmark)) out.title = bookmark.title.trim();
+  if (hasImage(bookmark)) out.image = bookmark.image;
+  else if (imageCheckedEmpty(bookmark)) out.image = null;
+  return out;
 }
 
 async function main() {
-  const config = await readJson(CONFIG_FILE, { collections: [] });
-  const ogFile = await readJson(OG_FILE, { entries: {} });
-  const prevEntries = ogFile.entries ?? {};
-  const nextEntries = {};
-
-  let ok = 0;
-  let failed = 0;
-  let skipped = 0;
-
-  for (const collection of config.collections) {
-    console.log(`\n→ ${collection.name}`);
-    for (const b of collection.bookmarks) {
-      const cached = prevEntries[b.url];
-      if (!force && cached && cached.title) {
-        nextEntries[b.url] = cached;
-        skipped += 1;
-        console.log(`  · ${b.url} (cached)`);
-        continue;
-      }
-      process.stdout.write(`  · ${b.url} `);
-      const og = await fetchOg(b.url);
-      if (og) {
-        nextEntries[b.url] = og;
-        ok += 1;
-        console.log('✓');
-      } else {
-        nextEntries[b.url] = cached ?? fallbackOg(b.url);
-        failed += 1;
-      }
-    }
+  const config = JSON.parse(await fs.readFile(CONFIG_FILE, 'utf8'));
+  if (!Array.isArray(config.collections)) {
+    console.error('bookmarks.config.json is missing `collections`.');
+    process.exit(1);
   }
 
-  const pruned = Object.keys(prevEntries).filter(url => !(url in nextEntries));
-  if (pruned.length) {
-    console.log(`\nPruning ${pruned.length} stale ${pruned.length === 1 ? 'entry' : 'entries'}:`);
-    for (const url of pruned) console.log(`  - ${url}`);
+  let fetched = 0;
+  let skipped = 0;
+  const missingTitle = [];
+  const missingImage = [];
+
+  const collections = [];
+
+  for (const collection of config.collections) {
+    console.log(`\n→ ${collection.name ?? collection.id}`);
+    const bookmarks = [];
+
+    for (const raw of collection.bookmarks ?? []) {
+      const bookmark = asBookmark(raw);
+      if (!bookmark.url) {
+        console.warn('  ! skipping bookmark with no url');
+        continue;
+      }
+
+      if (!needsFetch(bookmark)) {
+        skipped += 1;
+        console.log(`  · ${bookmark.url} (cached)`);
+        bookmarks.push(toWrittenBookmark(bookmark));
+        if (!hasImage(bookmark)) missingImage.push({ url: bookmark.url, collection: collection.name });
+        continue;
+      }
+
+      process.stdout.write(`  · ${bookmark.url} `);
+      const og = await fetchOg(bookmark.url);
+      fetched += 1;
+
+      if (og) {
+        if (!hasTitle(bookmark) && og.title) bookmark.title = og.title;
+        if (!hasImage(bookmark)) bookmark.image = og.image ?? null;
+        console.log('✓');
+      } else {
+        console.log('✗');
+      }
+
+      bookmarks.push(toWrittenBookmark(bookmark));
+      if (!hasTitle(bookmark)) missingTitle.push({ url: bookmark.url, collection: collection.name });
+      else if (!hasImage(bookmark)) missingImage.push({ url: bookmark.url, collection: collection.name });
+    }
+
+    collections.push({
+      id: collection.id,
+      name: collection.name,
+      description: collection.description ?? '',
+      bookmarks,
+    });
   }
 
   const output = {
-    $schema: 'Auto-generated by `pnpm --filter www fetch:bookmarks`. Do not hand-edit. Keyed by bookmark URL.',
-    entries: nextEntries,
+    $schema: SCHEMA,
+    collections,
   };
-  await fs.writeFile(OG_FILE, JSON.stringify(output, null, 2) + '\n', 'utf8');
+  await fs.writeFile(CONFIG_FILE, JSON.stringify(output, null, 2) + '\n', 'utf8');
+
+  if (missingTitle.length) {
+    console.log('\nNeeds you — no title. Add `title` by hand or fix the URL:\n');
+    for (const row of missingTitle) {
+      console.log(`  ${row.url}  (${row.collection})`);
+    }
+  }
+
+  if (missingImage.length) {
+    console.log('\nNo image — empty thumb until you set `image` or re-run with --force:\n');
+    for (const row of missingImage) {
+      console.log(`  ${row.url}  (${row.collection})`);
+    }
+  }
+
   console.log(
-    `\nDone. ${ok} fetched · ${skipped} skipped · ${failed} failed · ${pruned.length} pruned`,
+    `\nDone. ${fetched} fetched · ${skipped} skipped · ${missingTitle.length} need title · ${missingImage.length} no image`,
   );
+
+  if (missingTitle.length) process.exit(1);
 }
 
 main().catch(err => {

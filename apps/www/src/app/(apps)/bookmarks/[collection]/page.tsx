@@ -1,12 +1,10 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getCollection, getCollections, getEnrichedCollection } from '@/lib/bookmarks';
+import { getCollection, getCollections } from '@/lib/bookmarks';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
-import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
-import { BookmarksShell } from '@/components/bookmarks/bookmarks-shell';
-import { BookmarksSkeleton } from '@/components/bookmarks/bookmarks-skeleton';
+import { BookmarkTable } from '@/components/bookmarks/bookmark-table';
+import { BookmarksPageHeader } from '@/components/bookmarks/bookmarks-page-header';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
 interface CollectionPageProps {
@@ -14,51 +12,38 @@ interface CollectionPageProps {
 }
 
 export function generateStaticParams() {
-  return getCollections().map(c => ({ collection: c.id }));
+  return getCollections().map(collection => ({ collection: collection.id }));
 }
 
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { collection: id } = await params;
-  const c = getCollection(id);
-  if (!c) return { title: 'Bookmarks' };
+  const collection = getCollection(id);
+  if (!collection) return { title: 'Bookmarks' };
   return {
-    title: `${c.name} · Bookmarks`,
-    description: c.description ?? `Bookmarked links — ${c.name}`,
+    title: `${collection.name} · Bookmarks`,
+    description: collection.description || `Bookmarked links — ${collection.name}`,
   };
 }
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
   const { collection: id } = await params;
-  const exists = getCollection(id);
-  if (!exists) notFound();
-
-  const collections = getCollections();
+  const collection = getCollection(id);
+  if (!collection) notFound();
 
   return (
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
         <div className="pb-16">
-          <BookmarksHeader collections={collections} activeCollectionId={id} />
-          <Suspense fallback={<BookmarksSkeleton />}>
-            <CollectionView id={id} />
-          </Suspense>
+          <BookmarksPageHeader
+            title={collection.name}
+            description={collection.description}
+            backHref="/bookmarks"
+          />
+          <div className="mt-2 border-t border-neutral-900 px-1 pt-6 sm:pt-10">
+            <BookmarkTable bookmarks={collection.bookmarks} />
+          </div>
         </div>
       </ToolSubpageLayout>
     </AppEnabledGate>
-  );
-}
-
-async function CollectionView({ id }: { id: string }) {
-  const enriched = await getEnrichedCollection(id);
-  if (!enriched) notFound();
-
-  return (
-    <BookmarksShell
-      collections={getCollections()}
-      activeCollectionId={id}
-      bookmarks={enriched.bookmarks}
-      shareUrl={`/bookmarks/${id}`}
-      heading={enriched.name}
-    />
   );
 }

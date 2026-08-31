@@ -1,16 +1,14 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
-import { getAllEnrichedBookmarks, getCollections } from '@/lib/bookmarks';
+import { getCollections } from '@/lib/bookmarks';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
-import { BookmarksHeader } from '@/components/bookmarks/bookmarks-header';
-import { BookmarksShell } from '@/components/bookmarks/bookmarks-shell';
-import { BookmarksSkeleton } from '@/components/bookmarks/bookmarks-skeleton';
+import { BookmarksPageHeader } from '@/components/bookmarks/bookmarks-page-header';
+import { CollectionTable } from '@/components/bookmarks/collection-table';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
 export const metadata: Metadata = {
   title: 'Bookmarks',
-  description: 'Collections of links worth sharing — articles, places, channels, design.',
+  description: 'Collections of links worth keeping.',
 };
 
 export default function BookmarksPage() {
@@ -20,28 +18,12 @@ export default function BookmarksPage() {
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
         <div className="pb-16">
-          <BookmarksHeader collections={collections} />
-          <Suspense fallback={<BookmarksSkeleton />}>
-            <AllBookmarks />
-          </Suspense>
+          <BookmarksPageHeader title="Links worth keeping." />
+          <div className="mt-2 border-t border-neutral-900 px-1 pt-6 sm:pt-10">
+            <CollectionTable collections={collections} />
+          </div>
         </div>
       </ToolSubpageLayout>
     </AppEnabledGate>
-  );
-}
-
-async function AllBookmarks() {
-  const [bookmarks, collections] = await Promise.all([
-    getAllEnrichedBookmarks(),
-    Promise.resolve(getCollections()),
-  ]);
-
-  return (
-    <BookmarksShell
-      collections={collections}
-      activeCollectionId={null}
-      bookmarks={bookmarks}
-      shareUrl="/bookmarks"
-    />
   );
 }
