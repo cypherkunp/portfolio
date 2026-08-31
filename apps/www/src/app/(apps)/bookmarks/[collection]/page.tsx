@@ -7,6 +7,7 @@ import { BookmarkList } from '@/components/bookmarks/bookmark-list';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
+import { Badge } from '@/components/ui/badge';
 import UnderlineText from '@/components/underline-text';
 
 interface CollectionPageProps {
@@ -36,17 +37,26 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
         <PageContainer>
-          <section className="flex w-full flex-col">
-            <header className="mb-4 flex w-full flex-col gap-4">
+          <section className="flex w-full flex-col items-start text-left">
+            <header className="mb-4 flex w-full flex-col items-start gap-4">
               <Breadcrumbs
                 items={[
                   { label: 'Bookmarks', href: '/bookmarks' },
                   { label: collection.name },
                 ]}
               />
-              <h2 className="text-lg font-bold tracking-tight pb-2">
-                <UnderlineText>{collection.name}</UnderlineText>
-              </h2>
+              <div className="flex items-center gap-2 pb-2">
+                <h2 className="text-lg font-bold tracking-tight">
+                  <UnderlineText>{collection.name}</UnderlineText>
+                </h2>
+                <Badge
+                  variant="outline"
+                  className="shrink-0"
+                  aria-label={`${collection.bookmarks.length} links`}
+                >
+                  {collection.bookmarks.length}
+                </Badge>
+              </div>
               {collection.description ? (
                 <p className="text-muted-foreground text-sm">{collection.description}</p>
               ) : null}

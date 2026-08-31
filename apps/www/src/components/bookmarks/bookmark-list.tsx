@@ -20,7 +20,7 @@ export function BookmarkList({ bookmarks }: BookmarkListProps) {
   }
 
   return (
-    <ol className="m-0 list-none p-0">
+    <ol className="m-0 w-full list-none p-0 text-left">
       {bookmarks.map((bookmark, index) => {
         const title = bookmark.title || hostnameOf(bookmark.url);
         const host = hostnameOf(bookmark.url);

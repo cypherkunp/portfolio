@@ -19,8 +19,8 @@ export default function BookmarksPage() {
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
         <PageContainer>
-          <section className="flex w-full flex-col">
-            <header className="mb-4 flex w-full flex-col gap-4">
+          <section className="flex w-full flex-col items-start text-left">
+            <header className="mb-4 flex w-full flex-col items-start gap-4">
               <h2 className="text-lg font-bold tracking-tight pb-2">
                 <UnderlineText>Bookmarks</UnderlineText>
               </h2>
