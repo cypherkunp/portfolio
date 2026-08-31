@@ -1,11 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, Pin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
 import { Empty, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
@@ -55,7 +54,14 @@ function InspirationCard({ item, isCopied, onCopy }: InspirationCardProps) {
   return (
     <Card className="mb-4 break-inside-avoid rounded-sm border-white/10 bg-transparent shadow-none">
       <CardHeader>
-        {isPinned ? <Badge variant="outline">Pinned</Badge> : null}
+        {isPinned ? (
+          <span
+            className="mb-4 flex size-10 items-center justify-center self-end"
+            aria-label="Pinned"
+          >
+            <Pin className="size-4" aria-hidden />
+          </span>
+        ) : null}
         <blockquote className={quoteClassName(item.quote)}>{item.quote}</blockquote>
       </CardHeader>
       <CardFooter className="gap-2">
