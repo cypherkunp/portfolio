@@ -2,10 +2,10 @@ import { ArrowUpRight } from 'lucide-react';
 
 import type { Bookmark } from '@/lib/bookmarks';
 import { hostnameOf } from '@/lib/bookmarks';
-import { BookmarkThumb } from '@/components/bookmarks/bookmark-thumb';
 import {
   catalogArrowClassName,
   catalogAsideClassName,
+  catalogMetaClassName,
   catalogRowClassName,
   catalogTitleClassName,
 } from '@/components/bookmarks/catalog-row';
@@ -20,30 +20,29 @@ export function BookmarkList({ bookmarks }: BookmarkListProps) {
   }
 
   return (
-    <div>
-      {bookmarks.map(bookmark => {
+    <ol className="m-0 list-none p-0">
+      {bookmarks.map((bookmark, index) => {
         const title = bookmark.title || hostnameOf(bookmark.url);
         const host = hostnameOf(bookmark.url);
 
         return (
-          <a
-            key={bookmark.url}
-            href={bookmark.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={catalogRowClassName}
-          >
-            {bookmark.image ? (
-              <span className="size-8 shrink-0">
-                <BookmarkThumb src={bookmark.image} />
+          <li key={bookmark.url}>
+            <a
+              href={bookmark.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={catalogRowClassName}
+            >
+              <span className={catalogMetaClassName} aria-hidden="true">
+                {index + 1}
               </span>
-            ) : null}
-            <span className={catalogTitleClassName}>{title}</span>
-            {title !== host ? <span className={catalogAsideClassName}>{host}</span> : null}
-            <ArrowUpRight className={catalogArrowClassName} />
-          </a>
+              <span className={catalogTitleClassName}>{title}</span>
+              {title !== host ? <span className={catalogAsideClassName}>{host}</span> : null}
+              <ArrowUpRight className={catalogArrowClassName} />
+            </a>
+          </li>
         );
       })}
-    </div>
+    </ol>
   );
 }
