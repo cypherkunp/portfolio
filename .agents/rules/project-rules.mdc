@@ -1,6 +1,6 @@
 ---
-globs:
-alwaysApply: true
+description: Canonical copy. Always-on injection is root AGENTS.md. Do not set alwaysApply.
+alwaysApply: false
 ---
 
 You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.

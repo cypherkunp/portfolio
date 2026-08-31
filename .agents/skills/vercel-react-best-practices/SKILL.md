@@ -143,6 +143,4 @@ Each rule file contains:
 - Correct code example with explanation
 - Additional context and references
 
-## Full Compiled Document
-
-For the complete guide with all rules expanded: `AGENTS.md`
+Do not compile or check in an `AGENTS.md` in this skill folder. Cursor always-injects every `AGENTS.md` it finds, which dumps the full encyclopedia into every chat. Read `rules/<id>.md` on demand.

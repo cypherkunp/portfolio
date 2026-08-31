@@ -1,6 +1,6 @@
 ---
-globs: *.md*
-alwaysApply: true
+description: Canonical copy. Always-on injection is root AGENTS.md. Do not set alwaysApply.
+alwaysApply: false
 ---
 
 ## Sentence structure

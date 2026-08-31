@@ -31,8 +31,8 @@ export function CollectionList({ collections }: CollectionListProps) {
                 {index + 1}
               </span>
               <span className="flex min-w-0 flex-1 flex-col items-start gap-1">
-                <span className="flex w-full items-center gap-2">
-                  <span className={catalogTitleClassName}>{collection.name}</span>
+                <span className="flex w-full min-w-0 items-start gap-2">
+                  <span className={cn(catalogTitleClassName, 'min-w-0')}>{collection.name}</span>
                   <Badge variant="outline" className="shrink-0" aria-label={`${count} links`}>
                     {count}
                   </Badge>

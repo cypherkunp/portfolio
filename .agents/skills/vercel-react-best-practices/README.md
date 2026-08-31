@@ -10,8 +10,9 @@ A structured repository for creating and maintaining React Best Practices optimi
   - `area-description.md` - Individual rule files
 - `src/` - Build scripts and utilities
 - `metadata.json` - Document metadata (version, organization, abstract)
-- __`AGENTS.md`__ - Compiled output (generated)
 - __`test-cases.json`__ - Test cases for LLM evaluation (generated)
+
+Do not check in a compiled `AGENTS.md` here. Cursor treats any `AGENTS.md` as always-on workspace rules (~28K tokens per chat). Agents should read `rules/<id>.md` via `SKILL.md`.
 
 ## Getting Started
 
@@ -20,17 +21,12 @@ A structured repository for creating and maintaining React Best Practices optimi
    pnpm install
    ```
 
-2. Build AGENTS.md from rules:
-   ```bash
-   pnpm build
-   ```
-
-3. Validate rule files:
+2. Validate rule files:
    ```bash
    pnpm validate
    ```
 
-4. Extract test cases:
+3. Extract test cases:
    ```bash
    pnpm extract-tests
    ```
@@ -49,7 +45,7 @@ A structured repository for creating and maintaining React Best Practices optimi
    - `advanced-` for Advanced Patterns (Section 8)
 3. Fill in the frontmatter and content
 4. Ensure you have clear examples with explanations
-5. Run `pnpm build` to regenerate AGENTS.md and test-cases.json
+5. Run `pnpm validate`. Do not emit `AGENTS.md` into this skill folder.
 
 ## Rule File Structure
 
@@ -102,10 +98,8 @@ Reference: [Link](https://example.com)
 
 ## Scripts
 
-- `pnpm build` - Compile rules into AGENTS.md
 - `pnpm validate` - Validate all rule files
 - `pnpm extract-tests` - Extract test cases for LLM evaluation
-- `pnpm dev` - Build and validate
 
 ## Contributing
 
@@ -115,7 +109,7 @@ When adding or modifying rules:
 2. Follow the `_template.md` structure
 3. Include clear bad/good examples with explanations
 4. Add appropriate tags
-5. Run `pnpm build` to regenerate AGENTS.md and test-cases.json
+5. Run `pnpm validate`. Do not emit `AGENTS.md` into this skill folder.
 6. Rules are automatically sorted by title - no need to manage numbers!
 
 ## Acknowledgments
