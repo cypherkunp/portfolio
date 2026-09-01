@@ -7,7 +7,7 @@ Visual language: `.impeccable.md`. Landing (`/`) is the source of truth.
 ## Bookmarks
 
 **Collection**:
-A named group of bookmarks with its own route. The name is chosen by the curator, not derived from the web.
+A named group of bookmarks with its own route. The name is chosen by the curator, not derived from the web. The route slug is assigned once from that name and never changes.
 _Avoid_: folder, category, tag, list, board
 
 **Bookmark**:

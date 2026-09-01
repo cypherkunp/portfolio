@@ -1,7 +1,7 @@
 # How is Collection id assigned on first sync, and what if the slug exists?
 
 Type: grilling
-Status: open
+Status: open (collision only; id assignment resolved on #9)
 
 ## Question
 
@@ -12,3 +12,7 @@ On first sync of a Chrome folder (no matching guid):
 - If that slug already exists (`design-systems` is already on the site) and the user did not **attach**, what happens — refuse, suffix, or force the attach prompt?
 
 Attach keeps the existing Collection's `id` and writes the Chrome folder guid onto it. That path is already decided; this ticket is create-new and collision only.
+
+## Answer (id assignment)
+
+Resolved on [#9](https://github.com/cypherkunp/portfolio/issues/9): kebab slug of the confirmed Collection title. Never rewritten after first write. Collision is [#12](https://github.com/cypherkunp/portfolio/issues/12).
