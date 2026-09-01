@@ -1,7 +1,7 @@
 # Where does the Chrome folder guid live in bookmarks.config.json?
 
 Type: grilling
-Status: open
+Status: open (expose vs strip only; field/schema resolved on #10)
 Blocked by: 01
 
 ## Question
@@ -13,3 +13,7 @@ The join key is the Chrome folder guid. Where is it stored so a Collection title
 - Does `$schema` / the hand-edited comment mention it, or is it a quiet field `bookmarks:sync` owns?
 
 Runtime must keep treating **Collection** `id` + `name` as curator-owned. The guid is not a Collection name and not a Bookmark.
+
+## Answer (field + schema)
+
+Resolved on [#10](https://github.com/cypherkunp/portfolio/issues/10): optional `chromeGuid` on the Collection object; `$schema` mentions it as owned by `bookmarks:sync`. Expose vs strip is [#13](https://github.com/cypherkunp/portfolio/issues/13).
