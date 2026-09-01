@@ -1,7 +1,7 @@
 # Where does the Chrome folder guid live in bookmarks.config.json?
 
 Type: grilling
-Status: open (expose vs strip only; field/schema resolved on #10)
+Status: resolved
 Blocked by: 01
 
 ## Question
@@ -16,4 +16,8 @@ Runtime must keep treating **Collection** `id` + `name` as curator-owned. The gu
 
 ## Answer (field + schema)
 
-Resolved on [#10](https://github.com/cypherkunp/portfolio/issues/10): optional `chromeGuid` on the Collection object; `$schema` mentions it as owned by `bookmarks:sync`. Expose vs strip is [#13](https://github.com/cypherkunp/portfolio/issues/13).
+Resolved on [#10](https://github.com/cypherkunp/portfolio/issues/10): optional `chromeGuid` on the Collection object; `$schema` mentions it as owned by `bookmarks:sync`.
+
+## Answer (expose vs strip)
+
+Resolved on [#13](https://github.com/cypherkunp/portfolio/issues/13): strip at `getCollections()`. `/bookmarks` never sees it.
