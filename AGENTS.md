@@ -245,3 +245,17 @@ Apply especially for markdown, MDX, blog posts, and user-facing copy.
 - Use exclamation points sparingly.
 - Sentences can start with "But" and "And", but don't overuse.
 - Use periods instead of commas when possible for clarity.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues for `cypherkunp/portfolio` (via `gh`). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical roles map 1:1: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
