@@ -10,16 +10,15 @@
  * `--force` retries empty image/title fields only. Still won't clobber
  * a non-empty title or image.
  *
- * Run: pnpm --filter www fetch:bookmarks
+ * Run: pnpm --filter www bookmarks:fetch
  */
-
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
+import { BOOKMARKS_SCHEMA, serializeCollection } from './lib/bookmarks-schema.mjs';
+
 const CONFIG_FILE = path.resolve('src/content/bookmarks.config.json');
-const SCHEMA =
-  'Hand-edited. Add a collection (id, name, description) and bookmark `{ url }` objects. Run `pnpm --filter www fetch:bookmarks` to fill title and image. Fields you set are never overwritten.';
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 const force = process.argv.includes('--force');
@@ -166,7 +165,8 @@ async function main() {
         skipped += 1;
         console.log(`  · ${bookmark.url} (cached)`);
         bookmarks.push(toWrittenBookmark(bookmark));
-        if (!hasImage(bookmark)) missingImage.push({ url: bookmark.url, collection: collection.name });
+        if (!hasImage(bookmark))
+          missingImage.push({ url: bookmark.url, collection: collection.name });
         continue;
       }
 
@@ -183,20 +183,25 @@ async function main() {
       }
 
       bookmarks.push(toWrittenBookmark(bookmark));
-      if (!hasTitle(bookmark)) missingTitle.push({ url: bookmark.url, collection: collection.name });
-      else if (!hasImage(bookmark)) missingImage.push({ url: bookmark.url, collection: collection.name });
+      if (!hasTitle(bookmark))
+        missingTitle.push({ url: bookmark.url, collection: collection.name });
+      else if (!hasImage(bookmark))
+        missingImage.push({ url: bookmark.url, collection: collection.name });
     }
 
-    collections.push({
-      id: collection.id,
-      name: collection.name,
-      description: collection.description ?? '',
-      bookmarks,
-    });
+    collections.push(
+      serializeCollection({
+        id: collection.id,
+        name: collection.name,
+        description: collection.description ?? '',
+        chromeGuid: collection.chromeGuid,
+        bookmarks,
+      }),
+    );
   }
 
   const output = {
-    $schema: SCHEMA,
+    $schema: BOOKMARKS_SCHEMA,
     collections,
   };
   await fs.writeFile(CONFIG_FILE, JSON.stringify(output, null, 2) + '\n', 'utf8');

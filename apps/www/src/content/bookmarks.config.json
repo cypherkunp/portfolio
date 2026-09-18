@@ -1,5 +1,5 @@
 {
-  "$schema": "Hand-edited. Add a collection (id, name, description) and bookmark `{ url }` objects. Run `pnpm --filter www fetch:bookmarks` to fill title and image. Fields you set are never overwritten.",
+  "$schema": "Hand-edited. Add a collection (id, name, description) and bookmark `{ url }` objects. Run `pnpm --filter www bookmarks:fetch` to fill title and image. Fields you set are never overwritten. `chromeGuid` is owned by `bookmarks:sync`; leave it unless attaching.",
   "collections": [
     {
       "id": "reading-list",

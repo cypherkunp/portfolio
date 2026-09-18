@@ -12,9 +12,12 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "analyze-build": "ANALYZE=true next build",
     "unlighthouse-ci": "unlighthouse-ci",
-    "fetch:bookmarks": "node scripts/fetch-bookmarks-og.mjs"
+    "bookmarks:sync": "node scripts/bookmarks-sync.mjs",
+    "bookmarks:fetch": "node scripts/fetch-bookmarks-og.mjs",
+    "test": "node --test scripts/lib/*.test.mjs"
   },
   "devDependencies": {
+    "@clack/prompts": "^1.7.0",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
     "@types/node": "^22",
