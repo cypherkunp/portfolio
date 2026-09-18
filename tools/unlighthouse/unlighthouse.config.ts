@@ -1,5 +1,5 @@
 export default {
-  site: 'devvrat.cc',
+  site: 'devvrat.uk',
   ci: {
     budget: {
       performance: 0.9,

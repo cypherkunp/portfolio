@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@unlighthouse/cli": "^0.12.2",
-    "puppeteer": "^22.10.0"
+    "@unlighthouse/cli": "^0.17.7",
+    "puppeteer": "^24.38.0"
   }
 }
