@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
   },
+  outputFileTracingIncludes: {
+    '/photos': ['./public/photos/**/*'],
+  },
   transpilePackages: [],
   serverExternalPackages: ['exifr'],
   images: {
