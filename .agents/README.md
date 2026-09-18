@@ -20,7 +20,7 @@ Edit `.agents` files. Leave the symlink alone.
 ## Adding new stuff
 
 1. **Skill**: `.agents/skills/<skill-name>/SKILL.md`
-2. **Rule**: add under `.agents/rules/` with `alwaysApply: false`, then mirror into root `AGENTS.md` if it should always apply. Cursor always-injects every `AGENTS.md` it finds, including ones nested under skills.
+2. **Rule**: add under `.agents/rules/` with `alwaysApply: false`. Point at it from root `AGENTS.md`; do not inline the body. Cursor always-injects every `AGENTS.md` it finds, including ones nested under skills.
 3. **MCP**: add under `mcpServers` in `.agents/mcp.json`
 4. **Plugin**: update `.agents/plugins.json`
 
