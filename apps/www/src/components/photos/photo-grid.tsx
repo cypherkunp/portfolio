@@ -71,7 +71,7 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
   }, [selectedIndex, close, next, prev]);
 
   if (photos.length === 0) {
-    return <p className="text-sm text-neutral-500">Drop images into src/images/photos.</p>;
+    return <p className="text-sm text-neutral-500">Drop images into public/photos.</p>;
   }
 
   return (

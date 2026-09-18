@@ -2,7 +2,6 @@ import 'server-only';
 
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { parse as parseExif } from 'exifr';
 import { cache } from 'react';
 import sharp from 'sharp';
@@ -10,17 +9,14 @@ import sharp from 'sharp';
 import type { Photo } from '@/lib/photo';
 
 /**
- * Drop images in `src/images/photos`. The grid reads the folder on each request.
+ * Drop images in `public/photos`. The grid reads the folder on each request.
  *
  * Metadata, first hit wins:
  *   1. Embedded JPEG tags (EXIF / IPTC / XMP)
  *   2. Filename: `2025-11-15--new-york-us--city-skyline.jpg`
  *   3. File mtime for the date
  */
-export const PHOTOS_DIR = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '../images/photos',
-);
+export const PHOTOS_DIR = path.join(process.cwd(), 'public', 'photos');
 
 const PHOTO_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']);
 
