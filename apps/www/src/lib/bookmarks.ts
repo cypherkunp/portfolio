@@ -25,6 +25,7 @@ interface CollectionInput {
   id: string;
   name: string;
   description?: string;
+  chromeGuid?: string;
   bookmarks: BookmarkInput[];
 }
 
@@ -51,11 +52,11 @@ function normalizeBookmark(bookmark: BookmarkInput): Bookmark {
 }
 
 export function getCollections(): BookmarkCollection[] {
-  return config.collections.map(collection => ({
-    id: collection.id,
-    name: collection.name,
-    description: collection.description ?? '',
-    bookmarks: collection.bookmarks.map(normalizeBookmark),
+  return config.collections.map(({ id, name, description, bookmarks }) => ({
+    id,
+    name,
+    description: description ?? '',
+    bookmarks: bookmarks.map(normalizeBookmark),
   }));
 }
 

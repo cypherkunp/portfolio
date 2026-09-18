@@ -18,11 +18,11 @@ Standing preferences:
 - Chrome user profile: **Default** only. No profile prompt.
 - Top-level Chrome folders: children of every root in Default's Bookmarks file (`bookmark_bar`, `other`, `synced`). A root that holds URLs directly (e.g. Mobile Bookmarks) is selectable as a folder. Nested folders are not independently selectable.
 - Selecting a top-level folder **flattens** all descendant URLs into that Collection. `Personal` is a dump if picked.
-- One run can select several top-level folders (searchable multi-select via a CLI prompt library).
+- One run can select several top-level folders (searchable multi-select via `@clack/prompts` 1.x). Folder step starts **empty** (Personal is a landmine). Bookmark step starts **all checked**; uncheck is the veto.
 - Per selected folder: optional Collection title override (default: Chrome folder name); then bookmark multi-select, all checked; uncheck is the veto.
 - One-way Chrome → site, **additive**. Diff is new vs already in this Collection vs empty-title fill from Chrome name. No deletes.
-- Join key: optional `chromeGuid` on the Collection object (Chrome folder uuid string). Mentioned in `$schema` as owned by `bookmarks:sync`. Absent = never joined. `id` and `name` are curator-owned and never participate in the join. First time a folder has no matching `chromeGuid`: create new Collection vs attach to an existing one. `bookmarks:fetch` must round-trip the field.
-- Create-new Collection `id` is the kebab slug of the confirmed Collection title (title-override prompt, defaulting to the Chrome folder name). Later title edits and later syncs never rewrite it. Attach keeps the existing Collection's `id`.
+- Join key: optional `chromeGuid` on the Collection object (Chrome folder uuid string). Mentioned in `$schema` as owned by `bookmarks:sync`. Absent = never joined. `id` and `name` are curator-owned and never participate in the join. First time a folder has no matching `chromeGuid`: create new Collection vs attach to an existing one. `bookmarks:fetch` must round-trip the field. `getCollections()` strips `chromeGuid`; `/bookmarks` never sees it.
+- Create-new Collection `id` is the kebab slug of the confirmed Collection title (title-override prompt, defaulting to the Chrome folder name). Later title edits and later syncs never rewrite it. Attach keeps the existing Collection's `id`. Slug collision on create: refuse; attach / retitle / skip. No suffix, no force-attach.
 - Empty `title` gets the Chrome bookmark name. Never overwrite a title already set. Images stay `bookmarks:fetch`.
 - Every successful `bookmarks:sync` write then runs `bookmarks:fetch`. JSON is already written if fetch fails; inherit fetch's exit code.
 - Within a Collection, URL is unique; flatten dedupes (first Chrome-walk wins). Bookmark order is Chrome walk order.
@@ -35,11 +35,15 @@ Standing preferences:
 - [Which CLI prompt library can drive searchable multi-select for sync?](./issues/02-cli-prompt-library.md) — `@clack/prompts` 1.x (`autocompleteMultiselect`, `text`, `confirm`)
 - [How is Collection id chosen on create-new?](https://github.com/cypherkunp/portfolio/issues/9) — kebab slug of the confirmed Collection title; never rewritten after first write
 - [Guid field name and place on the Collection](https://github.com/cypherkunp/portfolio/issues/10) — optional `chromeGuid` on the Collection; `$schema` mentions it as `bookmarks:sync`-owned
+- [Prototype the sync prompts and diff](https://github.com/cypherkunp/portfolio/issues/11) — copy/layout on the issue; artifact on `prototype/bookmarks-sync`
+- [Create-new slug collision when the curator did not attach](https://github.com/cypherkunp/portfolio/issues/12) — refuse create; attach / retitle / skip
+- [Does /bookmarks see the guid?](https://github.com/cypherkunp/portfolio/issues/13) — strip at `getCollections()`
+- Spec: [spec.md](./spec.md)
 
 
 ## Not yet specified
 
-- Spec shape (sections, examples, handoff path) once research and the prototype have something to point at.
+- None. Spec: [spec.md](./spec.md)
 
 ## Out of scope
 

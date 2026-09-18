@@ -1,7 +1,7 @@
 # How is Collection id assigned on first sync, and what if the slug exists?
 
 Type: grilling
-Status: open (collision only; id assignment resolved on #9)
+Status: resolved
 
 ## Question
 
@@ -15,4 +15,8 @@ Attach keeps the existing Collection's `id` and writes the Chrome folder guid on
 
 ## Answer (id assignment)
 
-Resolved on [#9](https://github.com/cypherkunp/portfolio/issues/9): kebab slug of the confirmed Collection title. Never rewritten after first write. Collision is [#12](https://github.com/cypherkunp/portfolio/issues/12).
+Resolved on [#9](https://github.com/cypherkunp/portfolio/issues/9): kebab slug of the confirmed Collection title. Never rewritten after first write.
+
+## Answer (collision)
+
+Resolved on [#12](https://github.com/cypherkunp/portfolio/issues/12): refuse create; attach / retitle / skip. No suffix, no force-attach.
