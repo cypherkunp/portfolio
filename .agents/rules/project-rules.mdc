@@ -1,5 +1,5 @@
 ---
-description: Canonical copy. Always-on injection is root AGENTS.md. Do not set alwaysApply.
+description: TypeScript, Next.js App Router, RSC, and component conventions. Use when writing or reviewing app/www code.
 alwaysApply: false
 ---
 
