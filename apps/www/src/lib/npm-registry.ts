@@ -70,13 +70,25 @@ function cleanGithubUrl(repoField: unknown): string | null {
   url = url
     .replace(/^git\+/, '')
     .replace(/^ssh:\/\/git@github\.com/, 'https://github.com')
+    .replace(/^git@github\.com:/, 'https://github.com/')
     .replace(/^git:\/\//, 'https://')
     .replace(/\.git$/, '');
 
-  if (!url.includes('github.com')) return null;
-  if (!url.startsWith('http')) url = `https://${url}`;
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    if (!url.startsWith('github.com/')) return null;
+    url = `https://${url}`;
+  }
 
-  return url;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null;
+    if (parsed.hostname !== 'github.com' && parsed.hostname !== 'www.github.com') return null;
+    parsed.protocol = 'https:';
+    parsed.hostname = 'github.com';
+    return parsed.toString();
+  } catch {
+    return null;
+  }
 }
 
 // Names allowed by npm: scoped or unscoped, lowercased, limited charset.
