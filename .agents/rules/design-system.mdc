@@ -1,0 +1,25 @@
+---
+description: Visual language for www. Landing is source of truth. Catalogs use list rows, not tables or cards.
+globs: apps/www/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# Design system (www)
+
+Read `.impeccable.md` before adding or restyling UI.
+
+Landing (`/`) is the source of truth: Geist Mono, `#0a0a0a` blueprint grid (`.bg-app-dots`), `siteShellClassName` (`max-w-4xl px-6 sm:px-8`), yellow underline accent (`UnderlineText` / `.decoration-primary`).
+
+## Catalog pages
+
+Use `ToolSubpageLayout` + `PageContainer` + `Section` (title via `UnderlineText`). Copy the Posts/Apps row: `mb-4 flex items-center gap-2`, muted `w-8` meta, name with `hover:underline hover:underline-offset-8`, optional aside hidden below `sm`, `ArrowUpRight` on hover.
+
+Nested routes: shadcn `Breadcrumb` primitives (`BreadcrumbLink asChild` + Next `Link`, `BreadcrumbPage` for current). Page title is a separate yellow-underlined `h2`.
+
+## Do not
+
+- Tables, uppercase tracked column labels, or `border-t` table rules for catalogs
+- Italic yellow last-word headlines (Inspirations-only)
+- Card grids for posts, apps, or bookmarks
+- Hover-to-yellow text; hover is underline
+- A second typeface or heading scale on catalog pages

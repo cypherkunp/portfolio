@@ -1,21 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NEXT_PUBLIC_APP_URL", "GITHUB_ACCESS_TOKEN"],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "dist/**"
-      ]
-    },
-    "test": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": []
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "lint": {
       "outputs": []

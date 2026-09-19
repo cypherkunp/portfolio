@@ -1,0 +1,519 @@
+{
+  "Common": {
+    "contact": {
+      "name": "Devvrat",
+      "email": "devvrat.shukla@gmail.com",
+      "address": "London, UK",
+      "github": "https://github.com/cypherkunp",
+      "linkedin": "https://www.linkedin.com/in/devvratshukla/",
+      "twitter": "https://x.com/devvrathq"
+    },
+    "connectBlock": {
+      "reachOutOn": {
+        "title": "Have a question for me?",
+        "description": "Reach out via <email>Email</email> or <twitter>Twitter</twitter>"
+      },
+      "findMeOn": {
+        "title": "You can also find me on ",
+        "description": "<linkedin>LinkedIn</linkedin> and <github>GitHub</github>"
+      }
+    }
+  },
+  "Header": {
+    "navbar": [
+      {
+        "href": "/",
+        "label": "Home"
+      },
+      {
+        "href": "/about",
+        "label": "About"
+      },
+      {
+        "href": "https://devvrat.uk",
+        "label": "Connect",
+        "external": true
+      }
+    ]
+  },
+  "Colophon": {
+    "description": "Handmade by <underline>Devvrat</underline>. All rights reserved."
+  },
+  "HomePage": {
+    "title": "Devvrat | Portfolio",
+    "description": "Devvrat's Portfolio Website",
+    "url": "https://devvrat.cc",
+    "ogImage": "https://devvrat.cc/og-home.jpg"
+  },
+  "HandbookPage": {
+    "title": "Devvrat | Handbook",
+    "description": "Devvrat's User Manual",
+    "url": "https://devvrat.cc/handbook",
+    "ogImage": "https://devvrat.cc/og-home.jpg"
+  },
+  "ResumePage": {
+    "title": "Devvrat | Resume ",
+    "description": "Devvrat's Experience Summary",
+    "url": "https://devvrat.cc/resume",
+    "ogImage": "https://devvrat.cc/og-home.jpg",
+    "data": {
+      "labels": {
+        "about": "About",
+        "work": "Work Experience",
+        "education": "Education",
+        "skills": "Skills"
+      },
+      "name": "Devvrat Shukla",
+      "initials": "DS",
+      "location": "London, UK",
+      "locationLink": "",
+      "about": "Lead Experience Engineer",
+      "summary": "I am a seasoned software architect with 16 years of diverse experience in software product development. As a full stack architect, I have successfully taken multiple products from zero to one. I have a deep expertise in full stack development using technologies such as Typescript, JavaScript, NextJS, ReactJS, NodeJS and Serverless. I have led and architected several multi-million dollar projects including greenfield and rewrites of legacy products. I lead teams effectively, ensuring an environment where people can do their best work.",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1528663?v=4",
+      "personalWebsiteUrl": "https://devvrat.cc",
+      "contact": {
+        "email": "devvrat.shukla@gmail.com",
+        "tel": ""
+      },
+      "education": [
+        {
+          "school": "University of Pune, India",
+          "degree": "BE (Bachelor of Engineering) in Computer Science",
+          "start": "2006",
+          "end": "2010"
+        }
+      ],
+      "work": [
+        {
+          "company": "Publicis Sapient - London, UK",
+          "link": "https://www.publicissapient.com/",
+          "title": "Lead Experience Engineer",
+          "start": "2019",
+          "end": "2024",
+          "description": "Led and architected several multi-million dollar projects including greenfield and rewrites of legacy products in various domains such as E-commerce, Retail, Finance and Banking."
+        },
+        {
+          "company": "PTC Inc. - Pune, India",
+          "link": "https://www.ptc.com/",
+          "title": "Tech Lead",
+          "start": "2011",
+          "end": "2019",
+          "description": "Led and developed numerous projects based on frontend in React, Angular, Javascirpt and JQuery and backend in NodeJS and Java in various domains such as ALM (Application Lifecycle Management) and IOT"
+        },
+        {
+          "company": "Mphasis - Pune, India",
+          "link": "https://www.mphasis.com/",
+          "title": "Technical Support Associate",
+          "start": "2010",
+          "end": "2011",
+          "description": "Worked on handling and troubleshooting network and remote access-related issues (Cisco VPN Client, strong authentication devices, network connectivity)"
+        }
+      ],
+      "skills": [
+        "Web Development",
+        "JavaScript",
+        "ReactJS",
+        "NextJS",
+        "NodeJS",
+        "StencilJS",
+        "Typescript",
+        "NFRs",
+        "ExpressJS",
+        "HTML & CSS",
+        "Microservices",
+        "RESTApi",
+        "Lambda Functions",
+        "Edge Functions",
+        "CI/CD",
+        "Amazon AWS",
+        "Docker",
+        "Web3",
+        "Cloud Computing",
+        "LLMs",
+        "AI Agents",
+        "AI Chatbots",
+        "AI Agent Skills",
+        "RAG",
+        "Prompt Engineering",
+        "Vercel AI SDK"
+      ],
+      "projects": [],
+      "social": {
+        "links": [
+          {
+            "name": "GitHub",
+            "url": "https://github.com/cypherkunp"
+          },
+          {
+            "name": "LinkedIn",
+            "url": "https://www.linkedin.com/in/devvratshukla/"
+          },
+          {
+            "name": "X",
+            "url": "https://twitter.com/cypherkunp"
+          }
+        ]
+      }
+    }
+  },
+  "NotFoundPage": {
+    "title": "Devvrat | 404",
+    "description": "Page not found",
+    "content": {
+      "title": "404",
+      "description": "Oops! Looks like you've wandered off the map. You must return home."
+    }
+  },
+  "Blocks": {
+    "posts": {
+      "title": "Posts",
+      "description": "I write about my experiences and learnings in the software engineering field."
+    },
+    "apps": {
+      "title": "Apps",
+      "musicPlayer": {
+        "name": "Music Player",
+        "description": "Music in collaboration with AI artists"
+      },
+      "inspirations": {
+        "name": "Inspirations",
+        "description": "Collection of ideas and references that inspire."
+      },
+      "bookmarks": {
+        "name": "Bookmarks",
+        "description": "Saved links and resources."
+      },
+      "photos": {
+        "name": "Photos",
+        "description": "Photo gallery and visual snapshots."
+      },
+      "packageAnalyzer": {
+        "name": "Package Analyzer",
+        "description": "Analyze npm dependencies and check for updates."
+      }
+    },
+    "infoBlock": {
+      "pointer": {
+        "text": "Hey, What's up?"
+      },
+      "title": "Hi, I'm Devvrat",
+      "highlight": "AI Sorcerer | Engineer | Craftsman",
+      "description": "I am software engineer specializing in web app development. My passion is crafting digital experiences and building high-performance development teams.",
+      "name": "Devvrat Shukla"
+    },
+    "stackBlock": {
+      "title": "Tech Arsenal",
+      "description": "",
+      "list": [
+        {
+          "title": "Frontend",
+          "description": "JavaScript, TypeScript, React, Next.js, Remix, Tailwind CSS, StencilJS, Web Components"
+        },
+        {
+          "title": "Backend",
+          "description": "Node.js, Express, Fastify, REST API, tRPC, GraphQL, AWS Lambda, API Gateway, S3, SQS, SNS"
+        },
+        {
+          "title": "Database",
+          "description": "PostgreSQL, MongoDB, Supabase, AWS DynamoDB"
+        },
+        {
+          "title": "Cloud",
+          "description": "AWS, Vercel, Cloudflare, Fly.io"
+        },
+        {
+          "title": "DevOps",
+          "description": "GitHub Actions, AWS, Docker, Serverless, CDK, SST.dev, Vercel"
+        },
+        {
+          "title": "Design Systems",
+          "description": "Shadcn UI, Material UI, Radix UI, and Building Design Systems for web"
+        }
+      ]
+    },
+    "clientBlock": {
+      "title": "Clients",
+      "description": "",
+      "list": [
+        {
+          "name": "Unilever",
+          "url": "https://www.unilever.com/"
+        },
+        {
+          "name": "PTC Inc",
+          "url": "https://www.ptc.com/"
+        },
+        {
+          "name": "Lloyds Bank",
+          "url": "https://www.lloydsbank.com/"
+        },
+        {
+          "name": "Publicis Sapient",
+          "url": "https://publicissapient.com"
+        },
+        {
+          "name": "DGDA",
+          "url": "https://www.dgda.gov.sa/"
+        }
+      ]
+    },
+    "faqBlock": {
+      "title": "FAQs",
+      "description": "Straight answers if you're deciding whether to reach out.",
+      "list": [
+        {
+          "question": "What kind of work do you take on?",
+          "answer": "Full-stack product work: greenfield apps, legacy rewrites, and architecture on TypeScript / React / Next.js / Node stacks. I'm strongest when the problem needs both shipping code and system design."
+        },
+        {
+          "question": "Are you available for hire?",
+          "answer": "Yes. Open to full-time roles. Email with context and timeline; I'll reply with a clear yes or no."
+        },
+        {
+          "question": "Where are you based?",
+          "answer": "London, UK. Remote-first, and I've shipped with teams across UK, US, and India time zones."
+        },
+        {
+          "question": "Do you still write code, or is it mostly leadership?",
+          "answer": "Both. I've led teams of 3–10, but I stay in the codebase for architecture, hard bugs, and critical-path features. Split is roughly 60% hands-on / 40% leadership depending on the engagement."
+        },
+        {
+          "question": "What's your preferred stack?",
+          "answer": "TypeScript, React, Next.js, Node.js, and serverless on AWS. Docker, CI/CD, microservices, and edge / lambda when the product needs them."
+        },
+        {
+          "question": "How should I get in touch?",
+          "answer": "Email works best: devvrat.shukla@gmail.com. LinkedIn or X if you want a shorter intro first."
+        }
+      ]
+    },
+    "quotesBlock": {
+      "title": "",
+      "description": "",
+      "emptyState": "Nothing pinned here yet.",
+      "tagFilters": [
+        {
+          "id": "all",
+          "label": "All"
+        },
+        {
+          "id": "craft",
+          "label": "Craft"
+        },
+        {
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "id": "engineering",
+          "label": "Engineering"
+        },
+        {
+          "id": "design",
+          "label": "Design"
+        },
+        {
+          "id": "leadership",
+          "label": "Leadership"
+        },
+        {
+          "id": "mindset",
+          "label": "Mindset"
+        },
+        {
+          "id": "life",
+          "label": "Life"
+        }
+      ],
+      "content": [
+        {
+          "id": "1",
+          "quote": "I was born and raised in a city called Authenticity.",
+          "author": "@cypherkunp",
+          "tag": "life",
+          "variant": "highlight"
+        },
+        {
+          "id": "2",
+          "quote": "Stay hungry, stay foolish.",
+          "author": "Steve Jobs",
+          "source": "Stanford, 2005",
+          "tag": "mindset"
+        },
+        {
+          "id": "3",
+          "quote": "No is no to one thing. Yes is no to a lot of things.",
+          "author": "Jason Fried",
+          "source": "Rework",
+          "tag": "product",
+          "variant": "accent"
+        },
+        {
+          "id": "4",
+          "quote": "Think progress, not perfection.",
+          "author": "Ryan Holiday",
+          "tag": "mindset"
+        },
+        {
+          "id": "5",
+          "quote": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+          "author": "Winston Churchill",
+          "tag": "life"
+        },
+        {
+          "id": "6",
+          "quote": "Code never lies, comments sometimes do.",
+          "author": "Ron Jeffries",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "7",
+          "quote": "The most dangerous phrase in the language is, \"we've always done it this way.\"",
+          "author": "Grace Hopper",
+          "tag": "leadership"
+        },
+        {
+          "id": "8",
+          "quote": "Make it work, make it right, make it fast.",
+          "author": "Kent Beck",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "9",
+          "quote": "Design is not just what it looks like and feels like. Design is how it works.",
+          "author": "Steve Jobs",
+          "tag": "design",
+          "variant": "primary"
+        },
+        {
+          "id": "10",
+          "quote": "Simplicity is the ultimate sophistication.",
+          "author": "Leonardo da Vinci",
+          "tag": "design"
+        },
+        {
+          "id": "11",
+          "quote": "You can have brilliant ideas, but if you can't get them across, your ideas won't get you anywhere.",
+          "author": "Lee Iacocca",
+          "tag": "leadership"
+        },
+        {
+          "id": "12",
+          "quote": "Premature optimization is the root of all evil.",
+          "author": "Donald Knuth",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "13",
+          "quote": "Move slow and fix things. Speed comes from compounding small, correct decisions.",
+          "tag": "craft",
+          "variant": "highlight"
+        },
+        {
+          "id": "14",
+          "quote": "A user interface is like a joke. If you have to explain it, it's not that good.",
+          "author": "Martin LeBlanc",
+          "tag": "design"
+        },
+        {
+          "id": "15",
+          "quote": "Strong opinions, loosely held.",
+          "author": "Bob Sutton",
+          "tag": "mindset"
+        },
+        {
+          "id": "16",
+          "quote": "Ship, then iterate. Perfect is the enemy of done.",
+          "tag": "product",
+          "variant": "accent"
+        },
+        {
+          "id": "17",
+          "quote": "You are not paid to write code. You are paid to solve problems. Code is sometimes the answer.",
+          "tag": "engineering"
+        },
+        {
+          "id": "18",
+          "quote": "Taste is a muscle. Train it daily.",
+          "author": "@cypherkunp",
+          "tag": "craft",
+          "variant": "highlight"
+        },
+        {
+          "id": "19",
+          "quote": "The best teams I've worked on weren't the smartest. They were the kindest, fastest to recover, and slowest to assume malice.",
+          "tag": "leadership"
+        },
+        {
+          "id": "20",
+          "quote": "Do less, but do it better.",
+          "author": "Dieter Rams",
+          "tag": "design",
+          "variant": "primary"
+        },
+        {
+          "id": "21",
+          "quote": "If you are not embarrassed by the first version of your product, you've launched too late.",
+          "author": "Reid Hoffman",
+          "tag": "product"
+        },
+        {
+          "id": "22",
+          "quote": "Read the source. The truth is in the code, not the docs.",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "23",
+          "quote": "Constraints aren't the enemy of creativity. They're the reason it exists.",
+          "tag": "craft"
+        },
+        {
+          "id": "24",
+          "quote": "Default to action. The plan reveals itself in motion.",
+          "tag": "mindset",
+          "variant": "accent"
+        },
+        {
+          "id": "25",
+          "quote": "Hire for taste, train for skill.",
+          "tag": "leadership"
+        },
+        {
+          "id": "26",
+          "quote": "You become what you repeatedly do. Excellence, then, is not an act, but a habit.",
+          "author": "Will Durant",
+          "source": "paraphrasing Aristotle",
+          "tag": "life"
+        },
+        {
+          "id": "27",
+          "quote": "The details are not the details. They make the design.",
+          "author": "Charles Eames",
+          "tag": "design"
+        },
+        {
+          "id": "28",
+          "quote": "Write the API you wish existed. Then build the smallest thing that makes it real.",
+          "tag": "engineering",
+          "variant": "mono"
+        },
+        {
+          "id": "29",
+          "quote": "Build for the user who has never used software before, and the user who has used everything.",
+          "tag": "product"
+        },
+        {
+          "id": "30",
+          "quote": "Do work that doesn't need a meeting to be appreciated.",
+          "author": "@cypherkunp",
+          "tag": "craft",
+          "variant": "highlight"
+        }
+      ]
+    }
+  }
+}
