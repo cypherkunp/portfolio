@@ -1,0 +1,85 @@
+---
+title: 'GitHub stacked pull requests'
+summary: 'GitHub stacked PRs split a feature into dependent pull requests. Review one layer at a time. Merge from the bottom.'
+publishedOn: '2026-09-19'
+version: '1'
+tags:
+  - 'github'
+  - 'git'
+  - 'agent'
+---
+
+# GitHub stacked pull requests
+
+Agents finish a feature in one sitting. You open one pull request. Reviewers get a wall of code. They skim. The PR sits.
+
+GitHub stacked PRs split that wall into a chain. Same repository. Each PR targets the branch below it. Reviewers see one layer.
+
+## What a stack is
+
+```text
+   ┌── feat/frontend     → PR #3 (base: feat/api-endpoints)  ← top
+  ┌── feat/api-endpoints → PR #2 (base: feat/auth-layer)
+ ┌── feat/auth-layer     → PR #1 (base: main)               ← bottom
+main
+```
+
+Bottom PR targets `main`. Each PR above targets the branch below. Schema first. API next. UI last.
+
+If A depends on B, B lives in the same layer or a lower one. New branch when the concern changes, or when the current layer is already big enough to review.
+
+Public preview. Same repository only. No forks.
+
+## Create one
+
+<Terminal command="gh extension install github/gh-stack" />
+
+```bash
+gh stack init feat/auth-layer
+git add . && git commit -m "Add auth data model"
+
+gh stack add feat/api-endpoints
+git add . && git commit -m "Add auth API routes"
+
+gh stack submit
+```
+
+First PR targets `main`. The next one targets `feat/auth-layer`. Each diff stays small.
+
+## Merge from the bottom
+
+Stacks merge in order. Lowest unmerged PR first.
+
+- Merge the top PR and the whole stack lands.
+- Merge a PR in the middle and everything below it lands too. PRs above stay open and retarget `main`.
+
+You can't merge a middle PR on its own. GitHub rebases the rest.
+
+```bash
+gh stack merge
+```
+
+## Takeaway
+
+Agents generate a lot of code. A stack gives each change a place to go. One concern, one PR, merge from the bottom.
+
+<References
+  items={[
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/pull-requests/get-started/about-stacked-prs',
+    },
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/pull-requests/get-started/stacked-prs-quickstart',
+    },
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/merging-stacked-pull-requests',
+    },
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/copilot/tutorials/stack-ai-generated-code-in-pull-requests',
+    },
+  ]}
+/>
