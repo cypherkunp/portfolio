@@ -30,6 +30,6 @@ Test these public APIs. Do not reach into unexported helpers.
 | `Section` | layout heading/description |
 | `usePackageAnalyzer` | analyzer hook |
 
-E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog, Inspirations from Apps, a bookmark collection.
+E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection.
 
 Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.

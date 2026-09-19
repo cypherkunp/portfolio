@@ -9,7 +9,7 @@ test.describe('home', () => {
 
     await expect(page.getByRole('heading', { level: 1, name: "Hi, I'm Devvrat" })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Posts' })).toBeVisible();
-    await expect(page.getByRole('link', { name: /GitHub stacked pull requests/ })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Hello world/ })).toBeVisible();
 
     const nav = page.getByRole('navigation');
     await expect(nav.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
