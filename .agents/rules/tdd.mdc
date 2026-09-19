@@ -1,5 +1,5 @@
 ---
-description: Vitest + RTL unit tests. Use when writing, running, or reviewing tests, or when implementing a feature or bugfix.
+description: Vitest + RTL unit tests and Playwright e2e. Use when writing, running, or reviewing tests, or when implementing a feature or bugfix.
 alwaysApply: false
 ---
 
@@ -8,8 +8,11 @@ Red, then green, one seam at a time. Tests live at public interfaces; expected v
 ## Runner
 
 - Vitest + React Testing Library in `apps/www`. Colocate as `*.test.ts(x)` next to the module.
-- `pnpm test` (repo root, turbo) or `pnpm --filter www test`. Watch: `pnpm --filter www test:watch`.
-- CI: `.github/workflows/test.yaml` runs `pnpm test` on push/PR to `main`.
+- Playwright e2e in `apps/www/e2e/*.spec.ts`. Chromium only. `webServer` boots `pnpm dev` on :3333 (`reuseExistingServer` locally).
+- `pnpm test` (unit). `pnpm test:e2e` (Playwright). Watch: `pnpm --filter www test:watch`.
+- First machine: `pnpm --filter www playwright:install`.
+- CI: `.github/workflows/test.yaml` runs unit and e2e jobs on push/PR to `main`.
+- Pre-push: `.husky/pre-push` runs `pnpm lint`, `pnpm test`, `pnpm test:e2e`.
 - Bookmark sync scripts stay on `node:test` (`apps/www/scripts/lib/*.test.mjs`).
 
 ## Seams
@@ -27,4 +30,6 @@ Test these public APIs. Do not reach into unexported helpers.
 | `Section` | layout heading/description |
 | `usePackageAnalyzer` | analyzer hook |
 
-Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own.
+E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog, Inspirations from Apps, a bookmark collection.
+
+Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.

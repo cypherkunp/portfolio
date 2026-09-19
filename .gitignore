@@ -31,8 +31,8 @@ yarn-error.log*
 # Testing
 coverage
 /coverage
-
-# Cypress specific folders
+playwright-report/
+blob-report/
 test-results
 cypress/screenshots
 cypress/videos

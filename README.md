@@ -36,8 +36,11 @@ pnpm install
 pnpm dev    # www on http://localhost:3333
 pnpm build
 pnpm lint
-pnpm test   # Vitest + RTL in www, plus node:test for bookmark sync scripts (also CI on PRs to main)
+pnpm test       # Vitest + RTL in www, plus node:test for bookmark sync scripts
+pnpm test:e2e   # Playwright against next dev on :3333 (install Chromium once: pnpm --filter www playwright:install)
 ```
+
+`git push` runs `.husky/pre-push`: lint, unit tests, then e2e.
 
 Shared UI: `pnpm ui:add <component>` adds to `packages/ui`.
 
