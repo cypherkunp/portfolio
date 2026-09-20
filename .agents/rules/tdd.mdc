@@ -22,7 +22,8 @@ Test these public APIs. Do not reach into unexported helpers.
 | Seam | Module |
 | --- | --- |
 | `cn`, `formatTime` | `@/lib/utils` |
-| `hostnameOf`, `getCollections`, `getCollection` | `@/lib/bookmarks` |
+| `hostnameOf`, `getCollections(file)`, `getCollection(file, id)`, `fillSnapshots` | `@/lib/bookmark-store` |
+| `getCollections()`, `getCollection(id)` | `@/lib/bookmarks` (JSON-bound adapter) |
 | `isValidPackageName` | `@/lib/npm-registry` |
 | `fetchOg` | `@/lib/og` |
 | `BookmarkList`, `CollectionList` | bookmark catalog UI |
