@@ -1,8 +1,8 @@
 ---
 title: 'GitHub stacked pull requests'
-summary: 'GitHub stacked PRs split a feature into dependent pull requests. Review one layer at a time. Merge from the bottom.'
+summary: 'GitHub stacked PRs split a feature into dependent pull requests. Merge with gh stack merge. Never squash a layer with the green button.'
 publishedOn: '2026-09-19'
-version: '1'
+version: '2'
 tags:
   - 'github'
   - 'git'
@@ -46,22 +46,50 @@ gh stack submit
 
 First PR targets `main`. The next one targets `feat/auth-layer`. Each diff stays small.
 
-## Merge from the bottom
+Do not `git rebase` or `git push --force` stack branches. Use `gh stack rebase` and `gh stack push`.
 
-Stacks merge in order. Lowest unmerged PR first.
+## Merge with gh stack merge
 
-- Merge the top PR and the whole stack lands.
-- Merge a PR in the middle and everything below it lands too. PRs above stay open and retarget `main`.
-
-You can't merge a middle PR on its own. GitHub rebases the rest.
+Stacks merge bottom-up. Use `gh stack merge`. Never `gh pr merge`. Never the green Merge button.
 
 ```bash
-gh stack merge
+gh stack merge 35 --yes --squash   # remaining stack up through #35
+gh stack merge 23 --yes --squash   # #23 and every unmerged PR below it
 ```
+
+- Merge the top PR: the whole stack lands.
+- Merge a mid PR: that PR plus everything below. PRs above stay open and retarget `main`.
+- Atomic: if any PR in the set cannot merge, none do.
+
+You cannot merge a middle PR on its own.
+
+After a partial merge, restack before you look at the next PR:
+
+<Terminal command="gh stack sync --prune" />
+
+`sync` fetches trunk, skips the squash-merged layer, rebases the rest onto `main` with `--onto`, and force-with-lease pushes. Skip it and the next PR shows `CONFLICTING`.
+
+## The squash-replay conflict
+
+You squash-merge the bottom PR with a normal merge. GitHub writes a new commit on `main`. The original layer SHA is gone. GitHub retargets the next PR onto `main`. That PR still contains the original commits.
+
+Git reports "added in both" on files both layers touched. Same intent, different SHAs. Not a real conflict.
+
+Do not resolve that in the GitHub UI. You replay the merged layer. Run `gh stack sync --prune`.
+
+`gh stack merge` is the operation that drops the squashed commits and rebases the next PR onto trunk. A normal merge only retargets the base.
+
+## Lock is a freeze, not protection
+
+Keep the rules a multi-user trunk needs: required reviews, required status checks, linear history, conversation resolution, no force-push, no deleting the default branch. Those apply to every layer in the stack, not only the bottom PR. `gh stack merge` evaluates them when the merge runs. It cannot bypass them. Auto-merge is unsupported. Merge queues are: the stack enqueues in order.
+
+**Lock branch** (classic protection) and a ruleset **Restrict updates** rule freeze the ref. A single PR squash can still land. `gh stack merge` writes trunk through the async stack-merge API and fails with `Cannot change this locked branch`. A repo admin hits this too. Stack merge has no admin override.
+
+Use Lock for a release freeze or an incident. Lift it for the merge window, or wait. Do not squash layers with the green button as a workaround; you get the squash-replay conflict above.
 
 ## Takeaway
 
-Agents generate a lot of code. A stack gives each change a place to go. One concern, one PR, merge from the bottom.
+Agents generate a lot of code. A stack gives each change a place to go. One concern, one PR. Merge with `gh stack merge`. After a partial merge, `gh stack sync --prune` before the next layer.
 
 <References
   items={[
@@ -76,6 +104,14 @@ Agents generate a lot of code. A stack gives each change a place to go. One conc
     {
       author: 'GitHub',
       url: 'https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/merging-stacked-pull-requests',
+    },
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/managing-stacked-pull-requests',
+    },
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-stacked-pull-requests',
     },
     {
       author: 'GitHub',
