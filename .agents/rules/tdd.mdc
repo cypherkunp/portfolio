@@ -26,11 +26,12 @@ Test these public APIs. Do not reach into unexported helpers.
 | `getCollections()`, `getCollection(id)` | `@/lib/bookmarks` (JSON-bound adapter) |
 | `isValidPackageName` | `@/lib/npm-registry` |
 | `fetchOg` | `@/lib/og` |
+| `getApp`, `getEnabledApps`, `getSitemapPaths`, `assertAppEnabled` | `@/lib/app-catalog` |
 | `BookmarkList`, `CollectionList` | bookmark catalog UI |
 | `InspirationGrid` | inspirations pinboard |
 | `Section` | layout heading/description |
 | `usePackageAnalyzer` | analyzer hook |
 
-E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection.
+E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection, sitemap.xml when flags default on in development.
 
-Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.
+Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`, Flags SDK (`flags/next`, `@flags-sdk/vercel`) and `next/navigation` `notFound` in App catalog tests. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.

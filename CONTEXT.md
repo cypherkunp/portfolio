@@ -4,6 +4,15 @@ Personal site: writing, photos, inspirations, and curated links.
 
 Visual language: `.impeccable.md`. Landing (`/`) is the source of truth.
 
+## Apps
+
+**App**:
+A portfolio tool with its own route. Identity is the catalog id (`musicPlayer`, `inspirations`, `bookmarks`, `photos`, `packageAnalyzer`). Path, listing abbreviation, feature flag, and sitemap membership live in the App catalog. Name and description stay in i18n under `Blocks.apps.*`.
+_Avoid_: feature, tool, page (when you mean the catalog entry)
+
+**App catalog**:
+The single list of Apps. Homepage listing, per-page gates, and the sitemap are adapters on it.
+
 ## Bookmarks
 
 **Collection**:
