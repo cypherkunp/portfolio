@@ -1,12 +1,9 @@
-import 'server-only';
-
 export interface OgData {
-  title: string;
+  title: string | null;
   description: string | null;
   image: string | null;
   siteName: string | null;
   favicon: string | null;
-  fetchedAt: string | null;
 }
 
 const UA =
@@ -101,7 +98,7 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
     const html = (await res.text()).slice(0, 1_500_000);
     const finalUrl = res.url || url;
 
-    const title = pickTitle(html) ?? new URL(finalUrl).hostname.replace(/^www\./, '');
+    const title = pickTitle(html);
     const description = pickMeta(html, ['og:description', 'twitter:description', 'description']);
     const image = absolutize(
       pickMeta(html, ['og:image', 'og:image:url', 'twitter:image', 'twitter:image:src']),
@@ -116,7 +113,6 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
       image,
       siteName: siteName ?? new URL(finalUrl).hostname.replace(/^www\./, ''),
       favicon,
-      fetchedAt: null,
     };
   } catch {
     return null;
