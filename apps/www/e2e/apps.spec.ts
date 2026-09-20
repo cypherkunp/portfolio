@@ -13,6 +13,14 @@ test.describe('apps', () => {
     await expect(page.getByRole('blockquote').first()).toBeVisible();
   });
 
+  test('lists Bookmarks and Inspirations in the sitemap', async ({ request }) => {
+    const response = await request.get('/sitemap.xml');
+    expect(response.ok()).toBeTruthy();
+    const xml = await response.text();
+    expect(xml).toContain('https://devvrat.uk/bookmarks');
+    expect(xml).toContain('https://devvrat.uk/inspirations');
+  });
+
   test('opens a bookmark collection from the catalog', async ({ page }) => {
     await page.goto('/bookmarks');
     await waitForDevReady(page);

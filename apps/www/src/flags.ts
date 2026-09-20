@@ -1,6 +1,5 @@
-import { notFound } from 'next/navigation';
-import { flag } from 'flags/next';
 import { vercelAdapter } from '@flags-sdk/vercel';
+import { flag } from 'flags/next';
 
 const booleanOptions = [
   { value: false, label: 'Off' },
@@ -58,39 +57,3 @@ export const vercelFlags = {
   featureAppPhotos,
   featureAppPackageAnalyzer,
 };
-
-export const APP_FLAG_IDS = [
-  'musicPlayer',
-  'inspirations',
-  'bookmarks',
-  'photos',
-  'packageAnalyzer',
-] as const;
-
-export type AppFlagId = (typeof APP_FLAG_IDS)[number];
-
-const appFlagsById = {
-  musicPlayer: featureAppMusic,
-  inspirations: featureAppInspirations,
-  bookmarks: featureAppBookmarks,
-  photos: featureAppPhotos,
-  packageAnalyzer: featureAppPackageAnalyzer,
-} as const satisfies Record<AppFlagId, (typeof vercelFlags)[keyof typeof vercelFlags]>;
-
-/** Resolve which portfolio apps are currently enabled. */
-export async function getEnabledApps(): Promise<AppFlagId[]> {
-  const results = await Promise.all(
-    APP_FLAG_IDS.map(async id => {
-      const enabled = await appFlagsById[id]();
-      return enabled ? id : null;
-    }),
-  );
-
-  return results.filter((id): id is AppFlagId => id !== null);
-}
-
-/** 404 when a given app flag is off. */
-export async function assertAppEnabled(id: AppFlagId): Promise<void> {
-  const enabled = await appFlagsById[id]();
-  if (!enabled) notFound();
-}

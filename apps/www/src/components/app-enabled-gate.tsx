@@ -1,13 +1,14 @@
 import { Suspense, type ReactNode } from 'react';
-import { assertAppEnabled, type AppFlagId } from '@/flags';
+
+import { assertAppEnabled, type AppId } from '@/lib/app-catalog';
 
 interface AppEnabledGateProps {
-  id: AppFlagId;
+  id: AppId;
   children: ReactNode;
   fallback?: ReactNode;
 }
 
-async function AssertEnabled({ id, children }: { id: AppFlagId; children: ReactNode }) {
+async function AssertEnabled({ id, children }: { id: AppId; children: ReactNode }) {
   await assertAppEnabled(id);
   return children;
 }
