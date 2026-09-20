@@ -37,7 +37,6 @@ describe('fetchOg', () => {
       image: 'https://example.com/cover.png',
       siteName: 'Example',
       favicon: 'https://example.com/favicon.ico',
-      fetchedAt: null,
     });
   });
 
@@ -51,6 +50,17 @@ describe('fetchOg', () => {
 
     const data = await fetchOg('https://example.com/post');
     expect(data?.title).toBe('Page Title');
+  });
+
+  it('leaves title null when the page has no title', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(htmlResponse('<html><head></head><body>Hi</body></html>')),
+    );
+
+    const data = await fetchOg('https://example.com/post');
+    expect(data?.title).toBeNull();
+    expect(data?.siteName).toBe('example.com');
   });
 
   it('returns null when the response is not HTML', async () => {
