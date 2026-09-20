@@ -9,7 +9,7 @@ Red, then green, one seam at a time. Tests live at public interfaces; expected v
 
 - Vitest + React Testing Library in `apps/www`. Colocate as `*.test.ts(x)` next to the module.
 - Playwright e2e in `apps/www/e2e/*.spec.ts`. Chromium only. `webServer` boots `pnpm dev` on :3333 (`reuseExistingServer` locally).
-- `pnpm test` (unit). `pnpm test:e2e` (Playwright). Watch: `pnpm --filter www test:watch`.
+- `pnpm test` (unit). `pnpm test:e2e` (Playwright). Both go through Turborepo; unchanged inputs are a cache hit and skip. Force with `pnpm test -- --force` / `pnpm test:e2e -- --force`. Watch: `pnpm --filter www test:watch`.
 - First machine: `pnpm --filter www playwright:install`.
 - CI: `.github/workflows/test.yaml` runs unit and e2e jobs on push/PR to `main`.
 - Pre-push: `.husky/pre-push` runs `pnpm lint`, `pnpm test`, `pnpm test:e2e`.
