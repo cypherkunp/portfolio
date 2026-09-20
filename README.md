@@ -36,6 +36,7 @@ pnpm install
 pnpm dev    # www on http://localhost:3333
 pnpm build
 pnpm lint
+pnpm test   # Vitest + RTL in www, plus node:test for bookmark sync scripts (also CI on PRs to main)
 ```
 
 Shared UI: `pnpm ui:add <component>` adds to `packages/ui`.
