@@ -10,10 +10,14 @@
       "outputs": []
     },
     "test": {
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "test:e2e": {
-      "cache": false
+      "dependsOn": ["^build"],
+      "env": ["CI"],
+      "passThroughEnv": ["PLAYWRIGHT_*"],
+      "outputs": []
     },
     "dev": {
       "cache": false
