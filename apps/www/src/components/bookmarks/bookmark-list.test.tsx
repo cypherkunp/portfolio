@@ -31,4 +31,34 @@ describe('BookmarkList', () => {
 
     expect(screen.getByRole('link', { name: 'grugbrain.dev' })).toBeInTheDocument();
   });
+
+  it('shows the snapshot image when the bookmark has one', () => {
+    const { container } = render(
+      <BookmarkList
+        bookmarks={[
+          {
+            url: 'https://www.youtube.com/@Fireship',
+            title: 'Fireship',
+            image: 'https://yt3.googleusercontent.com/fireship.jpg',
+          },
+        ]}
+      />,
+    );
+
+    const image = container.querySelector('img');
+    expect(image).toHaveAttribute('src', 'https://yt3.googleusercontent.com/fireship.jpg');
+    expect(image).toHaveAttribute('alt', '');
+  });
+
+  it('does not render an image when the snapshot image is empty', () => {
+    const { container } = render(
+      <BookmarkList
+        bookmarks={[
+          { url: 'https://grugbrain.dev/', title: 'The Grug Brained Developer', image: null },
+        ]}
+      />,
+    );
+
+    expect(container.querySelector('img')).toBeNull();
+  });
 });
