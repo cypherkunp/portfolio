@@ -17,10 +17,13 @@
     "test": "vitest run && node --test scripts/lib/*.test.mjs",
     "test:watch": "vitest",
     "test:unit": "vitest run",
-    "test:scripts": "node --test scripts/lib/*.test.mjs"
+    "test:scripts": "node --test scripts/lib/*.test.mjs",
+    "test:e2e": "playwright test",
+    "playwright:install": "playwright install chromium"
   },
   "devDependencies": {
     "@clack/prompts": "^1.7.0",
+    "@playwright/test": "^1.63.0",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
     "@testing-library/dom": "^10.4.2",
