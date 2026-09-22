@@ -13,7 +13,9 @@ export default function ConnectBlock() {
         <ReachOutOn
           title={t('connectBlock.reachOutOn.title')}
           description={t.rich('connectBlock.reachOutOn.description', {
-            email: text => <ExternalLink href={t('contact.email')} text={text as string} />,
+            email: text => (
+              <ExternalLink href={`mailto:${t('contact.email')}`} text={text as string} />
+            ),
             twitter: text => <ExternalLink href={t('contact.twitter')} text={text as string} />,
           })}
         />
