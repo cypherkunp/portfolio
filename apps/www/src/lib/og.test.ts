@@ -40,6 +40,22 @@ describe('fetchOg', () => {
     });
   });
 
+  it('decodes each entity once', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockResolvedValue(
+          htmlResponse(
+            '<html><head><meta property="og:description" content="A &amp;lt; B &#39; C" /></head></html>',
+          ),
+        ),
+    );
+
+    const data = await fetchOg('https://example.com/post');
+    expect(data?.description).toBe("A &lt; B ' C");
+  });
+
   it('falls back to the document title when og:title is missing', async () => {
     vi.stubGlobal(
       'fetch',
