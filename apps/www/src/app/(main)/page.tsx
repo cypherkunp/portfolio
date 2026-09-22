@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import { featureAppsSupport, getEnabledApps } from '@/flags';
+import { featureAppsSupport } from '@/flags';
 import { getTranslations } from 'next-intl/server';
 
+import { getEnabledApps } from '@/lib/app-catalog';
+import { SITE_DESCRIPTION, siteJsonLd, socialMetadata } from '@/lib/seo';
 import AppsBlock from '@/components/apps-block';
 import InfoBlock from '@/components/info-block';
 import PageContainer from '@/components/layout/page-container';
@@ -12,38 +14,22 @@ import PostsBlock from '@/components/posts-block';
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
 
+  const title = t('HomePage.title');
+
   return {
-    title: t('HomePage.title'),
-    description: t('HomePage.description'),
-    openGraph: {
-      title: t('HomePage.title'),
-      description: t('HomePage.description'),
-      type: 'website',
-      url: t('HomePage.url'),
-      images: [
-        {
-          url: t('HomePage.ogImage'),
-          width: 660,
-          height: 240,
-          alt: t('Common.contact.name'),
-        },
-      ],
-    },
-    twitter: {
-      title: t('HomePage.title'),
-      description: t('HomePage.description'),
-      images: [t('HomePage.ogImage')],
-      creator: '@devvrathq',
-    },
+    title,
+    description: SITE_DESCRIPTION,
+    ...socialMetadata({
+      title,
+      description: SITE_DESCRIPTION,
+      url: '/',
+    }),
   };
 };
 
 async function AppsSectionGuard() {
   const t = await getTranslations();
-  const [showApps, enabledApps] = await Promise.all([
-    featureAppsSupport(),
-    getEnabledApps(),
-  ]);
+  const [showApps, enabledApps] = await Promise.all([featureAppsSupport(), getEnabledApps()]);
 
   if (!showApps || enabledApps.length === 0) return null;
 
@@ -57,8 +43,11 @@ async function AppsSectionGuard() {
 export default async function Page() {
   const t = await getTranslations();
 
+  const jsonLd = JSON.stringify(siteJsonLd()).replace(/</g, '\\u003c');
+
   return (
     <PageContainer>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       <Section isFirstSection>
         <InfoBlock />
       </Section>

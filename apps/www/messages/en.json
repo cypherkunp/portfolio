@@ -41,7 +41,7 @@
   },
   "HomePage": {
     "title": "Devvrat | Portfolio",
-    "description": "Devvrat's Portfolio Website",
+    "description": "Hi, I'm Devvrat, a product engineer based out of London. This is my personal website, where I share my ideas, opinions, and interests.",
     "url": "https://devvrat.cc",
     "ogImage": "https://devvrat.cc/og-home.jpg"
   },
@@ -51,10 +51,10 @@
     "url": "https://devvrat.cc/handbook",
     "ogImage": "https://devvrat.cc/og-home.jpg"
   },
-  "ResumePage": {
-    "title": "Devvrat | Resume ",
-    "description": "Devvrat's Experience Summary",
-    "url": "https://devvrat.cc/resume",
+  "AboutPage": {
+    "title": "Devvrat | About",
+    "description": "Devvrat's professional summary and about me.",
+    "url": "https://devvrat.cc/about",
     "ogImage": "https://devvrat.cc/og-home.jpg",
     "data": {
       "labels": {
@@ -89,7 +89,7 @@
           "link": "https://www.publicissapient.com/",
           "title": "Lead Experience Engineer",
           "start": "2019",
-          "end": "2024",
+          "end": "current",
           "description": "Led and architected several multi-million dollar projects including greenfield and rewrites of legacy products in various domains such as E-commerce, Retail, Finance and Banking."
         },
         {
@@ -259,31 +259,31 @@
     },
     "faqBlock": {
       "title": "FAQs",
-      "description": "Straight answers if you're deciding whether to reach out.",
+      "description": "Common questions about my experience, availability, and how to get in touch.",
       "list": [
         {
-          "question": "What kind of work do you take on?",
-          "answer": "Full-stack product work: greenfield apps, legacy rewrites, and architecture on TypeScript / React / Next.js / Node stacks. I'm strongest when the problem needs both shipping code and system design."
+          "question": "What is your professional background?",
+          "answer": "I am a Lead Experience Engineer at Publicis Sapient in London, where I have worked since 2019. I lead the architecture and delivery of web products, including new platforms and the redevelopment of existing ones. Previously, I was a Tech Lead at PTC in Pune from 2011 to 2019. Across 16 years in software product development, I have continued to contribute production code alongside leadership responsibilities."
         },
         {
-          "question": "Are you available for hire?",
-          "answer": "Yes. Open to full-time roles. Email with context and timeline; I'll reply with a clear yes or no."
+          "question": "Which industries and organizations have you worked with?",
+          "answer": "My recent work has focused on e-commerce, retail, finance, and banking. Client engagements have included Unilever, Lloyds Bank, and DGDA. At PTC, I worked on application lifecycle management and IoT products."
+        },
+        {
+          "question": "What technologies do you specialize in?",
+          "answer": "I primarily work with TypeScript, React, Next.js, and Node.js, deployed on AWS and Vercel. I also establish design systems when several teams share a user interface, and I use serverless architecture where it is a good fit for the product."
+        },
+        {
+          "question": "Are you open to new opportunities?",
+          "answer": "Yes. I am open to full-time roles. Please email a short summary of the position, the team location, and your timeline, and I will respond."
         },
         {
           "question": "Where are you based?",
-          "answer": "London, UK. Remote-first, and I've shipped with teams across UK, US, and India time zones."
+          "answer": "I am based in London, United Kingdom. My experience includes working with teams and clients across the United States, the United Kingdom, Australia, the Middle East, and India."
         },
         {
-          "question": "Do you still write code, or is it mostly leadership?",
-          "answer": "Both. I've led teams of 3–10, but I stay in the codebase for architecture, hard bugs, and critical-path features. Split is roughly 60% hands-on / 40% leadership depending on the engagement."
-        },
-        {
-          "question": "What's your preferred stack?",
-          "answer": "TypeScript, React, Next.js, Node.js, and serverless on AWS. Docker, CI/CD, microservices, and edge / lambda when the product needs them."
-        },
-        {
-          "question": "How should I get in touch?",
-          "answer": "Email works best: devvrat.shukla@gmail.com. LinkedIn or X if you want a shorter intro first."
+          "question": "How can I contact you?",
+          "answer": "Please email me at devvrat.shukla@gmail.com with a brief note about the opportunity. You are also welcome to connect on LinkedIn or X if you prefer to introduce yourself first."
         }
       ]
     },

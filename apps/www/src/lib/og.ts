@@ -1,35 +1,25 @@
-import 'server-only';
-
 export interface OgData {
-  title: string;
+  title: string | null;
   description: string | null;
   image: string | null;
   siteName: string | null;
   favicon: string | null;
-  fetchedAt: string | null;
 }
 
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
-const NAMED_ENTITIES: Record<string, string> = {
-  amp: '&',
-  lt: '<',
-  gt: '>',
-  quot: '"',
-  apos: "'",
-  nbsp: ' ',
-};
-
 function decodeEntities(text: string): string {
-  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (entity, body: string) => {
-    if (body[0] === '#') {
-      const code = body[1] === 'x' || body[1] === 'X' ? parseInt(body.slice(2), 16) : Number(body.slice(1));
-      if (!Number.isFinite(code) || code < 0 || code > 0x10ffff) return entity;
-      return String.fromCodePoint(code);
-    }
-    return NAMED_ENTITIES[body.toLowerCase()] ?? entity;
-  });
+  return text
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)));
 }
 
 function absolutize(value: string | null, base: string): string | null {
@@ -108,7 +98,7 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
     const html = (await res.text()).slice(0, 1_500_000);
     const finalUrl = res.url || url;
 
-    const title = pickTitle(html) ?? new URL(finalUrl).hostname.replace(/^www\./, '');
+    const title = pickTitle(html);
     const description = pickMeta(html, ['og:description', 'twitter:description', 'description']);
     const image = absolutize(
       pickMeta(html, ['og:image', 'og:image:url', 'twitter:image', 'twitter:image:src']),
@@ -123,7 +113,6 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
       image,
       siteName: siteName ?? new URL(finalUrl).hostname.replace(/^www\./, ''),
       favicon,
-      fetchedAt: null,
     };
   } catch {
     return null;

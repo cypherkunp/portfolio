@@ -1,3 +1,4 @@
+import { hostnameOf } from '../../src/lib/bookmark-store.ts';
 import { BOOKMARKS_SCHEMA, serializeCollection } from './bookmarks-schema.mjs';
 
 const LIST_CAP = 8;
@@ -11,14 +12,6 @@ export function collectionIdFromTitle(title) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '') || 'collection'
   );
-}
-
-export function hostnameOf(url) {
-  try {
-    return new URL(url).hostname.replace(/^www\./, '');
-  } catch {
-    return 'site';
-  }
 }
 
 export function hasTitle(bookmark) {
