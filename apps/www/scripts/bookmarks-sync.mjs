@@ -24,13 +24,13 @@ import {
   text,
 } from '@clack/prompts';
 
+import { hostnameOf } from '../src/lib/bookmark-store.ts';
 import {
   applyPlans,
   classifyBookmarks,
   collectionIdFromTitle,
   collectionMatchingGuid,
   formatDiff,
-  hostnameOf,
   topLevelFolders,
 } from './lib/bookmarks-sync.mjs';
 

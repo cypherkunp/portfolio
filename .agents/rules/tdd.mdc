@@ -1,0 +1,37 @@
+---
+description: Vitest + RTL unit tests and Playwright e2e. Use when writing, running, or reviewing tests, or when implementing a feature or bugfix.
+alwaysApply: false
+---
+
+Red, then green, one seam at a time. Tests live at public interfaces; expected values are literals, not recomputed the way the code does.
+
+## Runner
+
+- Vitest + React Testing Library in `apps/www`. Colocate as `*.test.ts(x)` next to the module.
+- Playwright e2e in `apps/www/e2e/*.spec.ts`. Chromium only. `webServer` boots `pnpm dev` on :3333 (`reuseExistingServer` locally).
+- `pnpm test` (unit). `pnpm test:e2e` (Playwright). Both go through Turborepo; unchanged inputs are a cache hit and skip. Force with `pnpm test -- --force` / `pnpm test:e2e -- --force`. Watch: `pnpm --filter www test:watch`.
+- First machine: `pnpm --filter www playwright:install`.
+- CI: `.github/workflows/test.yaml` runs unit and e2e jobs on push/PR to `main`.
+- Pre-push: `.husky/pre-push` runs `pnpm lint`, `pnpm test`, `pnpm test:e2e`.
+- Bookmark sync scripts stay on `node:test` (`apps/www/scripts/lib/*.test.mjs`).
+
+## Seams
+
+Test these public APIs. Do not reach into unexported helpers.
+
+| Seam | Module |
+| --- | --- |
+| `cn`, `formatTime` | `@/lib/utils` |
+| `hostnameOf`, `getCollections(file)`, `getCollection(file, id)`, `fillSnapshots` | `@/lib/bookmark-store` |
+| `getCollections()`, `getCollection(id)` | `@/lib/bookmarks` (JSON-bound adapter) |
+| `isValidPackageName` | `@/lib/npm-registry` |
+| `fetchOg` | `@/lib/og` |
+| `getApp`, `getEnabledApps`, `getSitemapPaths`, `assertAppEnabled` | `@/lib/app-catalog` |
+| `BookmarkList`, `CollectionList` | bookmark catalog UI |
+| `InspirationGrid` | inspirations pinboard |
+| `Section` | layout heading/description |
+| `usePackageAnalyzer` | analyzer hook |
+
+E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection, sitemap.xml when flags default on in development.
+
+Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`, Flags SDK (`flags/next`, `@flags-sdk/vercel`) and `next/navigation` `notFound` in App catalog tests. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.

@@ -14,19 +14,34 @@
     "unlighthouse-ci": "unlighthouse-ci",
     "bookmarks:sync": "node scripts/bookmarks-sync.mjs",
     "bookmarks:fetch": "node scripts/fetch-bookmarks-og.mjs",
-    "test": "node --test scripts/lib/*.test.mjs"
+    "test": "vitest run && node --test scripts/lib/*.test.mjs",
+    "test:watch": "vitest",
+    "test:unit": "vitest run",
+    "test:scripts": "node --test scripts/lib/*.test.mjs",
+    "test:e2e": "playwright test",
+    "playwright:install": "playwright install chromium"
   },
   "devDependencies": {
     "@clack/prompts": "^1.7.0",
+    "@playwright/test": "^1.63.0",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
     "@types/node": "^22",
+    "@vitejs/plugin-react": "^5.2.0",
     "baseline-browser-mapping": "^2.10.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "jsdom": "^30.1.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.0.0",
+    "vite": "^7.3.6",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^5.0.1"
   },
   "dependencies": {
     "@flags-sdk/vercel": "^1.4.6",

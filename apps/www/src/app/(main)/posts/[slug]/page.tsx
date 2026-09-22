@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { PORTFOLIO_BASE_URL } from '@/config/site-data';
+import { socialMetadata } from '@/lib/seo';
 import { blog } from '@/lib/source';
 import PageContainer from '@/components/layout/page-container';
 
@@ -45,30 +47,20 @@ export async function generateMetadata({
   }
 
   const data = page.data as any;
+  const images = data.image
+    ? [{ url: data.image as string, width: 1200, height: 630, alt: data.title as string }]
+    : [];
+
   return {
     title: data.title,
     description: data.summary,
-    openGraph: {
+    ...socialMetadata({
       title: data.title,
       description: data.summary,
-      type: 'article',
+      url: `${PORTFOLIO_BASE_URL}/posts/${slug}`,
       publishedTime: data.publishedOn,
-      images: data.image
-        ? [
-            {
-              url: data.image,
-              width: 1200,
-              height: 630,
-              alt: data.title,
-            },
-          ]
-        : [],
-    },
-    twitter: {
-      title: data.title,
-      description: data.summary,
-      images: data.image ? [data.image] : [],
-    },
+      images,
+    }),
   };
 }
 

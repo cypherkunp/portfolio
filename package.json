@@ -10,6 +10,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev --filter=www",
     "start": "turbo run start",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "turbo run clean",
