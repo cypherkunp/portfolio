@@ -14,8 +14,8 @@ import StackBlock from '@/components/stack-block';
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
 
-  const title = t('ResumePage.title');
-  const description = t('ResumePage.description');
+  const title = t('AboutPage.title');
+  const description = t('AboutPage.description');
 
   return {
     title,
@@ -31,7 +31,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default function Page() {
   const th = useTranslations();
-  const t = useTranslations('ResumePage.data');
+  const t = useTranslations('AboutPage.data');
   const stackBlock = useTranslations('Blocks.stackBlock');
 
   return (
