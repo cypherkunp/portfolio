@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
+import { socialMetadata } from '@/lib/seo';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { FaqBlock } from '@/components/faq-block';
@@ -13,29 +14,18 @@ import StackBlock from '@/components/stack-block';
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
 
+  const title = t('ResumePage.title');
+  const description = t('ResumePage.description');
+
   return {
-    title: t('ResumePage.title'),
-    description: t('ResumePage.description'),
-    openGraph: {
-      title: t('ResumePage.title'),
-      description: t('ResumePage.description'),
+    title,
+    description,
+    ...socialMetadata({
+      title,
+      description,
+      url: '/about',
       type: 'article',
-      url: t('ResumePage.url'),
-      images: [
-        {
-          url: t('ResumePage.ogImage'),
-          width: 660,
-          height: 240,
-          alt: t('Common.contact.name'),
-        },
-      ],
-    },
-    twitter: {
-      title: t('ResumePage.title'),
-      description: t('ResumePage.description'),
-      images: [t('ResumePage.ogImage')],
-      creator: '@cypherkunp',
-    },
+    }),
   };
 };
 

@@ -41,7 +41,7 @@
   },
   "HomePage": {
     "title": "Devvrat | Portfolio",
-    "description": "Devvrat's Portfolio Website",
+    "description": "Hi, I'm Devvrat, a product engineer based out of London. This is my personal website, where I share my ideas, opinions, and interests.",
     "url": "https://devvrat.cc",
     "ogImage": "https://devvrat.cc/og-home.jpg"
   },
@@ -52,8 +52,8 @@
     "ogImage": "https://devvrat.cc/og-home.jpg"
   },
   "ResumePage": {
-    "title": "Devvrat | Resume ",
-    "description": "Devvrat's Experience Summary",
+    "title": "Devvrat | Resume",
+    "description": "Devvrat Shukla is a lead experience engineer in London. A summary of work across web apps, teams, and products taken from zero to one.",
     "url": "https://devvrat.cc/resume",
     "ogImage": "https://devvrat.cc/og-home.jpg",
     "data": {
