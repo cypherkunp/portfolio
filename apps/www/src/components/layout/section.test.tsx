@@ -16,6 +16,12 @@ describe('Section', () => {
     expect(screen.getByText('Grid')).toBeInTheDocument();
   });
 
+  it('uses an h1 when the section opens the page', () => {
+    render(<Section isFirstSection title="Photos" />);
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Photos' })).toBeInTheDocument();
+  });
+
   it('omits the heading block when title and description are missing', () => {
     render(
       <Section>

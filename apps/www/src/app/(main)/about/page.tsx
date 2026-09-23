@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-import { socialMetadata } from '@/lib/seo';
+import { documentTitle, faqJsonLd, serializeJsonLd, socialMetadata } from '@/lib/seo';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { FaqBlock } from '@/components/faq-block';
@@ -18,13 +18,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const description = t('AboutPage.description');
 
   return {
-    title,
+    title: documentTitle(title),
     description,
     ...socialMetadata({
       title,
       description,
       url: '/about',
-      type: 'article',
     }),
   };
 };
@@ -33,10 +32,15 @@ export default function Page() {
   const th = useTranslations();
   const t = useTranslations('AboutPage.data');
   const stackBlock = useTranslations('Blocks.stackBlock');
+  const faqs = th.raw('Blocks.faqBlock.list') as { question: string; answer: string }[];
 
   return (
     <PageContainer className="w-full overflow-auto print:p-12">
-      <Section isFirstSection>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(faqs)) }}
+      />
+      <Section isFirstSection title={t('labels.about')}>
         <ul className="flex list-inside list-disc flex-col">
           {t('summary')
             .split('. ')

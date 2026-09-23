@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getCollection, getCollections } from '@/lib/bookmarks';
+import { brandedTitle, breadcrumbJsonLd, serializeJsonLd, socialMetadata } from '@/lib/seo';
+import { Badge } from '@/components/ui/badge';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { BookmarkList } from '@/components/bookmarks/bookmark-list';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
-import { Badge } from '@/components/ui/badge';
 import UnderlineText from '@/components/underline-text';
 
 interface CollectionPageProps {
@@ -22,9 +23,16 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   const { collection: id } = await params;
   const collection = getCollection(id);
   if (!collection) return { title: 'Bookmarks' };
+  const title = `${collection.name} · Bookmarks`;
+  const description = collection.description || `Bookmarked links — ${collection.name}`;
   return {
-    title: `${collection.name} · Bookmarks`,
-    description: collection.description || `Bookmarked links — ${collection.name}`,
+    title,
+    description,
+    ...socialMetadata({
+      title: brandedTitle(title),
+      description,
+      url: `/bookmarks/${id}`,
+    }),
   };
 }
 
@@ -37,18 +45,26 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     <AppEnabledGate id="bookmarks">
       <ToolSubpageLayout flush>
         <PageContainer>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: serializeJsonLd(
+                breadcrumbJsonLd([
+                  { name: 'Bookmarks', path: '/bookmarks' },
+                  { name: collection.name, path: `/bookmarks/${collection.id}` },
+                ]),
+              ),
+            }}
+          />
           <section className="flex w-full flex-col items-start text-left">
             <header className="mb-4 flex w-full flex-col items-start gap-4">
               <Breadcrumbs
-                items={[
-                  { label: 'Bookmarks', href: '/bookmarks' },
-                  { label: collection.name },
-                ]}
+                items={[{ label: 'Bookmarks', href: '/bookmarks' }, { label: collection.name }]}
               />
               <div className="flex items-center gap-2 pb-2">
-                <h2 className="text-lg font-bold tracking-tight">
+                <h1 className="text-lg font-bold tracking-tight">
                   <UnderlineText>{collection.name}</UnderlineText>
-                </h2>
+                </h1>
                 <Badge
                   variant="outline"
                   className="shrink-0"

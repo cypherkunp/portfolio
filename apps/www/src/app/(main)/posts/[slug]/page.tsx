@@ -2,8 +2,13 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { PORTFOLIO_BASE_URL } from '@/config/site-data';
-import { socialMetadata } from '@/lib/seo';
+import {
+  articleJsonLd,
+  brandedTitle,
+  documentTitle,
+  serializeJsonLd,
+  socialMetadata,
+} from '@/lib/seo';
 import { blog } from '@/lib/source';
 import PageContainer from '@/components/layout/page-container';
 
@@ -17,10 +22,26 @@ async function PostContent({ params }: { params: Promise<{ slug: string }> }) {
     notFound();
   }
 
-  const Mdx = (page.data as any).body;
+  const data = page.data as any;
+  const Mdx = data.body;
+  const description = data.summary || data.title;
 
   return (
     <PageContainer>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeJsonLd(
+            articleJsonLd({
+              title: data.title,
+              description,
+              slug,
+              publishedOn: data.publishedOn,
+              image: data.image,
+            }),
+          ),
+        }}
+      />
       <Mdx components={getMDXComponents()} />
     </PageContainer>
   );
@@ -47,19 +68,20 @@ export async function generateMetadata({
   }
 
   const data = page.data as any;
+  const description = data.summary || data.title;
   const images = data.image
     ? [{ url: data.image as string, width: 1200, height: 630, alt: data.title as string }]
-    : [];
+    : undefined;
 
   return {
-    title: data.title,
-    description: data.summary,
+    title: documentTitle(data.title),
+    description,
     ...socialMetadata({
-      title: data.title,
-      description: data.summary,
-      url: `${PORTFOLIO_BASE_URL}/posts/${slug}`,
+      title: brandedTitle(data.title),
+      description,
+      url: `/posts/${slug}`,
       publishedTime: data.publishedOn,
-      images,
+      ...(images ? { images } : {}),
     }),
   };
 }

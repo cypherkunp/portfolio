@@ -35,9 +35,15 @@ export function Section({
       <RenderIf condition={!!title || !!description}>
         <div className="mb-4 flex w-full flex-col items-start justify-start gap-4">
           <RenderIf condition={!!title}>
-            <h2 className="text-lg font-bold tracking-tight">
-              <UnderlineText>{title}</UnderlineText>
-            </h2>
+            {isFirstSection ? (
+              <h1 className="text-lg font-bold tracking-tight">
+                <UnderlineText>{title}</UnderlineText>
+              </h1>
+            ) : (
+              <h2 className="text-lg font-bold tracking-tight">
+                <UnderlineText>{title}</UnderlineText>
+              </h2>
+            )}
           </RenderIf>
 
           <RenderIf condition={!!description}>

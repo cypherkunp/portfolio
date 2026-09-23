@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(PORTFOLIO_BASE_URL),
   title: {
     default: 'Devvrat | Portfolio',
-    template: '%s',
+    template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -69,7 +69,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
       <body className="bg-app-dots relative z-10 flex min-h-screen flex-col overflow-auto">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider
