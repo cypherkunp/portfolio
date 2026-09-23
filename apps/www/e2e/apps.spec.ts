@@ -17,8 +17,10 @@ test.describe('apps', () => {
     const response = await request.get('/sitemap.xml');
     expect(response.ok()).toBeTruthy();
     const xml = await response.text();
-    expect(xml).toContain('https://devvrat.cc/bookmarks');
-    expect(xml).toContain('https://devvrat.cc/inspirations');
+    expect(xml).toContain('https://www.devvrat.cc/bookmarks');
+    expect(xml).toContain('https://www.devvrat.cc/inspirations');
+    expect(xml).toContain('https://www.devvrat.cc/posts/hello-world');
+    expect(xml).toContain('<lastmod>2025-01-01</lastmod>');
   });
 
   test('opens a bookmark collection from the catalog', async ({ page }) => {

@@ -43,7 +43,7 @@ const Pointer = ({ title, avatar }: { title: string; avatar: string }) => (
       src={avatar}
       height={20}
       width={20}
-      alt="thumbnail"
+      alt=""
       className="rounded-full border-2 border-white"
     />
     <p className="pr-2">{title}</p>

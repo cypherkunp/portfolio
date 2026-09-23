@@ -88,6 +88,7 @@ describe('getSitemapPaths', () => {
     await expect(getSitemapPaths()).resolves.toEqual([
       '/',
       '/about',
+      '/posts',
       '/music',
       '/inspirations',
       '/bookmarks',
@@ -102,6 +103,7 @@ describe('getSitemapPaths', () => {
     await expect(getSitemapPaths()).resolves.toEqual([
       '/',
       '/about',
+      '/posts',
       '/music',
       '/bookmarks',
       '/photos',
@@ -118,7 +120,7 @@ describe('getSitemapPaths', () => {
       'feature-app-package-analyzer': false,
     });
 
-    await expect(getSitemapPaths()).resolves.toEqual(['/', '/about']);
+    await expect(getSitemapPaths()).resolves.toEqual(['/', '/about', '/posts']);
   });
 });
 
