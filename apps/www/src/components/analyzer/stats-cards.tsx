@@ -1,9 +1,8 @@
 'use client';
 
+import { Card, CardContent } from '@repo/ui/components/card';
 import { AlertTriangle, Calendar, CheckCircle, Package } from 'lucide-react';
 import { motion } from 'motion/react';
-
-import { Card, CardContent } from '@/components/ui/card';
 
 interface StatsCardsProps {
   totalPackages: number;

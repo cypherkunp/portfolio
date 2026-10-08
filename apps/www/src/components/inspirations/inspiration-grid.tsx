@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@repo/ui/components/button';
+import { Card, CardDescription, CardFooter, CardHeader } from '@repo/ui/components/card';
+import { Empty, EmptyHeader, EmptyTitle } from '@repo/ui/components/empty';
 import { Check, Copy, Pin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-
-import { Button } from '@/components/ui/button';
-import { Card, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
-import { Empty, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 
 type InspirationVariant = 'default' | 'highlight' | 'accent' | 'primary' | 'mono';
 type InspirationTag =
@@ -108,12 +107,7 @@ export function InspirationGrid() {
   return (
     <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
       {items.map(item => (
-        <InspirationCard
-          key={item.id}
-          item={item}
-          isCopied={copiedId === item.id}
-          onCopy={copy}
-        />
+        <InspirationCard key={item.id} item={item} isCopied={copiedId === item.id} onCopy={copy} />
       ))}
     </div>
   );

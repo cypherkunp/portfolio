@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
+import { Badge } from '@repo/ui/components/badge';
+import { Card, CardContent, CardHeader } from '@repo/ui/components/card';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
+import { RenderIf } from '@repo/ui/components/render-if';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import { documentTitle, faqJsonLd, serializeJsonLd, socialMetadata } from '@/lib/seo';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { FaqBlock } from '@/components/faq-block';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
-import { RenderIf } from '@/components/render-if';
 import StackBlock from '@/components/stack-block';
 
 export const generateMetadata = async (): Promise<Metadata> => {

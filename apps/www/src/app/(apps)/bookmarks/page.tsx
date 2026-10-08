@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import UnderlineText from '@repo/ui/components/underline-text';
 
 import { getCollections } from '@/lib/bookmarks';
 import { brandedTitle, socialMetadata } from '@/lib/seo';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { CollectionList } from '@/components/bookmarks/collection-list';
-import PageContainer from '@/components/layout/page-container';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
-import UnderlineText from '@/components/underline-text';
 
 const title = 'Bookmarks';
 const description = 'Collections of links worth keeping.';

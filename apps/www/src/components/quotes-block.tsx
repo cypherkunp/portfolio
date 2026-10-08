@@ -1,13 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Button } from '@repo/ui/components/button';
+import { RenderIf } from '@repo/ui/components/render-if';
 import { ArrowLeftIcon, ArrowRightIcon, PauseIcon, PlayIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-
-import { Button } from '@/components/ui/button';
-
-import { RenderIf } from './render-if';
 
 interface InspirationItem {
   id: string;

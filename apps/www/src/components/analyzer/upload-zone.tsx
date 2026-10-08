@@ -1,11 +1,10 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
+import { Button } from '@repo/ui/components/button';
+import { cn } from '@repo/ui/lib/utils';
 import { FileJson, Upload, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 
 interface UploadZoneProps {
   onFileUpload: (file: File) => void;

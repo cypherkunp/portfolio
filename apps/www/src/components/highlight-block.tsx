@@ -1,4 +1,4 @@
-import UnderlineText from './underline-text';
+import UnderlineText from '@repo/ui/components/underline-text';
 
 export default function HighlightBlock() {
   return (

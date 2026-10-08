@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 
 interface Item {
   title: string;

@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Button } from '@repo/ui/components/button';
+import { Input } from '@repo/ui/components/input';
 import { ChevronLeft, ChevronRight, Clock, Play, Search } from 'lucide-react';
 
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 interface PlaylistViewProps {
   songs: Song[];
