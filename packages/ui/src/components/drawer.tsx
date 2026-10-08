@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -68,7 +68,7 @@ const DrawerTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Title
     ref={ref}
-    className={cn('text-lg font-semibold leading-none tracking-tight', className)}
+    className={cn('text-lg leading-none font-semibold tracking-tight', className)}
     {...props}
   />
 ));

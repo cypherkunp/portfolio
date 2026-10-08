@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import PageContainer from '@repo/ui/components/layout/page-container';
 
 import {
   articleJsonLd,
@@ -10,7 +11,6 @@ import {
   socialMetadata,
 } from '@/lib/seo';
 import { blog } from '@/lib/source';
-import PageContainer from '@/components/layout/page-container';
 
 import { getMDXComponents } from '../../../../../mdx-components';
 

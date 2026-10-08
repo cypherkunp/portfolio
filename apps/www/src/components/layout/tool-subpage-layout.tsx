@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
+import { siteShellClassName } from '@repo/ui/lib/site-shell';
+import { cn } from '@repo/ui/lib/utils';
 
-import { cn } from '@/lib/utils';
 import { Colophon } from '@/components/layout/colophon';
 import Header from '@/components/layout/header';
-import { siteShellClassName } from '@/components/layout/site-shell';
 
 interface ToolSubpageLayoutProps {
   children: ReactNode;

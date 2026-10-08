@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Badge } from '@repo/ui/components/badge';
+import { Breadcrumbs } from '@repo/ui/components/breadcrumbs';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import UnderlineText from '@repo/ui/components/underline-text';
 
 import { getCollection, getCollections } from '@/lib/bookmarks';
 import { brandedTitle, breadcrumbJsonLd, serializeJsonLd, socialMetadata } from '@/lib/seo';
-import { Badge } from '@/components/ui/badge';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { BookmarkList } from '@/components/bookmarks/bookmark-list';
-import { Breadcrumbs } from '@/components/breadcrumbs';
-import PageContainer from '@/components/layout/page-container';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
-import UnderlineText from '@/components/underline-text';
 
 interface CollectionPageProps {
   params: Promise<{ collection: string }>;

@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import { Card, CardContent } from '@repo/ui/components/card';
 
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
 
 interface SongListProps {
   songs: Song[];

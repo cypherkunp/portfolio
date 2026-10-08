@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
 
 import { brandedTitle, socialMetadata } from '@/lib/seo';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
 import { InspirationGrid } from '@/components/inspirations/inspiration-grid';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 
 const title = 'Inspirations';

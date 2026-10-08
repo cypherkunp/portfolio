@@ -1,9 +1,8 @@
 import * as React from 'react';
+import { Button } from '@repo/ui/components/button';
+import { Card, CardContent } from '@repo/ui/components/card';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@repo/ui/components/carousel';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 export default function Component() {
   const [api, setApi] = React.useState<CarouselApi>();

@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
 import { getTranslations } from 'next-intl/server';
 
 import { brandedTitle, socialMetadata } from '@/lib/seo';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
 import PostsBlock from '@/components/posts-block';
 
 export async function generateMetadata(): Promise<Metadata> {

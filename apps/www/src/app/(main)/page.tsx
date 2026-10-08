@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { featureAppsSupport } from '@/flags';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
 import { getTranslations } from 'next-intl/server';
 
 import { getEnabledApps } from '@/lib/app-catalog';
@@ -13,8 +15,6 @@ import {
 } from '@/lib/seo';
 import AppsBlock from '@/components/apps-block';
 import InfoBlock from '@/components/info-block';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
 import PostsBlock from '@/components/posts-block';
 
 export const generateMetadata = async (): Promise<Metadata> => {

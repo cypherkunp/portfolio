@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
+import { ThemeProvider } from '@repo/ui/components/theme-provider';
+import { geistMono } from '@repo/ui/lib/fonts';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
 import { PORTFOLIO_BASE_URL } from '@/config/site-data';
-import { geistMono } from '@/lib/font';
 import {
   OG_HOME_IMAGE,
   SITE_DESCRIPTION,
@@ -14,7 +15,6 @@ import {
   THEME_COLOR,
   TWITTER_SITE,
 } from '@/lib/seo';
-import { ThemeProvider } from '@/components/theme-provider';
 
 import '@/styles/globals.css';
 

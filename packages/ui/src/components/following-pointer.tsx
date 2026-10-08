@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValue } from 'motion/react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 
 export const FollowerPointerCard = ({
   children,

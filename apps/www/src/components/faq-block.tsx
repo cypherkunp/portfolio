@@ -1,7 +1,11 @@
 import React from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@repo/ui/components/accordion';
 import { useTranslations } from 'next-intl';
-
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 interface Faq {
   question: string;

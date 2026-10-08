@@ -1,4 +1,5 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@repo/ui/lib/utils';
+
 import ConnectBlock from '@/components/connect-block';
 
 export function Footer({ className }: { className?: string }) {

@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/photos': ['./public/photos/**/*'],
   },
-  transpilePackages: [],
+  transpilePackages: ['@repo/ui'],
   serverExternalPackages: ['exifr'],
   images: {
     formats: ['image/webp'],

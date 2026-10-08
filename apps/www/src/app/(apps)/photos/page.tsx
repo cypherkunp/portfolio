@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
 
 import { getPhotos } from '@/lib/photos';
 import { brandedTitle, socialMetadata } from '@/lib/seo';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 import { PhotoGrid } from '@/components/photos/photo-grid';
 
