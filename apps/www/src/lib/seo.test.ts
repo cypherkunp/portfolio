@@ -78,7 +78,7 @@ describe('articleJsonLd', () => {
         title: 'Hello world',
         description: 'The stack behind this site and why each piece is here.',
         slug: 'hello-world',
-        publishedOn: '2025-01-01',
+        publishedOn: '01-01-2025',
       }),
     ).toEqual({
       '@context': 'https://schema.org',
@@ -143,7 +143,7 @@ describe('buildSitemapEntries', () => {
         baseUrl,
         paths: ['/', '/about', '/posts', '/bookmarks'],
         posts: [
-          { slug: 'hello-world', publishedOn: '2025-01-01' },
+          { slug: 'hello-world', publishedOn: '01-01-2025' },
           { slug: 'draft', publishedOn: '' },
         ],
         collections: [{ id: 'reading-list' }],

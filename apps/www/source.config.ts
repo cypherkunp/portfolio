@@ -8,7 +8,7 @@ export const blogPosts = defineCollections({
     title: z.string(),
     description: z.string().optional(),
     summary: z.string().optional(),
-    publishedOn: z.string(),
+    publishedOn: z.string().regex(/^\d{2}-\d{2}-\d{4}$/),
     version: z.string(),
     tags: z.array(z.string()),
     image: z.string().optional(),

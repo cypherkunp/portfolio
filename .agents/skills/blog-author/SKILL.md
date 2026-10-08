@@ -120,7 +120,7 @@ Write every sentence with the `asd-ste100` skill. Read and follow `/asd-ste100` 
 ---
 title: 'Post title'
 summary: 'One sentence for the meta description. Falls back to title when omitted.'
-publishedOn: 'YYYY-MM-DD'
+publishedOn: 'DD-MM-YYYY'
 version: '1'
 image: '/path/to/og.png'
 tags:
