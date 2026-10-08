@@ -3,14 +3,111 @@ name: blog-author
 description: >-
   Write or edit portfolio blog posts as MDX in apps/www. Use when drafting a
   post, rewriting blog copy, or when the user asks for a blog, article, or
-  post. Prose follows the asd-ste100 skill. This skill covers the post file,
-  markdown, and MDX components.
+  post. Prose follows the asd-ste100 skill, then the voice rules in this
+  skill. This skill covers the post file, markdown, and MDX components.
 disable-model-invocation: true
 ---
 
 # Blog author
 
-Write every sentence with the `asd-ste100` skill. Read and follow `/asd-ste100` before the draft. Do not restate those rules here.
+Write every sentence with the `asd-ste100` skill. Read and follow `/asd-ste100` before the draft. Then apply the voice rules below. Where they disagree, follow this skill.
+
+## Voice and tone
+
+- Write like humans speak. Skip corporate jargon and marketing fluff.
+- Be confident and direct. Skip softening phrases like "I think," "maybe," or "could."
+- Use active voice.
+- Use positive phrasing. Say what something is rather than what it isn't.
+- Say "you" more than "we" when addressing external audiences.
+- Use contractions like "I'll," "won't," and "can't."
+
+## Specificity and evidence
+
+- Be specific with facts and data. Skip vague superlatives.
+- Back up claims with concrete examples or metrics.
+- Highlight customers and community members over company achievements.
+- Use realistic, product-based examples. Skip `foo` / `bar` / `baz` in code.
+- Make content concrete, visual, and falsifiable.
+
+## Title creation
+
+- Make a promise in the title so readers know what they get if they click.
+- Tap into a controversial point the audience holds and back it up with data. Skip clickbait.
+- Share something uniquely helpful that makes readers better at a meaningful part of their work.
+- Skip vague titles like "My Thoughts On XYZ." Titles are opinions or shareable facts.
+- Write a placeholder title first, finish the content, then iterate the title.
+
+## Banned words
+
+| Word | Replacement |
+| --- | --- |
+| a bit | remove |
+| a little | remove |
+| actually / actual | remove |
+| agile | remove |
+| arguably | remove |
+| assistance | help |
+| attempt | try |
+| battle tested | remove |
+| best practices | proven approaches |
+| blazing fast / lightning fast | build XX% faster |
+| business logic | remove |
+| cognitive load | remove |
+| commence | start |
+| delve | go into |
+| disrupt / disruptive | remove |
+| facilitate | help or ease |
+| game-changing | name the specific benefit |
+| great | remove or be specific |
+| implement | do |
+| individual | man or woman |
+| initial | first |
+| innovative | remove |
+| just | remove |
+| leverage | use |
+| mission-critical | important |
+| modern / modernized | remove |
+| numerous | many |
+| out of the box | remove |
+| performant | fast and reliable |
+| pretty / quite / rather / really / very | remove |
+| referred to as | called |
+| remainder | rest |
+| robust | strong |
+| seamless / seamlessly | automatic |
+| sufficient | enough |
+| that | remove when the sentence still holds |
+| thing | name the thing |
+| utilize | use |
+| webinar | online event |
+
+## LLM patterns
+
+- Replace an em dash with a semicolon, a comma, or a new sentence.
+- Skip openers like "Great question" and "Let me help you."
+- Skip "Let's dive into..."
+- Skip cliché intros like "In today's fast-paced digital world" and "In the ever-evolving landscape of."
+- Skip "it's not just [x], it's [y]."
+- Skip self-referential disclaimers like "As an AI" and "I'm here to help you with."
+- Skip essay closers: "In conclusion," "Overall," "To summarize."
+- Use a bullet list when the items are peers. Use a numbered list when order matters.
+- Skip closers like "Hope this helps!"
+- Skip stacked transitions: "Furthermore," "Additionally," "Moreover."
+- Replace "In conclusion" with the statement.
+- Skip hedge words ("might," "perhaps," "potentially") unless the uncertainty is real.
+- Skip stacked hedges: "may potentially," "it's important to note that."
+- Skip symmetrical lists that start "Firstly... Secondly...."
+- Sentence case headings.
+- Strip Unicode artifacts from pasted text: smart quotes, em dashes, non-breaking spaces.
+- Use `*` for emphasis. Skip `***`.
+- Delete empty citation placeholders like `[1]` with no source.
+
+## Punctuation
+
+- Use the Oxford comma.
+- Use an exclamation point rarely.
+- A sentence can start with "But" or "And." Do not stack them.
+- Use a period instead of a comma when the clause can stand alone.
 
 ## Where posts live
 
@@ -126,7 +223,7 @@ Every new post ends with `<References />`, after the takeaway.
 
 ## Before you write
 
-1. Read `/asd-ste100` and follow it for the body.
+1. Read `/asd-ste100` and follow it for the body. Then apply Voice and tone through Punctuation in this skill.
 2. Skim one post in `apps/www/src/content/posts/` for `Callout`, `Terminal`, and `References`.
-3. Draft the body first. Set the title last so it states the result.
+3. Draft the body first. Iterate the title last. See Title creation.
 4. Put real sources in `<References />` before you ship.
