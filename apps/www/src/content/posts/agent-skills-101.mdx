@@ -1,0 +1,252 @@
+---
+title: 'Agent skills 101'
+summary: 'A skill is a folder. The description decides when the agent loads the steps.'
+publishedOn: '08-10-2026'
+version: '1'
+tags:
+  - 'agent'
+  - 'skills'
+---
+
+# Agent skills 101
+
+A skill is a folder. The folder holds `SKILL.md`. The file tells the agent how to do one task.
+
+Anthropic made the format. Anthropic then released the format as an open standard. You write the skill once. You'll run it in Cursor, Claude Code, Codex, GitHub Copilot, VS Code, and Gemini CLI.
+
+At the start, the agent reads the name and the description. The agent reads the steps only when the task matches.
+
+## The folder
+
+```text
+code-review/
+├── SKILL.md
+├── scripts/
+├── references/
+└── assets/
+```
+
+`SKILL.md` is required. The other three directories are optional.
+
+- `scripts/` holds code the agent can run.
+- `references/` holds docs the agent reads on demand.
+- `assets/` holds templates, images, and data files.
+
+You can add other files. The three names above are the common ones.
+
+## The two required fields
+
+`SKILL.md` starts with YAML frontmatter. The markdown body comes after the frontmatter.
+
+### `name`
+
+The `name` value has five rules.
+
+- Use 1 to 64 characters.
+- Use lowercase letters, digits, and hyphens.
+- Do not start or end with a hyphen.
+- Do not use two hyphens in a row.
+- Use the same text as the parent directory name.
+
+`code-review` and `pdf-processing` pass the rules. `Code-Review`, `-pdf`, and `pdf--processing` break the rules.
+
+### `description`
+
+The `description` value has a hard limit of 1024 characters. The description says what the skill does. The description says when to use the skill. Put the user's words in the description.
+
+This description is too thin:
+
+```yaml
+description: Review code.
+```
+
+This description names the checks and the trigger:
+
+```yaml
+description: >
+  Review a diff for SQL injection, missing auth checks, and
+  errors with leaked internals. Use this skill when the user
+  asks for a review of a pull request, a branch, or a patch,
+  even when they don't say "security".
+```
+
+Write the description as a command. Start with `Use this skill when`. Name the user goal. Name a near miss, so the agent skips the adjacent task.
+
+<Table
+  data={{
+    headers: ['Field', 'Required', 'Limit'],
+    rows: [
+      ['name', 'Yes', '64 characters. Must match the directory.'],
+      ['description', 'Yes', '1024 characters. Task plus trigger.'],
+      ['license', 'No', 'License name, or a bundled license file.'],
+      ['compatibility', 'No', '500 characters. Packages, product, or network.'],
+      ['metadata', 'No', 'Map of string keys to string values.'],
+      ['allowed-tools', 'No', 'Experimental. A space-separated tool list.'],
+    ],
+  }}
+/>
+
+Add `compatibility` when the skill needs a package, a product, or network access.
+
+`allowed-tools` is experimental. Support for the field differs by agent.
+
+## How the agent loads a skill
+
+The load has three stages. The spec calls this progressive disclosure.
+
+1. At startup the agent reads `name` and `description` only. The catalog costs approximately 100 tokens for each skill.
+2. When the task matches the description, the agent reads the full `SKILL.md`.
+3. The agent runs a script only when a step names the script. The agent reads a reference file only when a step names the file.
+
+A one-step task often skips the skill. `Read this PDF` is one step. The agent can read the file with basic tools. A skill earns the load on a team workflow, an unfamiliar API, or an uncommon format.
+
+Keep the main file small.
+
+1. Keep `SKILL.md` under 500 lines.
+2. Keep the body under 5000 tokens.
+
+Move the long detail to `references/`. Tell the agent when to open the file.
+
+```text
+If the API status is not 200, read references/api-errors.md.
+```
+
+Use a path from the skill root. Keep each reference one level under `SKILL.md`. Do not chain a reference through more files.
+
+## Where you put the folder
+
+Put a project skill in `.agents/skills/`. Put a personal skill in `~/.agents/skills/`.
+
+A project skill with the same `name` overrides the personal skill.
+
+<Callout variant="warning" title="CAUTION">
+
+- Do not load skills from a repository you do not trust. A project skill ships with the repository. Those files enter the agent context.
+- Do not put secrets in a skill. The agent loads the file into context. A skill in a public repository is public.
+
+</Callout>
+
+## Write the steps the agent gets wrong
+
+Put in `SKILL.md` only the facts the agent will miss. Skip the definition of a pull request. Skip the definition of SQL. The agent knows both.
+
+Give one default. State the defect in the next sentence.
+
+```markdown
+Use parameterized queries for every database call.
+
+If the code builds SQL with string concatenation, flag the line.
+```
+
+Put a gotcha in `SKILL.md`. The agent reads the gotcha before the mistake.
+
+```markdown
+## Gotcha
+
+The users table uses a soft delete. Each query needs `deleted_at IS NULL`.
+```
+
+When the output shape matters, give a template. The agent matches a template more reliably than a prose description of the shape.
+
+If the agent builds the same script on every run, put the script in `scripts/`. Point at the script from `SKILL.md`.
+
+```text
+Run scripts/validate.py on the diff.
+```
+
+A script for an agent takes flags, environment variables, or stdin. The script prints JSON on stdout. The script prints errors on stderr. The script won't take a typed answer. A prompt on the terminal hangs the run.
+
+## Create the skill
+
+1. Create the directory `.agents/skills/code-review`.
+2. Add `SKILL.md` in the new directory.
+3. Set `name` to `code-review`.
+4. Write the description with the task and the trigger.
+5. Write the steps the agent gets wrong.
+6. Run the validator on the skill directory.
+
+<Terminal command="skills-ref validate ./code-review" />
+
+The validator checks the frontmatter and the name rules. The tool is `skills-ref` in the Agent Skills repository.
+
+## Test the trigger
+
+The description carries the whole trigger. A thin description misses the task. A wide description loads on the wrong task.
+
+1. Write 10 must-load prompts. The skill must load for each one.
+2. Write 10 near-miss prompts. A near miss shares a keyword and needs a different task.
+3. Hold back 40 percent of the prompts.
+4. Run each prompt three times.
+5. A must-load prompt passes when the skill loads on at least two runs.
+6. A near miss passes when the skill loads on fewer than two runs.
+7. Change the description using only the kept prompts.
+8. Score the description with the held-back prompts.
+
+Do not paste a failed prompt into the description. Name the category of the task. A keyword from one prompt fits one prompt and misses the next prompt.
+
+Model output varies between runs. Three runs is the minimum for a trigger rate.
+
+After the trigger is stable, grade the skill output on real tasks. Read the trace and the final file. A vague step makes the agent try several paths. The agent still follows a step for a different task.
+
+## After the first skill
+
+A large set of skills gets expensive. [Build better agent skills](/posts/build-better-agent-skills) shows how to keep the set small.
+
+## Takeaway
+
+The description decides if the skill runs. The folder holds the steps.
+
+- Match `name` to the directory.
+- Say what the skill does, and when to use it.
+- Keep `SKILL.md` under 500 lines.
+- Load extra files only when a step names them.
+- Test must-load prompts and near misses before you add a second skill.
+
+<References
+  items={[
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/specification',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/clients',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/skill-creation/quickstart',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/skill-creation/best-practices',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/skill-creation/optimizing-descriptions',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/skill-creation/evaluating-skills',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/skill-creation/using-scripts',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://agentskills.io/client-implementation/adding-skills-support',
+    },
+    {
+      author: 'Agent Skills',
+      url: 'https://github.com/agentskills/agentskills/tree/main/skills-ref',
+    },
+    {
+      author: 'Anthropic',
+      url: 'https://www.anthropic.com/',
+    },
+  ]}
+/>

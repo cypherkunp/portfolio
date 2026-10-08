@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import PageContainer from '@repo/ui/components/layout/page-container';
 
+import { toIsoDate } from '@/lib/format-date';
 import {
   articleJsonLd,
   brandedTitle,
@@ -80,7 +81,7 @@ export async function generateMetadata({
       title: brandedTitle(data.title),
       description,
       url: `/posts/${slug}`,
-      publishedTime: data.publishedOn,
+      publishedTime: toIsoDate(data.publishedOn),
       ...(images ? { images } : {}),
     }),
   };

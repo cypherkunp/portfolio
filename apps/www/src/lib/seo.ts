@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { PORTFOLIO_BASE_URL } from '@/config/site-data';
+import { toIsoDate } from '@/lib/format-date';
 
 export const SITE_NAME = 'Devvrat';
 export const SITE_LOCALE = 'en_GB';
@@ -11,12 +12,9 @@ export const SITE_DESCRIPTION =
   "Hi, I'm Devvrat, a product engineer based out of London. This is my personal website, where I share my ideas, opinions, and interests.";
 
 const PERSON_IMAGE = 'https://avatars.githubusercontent.com/u/1528663?v=4';
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 function alreadyBranded(title: string) {
-  return (
-    title.startsWith(SITE_NAME) || title.endsWith(`| ${SITE_NAME}`)
-  );
+  return title.startsWith(SITE_NAME) || title.endsWith(`| ${SITE_NAME}`);
 }
 
 export function brandedTitle(title: string) {
@@ -141,12 +139,14 @@ export function articleJsonLd(post: {
       : `${PORTFOLIO_BASE_URL}${post.image}`
     : undefined;
 
+  const datePublished = post.publishedOn ? toIsoDate(post.publishedOn) : undefined;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.description,
-    ...(post.publishedOn ? { datePublished: post.publishedOn } : {}),
+    ...(datePublished ? { datePublished } : {}),
     ...(image ? { image } : {}),
     author: {
       '@type': 'Person',
@@ -221,7 +221,8 @@ export function buildSitemapEntries({
 
   for (const post of posts) {
     const entry: SitemapEntry = { url: `${baseUrl}/posts/${post.slug}` };
-    if (ISO_DATE.test(post.publishedOn)) entry.lastModified = post.publishedOn;
+    const lastModified = toIsoDate(post.publishedOn);
+    if (lastModified) entry.lastModified = lastModified;
     entries.push(entry);
   }
 

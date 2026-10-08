@@ -1,9 +1,12 @@
 // @ts-nocheck
-import * as __fd_glob_4 from "../src/content/posts/hello-world.mdx?collection=blogPosts"
-import * as __fd_glob_3 from "../src/content/posts/handbook.mdx?collection=blogPosts"
-import * as __fd_glob_2 from "../src/content/posts/github-stacked-prs.mdx?collection=blogPosts"
-import * as __fd_glob_1 from "../src/content/posts/claude-code-mcp.mdx?collection=blogPosts"
-import * as __fd_glob_0 from "../src/content/posts/build-better-agent-skills.mdx?collection=blogPosts"
+import * as __fd_glob_7 from "../src/content/posts/hello-world.mdx?collection=blogPosts"
+import * as __fd_glob_6 from "../src/content/posts/handbook.mdx?collection=blogPosts"
+import * as __fd_glob_5 from "../src/content/posts/github-stacked-prs.mdx?collection=blogPosts"
+import * as __fd_glob_4 from "../src/content/posts/factory-mindset.mdx?collection=blogPosts"
+import * as __fd_glob_3 from "../src/content/posts/claude-code-mcp.mdx?collection=blogPosts"
+import * as __fd_glob_2 from "../src/content/posts/build-better-agent-skills.mdx?collection=blogPosts"
+import * as __fd_glob_1 from "../src/content/posts/branch-naming-conventions.mdx?collection=blogPosts"
+import * as __fd_glob_0 from "../src/content/posts/agent-skills-101.mdx?collection=blogPosts"
 import { server } from 'fumadocs-mdx/runtime/server';
 import type * as Config from '../source.config';
 
@@ -12,4 +15,4 @@ const create = server<typeof Config, import("fumadocs-mdx/runtime/types").Intern
   }
 }>({"doc":{"passthroughs":["extractedReferences"]}});
 
-export const blogPosts = await create.doc("blogPosts", "src/content/posts", {"build-better-agent-skills.mdx": __fd_glob_0, "claude-code-mcp.mdx": __fd_glob_1, "github-stacked-prs.mdx": __fd_glob_2, "handbook.mdx": __fd_glob_3, "hello-world.mdx": __fd_glob_4, });
+export const blogPosts = await create.doc("blogPosts", "src/content/posts", {"agent-skills-101.mdx": __fd_glob_0, "branch-naming-conventions.mdx": __fd_glob_1, "build-better-agent-skills.mdx": __fd_glob_2, "claude-code-mcp.mdx": __fd_glob_3, "factory-mindset.mdx": __fd_glob_4, "github-stacked-prs.mdx": __fd_glob_5, "handbook.mdx": __fd_glob_6, "hello-world.mdx": __fd_glob_7, });

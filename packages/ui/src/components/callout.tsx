@@ -20,7 +20,15 @@ export function Callout({
     >
       {icon}
       {title && <AlertTitle className="mb-2">{title}</AlertTitle>}
-      <AlertDescription className="text-card-foreground/80">{children}</AlertDescription>
+      <AlertDescription
+        className={cn(
+          'text-card-foreground/80',
+          '[&_ol]:my-0 [&_ol]:text-sm [&_ul]:my-0 [&_ul]:text-sm',
+          '[&_li]:text-sm [&_p]:my-0',
+        )}
+      >
+        {children}
+      </AlertDescription>
     </Alert>
   );
 }
