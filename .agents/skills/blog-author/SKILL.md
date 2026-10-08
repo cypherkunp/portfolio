@@ -1,12 +1,16 @@
 ---
 name: blog-author
-description: Write or edit portfolio blog posts in Devvrat's voice. Use when drafting MDX posts, rewriting blog copy, or when the user asks to write a blog, article, or post for apps/www.
+description: >-
+  Write or edit portfolio blog posts as MDX in apps/www. Use when drafting a
+  post, rewriting blog copy, or when the user asks for a blog, article, or
+  post. Prose follows the asd-ste100 skill. This skill covers the post file,
+  markdown, and MDX components.
 disable-model-invocation: true
 ---
 
 # Blog author
 
-Write blog posts in Devvrat's voice. Style source of truth: `apps/www/src/content/posts/handbook.mdx`.
+Write every sentence with the `asd-ste100` skill. Read and follow `/asd-ste100` before the draft. Do not restate those rules here.
 
 ## Where posts live
 
@@ -18,63 +22,91 @@ Write blog posts in Devvrat's voice. Style source of truth: `apps/www/src/conten
 ```yaml
 ---
 title: 'Post title'
+summary: 'One sentence for the meta description. Falls back to title when omitted.'
 publishedOn: 'YYYY-MM-DD'
 version: '1'
+image: '/path/to/og.png'
 tags:
   - 'tag'
 ---
 ```
 
-## Voice
-
-- Soft but assertive. Kind. Clear. Direct.
-- First person when it is personal experience. "I" not "we".
-- Talk like a human. No marketing fluff. No corporate speak.
-- Confident. No hedging ("I think", "maybe", "could").
-- Simple English. Clarity beats perfect grammar.
-- Short sentences. One idea per sentence.
-- Prefer "you" when teaching the reader.
-- Concrete over vague. Show examples. Name real tools and products.
-
-## Format rules
-
-- Prefer bullet points. Nest with real headings or indented lists, not bold fake headings.
-- Use `X > Y > Z` for ranked tradeoffs.
-- Never use hyphens or dashes as sentence punctuation. Rewrite with a period, comma, or new sentence. Compound words like "late night" stay as separate words when possible.
-- No em dashes. No en dashes. No hyphenated asides.
-- Sentence case headings. Not Title Case.
-- Skip LLM filler: "Let's dive in", "In conclusion", "Hope this helps", "In today's world".
-- Skip banned fluff words from the project writing rules when they add nothing.
+`image` is optional. `summary` is optional. The page uses `summary` for the description and JSON-LD. The H1 in the body is the visible title. Match it to `title`.
 
 ## Markdown
 
-Write valid CommonMark / MDX. Broken markdown ships broken HTML.
+Write valid CommonMark / MDX. `apps/www/mdx-components.tsx` maps these elements:
 
-- Headings: use `#` / `##` / `###`. Never use `**Bold line**` as a heading.
-- One H1 per post. Match the title. Then `##` for sections, `###` for subsections.
+- Headings `h1`–`h6`
+- Paragraphs
+- Ordered lists, unordered lists, list items
+- Emphasis, strong, strikethrough (`~~deleted~~`)
+- Images. `width` and `height` when you know them
+- Links. A site path uses `next/link`. A `#hash` stays on the page. Any other URL opens in a new tab
+- Thematic breaks (`---`)
+- Fenced code with a language tag, and inline code
+- GFM tables
+- Blockquotes
+
+Authoring:
+
+- One H1. Then `##` for sections, `###` for subsections.
 - Blank line before and after headings, lists, code fences, and blockquotes.
-- Lists: `-` for bullets, `1.` for ordered. Nest with 2 spaces.
-- Inline code: `` `like this` ``. Multi line code: fenced blocks with a language tag.
-- Examples and commands go in fenced code blocks, not blockquotes.
-- Blockquotes (`>`) only for real quotes.
-- Links: `[label](https://example.com)`. Never paste a bare URL as the only link text when a label fits.
-- Bold and italic for emphasis inside a sentence. Not for structure.
-- Do not mix HTML and markdown for the same job. Use existing MDX components (`Terminal`, `References`, etc.) when the post needs them.
-- Frontmatter is YAML. Keep it valid. Quoting strings is fine.
+- `-` for bullets. `1.` for ordered lists. Nest with 2 spaces.
+- `` `inline` ``. Multi-line code in a fence with a language tag.
+- `[label](https://example.com)`. A bare URL is the link text only when no label fits.
+- `>` only for a real quote.
+- Bold and italic inside a sentence.
+- A GFM table for tabular data. Use the `Table` component when you pass `headers` and `rows` as data.
 
-## Structure
+## Components
 
-1. Open with the problem or the promise. One short paragraph.
-2. Give the answer early. Do not bury it.
-3. Break the rest into sections with bullets.
-4. End with a direct takeaway. No summary essay closer.
-5. Always close with a `<References />` block after the takeaway.
+Registered in `apps/www/mdx-components.tsx`. No import.
 
-## References (required)
+### Callout
 
-Every new post ends with `<References />`. It is registered in `mdx-components.tsx`. No import needed.
+```mdx
+<Callout variant="warning" title="CAUTION">
+  Command or condition. Then the result.
+</Callout>
+```
 
-Place it after the takeaway:
+- `variant`: `default` | `info` | `warning`
+- `title`: short label. A STE `WARNING` or `CAUTION` uses this prop
+- `children`: the body
+- `icon`: optional React node
+- `className`: optional
+
+### Terminal
+
+One shell command, with copy.
+
+```mdx
+<Terminal command="gh stack sync --prune" title="Terminal" />
+```
+
+- `command`: required
+- `title`: optional, default `Terminal`
+- `className`: optional
+
+A multi-line example stays in a fenced code block.
+
+### Table
+
+```mdx
+<Table
+  data={{
+    headers: ['Column', 'Column'],
+    rows: [
+      ['Cell', 'Cell'],
+    ],
+  }}
+/>
+```
+
+### References
+
+Every new post ends with `<References />`, after the takeaway.
 
 ```mdx
 <References
@@ -85,17 +117,16 @@ Place it after the takeaway:
 />
 ```
 
-Rules:
-
-- Each item is `{ author, url }`. Author is a person or org name. URL is the blog post or YouTube video.
-- Numbered list renders as `Author - url`. Keep author names short and real.
+- Each item is `{ author, url }`. Author is a person or org. URL is the source.
+- The list renders as `Author - url`.
 - Include every source the post draws on. Talks, essays, docs, videos.
-- If there are no external sources, still add the block with an empty array only when the post is pure original writing with zero citations. Prefer finding the real sources.
-- Do not invent authors or URLs. Ask if sources are unclear.
+- An empty `items` array renders nothing. Use that only when the post cites nothing.
+- Do not invent authors or URLs. Ask when a source is unclear.
+- `title` defaults to `References`. `className` is optional.
 
 ## Before you write
 
-1. Read `apps/www/src/content/posts/handbook.mdx` for tone.
-2. Skim one nearby post in `apps/www/src/content/posts/` for MDX patterns (`Terminal`, `References`, spacing, links).
-3. Draft the body first. Iterate the title last so it makes a clear promise.
-4. Collect source authors and URLs before shipping. Wire them into `<References />` at the end.
+1. Read `/asd-ste100` and follow it for the body.
+2. Skim one post in `apps/www/src/content/posts/` for `Callout`, `Terminal`, and `References`.
+3. Draft the body first. Set the title last so it states the result.
+4. Put real sources in `<References />` before you ship.
