@@ -1,5 +1,5 @@
 // source.config.ts
-import { defineCollections } from "fumadocs-mdx/config";
+import { defineCollections, defineConfig } from "fumadocs-mdx/config";
 import { z } from "zod";
 var blogPosts = defineCollections({
   type: "doc",
@@ -16,6 +16,31 @@ var blogPosts = defineCollections({
     full: z.boolean().optional()
   })
 });
+var source_config_default = defineConfig({
+  mdxOptions: {
+    rehypeCodeOptions: {
+      themes: {
+        light: "github-light",
+        dark: "github-dark"
+      },
+      transformers: [
+        {
+          name: "rehype-code:language",
+          pre(node) {
+            const lang = this.options.lang;
+            if (lang) node.properties["data-language"] = lang;
+            const meta = this.options.meta;
+            const raw = meta && typeof meta === "object" && "__raw" in meta && typeof meta.__raw === "string" ? meta.__raw : "";
+            const wrap = raw.match(/(?:^|\s)wrap=(?:"([^"]+)"|'([^']+)'|(\S+))/);
+            const value = wrap?.[1] ?? wrap?.[2] ?? wrap?.[3];
+            if (value) node.properties["data-wrap"] = value;
+          }
+        }
+      ]
+    }
+  }
+});
 export {
-  blogPosts
+  blogPosts,
+  source_config_default as default
 };

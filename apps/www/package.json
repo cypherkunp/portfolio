@@ -61,7 +61,6 @@
     "reading-duration": "^1.1.2",
     "server-only": "^0.0.1",
     "sharp": "^0.34.5",
-    "sugar-high": "^0.9.5",
     "tailwindcss": "^4.2.1",
     "zod": "^4.3.6"
   }

@@ -1,14 +1,13 @@
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Callout } from '@repo/ui/components/callout';
+import { CodeBlock } from '@repo/ui/components/code-block';
 import { CodeBlockCommand } from '@repo/ui/components/code-block-command';
-import { CopyButton } from '@repo/ui/components/copy-button';
 import { References } from '@repo/ui/components/references';
 import { Terminal } from '@repo/ui/components/terminal';
 import UnderlineText from '@repo/ui/components/underline-text';
 import { cn } from '@repo/ui/lib/utils';
-import { highlight } from 'sugar-high';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
@@ -25,15 +24,11 @@ function parseImageDimension(value: string | number | undefined): number | undef
   return Number.isFinite(n) && n > 0 ? n : undefined;
 }
 
-function getCodeText(children: ReactNode): string {
-  if (typeof children === 'string') return children;
-  if (Array.isArray(children)) {
-    return children
-      .map(child => (typeof child === 'string' ? child : String(child ?? '')))
-      .join('');
-  }
-  if (children == null) return '';
-  return String(children);
+function wrapAtFromFence(value: string | undefined): number | false | undefined {
+  if (value === undefined) return undefined;
+  if (value === 'off' || value === 'none') return false;
+  const width = Number(value);
+  return Number.isFinite(width) ? width : undefined;
 }
 
 const headingClass = {
@@ -139,22 +134,36 @@ const components = {
   hr: ({ className, ...props }: ComponentPropsWithoutRef<'hr'>) => (
     <hr className={cn('border-border my-8', className)} {...props} />
   ),
-  pre: ({ className, children, ...props }: ComponentPropsWithoutRef<'pre'>) => (
-    <pre
-      className={cn(
-        'border-border my-6 overflow-x-auto rounded-lg border bg-neutral-950 p-4 text-sm text-neutral-100',
-        'dark:border-neutral-800',
-        className,
-      )}
-      {...props}
+  pre: ({
+    className,
+    style,
+    children,
+    icon,
+    title,
+    tabIndex,
+    ...props
+  }: ComponentPropsWithoutRef<'pre'> & {
+    icon?: ReactNode;
+    title?: string;
+    'data-language'?: string;
+    'data-wrap'?: string;
+  }) => (
+    <CodeBlock
+      className={className}
+      style={style as CSSProperties | undefined}
+      icon={icon}
+      title={typeof title === 'string' ? title : undefined}
+      language={props['data-language']}
+      wrapAt={wrapAtFromFence(props['data-wrap'])}
+      tabIndex={tabIndex}
     >
       {children}
-    </pre>
+    </CodeBlock>
   ),
   code: ({
     className,
-    __raw__,
-    __src__,
+    __raw__: _raw,
+    __src__: _src,
     __npm__,
     __yarn__,
     __pnpm__,
@@ -181,28 +190,6 @@ const components = {
       );
     }
 
-    const isCodeBlock = className?.includes('language-');
-    if (isCodeBlock) {
-      const trimmedContent = getCodeText(children).trim();
-      if (!trimmedContent) return null;
-
-      try {
-        const highlightedCode = highlight(trimmedContent);
-        return (
-          <code
-            className={cn('relative font-mono text-sm text-neutral-100', className)}
-            dangerouslySetInnerHTML={{ __html: highlightedCode }}
-          />
-        );
-      } catch {
-        return (
-          <code className={cn('relative font-mono text-sm text-neutral-100', className)}>
-            {trimmedContent}
-          </code>
-        );
-      }
-    }
-
     if (typeof children === 'string') {
       return (
         <code
@@ -218,12 +205,9 @@ const components = {
     }
 
     return (
-      <>
-        {__raw__ ? <CopyButton value={__raw__} src={__src__} /> : null}
-        <code className={cn('font-mono text-sm', className)} {...props}>
-          {children}
-        </code>
-      </>
+      <code className={cn('font-mono text-sm', className)} {...props}>
+        {children}
+      </code>
     );
   },
   table: ({ className, ...props }: ComponentPropsWithoutRef<'table'>) => (

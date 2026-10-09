@@ -279,3 +279,38 @@
     transform: translateY(0);
   }
 }
+
+/* Shiki dual theme. rehype-code sets --shiki-light / --shiki-dark on each token. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
+/* GitHub dark's #24292e sits too close to the page. One step down. */
+.dark .shiki {
+  --shiki-dark-bg: #161b22 !important;
+}
+
+.shiki.wrap-code,
+.shiki.wrap-code code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.shiki.wrap-code code {
+  display: block;
+  max-width: min(100%, calc(var(--code-wrap) * 1ch));
+}

@@ -150,7 +150,7 @@ Authoring:
 - One H1. Then `##` for sections, `###` for subsections.
 - Blank line before and after headings, lists, code fences, and blockquotes.
 - `-` for bullets. `1.` for ordered lists. Nest with 2 spaces.
-- `` `inline` ``. Multi-line code in a fence with a language tag.
+- `` `inline` ``. Multi-line code in a fence with a language tag. A fence wraps at 100 characters. Set another width on the info string: `` ```tsx wrap=72 ``. `` ```tsx wrap=off `` keeps each line on one row.
 - `[label](https://example.com)`. A bare URL is the link text only when no label fits.
 - `>` only for a real quote.
 - Bold and italic inside a sentence.
