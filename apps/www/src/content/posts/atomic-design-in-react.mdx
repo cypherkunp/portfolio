@@ -1,0 +1,521 @@
+---
+title: 'The Five Stages of Atomic Design'
+summary: 'Name each React component by its atomic stage, and put real content plus shared state on the page.'
+publishedOn: '09-10-2026'
+version: '1'
+tags:
+  - 'react'
+  - 'design'
+---
+
+# The Five Stages of Atomic Design
+
+Brad Frost published the essay [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) on 10 June 2013. The [2016 book](https://atomicdesign.bradfrost.com/chapter-2/) keeps the same five stages. The stages are atoms, molecules, organisms, templates, and pages.
+
+You use the five stages at the same time. A stage names one part of the screen. In React, the part is a component.
+
+You'll record the stage in the story title. You'll see the stage on the screen. A folder name can stay plain.
+
+## The five stages
+
+Atomic design is a method for an interface design system. Small components sit inside larger components. The screen is the largest component.
+
+The first three names come from chemistry. Frost drops the chemistry names at the template. A template and a page use words your team already says.
+
+<Table
+  data={{
+    headers: ['Stage', 'What it holds', 'Catalog part'],
+    rows: [
+      ['Atom', 'One element, plus a token', 'Button, label, input'],
+      ['Molecule', 'A few atoms with one job', 'Search form, product card'],
+      ['Organism', 'One section of the screen', 'Header, product grid'],
+      ['Template', 'Layout and content structure', 'Catalog template'],
+      ['Page', 'Real content and variation', 'Catalog page'],
+    ],
+  }}
+/>
+
+This tree is one catalog screen. Read the tree from the page down to the button.
+
+```text
+CatalogPage                     page
+└── CatalogTemplate             template
+    ├── SiteHeader              organism
+    │   ├── Logo                atom
+    │   ├── PrimaryNav          molecule
+    │   └── SearchForm          molecule
+    │       ├── Label           atom
+    │       ├── Input           atom
+    │       └── Button          atom
+    └── ProductGrid             organism
+        └── ProductCard         molecule
+```
+
+The book applies the five stages to the Instagram app. Icons and short text are atoms. The row of photo actions is a molecule. The photo block is an organism.
+
+The feed layout is a template. The feed with real photos is a page. The method applies to any user interface. React is one way to build the tree.
+
+## Design tokens sit under the atom
+
+> In the world of UI, design tokens are subatomic particles.
+
+Frost wrote the line in [2019](https://bradfrost.com/blog/post/extending-atomic-design/). He repeated the line on [14 April 2025](https://bradfrost.com/blog/post/design-tokens-atomic-design-%E2%9D%A4%EF%B8%8F/). A token stores one value, such as a color, a font, or a space.
+
+The token `color-brand-blue` has no job alone. You apply the token to a button. The button is the atom.
+
+Jina and the team for Lightning Design System used tokens to share color, type, and space across platforms. On the web, a CSS variable is a common form of the token.
+
+The 2013 essay groups color palettes with the atoms. The 2019 post moves those values under the atom, as tokens.
+
+## Atoms
+
+An atom is the smallest component that still has a job. Frost's atoms are a label, an input, and a button. In a pattern library, the atoms also show the base styles.
+
+In React, `Button` is an atom component. A label or an input can stay an element inside the molecule. Promote the element to a component when a second molecule needs it.
+
+An atom accepts props. An atom renders an element. An atom reads a token.
+
+```tsx
+import type { ReactNode } from 'react';
+
+type ButtonProps = {
+  children: ReactNode;
+  type?: 'button' | 'submit';
+  onClick?: () => void;
+};
+
+export function Button({ children, type = 'button', onClick }: ButtonProps) {
+  return (
+    <button className="button" type={type} onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+```
+
+The token file owns the hex value. The button reads the token name.
+
+```css
+.button {
+  background: var(--color-brand-blue);
+  color: var(--color-text-on-blue);
+}
+```
+
+## Molecules
+
+A molecule is a small group of atoms with one job. Frost's search form joins a label, an input, and a button. The label names the input. The button submits the form.
+
+This cut follows the single responsibility principle. One component does one job. A test covers the one job. A second screen can reuse the form.
+
+```tsx
+import { Button } from './button';
+
+type SearchFormProps = {
+  query: string;
+  onQueryChange: (query: string) => void;
+  onSubmit: () => void;
+};
+
+export function SearchForm({ query, onQueryChange, onSubmit }: SearchFormProps) {
+  return (
+    <form
+      onSubmit={event => {
+        event.preventDefault();
+        onSubmit();
+      }}
+    >
+      <label htmlFor="catalog-search">Search the catalog</label>
+      <input
+        id="catalog-search"
+        value={query}
+        onChange={event => onQueryChange(event.target.value)}
+      />
+      <Button type="submit">Search</Button>
+    </form>
+  );
+}
+```
+
+The page owns the product list. The form sends the query text up when you submit.
+
+## Organisms
+
+An organism is one section of the screen. The organism contains molecules, atoms, or other organisms. Frost's header contains a logo, primary navigation, and a search form. Frost's product grid repeats one product card.
+
+A teammate can review an organism. The organism already looks like a piece of the screen.
+
+```tsx
+import { SearchForm } from './search-form';
+
+type SiteHeaderProps = {
+  query: string;
+  onQueryChange: (query: string) => void;
+  onSubmit: () => void;
+};
+
+export function SiteHeader({ query, onQueryChange, onSubmit }: SiteHeaderProps) {
+  return (
+    <header>
+      <a href="/">Northwind</a>
+      <nav aria-label="Primary">
+        <a href="/catalog">Catalog</a>
+        <a href="/cart">Cart</a>
+      </nav>
+      <SearchForm query={query} onQueryChange={onQueryChange} onSubmit={onSubmit} />
+    </header>
+  );
+}
+```
+
+The tree names `Logo` and `PrimaryNav`. This first version keeps both inside `SiteHeader`. Extract a component when a second screen needs the logo or the nav on its own.
+
+```tsx
+import { Button } from './button';
+
+export type Product = {
+  id: string;
+  name: string;
+  price: string;
+  imageUrl: string;
+};
+
+type ProductCardProps = {
+  product: Product;
+  canEdit?: boolean;
+  onEdit?: (id: string) => void;
+};
+
+export function ProductCard({ product, canEdit = false, onEdit }: ProductCardProps) {
+  return (
+    <article>
+      <img alt={product.name} height={320} src={product.imageUrl} width={320} />
+      <p className="product-name">{product.name}</p>
+      <p>{product.price}</p>
+      {canEdit ? (
+        <Button type="button" onClick={() => onEdit?.(product.id)}>
+          Edit
+        </Button>
+      ) : null}
+    </article>
+  );
+}
+```
+
+```css
+.product-name {
+  line-height: 1.25rem;
+  max-height: 2.5rem;
+  overflow: hidden;
+}
+```
+
+The image is 320 by 320. The name block is two lines tall. A name of 340 characters stays inside the card.
+
+```tsx
+import { ProductCard, type Product } from './product-card';
+
+type ProductGridProps = {
+  products: Product[];
+  canEdit?: boolean;
+  onEdit?: (id: string) => void;
+};
+
+export function ProductGrid({ products, canEdit = false, onEdit }: ProductGridProps) {
+  return (
+    <ul>
+      {products.map(product => (
+        <li key={product.id}>
+          <ProductCard canEdit={canEdit} onEdit={onEdit} product={product} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+A header that fetches the user, the cart, and the search index has three jobs. Leave the header as composition. Put each fetch on the page.
+
+## Templates
+
+A template places organisms in a layout. The template shows the content structure. The page holds the final copy and the final photos.
+
+Mark Boulton's point, as Frost uses it, is the structure. You can lay out the screen before the final copy exists. You still name the image size and the heading length.
+
+```tsx
+import type { ReactNode } from 'react';
+
+type CatalogTemplateProps = {
+  header: ReactNode;
+  children: ReactNode;
+};
+
+export function CatalogTemplate({ header, children }: CatalogTemplateProps) {
+  return (
+    <>
+      {header}
+      <main>
+        <h1>Catalog</h1>
+        {children}
+      </main>
+    </>
+  );
+}
+```
+
+## Pages
+
+A page fills a template with real content. The shopper sees the page. The stakeholder reviews the page. You test the system on the page.
+
+Frost's page test uses real variation. Use a headline of 40 characters, then a headline of 340 characters. Use one cart item, then ten cart items. When the layout breaks, change the molecule, the organism, or the template.
+
+Use the same test on the catalog. Render one product, then ten products. Render a short name, then a name of 340 characters. Show an edit button for an admin. Show the price alone for a shopper.
+
+```tsx
+import { useState } from 'react';
+
+import { CatalogTemplate } from './catalog-template';
+import type { Product } from './product-card';
+import { ProductGrid } from './product-grid';
+import { SiteHeader } from './site-header';
+
+type CatalogPageProps = {
+  products: Product[];
+  canEdit?: boolean;
+  onEdit?: (id: string) => void;
+  startQuery?: string;
+};
+
+export function CatalogPage({
+  products,
+  canEdit = false,
+  onEdit,
+  startQuery = '',
+}: CatalogPageProps) {
+  const [query, setQuery] = useState(startQuery);
+  const [submittedQuery, setSubmittedQuery] = useState(startQuery);
+  const visible = products.filter(product =>
+    product.name.toLowerCase().includes(submittedQuery.toLowerCase()),
+  );
+
+  return (
+    <CatalogTemplate
+      header={
+        <SiteHeader
+          onQueryChange={setQuery}
+          onSubmit={() => setSubmittedQuery(query)}
+          query={query}
+        />
+      }
+    >
+      {visible.length === 0 ? (
+        <p>{submittedQuery ? `No products match ${submittedQuery}.` : 'The catalog is empty.'}</p>
+      ) : (
+        <ProductGrid canEdit={canEdit} onEdit={onEdit} products={visible} />
+      )}
+    </CatalogTemplate>
+  );
+}
+```
+
+The route loads the products. The route passes the products into `CatalogPage`. The view stays free of the fetch, so a story can pass fixtures.
+
+```tsx
+import { getProducts } from '../lib/catalog';
+import { CatalogPage } from './catalog-page';
+
+export default async function Page() {
+  const products = await getProducts();
+  return <CatalogPage products={products} />;
+}
+```
+
+<Callout variant="warning" title="CAUTION">
+  Do not fetch data in an atom, a molecule, or an organism. The fetch locks one response into the
+  component. The page then cannot render a second variation.
+</Callout>
+
+## Work on the part and the whole
+
+The five stages are a mental model. You build a component and the page in the same pass. You change the component after you see it on the page.
+
+Frost uses Frank Chimero's painter for this pass. The painter steps close to make a mark. The painter steps back to see the whole canvas. The close view is the component. The far view is the page with real content.
+
+React lets you start at the top of the tree or at the bottom. Start at the top for a small tree. Start at the bottom for a large tree. Either start ends at the same tree.
+
+## Put state in the common parent
+
+The React guide [Thinking in React](https://react.dev/learn/thinking-in-react) has five steps. Use the steps to place state on the tree.
+
+1. Break the mock into components, and give each component a stage.
+2. Build the static version with props and with no state.
+3. Find the minimal complete set of state.
+4. Put each piece of state in the closest common parent.
+5. Pass a callback down so a child can update the state.
+
+The catalog holds two pieces of state. The pieces are the input text and the submitted query. The search form writes both pieces. The product grid reads the submitted query. The page is the closest common parent, so the page holds both pieces.
+
+Define each component at the [top level of its file](https://react.dev/learn/your-first-component). A nested definition is slow, and it causes bugs.
+
+Keep a one-line label inside the product card. Extract a component when the label gains a second job, such as sort.
+
+## Record the stage in the story title
+
+Frost and Dave Olsen built Pattern Lab in 2013 to assemble the stages. On 21 January 2022, Frost showed the same assembly in [Storybook](https://bradfrost.com/blog/post/atomic-design-and-storybook/).
+
+Write the story when you build the component. Put the story file next to the component file. Start the title with the stage.
+
+```tsx
+export default {
+  title: 'Molecules/Catalog/SearchForm',
+  component: SearchForm,
+};
+```
+
+Frost's title is `Molecules/Messaging/Alert`. The catalog form uses the same shape.
+
+Pages stay out of the published library. Put the pages directory in `.storybook`. A page story can show one product, ten products, a long name, and an empty result. You can show each state before the API exists.
+
+```tsx
+import { CatalogPage } from '../../app/catalog/catalog-page';
+
+const chair = {
+  id: 'chair-oak',
+  name: 'Oak side chair',
+  price: '$240',
+  imageUrl: '/catalog/oak-side-chair.jpg',
+};
+
+const longName =
+  'Oak side chair with a woven seat, a steam-bent back, and a clear finish matched to the dining table';
+
+export default {
+  title: 'Pages/CatalogPage',
+  component: CatalogPage,
+};
+
+export const OneProduct = {
+  args: { products: [chair] },
+};
+
+export const TenProducts = {
+  args: {
+    products: Array.from({ length: 10 }, (_, index) => ({
+      ...chair,
+      id: `chair-${index + 1}`,
+      name: `Oak side chair ${index + 1}`,
+    })),
+  },
+};
+
+export const LongName = {
+  args: {
+    products: [{ ...chair, name: longName }],
+  },
+};
+
+export const EmptyResult = {
+  args: {
+    products: [chair],
+    startQuery: 'linen',
+  },
+};
+
+export const Admin = {
+  args: {
+    products: [chair],
+    canEdit: true,
+  },
+};
+```
+
+## Keep the import direction
+
+Keep this import direction:
+
+- An atom imports a token and renders an element.
+- A molecule imports atoms.
+- An organism imports molecules, atoms, and other organisms.
+- A template imports organisms.
+- A page imports a template and passes data.
+
+<Callout variant="warning" title="CAUTION">
+  Do not import a molecule from an atom. The atom then depends on a larger part. The hierarchy
+  breaks.
+</Callout>
+
+```text
+ui/button.tsx
+ui/button.stories.tsx
+ui/search-form.tsx
+ui/search-form.stories.tsx
+ui/site-header.tsx
+ui/product-card.tsx
+ui/product-grid.tsx
+app/catalog/catalog-template.tsx
+app/catalog/catalog-page.tsx
+app/catalog/page.tsx
+.storybook/pages/catalog-page.stories.tsx
+```
+
+Put a shared component in the UI package. Keep a one-screen component beside the route. Move the component when a second screen needs it. The stage doesn't pick the folder.
+
+## Apply the stages to one catalog
+
+1. Draw a box around each part of the catalog mock.
+2. Name each box as an atom, a molecule, an organism, a template, or a page.
+3. Build the static components.
+4. Pass data with props.
+5. Put the input text and the submitted query in the page.
+6. Pass the text, the query, and the callbacks down the tree.
+7. Add a story for one product, ten products, a long name, and an empty result.
+8. If a product name breaks the card, change the card.
+
+## Keep the hierarchy, and change the names
+
+The hierarchy matters more than the chemistry words. The book records the GE names Principles, Basics, Components, Templates, Features, and Applications. Jeff Crossman changed the names. The chemistry words confused his colleagues.
+
+The 2019 post keeps the same rule. Pick names the team can say. Keep a small component inside a larger component. Keep the screen at the top.
+
+Motion, a user flow, a persona, a locale, and an A/B test sit beside the five stages. The design system is the umbrella. Atomic design is the component hierarchy under the umbrella.
+
+## Takeaway
+
+Name every component on the screen with a stage. Put each design token under an atom. Put real content, variation, and shared state on the page. Write the story while you build the component.
+
+<References
+  items={[
+    {
+      author: 'Brad Frost',
+      url: 'https://bradfrost.com/blog/post/atomic-web-design/',
+    },
+    {
+      author: 'Brad Frost',
+      url: 'https://atomicdesign.bradfrost.com/chapter-2/',
+    },
+    {
+      author: 'Brad Frost',
+      url: 'https://github.com/bradfrost/atomic-design/blob/master/legal.md',
+    },
+    {
+      author: 'Brad Frost',
+      url: 'https://bradfrost.com/blog/post/extending-atomic-design/',
+    },
+    {
+      author: 'Brad Frost',
+      url: 'https://bradfrost.com/blog/post/design-tokens-atomic-design-%E2%9D%A4%EF%B8%8F/',
+    },
+    {
+      author: 'Brad Frost',
+      url: 'https://bradfrost.com/blog/post/atomic-design-and-storybook/',
+    },
+    {
+      author: 'React',
+      url: 'https://react.dev/learn/thinking-in-react',
+    },
+    {
+      author: 'React',
+      url: 'https://react.dev/learn/your-first-component',
+    },
+  ]}
+/>
