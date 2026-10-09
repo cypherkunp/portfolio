@@ -18,6 +18,8 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "ui:add": "pnpm --filter @repo/ui ui:add",
+    "storybook": "pnpm --filter @repo/ui storybook",
+    "build-storybook": "pnpm --filter @repo/ui build-storybook",
     "prepare": "husky"
   },
   "dependencies": {

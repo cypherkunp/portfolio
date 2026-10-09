@@ -12,6 +12,8 @@
     "clean": "rm -rf .turbo node_modules",
     "test": "vitest run",
     "test:watch": "vitest",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "ui:add": "pnpx shadcn@latest add"
   },
   "dependencies": {
@@ -67,6 +69,10 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "10.6.1",
+    "@storybook/addon-docs": "10.6.1",
+    "@storybook/react-vite": "10.6.1",
+    "@tailwindcss/vite": "4.3.3",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
@@ -79,6 +85,7 @@
     "next": "^16.1.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "storybook": "10.6.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.6",
     "vite-tsconfig-paths": "^6.1.1",

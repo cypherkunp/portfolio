@@ -56,3 +56,12 @@ pnpm ui:add <component>
 ```sh
 pnpm --filter @repo/ui test
 ```
+
+## Storybook
+
+Stories live in `src/stories`, one file per reusable component. The preview loads the design-system stylesheet, defaults to the dark theme, and mocks `next/link`, `next/image`, `next/navigation`, and `next/font`.
+
+```sh
+pnpm storybook
+pnpm build-storybook
+```
