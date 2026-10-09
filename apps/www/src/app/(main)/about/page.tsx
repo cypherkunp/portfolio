@@ -45,7 +45,7 @@ export default function Page() {
           {t('summary')
             .split('. ')
             .map((sentence, index) => (
-              <li key={index} className="text-sm text-pretty">
+              <li key={index} className="text-base leading-relaxed text-pretty">
                 {sentence}
               </li>
             ))}
@@ -60,7 +60,7 @@ export default function Page() {
             <Card key={work.company} className="mb-10 space-y-2 border-none !bg-neutral-950">
               <CardHeader className="mb-8 !p-0">
                 <div className="flex flex-col items-start justify-start text-base md:flex-row md:items-center md:justify-between">
-                  <h3 className="text-md inline-flex items-center justify-center gap-x-1 leading-none font-normal">
+                  <h3 className="inline-flex items-center justify-center gap-x-1 text-base leading-none font-normal">
                     <a className="hover:underline" href={work.link}>
                       {work.company}
                     </a>
@@ -68,7 +68,7 @@ export default function Page() {
                     <RenderIf condition={!!work.badges}>
                       <span className="inline-flex gap-x-1">
                         {work.badges?.map((badge: string) => (
-                          <Badge variant="secondary" className="align-middle text-xs" key={badge}>
+                          <Badge variant="secondary" className="align-middle text-base" key={badge}>
                             {badge}
                           </Badge>
                         ))}
@@ -80,9 +80,9 @@ export default function Page() {
                   </div>
                 </div>
 
-                <p className="text-muted-foreground font-mono text-sm leading-none">{work.title}</p>
+                <p className="text-muted-foreground text-base leading-relaxed">{work.title}</p>
               </CardHeader>
-              <CardContent className="!p-0 text-sm">{work.description}</CardContent>
+              <CardContent className="!p-0 text-base leading-relaxed">{work.description}</CardContent>
             </Card>
           );
         })}
@@ -99,7 +99,7 @@ export default function Page() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="!p-0 text-xs">{education.degree}</CardContent>
+              <CardContent className="!p-0 text-base leading-relaxed">{education.degree}</CardContent>
             </Card>
           );
         })}
@@ -110,7 +110,7 @@ export default function Page() {
             return (
               <Badge
                 variant="outline"
-                className="rounded-xl border-neutral-500 px-3 py-1 font-normal text-white"
+                className="rounded-xl border-neutral-500 px-3 py-1 text-base font-normal text-white"
                 key={skill}
               >
                 {skill}
