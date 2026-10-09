@@ -1,0 +1,157 @@
+---
+title: 'Check out two branches at once with git worktrees'
+summary: 'Add a second folder for a second branch, then open a pull request from that folder.'
+publishedOn: '09-10-2026'
+version: '1'
+tags:
+  - 'git'
+  - 'github'
+---
+
+# Check out two branches at once with git worktrees
+
+A normal checkout holds one branch. You switch branches, and Git replaces the files in that folder. A second task in that folder then edits the wrong branch.
+
+A git worktree is another folder for the same repository. You check out a second branch there. The first folder stays on its branch. Both folders share one commit history.
+
+GitHub stores the branch and the pull request. The worktree stays on your machine. You push from the worktree folder.
+
+## What each folder holds
+
+The clone is the main worktree. `git worktree add` creates a linked worktree.
+
+A linked worktree gets its own files, its own index, and its own `HEAD`. A commit in one folder shows up in the other folder.
+
+Each new folder starts with tracked files only. Copy `.env` into it. Install dependencies there. pnpm links the second install from its store on the machine.
+
+Git allows one branch in one worktree. A second checkout fails:
+
+```text
+fatal: 'feat/billing-page' is already used by worktree at '/src/billing-page'
+```
+
+Stay on `main` in the clone. Give the new folder a new branch with `-b`. A command without `-b` checks out the branch you name. Git refuses when that branch is already checked out.
+
+## Commands
+
+Create the folder and the branch. The last argument is the start commit.
+
+```bash
+git worktree add -b fix/login-timeout ../login-fix main
+```
+
+Git creates `../login-fix` and checks out `fix/login-timeout` there. Put the folder next to the clone. A path inside the clone shows up as untracked files.
+
+Check out a branch that already exists:
+
+<Terminal command="git worktree add ../login-fix fix/login-timeout" />
+
+List the worktrees. The first line is the main worktree.
+
+<Terminal command="git worktree list" />
+
+```text
+/src/web            abc1234 [main]
+/src/billing-page   def5678 [feat/billing-page]
+/src/login-fix      9012abc [fix/login-timeout]
+```
+
+Remove a clean worktree. The command deletes the folder. The branch stays.
+
+<Terminal command="git worktree remove ../login-fix" />
+
+Git refuses when the folder has changes or untracked files. Commit first. `--force` deletes uncommitted files. A worktree with submodules also needs `--force`.
+
+If you delete the folder outside Git, prune the record from the main worktree:
+
+<Terminal command="git worktree prune" />
+
+If Git says the worktree is locked, unlock it, then remove it.
+
+```bash
+git worktree unlock ../login-fix
+git worktree remove ../login-fix
+```
+
+<Callout variant="warning" title="CAUTION">
+  Push the branch before you remove the worktree. `git worktree remove --force` deletes uncommitted
+  files. The branch stays in the repository.
+</Callout>
+
+## Name the branch
+
+A feature is `feat/slug`. A bug fix is `fix/slug`. The slug is lowercase, with hyphens. The full rules are in [Name branches like commits](/posts/branch-naming-conventions).
+
+Read the name inside the worktree before the first push.
+
+<Terminal command="git branch --show-current" />
+
+Rename the current branch when the name is wrong:
+
+<Terminal command="git branch -m feat/billing-page" />
+
+## Two tasks, two folders
+
+Give each task a different set of files. The folders stay separate. A merge still conflicts when both branches edit the same lines.
+
+From the main checkout:
+
+```bash
+git fetch origin
+git worktree add -b feat/billing-page ../billing-page origin/main
+git worktree add -b fix/login-timeout ../login-fix origin/main
+```
+
+The main checkout in this example is `web`. From each new folder:
+
+```bash
+cp ../web/.env .env
+pnpm install
+```
+
+Port 3000 belongs to one app. Start the other on port 3001.
+
+<Terminal command="pnpm exec next dev --port 3001" title="Second dev server" />
+
+Open `http://localhost:3000` for one app. Open `http://localhost:3001` for the other.
+
+Start one agent in each folder. Tell it the branch name and the files it may edit. Then run `git worktree list` and confirm the names.
+
+## Open the pull request
+
+Work inside the folder that holds the branch.
+
+```bash
+git status -sb
+git diff
+git push -u origin HEAD
+gh pr create --base main \
+  --title "Fix the login timeout" \
+  --body "Stop the login request after 10 seconds and show an error."
+```
+
+Read the file list on GitHub. Each pull request contains the files for its own task.
+
+Merge on GitHub. Then remove the folder and the local branch:
+
+```bash
+git worktree remove ../login-fix
+git branch -d fix/login-timeout
+```
+
+`git branch -d` refuses a branch that is not merged. Stop there. Those commits belong on the remote before you use `-D`.
+
+## Takeaway
+
+Keep the main checkout on `main`. Put each task on its own branch, in its own folder.
+
+Copy `.env` into the new folder. Install dependencies there. Give the dev server its own port. Read `git worktree list` before you push. Open one pull request per folder. Remove the folder after the pull request merges.
+
+<References
+  items={[
+    {
+      author: 'Git',
+      url: 'https://git-scm.com/docs/git-worktree',
+    },
+  ]}
+/>
