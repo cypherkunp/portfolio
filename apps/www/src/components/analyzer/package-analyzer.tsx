@@ -1,12 +1,12 @@
 'use client';
 
+import { Alert, AlertDescription, AlertTitle } from '@repo/ui/components/alert';
+import { Button } from '@repo/ui/components/button';
+import { Progress } from '@repo/ui/components/progress';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
 import { usePackageAnalyzer } from '@/hooks/use-package-analyzer';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 
 import { DependencyTable } from './dependency-table';
 import { MetadataDisplay } from './metadata-display';

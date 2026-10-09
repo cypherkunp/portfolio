@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { SparklesCore } from '@repo/ui/components/sparkles';
 import { AnimatePresence, motion } from 'motion/react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
+import { SparklesCore } from './sparkles';
 
 export const Cover = ({
   children,

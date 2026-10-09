@@ -3,10 +3,8 @@
 import type React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-import { cn } from '@/lib/utils';
-
-import IconArrow from './icon-arrow';
+import IconArrow from '@repo/ui/components/icon-arrow';
+import { cn } from '@repo/ui/lib/utils';
 
 export interface NavItem {
   href: string;

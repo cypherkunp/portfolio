@@ -7,9 +7,9 @@ Red, then green, one seam at a time. Tests live at public interfaces; expected v
 
 ## Runner
 
-- Vitest + React Testing Library in `apps/www`. Colocate as `*.test.ts(x)` next to the module.
+- Vitest + React Testing Library in `apps/www` and `packages/ui`. Colocate as `*.test.ts(x)` next to the module.
 - Playwright e2e in `apps/www/e2e/*.spec.ts`. Chromium only. `webServer` boots `pnpm dev` on :3333 (`reuseExistingServer` locally).
-- `pnpm test` (unit). `pnpm test:e2e` (Playwright). Both go through Turborepo; unchanged inputs are a cache hit and skip. Force with `pnpm test -- --force` / `pnpm test:e2e -- --force`. Watch: `pnpm --filter www test:watch`.
+- `pnpm test` (unit). `pnpm test:e2e` (Playwright). Both go through Turborepo; unchanged inputs are a cache hit and skip. Force with `pnpm test -- --force` / `pnpm test:e2e -- --force`. Watch: `pnpm --filter www test:watch` / `pnpm --filter @repo/ui test:watch`.
 - First machine: `pnpm --filter www playwright:install`.
 - CI: `.github/workflows/test.yaml` runs unit and e2e jobs on push/PR to `main`.
 - Pre-push: `.husky/pre-push` runs `pnpm lint`, `pnpm test`, `pnpm test:e2e`.
@@ -21,7 +21,8 @@ Test these public APIs. Do not reach into unexported helpers.
 
 | Seam | Module |
 | --- | --- |
-| `cn`, `formatTime` | `@/lib/utils` |
+| `cn` | `@repo/ui/lib/utils` |
+| `formatTime` | `@/lib/utils` |
 | `hostnameOf`, `getCollections(file)`, `getCollection(file, id)`, `fillSnapshots` | `@/lib/bookmark-store` |
 | `getCollections()`, `getCollection(id)` | `@/lib/bookmarks` (JSON-bound adapter) |
 | `isValidPackageName` | `@/lib/npm-registry` |
@@ -29,9 +30,10 @@ Test these public APIs. Do not reach into unexported helpers.
 | `getApp`, `getEnabledApps`, `getSitemapPaths`, `assertAppEnabled` | `@/lib/app-catalog` |
 | `BookmarkList`, `CollectionList` | bookmark catalog UI |
 | `InspirationGrid` | inspirations pinboard |
-| `Section` | layout heading/description |
+| `Section` | `@repo/ui/components/layout/section` |
+| `RenderIf`, `CopyButton` | `@repo/ui/components/*` |
 | `usePackageAnalyzer` | analyzer hook |
 
-E2E seams (Playwright, real browser): home identity + nav, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection, sitemap.xml when flags default on in development.
+E2E seams (Playwright, real browser): home identity + nav, design system tokens and canvas on `/`, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection, sitemap.xml when flags default on in development.
 
 Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`, Flags SDK (`flags/next`, `@flags-sdk/vercel`) and `next/navigation` `notFound` in App catalog tests. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.

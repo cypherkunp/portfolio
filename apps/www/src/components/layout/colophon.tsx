@@ -1,7 +1,6 @@
+import UnderlineText from '@repo/ui/components/underline-text';
+import { cn } from '@repo/ui/lib/utils';
 import { useTranslations } from 'next-intl';
-
-import { cn } from '@/lib/utils';
-import UnderlineText from '@/components/underline-text';
 
 export function Colophon({ className }: { className?: string }) {
   const t = useTranslations('Colophon');

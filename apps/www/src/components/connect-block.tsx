@@ -1,8 +1,7 @@
 import React from 'react';
+import ExternalLink from '@repo/ui/components/external-link';
+import { RenderIf } from '@repo/ui/components/render-if';
 import { useTranslations } from 'next-intl';
-
-import ExternalLink from './external-link';
-import { RenderIf } from './render-if';
 
 export default function ConnectBlock() {
   const t = useTranslations('Common');

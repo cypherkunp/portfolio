@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
+import { LinkPreview } from '@repo/ui/components/link-preview';
+import { RenderIf } from '@repo/ui/components/render-if';
+import UnderlineText from '@repo/ui/components/underline-text';
 import { useTranslations } from 'next-intl';
-
-import { LinkPreview } from '@/components/ui/link-preview';
-import { RenderIf } from '@/components/render-if';
-import UnderlineText from '@/components/underline-text';
 
 interface Company {
   name: string;

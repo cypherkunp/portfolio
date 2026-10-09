@@ -21,7 +21,7 @@ interface AppEntry extends AppListing {
   flag: () => Promise<boolean>;
 }
 
-const ALWAYS_ON_PATHS = ['/', '/about'] as const;
+const ALWAYS_ON_PATHS = ['/', '/about', '/posts'] as const;
 
 const apps: Record<AppId, AppEntry> = {
   musicPlayer: {

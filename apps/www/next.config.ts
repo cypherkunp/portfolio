@@ -16,13 +16,23 @@ const nextConfig: NextConfig = {
     { source: '/connect', destination: 'https://devvrat.uk', permanent: true },
     { source: '/contacts', destination: 'https://devvrat.uk', permanent: true },
   ],
+  headers: async () => [
+    {
+      source: '/:path*',
+      headers: [
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'X-Frame-Options', value: 'DENY' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      ],
+    },
+  ],
   experimental: {
     viewTransition: true,
   },
   outputFileTracingIncludes: {
     '/photos': ['./public/photos/**/*'],
   },
-  transpilePackages: [],
+  transpilePackages: ['@repo/ui'],
   serverExternalPackages: ['exifr'],
   images: {
     formats: ['image/webp'],

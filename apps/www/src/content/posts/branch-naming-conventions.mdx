@@ -1,0 +1,106 @@
+---
+title: 'Name branches like commits'
+summary: 'The branch prefix is the commit type. Put the issue id next when you have one. The description is short, lowercase, and split with hyphens. Keep the name at 50 characters or fewer.'
+publishedOn: '06-10-2026'
+version: '1'
+tags:
+  - 'git'
+---
+
+# Name branches like commits
+
+I name a branch the same way I name the commit. The prefix is a [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) type. If you have an issue id, put it in the name. If you don't, skip it.
+
+```text
+feat/123-add-new-residence-page
+```
+
+`feat` is the type. `123` is the issue id. `add-new-residence-page` is the description. That name is 31 characters.
+
+## Prefix
+
+The prefix is the type you will put on the commit. Conventional Commits requires `feat` for a new feature and `fix` for a bug fix. Other types are allowed. I use the types from commitlint's conventional config:
+
+- `feat`, a new feature
+- `fix`, a bug fix
+- `docs`, documentation only
+- `style`, formatting that does not change what the code does
+- `refactor`, a code change that is not a fix and not a feature
+- `perf`, a code change that makes the code faster
+- `test`, new tests, or a correction to existing tests
+- `build`, the build system or dependencies
+- `ci`, CI config and scripts
+- `chore`, a change that does not touch `src` or test files
+- `revert`, a revert of an earlier commit
+
+Use the short type from that list. A new feature is `feat`. A bug fix is `fix`. A hotfix is `fix`.
+
+## Issue id
+
+If you have an issue id, put it right after the prefix.
+
+```text
+feat/123-add-new-residence-page
+fix/456-login-validation
+refactor/789-migrate-to-next-14
+```
+
+If you don't have an issue id, skip it.
+
+```text
+feat/add-new-residence-page
+fix/login-validation
+refactor/migrate-to-next-14
+```
+
+The description does not repeat the type. The prefix already says `fix`.
+
+## Description
+
+The description is lowercase. A hyphen splits the words. The words state the change.
+
+```text
+refactor/789-migrate-to-next-14
+```
+
+## Length
+
+Keep the branch name at 50 characters or fewer.
+
+With an issue id:
+
+- `feat/123-add-new-residence-page` is 31 characters.
+- `fix/456-login-validation` is 24 characters.
+- `refactor/789-migrate-to-next-14` is 31 characters.
+
+With no issue id:
+
+- `feat/add-new-residence-page` is 27 characters.
+- `fix/login-validation` is 20 characters.
+- `refactor/migrate-to-next-14` is 27 characters.
+
+## Set the name
+
+1. Pick the commit type.
+2. If you have an issue id, put it after the type.
+3. If you don't have an issue id, skip it.
+4. Write a short description in lowercase, with a hyphen between the words.
+5. If the name is longer than 50 characters, cut words from the description.
+6. Use this pattern on every branch.
+
+## Takeaway
+
+The branch and the commit share one type. Put the issue id in the name when you have one. Skip it when you don't.
+
+<References
+  items={[
+    {
+      author: 'Conventional Commits',
+      url: 'https://www.conventionalcommits.org/en/v1.0.0/',
+    },
+    {
+      author: 'commitlint',
+      url: 'https://github.com/conventional-changelog/commitlint',
+    },
+  ]}
+/>

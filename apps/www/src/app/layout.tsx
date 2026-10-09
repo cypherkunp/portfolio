@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from 'next';
+import { ThemeProvider } from '@repo/ui/components/theme-provider';
+import { geistMono } from '@repo/ui/lib/fonts';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
 import { PORTFOLIO_BASE_URL } from '@/config/site-data';
-import { geistMono } from '@/lib/font';
 import {
   OG_HOME_IMAGE,
   SITE_DESCRIPTION,
@@ -14,7 +15,6 @@ import {
   THEME_COLOR,
   TWITTER_SITE,
 } from '@/lib/seo';
-import { ThemeProvider } from '@/components/theme-provider';
 
 import '@/styles/globals.css';
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(PORTFOLIO_BASE_URL),
   title: {
     default: 'Devvrat | Portfolio',
-    template: '%s',
+    template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -69,7 +69,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const messages = await getMessages();
 
   return (
-    <html lang="en" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
       <body className="bg-app-dots relative z-10 flex min-h-screen flex-col overflow-auto">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider

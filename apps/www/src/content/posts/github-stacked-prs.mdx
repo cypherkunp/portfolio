@@ -1,8 +1,8 @@
 ---
 title: 'GitHub stacked pull requests'
-summary: 'GitHub stacked PRs split a feature into dependent pull requests. Merge with gh stack merge. Never squash a layer with the green button.'
-publishedOn: '2026-09-19'
-version: '2'
+summary: 'A stack splits one feature into dependent pull requests. Merge with gh stack merge. Do not squash a pull request with the green "Merge" button.'
+publishedOn: '19-09-2026'
+version: '3'
 tags:
   - 'github'
   - 'git'
@@ -11,9 +11,9 @@ tags:
 
 # GitHub stacked pull requests
 
-Agents finish a feature in one sitting. You open one pull request. Reviewers get a wall of code. They skim. The PR sits.
+Agents finish a feature in one session. You open one pull request for that feature. That pull request contains the whole feature. Reviewers do not read all of the code. The pull request stays unmerged.
 
-GitHub stacked PRs split that wall into a chain. Same repository. Each PR targets the branch below it. Reviewers see one layer.
+A stack splits the feature into a chain of pull requests. All branches stay in the same repository. Each pull request uses the branch below it as its base. Reviewers then see the changes for one pull request.
 
 ## What a stack is
 
@@ -24,72 +24,126 @@ GitHub stacked PRs split that wall into a chain. Same repository. Each PR target
 main
 ```
 
-Bottom PR targets `main`. Each PR above targets the branch below. Schema first. API next. UI last.
+The figure shows one stack. The trunk is the base of the bottom pull request. In this figure, the trunk is main. Each pull request above the bottom pull request uses the branch below it as its base.
 
-If A depends on B, B lives in the same layer or a lower one. New branch when the concern changes, or when the current layer is already big enough to review.
+The bottom pull request contains the schema. The middle pull request contains the API. The top pull request contains the UI.
 
-Public preview. Same repository only. No forks.
+A concern is one subject of the work.
 
-## Create one
+1. If code in pull request A depends on code in pull request B, put B in the same pull request.
+2. If B is not in pull request A, put B in a lower pull request.
+3. When the concern changes, start a new branch.
+4. When the current pull request is large enough for one review, start a new branch.
 
-<Terminal command="gh extension install github/gh-stack" />
+Stacked pull requests are in public preview. The commands can change during public preview. All branches of a stack are in one repository. A stack does not include a fork. GitHub Desktop does not open a stack.
+
+## Create a stack
+
+1. If you do not have GitHub CLI 2.90.0 or a later version, install that version.
+2. If you do not have Git 2.36 or a later version, install that version.
+3. Run `gh auth login`.
+4. Run `gh extension install github/gh-stack`.
+5. Run `gh stack init feat/auth-layer`.
+6. Run `git add .`.
+7. Run `git commit -m "Add auth data model"`.
+8. Run `gh stack add feat/api-endpoints`.
+9. Run `git add .`.
+10. Run `git commit -m "Add auth API routes"`.
+11. Run `gh stack submit`.
 
 ```bash
+gh auth login
+gh extension install github/gh-stack
 gh stack init feat/auth-layer
-git add . && git commit -m "Add auth data model"
-
+git add .
+git commit -m "Add auth data model"
 gh stack add feat/api-endpoints
-git add . && git commit -m "Add auth API routes"
-
+git add .
+git commit -m "Add auth API routes"
 gh stack submit
 ```
 
-First PR targets `main`. The next one targets `feat/auth-layer`. Each diff stays small.
+The first pull request uses the trunk as its base. The next pull request uses branch feat/auth-layer as its base. Each pull request shows only the changes on its branch.
 
-Do not `git rebase` or `git push --force` stack branches. Use `gh stack rebase` and `gh stack push`.
+<Callout variant="warning" title="CAUTION">
+  Do not run `git rebase` on a stack branch. This command can break the stack. Do not run `git push --force` on a stack branch. This command can break the stack. Run `gh stack rebase`. Run `gh stack push`.
+</Callout>
 
-## Merge with gh stack merge
+## Merge the stack
 
-Stacks merge bottom-up. Use `gh stack merge`. Never `gh pr merge`. Never the green Merge button.
+A stack merges from the bottom pull request toward the top pull request. You cannot merge a middle pull request without the pull requests below it.
+
+1. Run `gh stack merge`.
+2. Do not run `gh pr merge`.
+3. Do not squash a pull request with the green "Merge" button.
 
 ```bash
-gh stack merge 35 --yes --squash   # remaining stack up through #35
-gh stack merge 23 --yes --squash   # #23 and every unmerged PR below it
+gh stack merge 35 --yes --squash
+gh stack merge 23 --yes --squash
 ```
 
-- Merge the top PR: the whole stack lands.
-- Merge a mid PR: that PR plus everything below. PRs above stay open and retarget `main`.
-- Atomic: if any PR in the set cannot merge, none do.
+`gh stack merge` with no number merges the current stack. A number that matches a stack merges that stack. A pull request number merges that pull request and every pull request below it. The two example commands follow this number rule.
 
-You cannot merge a middle PR on its own.
+When you merge the top pull request, the whole stack lands on the trunk. When you merge a middle pull request, that pull request lands on the trunk. Every pull request below that pull request also lands on the trunk. GitHub keeps the pull requests above that pull request. GitHub then sets the base of those pull requests to the trunk.
 
-After a partial merge, restack before you look at the next PR:
+The `gh stack merge` operation is all-or-nothing. If one pull request in the group cannot merge, no pull request in the group merges.
+
+A merge queue is available for a stack. GitHub adds the pull requests to the merge queue from the bottom toward the top. When the trunk uses a merge queue, `gh stack merge` does not use the `--squash` flag. The queue selects the merge method. The selected pull requests can land in more than one group. If one pull request leaves the merge queue, every pull request above it also leaves the queue.
+
+<Callout variant="warning" title="CAUTION">
+  If `gh stack merge` fails, do a check of the trunk before you run the command again. Pull requests below the failure can already be on the trunk.
+</Callout>
+
+After you merge with `gh stack merge`, GitHub rebases the next pull request onto the trunk. Your local branches can differ from the trunk after that rebase.
+
+1. Before you read the next pull request, run `gh stack sync --prune`.
 
 <Terminal command="gh stack sync --prune" />
 
-`sync` fetches trunk, skips the squash-merged layer, rebases the rest onto `main` with `--onto`, and force-with-lease pushes. Skip it and the next PR shows `CONFLICTING`.
+`gh stack sync --prune` fetches the trunk. The command skips each merged pull request. The command rebases the other branches onto the trunk with `--onto`. The command then pushes those branches with `--force-with-lease`. The `--prune` flag deletes the local branches for merged pull requests. If the local stack and the GitHub stack differ, `gh stack sync` stops before it pushes.
+
+If you do not run this command, the next pull request shows "CONFLICTING".
 
 ## The squash-replay conflict
 
-You squash-merge the bottom PR with a normal merge. GitHub writes a new commit on `main`. The original layer SHA is gone. GitHub retargets the next PR onto `main`. That PR still contains the original commits.
+If you squash the bottom pull request with the green "Merge" button, GitHub writes a new commit on the trunk. The original SHA of that pull request is gone. GitHub sets the base of the next pull request to the trunk. That pull request still contains the original commits. Git reports "added in both" for each file that both pull requests change. The intent of the two commits is the same.
 
-Git reports "added in both" on files both layers touched. Same intent, different SHAs. Not a real conflict.
+But the SHAs differ. This message is not a conflict in the file contents.
 
-Do not resolve that in the GitHub UI. You replay the merged layer. Run `gh stack sync --prune`.
+<Callout variant="warning" title="CAUTION">
+  Do not resolve this conflict in the GitHub UI. Run `gh stack sync --prune`. This command rebases the next pull request onto the trunk.
+</Callout>
 
-`gh stack merge` is the operation that drops the squashed commits and rebases the next PR onto trunk. A normal merge only retargets the base.
+`gh stack merge` drops the squashed commits from the next pull request. `gh stack merge` then rebases that pull request onto the trunk. The green "Merge" button only changes the base of the next pull request. The green "Merge" button does not drop the old commits.
 
-## Lock is a freeze, not protection
+## Lock branch stops a stack merge
 
-Keep the rules a multi-user trunk needs: required reviews, required status checks, linear history, conversation resolution, no force-push, no deleting the default branch. Those apply to every layer in the stack, not only the bottom PR. `gh stack merge` evaluates them when the merge runs. It cannot bypass them. Auto-merge is unsupported. Merge queues are: the stack enqueues in order.
+Keep these rules on the trunk:
 
-**Lock branch** (classic protection) and a ruleset **Restrict updates** rule freeze the ref. A single PR squash can still land. `gh stack merge` writes trunk through the async stack-merge API and fails with `Cannot change this locked branch`. A repo admin hits this too. Stack merge has no admin override.
+- Required reviews
+- Required status checks
+- A linear history
+- Conversation resolution
+- No force-push
+- No deletion of the default branch
 
-Use Lock for a release freeze or an incident. Lift it for the merge window, or wait. Do not squash layers with the green button as a workaround; you get the squash-replay conflict above.
+These rules apply to every pull request in the stack. `gh stack merge` applies the rules when you run the command. `gh stack merge` cannot ignore the rules. Auto-merge is not available for a stack.
 
-## Takeaway
+Lock branch is a classic protection rule. A ruleset rule with the name "Restrict updates" also stops an update to the branch ref. You can still squash one pull request onto a locked trunk. `gh stack merge` writes the trunk through the async stack-merge API. The command fails with "Cannot change this locked branch". A repository administrator gets the same error.
 
-Agents generate a lot of code. A stack gives each change a place to go. One concern, one PR. Merge with `gh stack merge`. After a partial merge, `gh stack sync --prune` before the next layer.
+`gh stack merge` has no administrator override.
+
+<Callout variant="warning" title="CAUTION">
+  Use Lock branch for a release freeze. Use Lock branch for an incident. Remove the lock before you merge. If you cannot remove the lock, wait. Do not squash a pull request with the green "Merge" button while the branch is locked. This action causes the squash-replay conflict.
+</Callout>
+
+## Result
+
+Agents generate a large amount of code. A stack gives each concern one pull request.
+
+1. Merge with `gh stack merge`.
+2. After you merge part of the stack, run `gh stack sync --prune` before you open the next pull request.
+3. Do not squash a pull request with the green "Merge" button.
 
 <References
   items={[
@@ -116,6 +170,10 @@ Agents generate a lot of code. A stack gives each change a place to go. One conc
     {
       author: 'GitHub',
       url: 'https://docs.github.com/en/copilot/tutorials/stack-ai-generated-code-in-pull-requests',
+    },
+    {
+      author: 'GitHub',
+      url: 'https://docs.github.com/en/pull-requests/reference/stacked-prs-cli-commands',
     },
   ]}
 />

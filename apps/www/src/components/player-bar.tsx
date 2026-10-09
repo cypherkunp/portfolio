@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { Button } from '@repo/ui/components/button';
+import { Slider } from '@repo/ui/components/slider';
 import {
   Laptop,
   LayoutList,
@@ -18,8 +20,6 @@ import {
 
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
 
 interface PlayerBarProps {
   currentSong: Song | null;

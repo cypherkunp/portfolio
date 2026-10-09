@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { formatDate, getTimeSortedPosts } from '@/lib/post.utils';
+import { formatDate } from '@/lib/format-date';
+import { getTimeSortedPosts } from '@/lib/post.utils';
 
 export default async function PostsBlock() {
   const allTimeSortedPosts = getTimeSortedPosts();
@@ -14,7 +15,7 @@ export default async function PostsBlock() {
       {allTimeSortedPosts.map(post => (
         <Link key={post.slug} className="mb-4 flex flex-col space-y-1" href={`/posts/${post.slug}`}>
           <div className="flex items-center gap-2">
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            <p className="shrink-0 text-sm text-neutral-600 tabular-nums dark:text-neutral-400">
               {formatDate(post.metadata.publishedOn, false)}
             </p>
             <p className="hover:decoration-tertiary tracking-tight text-neutral-900 hover:underline hover:underline-offset-8 dark:text-neutral-100">

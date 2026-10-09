@@ -97,6 +97,7 @@ export default tseslint.config(
       '**/build/**',
       '**/.turbo/**',
       '**/coverage/**',
+      '**/storybook-static/**',
       '**/.source/**',
       '**/next-env.d.ts',
       '**/tools/**',

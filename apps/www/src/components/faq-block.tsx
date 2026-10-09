@@ -1,7 +1,11 @@
 import React from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@repo/ui/components/accordion';
 import { useTranslations } from 'next-intl';
-
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 interface Faq {
   question: string;
@@ -16,10 +20,10 @@ export function FaqBlock() {
     <Accordion type="single" collapsible className="w-full">
       {faqData.map((faq, index) => (
         <AccordionItem key={index} value={`item-${index}`}>
-          <AccordionTrigger className="text-decoration-none text-left text-sm">
+          <AccordionTrigger className="text-decoration-none text-left text-base">
             {faq.question}
           </AccordionTrigger>
-          <AccordionContent>{faq.answer}</AccordionContent>
+          <AccordionContent className="text-base leading-relaxed">{faq.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>

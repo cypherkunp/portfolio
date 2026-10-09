@@ -2,11 +2,9 @@
 
 import Image from 'next/image';
 import ProfilePic from '@/images/profile.jpg';
+import { Cover } from '@repo/ui/components/cover';
+import { FollowerPointerCard } from '@repo/ui/components/following-pointer';
 import { useTranslations } from 'next-intl';
-
-import { FollowerPointerCard } from '@/components/ui/following-pointer';
-
-import { Cover } from './ui/cover';
 
 export default function InfoBlock() {
   const t = useTranslations();
@@ -43,7 +41,7 @@ const Pointer = ({ title, avatar }: { title: string; avatar: string }) => (
       src={avatar}
       height={20}
       width={20}
-      alt="thumbnail"
+      alt=""
       className="rounded-full border-2 border-white"
     />
     <p className="pr-2">{title}</p>

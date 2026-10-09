@@ -1,15 +1,15 @@
 import React from 'react';
-import { Building2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-
-import CompanyCard from './company-card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from './ui/carousel';
+} from '@repo/ui/components/carousel';
+import { Building2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+import CompanyCard from './company-card';
 
 interface Company {
   name: string;

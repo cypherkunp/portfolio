@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import { cn } from '@repo/ui/lib/utils';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 import type { Photo } from '@/lib/photo';
-import { cn } from '@/lib/utils';
 
 function formatDate(dateStr: string) {
   const value = dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`;
@@ -102,7 +102,9 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
               aria-hidden
               className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/55 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             >
-              <span className="text-sm text-neutral-300 tabular-nums">{formatDate(photo.date)}</span>
+              <span className="text-sm text-neutral-300 tabular-nums">
+                {formatDate(photo.date)}
+              </span>
               {photo.location ? (
                 <span className="px-3 text-center text-sm tracking-tight text-white">
                   {photo.location}

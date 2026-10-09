@@ -7,7 +7,7 @@ import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
 import { encode } from 'qss';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 
 type LinkPreviewProps = {
   children: React.ReactNode;
@@ -16,7 +16,6 @@ type LinkPreviewProps = {
   width?: number;
   height?: number;
   quality?: number;
-  layout?: string;
 } & ({ isStatic: true; imageSrc: string } | { isStatic?: false; imageSrc?: never });
 
 export const LinkPreview = ({
@@ -26,7 +25,6 @@ export const LinkPreview = ({
   width = 200,
   height = 125,
   quality = 50,
-  layout = 'fixed',
   isStatic = false,
   imageSrc = '',
 }: LinkPreviewProps) => {
@@ -72,15 +70,7 @@ export const LinkPreview = ({
     <>
       {isMounted ? (
         <div className="hidden">
-          <Image
-            src={src}
-            width={width}
-            height={height}
-            quality={quality}
-            layout={layout}
-            priority={true}
-            alt="hidden image"
-          />
+          <Image src={src} width={width} height={height} quality={quality} priority={true} alt="" />
         </div>
       ) : null}
 
@@ -135,10 +125,9 @@ export const LinkPreview = ({
                     width={width}
                     height={height}
                     quality={quality}
-                    layout={layout}
                     priority={true}
                     className="rounded-lg"
-                    alt="preview image"
+                    alt={`Preview of ${url}`}
                   />
                 </Link>
               </motion.div>
