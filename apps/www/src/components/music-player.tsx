@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { Button } from '@repo/ui/components/button';
+import { Slider } from '@repo/ui/components/slider';
+import { cn } from '@repo/ui/lib/utils';
 import {
   ChevronDown,
   ChevronUp,
@@ -17,9 +20,7 @@ import {
 
 import { songs } from '@/config/songs';
 import type { Song } from '@/lib/types';
-import { cn, formatTime } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
+import { formatTime } from '@/lib/utils';
 
 export default function MusicPlayer() {
   const [currentSong, setCurrentSong] = useState<Song>(songs[0]);

@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
+import { Badge } from '@repo/ui/components/badge';
+import { Card, CardContent, CardHeader } from '@repo/ui/components/card';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
+import { RenderIf } from '@repo/ui/components/render-if';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-import { socialMetadata } from '@/lib/seo';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { documentTitle, faqJsonLd, serializeJsonLd, socialMetadata } from '@/lib/seo';
 import { FaqBlock } from '@/components/faq-block';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
-import { RenderIf } from '@/components/render-if';
 import StackBlock from '@/components/stack-block';
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -18,13 +18,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const description = t('AboutPage.description');
 
   return {
-    title,
+    title: documentTitle(title),
     description,
     ...socialMetadata({
       title,
       description,
       url: '/about',
-      type: 'article',
     }),
   };
 };
@@ -33,15 +32,20 @@ export default function Page() {
   const th = useTranslations();
   const t = useTranslations('AboutPage.data');
   const stackBlock = useTranslations('Blocks.stackBlock');
+  const faqs = th.raw('Blocks.faqBlock.list') as { question: string; answer: string }[];
 
   return (
     <PageContainer className="w-full overflow-auto print:p-12">
-      <Section isFirstSection>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(faqs)) }}
+      />
+      <Section isFirstSection title={t('labels.about')}>
         <ul className="flex list-inside list-disc flex-col">
           {t('summary')
             .split('. ')
             .map((sentence, index) => (
-              <li key={index} className="text-sm text-pretty">
+              <li key={index} className="text-base leading-relaxed text-pretty">
                 {sentence}
               </li>
             ))}
@@ -56,7 +60,7 @@ export default function Page() {
             <Card key={work.company} className="mb-10 space-y-2 border-none !bg-neutral-950">
               <CardHeader className="mb-8 !p-0">
                 <div className="flex flex-col items-start justify-start text-base md:flex-row md:items-center md:justify-between">
-                  <h3 className="text-md inline-flex items-center justify-center gap-x-1 leading-none font-normal">
+                  <h3 className="inline-flex items-center justify-center gap-x-1 text-base leading-none font-normal">
                     <a className="hover:underline" href={work.link}>
                       {work.company}
                     </a>
@@ -64,7 +68,7 @@ export default function Page() {
                     <RenderIf condition={!!work.badges}>
                       <span className="inline-flex gap-x-1">
                         {work.badges?.map((badge: string) => (
-                          <Badge variant="secondary" className="align-middle text-xs" key={badge}>
+                          <Badge variant="secondary" className="align-middle text-base" key={badge}>
                             {badge}
                           </Badge>
                         ))}
@@ -76,9 +80,9 @@ export default function Page() {
                   </div>
                 </div>
 
-                <p className="text-muted-foreground font-mono text-sm leading-none">{work.title}</p>
+                <p className="text-muted-foreground text-base leading-relaxed">{work.title}</p>
               </CardHeader>
-              <CardContent className="!p-0 text-sm">{work.description}</CardContent>
+              <CardContent className="!p-0 text-base leading-relaxed">{work.description}</CardContent>
             </Card>
           );
         })}
@@ -95,7 +99,7 @@ export default function Page() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="!p-0 text-xs">{education.degree}</CardContent>
+              <CardContent className="!p-0 text-base leading-relaxed">{education.degree}</CardContent>
             </Card>
           );
         })}
@@ -106,7 +110,7 @@ export default function Page() {
             return (
               <Badge
                 variant="outline"
-                className="rounded-xl border-neutral-500 px-3 py-1 font-normal text-white"
+                className="rounded-xl border-neutral-500 px-3 py-1 text-base font-normal text-white"
                 key={skill}
               >
                 {skill}

@@ -1,8 +1,9 @@
+import { RouteViewTransition } from '@repo/ui/components/layout/route-view-transition';
+import { siteShellClassName } from '@repo/ui/lib/site-shell';
+
 import { Colophon } from '@/components/layout/colophon';
 import { Footer } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
-import { RouteViewTransition } from '@/components/layout/route-view-transition';
-import { siteShellClassName } from '@/components/layout/site-shell';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (

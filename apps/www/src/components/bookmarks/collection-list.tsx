@@ -1,9 +1,9 @@
 import Link from 'next/link';
+import { Badge } from '@repo/ui/components/badge';
+import { cn } from '@repo/ui/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
 
 import type { BookmarkCollection } from '@/lib/bookmarks';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 import {
   catalogArrowClassName,
   catalogMetaClassName,

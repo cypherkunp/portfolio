@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRightIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 
 interface Item {
   title: string;
@@ -30,14 +30,14 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
         <Link
           href={item.link ?? '#'}
           key={item.title}
-          className="group relative block h-[150px] w-full md:h-[220px]"
+          className="group relative block h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 block h-[150px] w-full rounded-3xl bg-neutral-200 md:h-[220px] dark:bg-slate-800/[0.8]"
+                className="absolute inset-0 block h-full w-full rounded-3xl bg-neutral-200 dark:bg-slate-800/[0.8]"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.15 } }}
@@ -61,7 +61,7 @@ function Card({ className, children }: CardProps) {
   return (
     <div
       className={cn(
-        `light relative z-20 h-[150px] w-full overflow-hidden rounded-2xl border border-transparent p-1 shadow-sm md:h-[220px]`,
+        `light relative z-20 h-full w-full overflow-hidden rounded-2xl border border-transparent p-1 shadow-sm`,
         'group-hover:border-slate-700 dark:border-white/[0.2]',
         className,
       )}
@@ -73,13 +73,13 @@ function Card({ className, children }: CardProps) {
 
 function CardTitle({ className, children }: CardProps) {
   return (
-    <h4 className={cn('text-md font-bold tracking-wide text-zinc-100', className)}>{children}</h4>
+    <h4 className={cn('text-base font-bold tracking-wide text-zinc-100', className)}>{children}</h4>
   );
 }
 
 function CardDescription({ className, children }: CardProps) {
   return (
-    <p className={cn('mt-4 text-sm leading-relaxed tracking-wide text-zinc-300', className)}>
+    <p className={cn('mt-4 text-base leading-relaxed tracking-wide text-zinc-300', className)}>
       {children}
     </p>
   );

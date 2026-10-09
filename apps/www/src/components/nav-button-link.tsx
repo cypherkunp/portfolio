@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { ArrowIcon } from '@/images/icons/arrow';
-
-import { cn } from '@/lib/utils';
+import { cn } from '@repo/ui/lib/utils';
 
 type NavButtonProps = {
   text: string;

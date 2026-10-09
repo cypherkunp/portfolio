@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from '@repo/ui/hooks/use-media-query';
 
 import type { Song } from '@/lib/types';
-import { useMediaQuery } from '@/hooks/use-media-query';
 import PlayerBar from '@/components/player-bar';
 import PlaylistView from '@/components/playlist-view';
 import Sidebar from '@/components/sidebar';

@@ -1,3 +1,4 @@
+import { publishedOnTime } from '@/lib/format-date';
 import { blog } from '@/lib/source';
 
 type Metadata = {
@@ -38,35 +39,13 @@ export function getAllTags() {
   return tags.sort((a: string, b: string) => a.localeCompare(b));
 }
 
-export function formatDate(date: string, includeRelative = false) {
-  if (!date.includes('T')) {
-    date = `${date}T00:00:00`;
-  }
-  const targetDate = new Date(date);
-
-  const fullDate = targetDate.toLocaleString('en-us', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  });
-
-  if (!includeRelative) {
-    return fullDate;
-  }
-
-  // Only calculate relative time if needed (this requires current date)
-  // For static generation, we skip relative time calculation
-  // If relative time is needed, it should be calculated on the client side
-  return fullDate;
-}
-
 export function getTimeSortedPosts() {
   return [...getBlogPosts()].sort((a, b) => {
-    const postA = new Date(a.metadata.publishedOn);
-    const postB = new Date(b.metadata.publishedOn);
-    if (isNaN(postA.getTime()) && isNaN(postB.getTime())) return 0;
-    if (isNaN(postA.getTime())) return 1;
-    if (isNaN(postB.getTime())) return -1;
-    return postB.getTime() - postA.getTime();
+    const postA = publishedOnTime(a.metadata.publishedOn);
+    const postB = publishedOnTime(b.metadata.publishedOn);
+    if (isNaN(postA) && isNaN(postB)) return 0;
+    if (isNaN(postA)) return 1;
+    if (isNaN(postB)) return -1;
+    return postB - postA;
   });
 }

@@ -1,16 +1,25 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
 
 import { getPhotos } from '@/lib/photos';
+import { brandedTitle, socialMetadata } from '@/lib/seo';
 import { AppEnabledGate } from '@/components/app-enabled-gate';
-import PageContainer from '@/components/layout/page-container';
-import { Section } from '@/components/layout/section';
 import { ToolSubpageLayout } from '@/components/layout/tool-subpage-layout';
 import { PhotoGrid } from '@/components/photos/photo-grid';
 
+const title = 'Photos';
+const description = 'A journal of places I stopped to look.';
+
 export const metadata: Metadata = {
-  title: 'Photos',
-  description: 'A journal of places I stopped to look.',
+  title,
+  description,
+  ...socialMetadata({
+    title: brandedTitle(title),
+    description,
+    url: '/photos',
+  }),
 };
 
 function PhotoGridFallback() {

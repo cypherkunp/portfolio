@@ -2,10 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { cn } from '@repo/ui/lib/utils';
 import { Building2, Code, Database, Globe, Package, Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-
-import { cn } from '@/lib/utils';
 
 interface Project {
   name: string;

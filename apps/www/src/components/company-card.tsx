@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Card, CardContent } from './ui/card';
+import { Card, CardContent } from '@repo/ui/components/card';
 
 interface CompanyCardProps {
   name: string;

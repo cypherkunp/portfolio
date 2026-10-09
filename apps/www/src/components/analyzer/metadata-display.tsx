@@ -1,10 +1,10 @@
 'use client';
 
+import { Badge } from '@repo/ui/components/badge';
 import { ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
 
 import type { ProjectMetadata } from '@/hooks/use-package-analyzer';
-import { Badge } from '@/components/ui/badge';
 
 interface MetadataDisplayProps {
   metadata: ProjectMetadata;
