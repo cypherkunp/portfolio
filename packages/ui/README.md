@@ -43,7 +43,7 @@ Inside the package, never use `@/`: it resolves against the consuming app. Use r
 
 5. Copy `apps/www/components.json` so the shadcn CLI resolves `ui` and `utils` to this package.
 
-Route view transitions need `experimental.viewTransition` in `next.config.ts` for `RouteViewTransition`.
+`RouteViewTransition` uses React 19.3 `<ViewTransition>`. Next.js 16.4 needs no config flag for it.
 
 ## Add a primitive
 

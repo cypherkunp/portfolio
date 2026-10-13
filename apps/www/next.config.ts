@@ -26,9 +26,6 @@ const nextConfig: NextConfig = {
       ],
     },
   ],
-  experimental: {
-    viewTransition: true,
-  },
   outputFileTracingIncludes: {
     '/photos': ['./public/photos/**/*'],
   },
@@ -45,6 +42,9 @@ const nextConfig: NextConfig = {
   },
   // Next.js 16 features
   cacheComponents: true,
+  // Existing Cache Components app. `false` keeps the 16.1 full prefetch until
+  // links are audited for Partial Prefetching.
+  partialPrefetching: false,
   reactCompiler: true,
   turbopack: {
     root: path.resolve(__dirname, '../..'),

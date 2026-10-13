@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@flags-sdk/vercel": "^1.4.6",
-    "@next/bundle-analyzer": "^16.1.6",
+    "@next/bundle-analyzer": "^16.4.0",
     "@repo/ui": "workspace:*",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/mdx": "^2.0.13",
