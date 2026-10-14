@@ -4,6 +4,15 @@ import Link from 'next/link';
 import { Callout } from '@repo/ui/components/callout';
 import { CodeBlock } from '@repo/ui/components/code-block';
 import { CodeBlockCommand } from '@repo/ui/components/code-block-command';
+import { Diagram } from '@repo/ui/components/diagram';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger as DialogTriggerBase,
+} from '@repo/ui/components/dialog';
 import { References } from '@repo/ui/components/references';
 import { Terminal } from '@repo/ui/components/terminal';
 import UnderlineText from '@repo/ui/components/underline-text';
@@ -47,6 +56,22 @@ const listBase = cn(
   'marker:font-normal marker:text-foreground/60',
   '[&_ol]:my-2 [&_ul]:my-2 [&_ol]:pl-4 [&_ul]:pl-4',
 );
+
+function DialogTrigger({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<typeof DialogTriggerBase>) {
+  return (
+    <DialogTriggerBase
+      className={cn(
+        'font-medium text-blue-500 underline-offset-4 hover:underline',
+        'dark:text-sky-400 dark:decoration-sky-400/40 hover:dark:text-sky-300',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
 
 const components = {
   h1: ({ className, ...props }: HeadingProps) => (
@@ -270,6 +295,13 @@ const components = {
     />
   ),
   Callout,
+  Diagram,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   References,
   Terminal,
 };
