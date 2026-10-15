@@ -1,0 +1,216 @@
+---
+title: 'Fixing performance issues with a photo gallery'
+summary: 'A gallery that mounts every photo can download a 3840px file per cell. Render the visible rows, cap the thumbnail width, and show the title while the folder is read.'
+publishedOn: '15-10-2026'
+version: '1'
+tags:
+  - 'nextjs'
+  - 'react'
+  - 'performance'
+---
+
+# A photo gallery should only load what is on screen
+
+Map about 50 photos into the page and each file becomes an image. Each image downloads a 3840px file for a cell about 280px wide. Photos below the screen start their own downloads, so the first row waits on those files. On a 390px-wide phone the cell is about 130px wide, and the file is still 3840px.
+
+The server reads every file before it sends the page, so the title stays blank. Then the browser starts a download for every image in the page.
+
+Render only the rows in the scroll box. Request a small file for each cell, and a larger file only when a photo opens. Send the title while the folder read is still running.
+
+<Diagram
+  kind="rows"
+  title="What the browser downloads"
+  notes={[
+    '1x means one device pixel per CSS pixel. A 2x screen asks for the larger file in the same pair.',
+  ]}
+  rows={[
+    { label: 'Whole gallery, first load', value: 'about 50 files at 3840px', tone: 'fail' },
+    { label: 'Visible rows, 1x', value: 'about 12 files at 384px', tone: 'pass' },
+    { label: 'After a photo opens, 1x', value: 'one more file at 1080px', tone: 'pass' },
+  ]}
+/>
+
+## Render only the rows on screen
+
+A loop over the list creates a button for every photo. Each button contains an image. The browser starts a download for each image element it finds.
+
+`loading="lazy"` delays a download until the image is near the screen. The page still contains the element. Scroll near it and the browser requests the file. A long gallery still requests every photo. The requests start later.
+
+You see a few rows. Those are the only images that need an element.
+
+`react-window` renders the items that fit in the scroll box. When you scroll, it removes the items that left and creates the items that entered. A photo you have not reached has no element, so the browser has no URL to request.
+
+Use `Grid` when the gallery has rows and columns. Pass the row count, the column count, and the size of one cell. The cell size has to be known before render. `Grid` builds the cells that fit and positions them with CSS. The scroll height still covers every row.
+
+Every cell is an image, so every mounted cell is a download. About 50 cells means about 50 downloads. The cells on a laptop screen are about a dozen downloads, each at a small width.
+
+`overscanCount` is how many extra rows to build outside the scroll box. The default is 3. Three extra rows on a three-column gallery is nine more photos before you scroll. Set it to 1. That is one extra row, three thumbnails, already mounted for a small scroll.
+
+`Grid` needs the scroll box height in pixels. Use the viewport height, minus the space above the gallery, and keep the result at least 320px. Keep that height stable when the folder grows. A box as tall as every row treats every cell as visible, and `Grid` renders the whole gallery.
+
+<Callout variant="warning" title="CAUTION">
+  Give `Grid` a fixed height in pixels. A height of `auto`, or a height that grows with the photo
+  count, renders every cell.
+</Callout>
+
+```tsx
+<Grid
+  cellComponent={PhotoCell}
+  cellProps={{ photos }}
+  columnCount={3}
+  columnWidth={cellSize}
+  rowCount={Math.ceil(photos.length / 3)}
+  rowHeight={cellSize}
+  overscanCount={1}
+  style={{ height: frameHeight, width: '100%' }}
+/>
+```
+
+`cellSize` is the scroll box width divided by 3. `frameHeight` is the pixel height from the paragraph above.
+
+## Request a small file for each cell
+
+`next/image` writes `srcset` and `src` on the image.
+
+<ImageContract
+  title="Default widths when sizes is set"
+  widths={[32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840]}
+/>
+
+`sizes` changes which widths go in that list. With `sizes`, the list is every configured width. The network panel shows `w=3840` when the browser requests the fallback URL.
+
+This is the thumbnail that produces that file.
+
+```tsx
+<Image
+  src={photo.src}
+  alt={photo.alt}
+  fill
+  sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 280px"
+/>
+```
+
+Leave `sizes` off the thumbnail. Pass `width={320}` and `height={320}`. Without `sizes`, the list has two entries. One is for a 1x screen. One is for a 2x screen. A 1x screen has one device pixel for each CSS pixel. A 2x screen has two, so it needs the larger file.
+
+A loader then allows only 384 or 640. The 1x screen gets 384. The 2x screen gets 640. If `next/image` asks for a width above 640, the loader still returns 640. The URL stays at `w=640`.
+
+The loader is a function, so the gallery component has to be a client component.
+
+```tsx
+const thumbWidths = [384, 640] as const;
+
+function thumbLoader({ src, width }: { src: string; width: number }) {
+  const allowed = thumbWidths.find(size => size >= width) ?? 640;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${allowed}&q=75`;
+}
+```
+
+```tsx
+<Image loader={thumbLoader} src={photo.src} alt={photo.alt} width={320} height={320} />
+```
+
+The width you pass is how `next/image` picks the 1x and 2x pair. CSS sets the size on screen. `width={320}` only chooses the file.
+
+The photo you open uses a second pair, 1080 or 1920. Pass `width={960}` and a loader that allows only those two widths. Mount that image only while the photo is open. The next and previous buttons replace that one image. The large file is requested for the open photo only.
+
+Keep a copy of the thumbnail under the large image. Hide the large image until its `onLoad` fires. The frame shows a blurred thumbnail until the sharp file arrives.
+
+`sizes="92vw"` on a large 2x screen is wider than 2048 device pixels. The next default width after 2048 is 3840. The loader for the opened photo never returns 3840, so that request cannot start.
+
+<Table
+  data={{
+    headers: ['Which image', 'Width you pass', '1x file', '2x file'],
+    rows: [
+      ['Thumbnail', '320', '384', '640'],
+      ['Opened photo', '960', '1080', '1920'],
+    ],
+  }}
+/>
+
+<Callout variant="info" title="NOTE">
+  A thumbnail never asks for a file wider than 640px. A wide column can be more than 320 CSS pixels,
+  so a 2x screen still gets 640 device pixels for that column.
+</Callout>
+
+`priority` on a cell starts its download before the other cells. Put it on the first cell. On a whole row, it starts a download for every cell in that row.
+
+## Show the title while the folder is read
+
+The server builds the list by reading the folder on the request. For each file it reads the pixel size, and any date or place stored in the file. The gallery renders after that work finishes.
+
+If the page component awaits that read, the title waits with it. The visitor gets a blank page for the whole read.
+
+Move the await into a child component. Wrap that child in `Suspense`. The fallback is nine gray squares in the same three columns. Those squares match the first screen, so the title stays in place when the gallery arrives. Leave the title outside `Suspense`. The server sends the title and the squares first. When the read finishes, React replaces the squares with the gallery. The browser loads the image files after that.
+
+The folder read takes the same time. The title can paint while that read runs.
+
+A `loading.tsx` file next to the page wraps the whole page, including the title. Use `Suspense` around the list when the title should show first.
+
+```tsx
+async function PhotoList() {
+  const photos = await getPhotos();
+  return <Gallery photos={photos} />;
+}
+
+export default function Page() {
+  return (
+    <section>
+      <h1>Photos</h1>
+      <Suspense fallback={<GallerySkeleton />}>
+        <PhotoList />
+      </Suspense>
+    </section>
+  );
+}
+```
+
+## Check the network panel
+
+Filter requests to images. Mount every photo and the panel lists one request per file, with `w=3840` in the URL. Render the visible rows and cap the width. A 1x screen then lists about a dozen requests at `w=384`. Opening a photo adds one request at `w=1080`. The next photo adds one more.
+
+## Limits
+
+Wrap the folder read in `cache`. A second call in the same render reuses the first result. The next visit reads the folder again. That cache ends when the request ends.
+
+A photo outside the visible rows has no element. Find in page misses that photo until you scroll the row into view. That scroll downloads the new row.
+
+## Takeaway
+
+Use `react-window` when every cell is an image. The browser downloads a cell after that cell mounts. Cap thumbnails at 384 or 640, and load 1080 or 1920 for the open photo only. Wrap the folder read in `Suspense` so the title paints while that read runs.
+
+<References
+  items={[
+    {
+      author: 'Next.js',
+      url: 'https://nextjs.org/docs/app/api-reference/components/image',
+    },
+    {
+      author: 'Next.js',
+      url: 'https://github.com/vercel/next.js/blob/v16.4.0/packages/next/src/shared/lib/get-img-props.ts',
+    },
+    {
+      author: 'Next.js',
+      url: 'https://nextjs.org/docs/app/guides/streaming',
+    },
+    {
+      author: 'React',
+      url: 'https://react.dev/reference/react/Suspense',
+    },
+    {
+      author: 'React',
+      url: 'https://react.dev/reference/react/cache',
+    },
+    {
+      author: 'MDN',
+      url: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading',
+    },
+    {
+      author: 'Brian Vaughn',
+      url: 'https://react-window.vercel.app/how-does-it-work',
+    },
+    {
+      author: 'Brian Vaughn',
+      url: 'https://react-window.vercel.app/grid/props',
+    },
+  ]}
+/>

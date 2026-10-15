@@ -1,4 +1,5 @@
 // @ts-nocheck
+import * as __fd_glob_10 from "../src/content/posts/how-to-load-a-photo-grid.mdx?collection=blogPosts"
 import * as __fd_glob_9 from "../src/content/posts/hello-world.mdx?collection=blogPosts"
 import * as __fd_glob_8 from "../src/content/posts/handbook.mdx?collection=blogPosts"
 import * as __fd_glob_7 from "../src/content/posts/github-stacked-prs.mdx?collection=blogPosts"
@@ -17,4 +18,4 @@ const create = server<typeof Config, import("fumadocs-mdx/runtime/types").Intern
   }
 }>({"doc":{"passthroughs":["extractedReferences"]}});
 
-export const blogPosts = await create.doc("blogPosts", "src/content/posts", {"agent-skills-101.mdx": __fd_glob_0, "atomic-design-in-react.mdx": __fd_glob_1, "branch-naming-conventions.mdx": __fd_glob_2, "build-better-agent-skills.mdx": __fd_glob_3, "claude-code-mcp.mdx": __fd_glob_4, "factory-mindset.mdx": __fd_glob_5, "git-worktrees-parallel-agents.mdx": __fd_glob_6, "github-stacked-prs.mdx": __fd_glob_7, "handbook.mdx": __fd_glob_8, "hello-world.mdx": __fd_glob_9, });
+export const blogPosts = await create.doc("blogPosts", "src/content/posts", {"agent-skills-101.mdx": __fd_glob_0, "atomic-design-in-react.mdx": __fd_glob_1, "branch-naming-conventions.mdx": __fd_glob_2, "build-better-agent-skills.mdx": __fd_glob_3, "claude-code-mcp.mdx": __fd_glob_4, "factory-mindset.mdx": __fd_glob_5, "git-worktrees-parallel-agents.mdx": __fd_glob_6, "github-stacked-prs.mdx": __fd_glob_7, "handbook.mdx": __fd_glob_8, "hello-world.mdx": __fd_glob_9, "how-to-load-a-photo-grid.mdx": __fd_glob_10, });
