@@ -210,13 +210,9 @@ function runCommand(command, args, cwd) {
       settle({ code: 127, output: String(error) });
     });
     child.on('close', code => {
-      if (timedOut) {
-        settle({
-          code: 124,
-          output: `${output}\n[timed out after ${COMMAND_TIMEOUT_MS}ms]\n`,
-        });
-        return;
-      }
+      // On timeout, wait for killTimer so SIGKILL can reap detached descendants
+      // after the top-level child exits from SIGTERM.
+      if (timedOut) return;
       settle({ code: code ?? 1, output });
     });
   });
