@@ -14,8 +14,8 @@ export default async function PostsBlock() {
     <div>
       {allTimeSortedPosts.map(post => (
         <Link key={post.slug} className="mb-4 flex flex-col space-y-1" href={`/posts/${post.slug}`}>
-          <div className="flex items-center gap-2">
-            <p className="shrink-0 text-sm text-neutral-600 tabular-nums dark:text-neutral-400">
+          <div className="flex items-start gap-2">
+            <p className="shrink-0 text-sm leading-6 text-neutral-600 tabular-nums dark:text-neutral-400">
               {formatDate(post.metadata.publishedOn, false)}
             </p>
             <p className="hover:decoration-tertiary tracking-tight text-neutral-900 hover:underline hover:underline-offset-8 dark:text-neutral-100">
