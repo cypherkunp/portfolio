@@ -1,0 +1,329 @@
+---
+title: 'What each Cursor hook does'
+summary: 'A hook runs at one stage of the agent loop and can watch, block, or change that stage.'
+publishedOn: '16-10-2026'
+version: '1'
+tags:
+  - 'cursor'
+  - 'hooks'
+  - 'agent'
+---
+
+# What each Cursor hook does
+
+A hook runs at one stage of the agent loop. The hook can watch that stage. The hook can block that stage. The hook can change that stage.
+
+A command hook is a script. The script reads JSON on standard input. The script writes JSON on standard output.
+
+A prompt hook has type prompt. A model judges the prompt text. The model returns ok. The reason field is optional. If the prompt contains $ARGUMENTS, Cursor replaces that token with the event JSON. If the prompt has no $ARGUMENTS, Cursor adds the event JSON.
+
+You can set model on a prompt hook. The default model is a fast model. A cloud agent does not run a prompt hook.
+
+```json
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/approve-network.sh",
+        "failClosed": true
+      }
+    ]
+  }
+}
+```
+
+## Where the hook file sits
+
+`hooks.json` uses version 1. A project file is `.cursor/hooks.json`. A user file is `~/.cursor/hooks.json`.
+
+Cursor runs every hook that matches the event. The load order is enterprise, then team, then project, then user.
+
+A deny from any source blocks the action. An ask applies when no source returns deny. An allow applies when no source returns deny or ask. Cursor joins every user_message. Cursor joins every agent_message. For followup_message, the last response wins.
+
+The last response comes from the lowest priority source.
+
+A project hook runs from the project root. The command path is `.cursor/hooks/script.sh`. A user hook runs from `~/.cursor/`. The command path is `./hooks/script.sh`. A project hook runs only in a trusted workspace.
+
+Cursor loads `hooks.json` again when you save the file.
+
+Commit `.cursor/hooks.json` with the repository. A teammate gets the hook in a trusted workspace. A cloud agent loads that same file.
+
+The enterprise file path depends on the operating system:
+
+- macOS uses `/Library/Application Support/Cursor/hooks.json`.
+- Linux and WSL use `/etc/cursor/hooks.json`.
+- Windows uses `C:\ProgramData\Cursor\hooks.json`.
+
+A team hook comes from the dashboard. The plan is Enterprise. Cursor copies that hook to each machine every 30 minutes.
+
+## What the exit code means
+
+Exit code 0 means the script succeeded. Cursor then uses the JSON. Exit code 2 blocks the action. Exit code 2 is the same as permission deny. Any other exit code lets the action continue.
+
+The failClosed default is false. Set failClosed to true on a hook that must block when the script fails.
+
+timeout is a limit in seconds.
+
+<Callout variant="warning" title="CAUTION">
+  Set failClosed to true on a hook that guards a risky action. A crash, a timeout, or a bad exit code lets that action continue.
+</Callout>
+
+Some hooks block the action when the JSON is not valid. This block applies when failClosed is false. The hooks are beforeShellExecution, beforeMCPExecution, beforeReadFile, beforeTabFileRead, subagentStart, and preToolUse.
+
+## What every agent event contains
+
+Every agent hook receives these fields:
+
+- conversation_id stays the same for one chat.
+- generation_id changes on each user message.
+- model is the selected model.
+- hook_event_name is the event name.
+- cursor_version is the app version.
+- workspace_roots lists the workspace folders.
+- user_email is the signed-in email or null.
+- transcript_path is the chat file or null.
+
+model_id and model_params are optional.
+
+The script also receives environment variables:
+
+- CURSOR_PROJECT_DIR is the workspace root.
+- CURSOR_VERSION is the app version.
+- CURSOR_USER_EMAIL is set when you are signed in.
+- CLAUDE_PROJECT_DIR is the same path as CURSOR_PROJECT_DIR.
+
+A sessionStart hook can add env for later hooks in that chat.
+
+## When the matcher runs
+
+A matcher is a regular expression. An empty matcher matches every event. A matcher that is only an asterisk matches every event.
+
+The matcher tests a different value for each event:
+
+- preToolUse, postToolUse, and postToolUseFailure test the tool name.
+- beforeShellExecution and afterShellExecution test the full command.
+- subagentStart and subagentStop test the subagent type.
+- beforeReadFile tests the value Read.
+- afterFileEdit tests the value Write.
+- beforeSubmitPrompt tests the value UserPromptSubmit.
+- stop tests the value Stop.
+- afterAgentResponse tests the value AgentResponse.
+- afterAgentThought tests the value AgentThought.
+- beforeTabFileRead tests the value TabRead.
+- afterTabFileEdit tests the value TabWrite.
+
+Tool names include Shell, Read, Write, Grep, Delete, and Task. An MCP matcher has the form MCP:tool_name.
+
+## The agent session
+
+Agent hooks run in Agent Chat and in Cmd+K. The figure shows the session order. Two gates on one tool can run at the same point.
+
+<Diagram
+  kind="flow"
+  title="The order of an agent session"
+  steps={[
+    { label: 'sessionStart' },
+    { label: 'beforeSubmitPrompt' },
+    { label: 'preToolUse', current: true },
+    { label: 'The tool runs' },
+    { label: 'postToolUse' },
+    { label: 'stop' },
+    { label: 'sessionEnd' },
+  ]}
+  marker="Other gates can also run before the tool"
+  notes={[
+    'sessionStart and sessionEnd run once.',
+    'preCompact can run during the session.',
+    'Tab hooks are not on this line.',
+    'workspaceOpen is not on this line.',
+  ]}
+/>
+
+<Diagram
+  kind="rows"
+  title="What the script can send back"
+  rows={[
+    { label: 'Watch', value: 'No output field is required' },
+    { label: 'Block', value: 'permission deny stops the action' },
+    { label: 'Change', value: 'updated_input replaces the tool input' },
+    { label: 'Continue', value: 'followup_message starts the next turn' },
+  ]}
+/>
+
+### sessionStart
+
+sessionStart runs when a new chat starts. Cursor does not wait for this hook. The hook can return env. The hook can return additional_context. The hook cannot block the new chat.
+
+session_id is the same value as conversation_id. is_background_agent is true when the chat is not interactive. composer_mode is agent, ask, or edit.
+
+The schema accepts continue. Cursor does not enforce continue.
+
+### sessionEnd
+
+sessionEnd runs when the chat ends. Cursor does not wait for this hook. Cursor logs the output. Cursor does not use the output. The reason is completed, aborted, error, window_close, or user_close. duration_ms is the length of the chat in milliseconds.
+
+### beforeSubmitPrompt
+
+beforeSubmitPrompt runs after you send the prompt. The request is still in the editor. The input has the prompt text and the attachments. Set continue to false to block the prompt. user_message is the text you see when the prompt is blocked.
+
+### preToolUse
+
+preToolUse runs before every tool. permission allow lets the tool run. permission deny blocks the tool. updated_input replaces the tool input. user_message is text for you when the tool is denied. agent_message is text for the agent when the tool is denied.
+
+The schema accepts ask for preToolUse. Cursor does not enforce ask for this hook.
+
+### postToolUse
+
+postToolUse runs after a tool succeeds. additional_context is extra text for the chat. For an MCP tool, updated_mcp_tool_output replaces the tool result. The model sees that new result. tool_output in the input is a JSON string. duration is the time in milliseconds.
+
+### postToolUseFailure
+
+postToolUseFailure runs when a tool fails. The hook also runs when the tool exceeds the time limit. The hook also runs when the tool is denied. additional_context is the only output. failure_type is error, timeout, or permission_denied. is_interrupt is true when you cancel the tool.
+
+### beforeShellExecution
+
+beforeShellExecution runs before a shell command. permission can be allow, deny, or ask. The input has command, cwd, and sandbox. sandbox is true when Cursor runs the command in a sandbox. user_message is text for you. agent_message is text for the agent.
+
+### afterShellExecution
+
+afterShellExecution runs after the shell command. The input has the command and the output. duration omits the wait for approval. This hook has no output fields.
+
+### beforeMCPExecution
+
+beforeMCPExecution runs before an MCP tool. permission can be allow, deny, or ask. The input has tool_name, tool_input, and mcp_server_name.
+
+An HTTP server also has a url field. A stdio server also has a command field. user_message is text for you. agent_message is text for the agent.
+
+<Callout variant="warning" title="CAUTION">
+  Treat a missing or unexpected mcp_server_name as deny. A hook that allows an unknown server can let the wrong server run.
+</Callout>
+
+### afterMCPExecution
+
+afterMCPExecution runs after the MCP tool. The input has result_json and duration. duration omits the wait for approval. This hook has no output fields.
+
+### beforeReadFile
+
+beforeReadFile runs before the agent reads a file. The input includes the file contents. permission deny blocks the read. attachments can be a file or a rule. The matcher value is Read.
+
+### afterFileEdit
+
+afterFileEdit runs after the agent edits a file. The input has file_path and the edits. Each edit has old_string and new_string. Use this hook to format the file. The matcher value is Write.
+
+### subagentStart
+
+subagentStart runs before a subagent starts. permission allow lets the subagent start. permission deny blocks the subagent. Cursor treats ask as deny. The input includes subagent_type, task, and subagent_model.
+
+### subagentStop
+
+subagentStop runs when the subagent ends. status is completed, error, or aborted. followup_message continues the subagent. Cursor uses that message only when status is completed. The loop limit is the same limit as stop. loop_count starts at 0.
+
+### preCompact
+
+preCompact runs before Cursor summarizes the chat. The hook cannot block the summary. The hook cannot change the summary. user_message is text for you. trigger is auto or manual. context_usage_percent is a percentage from 0 to 100.
+
+The input also has context_tokens and context_window_size. message_count is the number of messages. messages_to_compact is the number of messages in the summary. is_first_compaction is true on the first summary.
+
+### afterAgentThought
+
+afterAgentThought runs after a thinking block. The input field text is the full thinking text. duration_ms is the length of that block. This hook has no output fields.
+
+### afterAgentResponse
+
+afterAgentResponse runs after an assistant message. The input field text is the final text. This hook has no output fields.
+
+### stop
+
+stop runs when the agent loop ends. status is completed, aborted, or error. A non-empty followup_message becomes the next user message. loop_count starts at 0. The default limit is 5 follow-up messages for each script. Set loop_limit to null to remove the limit.
+
+## Tab
+
+Tab hooks apply to inline completion. Tab hooks do not apply to the agent.
+
+### beforeTabFileRead
+
+beforeTabFileRead runs before Tab reads a file. permission deny blocks the read. The input has file_path and content. The input has no attachments. The matcher value is TabRead.
+
+### afterTabFileEdit
+
+afterTabFileEdit runs after Tab edits a file. Each edit has a range, old_line, and new_line. This hook has no output fields. The matcher value is TabWrite.
+
+## The workspace
+
+### workspaceOpen
+
+workspaceOpen runs when Cursor opens a workspace. The hook runs again when a folder changes. The hook does not run when the window has no folder. The hook runs in the desktop app and in the CLI. pluginPaths is a list of plugin folders. This hook is not part of a chat.
+
+The input omits these fields:
+
+- conversation_id
+- generation_id
+- model
+- session_id
+- transcript_path
+
+The input still has hook_event_name, cursor_version, workspace_roots, and user_email.
+
+## A cloud agent
+
+A cloud agent runs command hooks from `.cursor/hooks.json`. On an Enterprise plan, a cloud agent also runs team hooks and enterprise hooks. The agent does not run a hook from `~/.cursor/hooks.json`. Hooks do not run in a read-only turn. Hooks start when the agent can write files.
+
+These hooks do not run in a cloud agent:
+
+- sessionStart
+- sessionEnd
+- beforeMCPExecution
+- afterMCPExecution
+- beforeTabFileRead
+- afterTabFileEdit
+- workspaceOpen
+
+On Self-Hosted Machines, sessionStart runs when a session claims the worker. sessionEnd runs when that claim ends.
+
+## A Claude hook name
+
+Cursor can load a Claude hook. The local file is `.claude/settings.local.json`. The project file is `.claude/settings.json`. The user file is `~/.claude/settings.json`. These files load after the Cursor user file.
+
+The setting Include Third-Party Plugins, Skills, and Other Configs is on by default.
+
+A Claude block decision with a reason maps to followup_message. A Claude hook has no loop limit unless you set loop_limit.
+
+| Claude name | Cursor name |
+| --- | --- |
+| PreToolUse | preToolUse |
+| PostToolUse | postToolUse |
+| UserPromptSubmit | beforeSubmitPrompt |
+| Stop | stop |
+| SubagentStop | subagentStop |
+| SessionStart | sessionStart |
+| SessionEnd | sessionEnd |
+| PreCompact | preCompact |
+
+Notification has no Cursor hook. PermissionRequest has no Cursor hook. The Glob tool has no Cursor tool name. subagentStart has no Claude name.
+
+Bash maps to Shell. Edit maps to Write.
+
+The Hooks tab in Customize shows each configured hook. The Hooks output channel shows hook errors.
+
+## Which hook to use
+
+Use the hook that matches one action:
+
+1. Use beforeShellExecution for a shell command.
+2. Use beforeMCPExecution for an MCP tool.
+3. Use preToolUse for every tool.
+4. Use beforeReadFile for an agent file read.
+5. Use beforeTabFileRead for a Tab file read.
+6. Use afterFileEdit to format an agent edit.
+7. Use beforeSubmitPrompt to block a prompt.
+8. Use sessionStart to add context at the start of a chat.
+9. Use stop to send a follow-up message.
+10. Set failClosed to true when the gate must hold.
+
+<References
+  items={[
+    { author: 'Cursor', url: 'https://cursor.com/docs/hooks' },
+    { author: 'Cursor', url: 'https://cursor.com/docs/reference/third-party-hooks' },
+  ]}
+/>
