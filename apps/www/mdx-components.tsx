@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger as DialogTriggerBase,
 } from '@repo/ui/components/dialog';
+import { ImageContract } from '@repo/ui/components/image-contract';
 import { References } from '@repo/ui/components/references';
 import { Terminal } from '@repo/ui/components/terminal';
 import UnderlineText from '@repo/ui/components/underline-text';
@@ -296,6 +297,7 @@ const components = {
   ),
   Callout,
   Diagram,
+  ImageContract,
   Dialog,
   DialogContent,
   DialogDescription,
