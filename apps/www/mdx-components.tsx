@@ -219,7 +219,7 @@ const components = {
       return (
         <code
           className={cn(
-            'bg-muted text-foreground relative rounded-md px-[0.35rem] py-[0.15rem] font-mono text-[0.85em]',
+            'rounded-sm bg-neutral-200 px-[0.4rem] py-[0.12rem] font-mono text-[0.9em] text-neutral-950',
             className,
           )}
           {...props}
