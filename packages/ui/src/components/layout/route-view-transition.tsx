@@ -14,7 +14,7 @@ interface RouteViewTransitionProps {
 export function RouteViewTransition({ children }: RouteViewTransitionProps) {
   return (
     <ViewTransition enter="route-vt" exit="route-vt" default="none">
-      <div className="min-w-0 grow">{children}</div>
+      <div className="flex min-w-0 grow flex-col">{children}</div>
     </ViewTransition>
   );
 }
