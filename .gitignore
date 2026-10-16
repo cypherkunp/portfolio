@@ -52,3 +52,6 @@ tsconfig.tsbuildinfo
 
 # Storybook
 storybook-static
+
+# Skill eval workspaces
+.agents/skills/*-workspace/

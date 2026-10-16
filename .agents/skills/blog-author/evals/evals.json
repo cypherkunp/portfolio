@@ -1,0 +1,44 @@
+{
+  "skill_name": "blog-author",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a portfolio blog post that explains stale-while-revalidate to a frontend developer who has shipped Next.js pages and set Cache-Control, but has never been sure what that directive actually does. One concept. Keep the prose under 700 words. Save the post as post.mdx in the outputs directory only. Do not edit anything under apps/www.",
+      "expected_output": "An MDX post whose lead names stale-while-revalidate and the later sections, then explains it as what, why, how, and when, with each term defined before it is used.",
+      "files": [],
+      "expectations": [
+        "The first prose after the H1 is a lead of at most three sentences that names stale-while-revalidate and every later ## topic, and does not walk through the request steps.",
+        "The concept is explained in what, then why, then how, then when order. What is one sentence a new reader can repeat. How names who acts, what they do, and what comes back, with one concrete example. When states when to use it and when to leave it out.",
+        "Each specialist term is defined in the sentence that introduces it, before a later sentence depends on that term.",
+        "Frontmatter summary is one sentence that makes the same claim as the lead.",
+        "The body does not name a source author. Sources appear only in References."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write a portfolio blog post that explains what a React Server Component is to a frontend developer who has only shipped client-rendered React with useEffect, useState, and a single bundle. They should finish able to say what it is, why it exists, how rendering splits, and when they would still use a client component. One concept. Prose under 700 words. Save the post as post.mdx in the outputs directory only. Do not edit anything under apps/www.",
+      "expected_output": "An MDX post with a short lead, then a React Server Component explanation in what, why, how, when order, plain enough that a client-only React developer can restate it.",
+      "files": [],
+      "expectations": [
+        "The first prose after the H1 is a lead of at most three sentences that names React Server Components and every later ## topic, and does not walk through the render steps.",
+        "The concept is explained in what, then why, then how, then when order. What is one sentence a new reader can repeat. How names who acts, what they do, and what comes back, with one concrete example. When states when a client component is still required and when a server component is enough.",
+        "useEffect, useState, the bundle, and server component are each defined in ordinary words in the sentence that introduces them, before a later sentence depends on them.",
+        "A reader who has only used client React can restate the post without a second meaning for 'server', 'client', or 'bundle'.",
+        "Frontmatter summary is one sentence that makes the same claim as the lead."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Rewrite the draft below into a real portfolio post. Explain the difference between the browser cache and a CDN cache for a frontend developer who has put images on a CDN and cannot tell which cache served the file. One concept. Prose under 700 words. Save the post as post.mdx in the outputs directory only. Do not edit anything under apps/www.\n\n---\ntitle: 'My Thoughts On Caching'\npublishedOn: '15-10-2026'\nversion: '1'\ntags:\n  - 'web'\n---\n\n# My Thoughts On Caching\n\nIn today's fast-paced digital world, caching is crucial. It serves as a pivotal mechanism for enhancing performance across the landscape. Experts believe it could potentially possibly be the key to a vibrant user experience.\n\nAdditionally, the cache is not just a store, but a paradigm. Furthermore, it is important to note that stale content can linger.\n\n## The mechanism\n\nThe cache holds it. When you request a file, something happens. This ensures a faster feel and showcases the power of the edge.",
+      "expected_output": "A rewritten MDX post that drops the slop, opens with a lead, and explains browser cache versus CDN cache as what, why, how, and when without ambiguous wording.",
+      "files": [],
+      "expectations": [
+        "The rewritten post deletes the original slop: no 'fast-paced', 'crucial', 'pivotal', 'landscape', 'experts believe', 'not just', 'furthermore', 'it is important to note', 'serves as', or 'showcases'.",
+        "The first prose after the H1 is a lead of at most three sentences that names the browser cache, the CDN cache, and every later ## topic.",
+        "Browser cache and CDN cache are each given what, why, how, and when, in that order, or the post explains the pair in that order and the reader can point at each part.",
+        "The post states a concrete way to tell which cache served the file. That sentence has one reading.",
+        "The title is sentence case and is not 'My Thoughts On Caching'."
+      ]
+    }
+  ]
+}
