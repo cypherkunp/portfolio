@@ -215,6 +215,7 @@ export const CircleIcon = ({ className, delay }: { className?: string; delay?: n
         `group pointer-events-none size-2 animate-pulse rounded-full bg-neutral-600 opacity-20 group-hover/cover:hidden group-hover/cover:bg-white group-hover/cover:opacity-100 dark:bg-white`,
         className,
       )}
+      style={delay === undefined ? undefined : { animationDelay: `${delay}s` }}
     ></div>
   );
 };

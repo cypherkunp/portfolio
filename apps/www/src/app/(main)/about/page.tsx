@@ -11,6 +11,23 @@ import { documentTitle, faqJsonLd, serializeJsonLd, socialMetadata } from '@/lib
 import { FaqBlock } from '@/components/faq-block';
 import StackBlock from '@/components/stack-block';
 
+interface WorkEntry {
+  company: string;
+  link: string;
+  badges?: string[];
+  start: string;
+  end: string;
+  title: string;
+  description: string;
+}
+
+interface EducationEntry {
+  school: string;
+  degree: string;
+  start: string;
+  end: string;
+}
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const t = await getTranslations();
 
@@ -55,7 +72,7 @@ export default function Page() {
         <StackBlock />
       </Section>
       <Section title={t('labels.work')}>
-        {t.raw('work').map((work: any) => {
+        {(t.raw('work') as WorkEntry[]).map(work => {
           return (
             <Card key={work.company} className="mb-10 space-y-2 border-none !bg-neutral-950">
               <CardHeader className="mb-8 !p-0">
@@ -88,7 +105,7 @@ export default function Page() {
         })}
       </Section>
       <Section title={t('labels.education')}>
-        {t.raw('education').map((education: any) => {
+        {(t.raw('education') as EducationEntry[]).map(education => {
           return (
             <Card key={education.school} className="space-y-4 border-none !bg-neutral-950">
               <CardHeader className="mb-8 !p-0">

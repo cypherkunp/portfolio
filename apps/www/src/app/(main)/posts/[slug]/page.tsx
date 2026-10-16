@@ -23,7 +23,7 @@ async function PostContent({ params }: { params: Promise<{ slug: string }> }) {
     notFound();
   }
 
-  const data = page.data as any;
+  const data = page.data;
   const Mdx = data.body;
   const description = data.summary || data.title;
 
@@ -68,10 +68,10 @@ export async function generateMetadata({
     };
   }
 
-  const data = page.data as any;
+  const data = page.data;
   const description = data.summary || data.title;
   const images = data.image
-    ? [{ url: data.image as string, width: 1200, height: 630, alt: data.title as string }]
+    ? [{ url: data.image, width: 1200, height: 630, alt: data.title }]
     : undefined;
 
   return {
