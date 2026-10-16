@@ -1,6 +1,5 @@
 'use client';
 
-import type React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import IconArrow from '@repo/ui/components/icon-arrow';
@@ -14,7 +13,6 @@ export interface NavItem {
 
 export interface NavbarProps {
   items: NavItem[];
-  logo?: React.ReactNode;
   className?: string;
 }
 
@@ -22,7 +20,7 @@ function isExternalHref(href: string, external?: boolean) {
   return external === true || /^https?:\/\//i.test(href);
 }
 
-export function Navbar({ items, logo = 'Logo', className }: NavbarProps) {
+export function Navbar({ items, className }: NavbarProps) {
   const pathname = usePathname();
 
   return (

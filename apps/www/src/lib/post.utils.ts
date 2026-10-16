@@ -16,7 +16,7 @@ export function getBlogPosts() {
   // Map Fumadocs page data to the existing format for backward compatibility
   return pages.map(page => {
     const slug = page.slugs[0];
-    const data = page.data as any;
+    const data = page.data;
 
     const metadata: Metadata = {
       title: data.title || '',

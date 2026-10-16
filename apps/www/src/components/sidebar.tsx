@@ -1,7 +1,7 @@
 import { Button } from '@repo/ui/components/button';
 import { ScrollArea } from '@repo/ui/components/scroll-area';
 import { Separator } from '@repo/ui/components/separator';
-import { Heart, Home, Library, Search } from 'lucide-react';
+import { Heart, Home, Search } from 'lucide-react';
 
 export default function Sidebar() {
   return (
