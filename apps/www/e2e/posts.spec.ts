@@ -3,6 +3,40 @@ import { expect, test } from '@playwright/test';
 import { waitForDevReady } from './ready';
 
 test.describe('posts', () => {
+  test('aligns the date with the first line of a wrapped title', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/posts');
+    await waitForDevReady(page);
+
+    const rows = await page.locator('a[href^="/posts/"]').evaluateAll(anchors =>
+      anchors.map(anchor => {
+        const [date, title] = anchor.querySelectorAll('p');
+        const range = document.createRange();
+        range.selectNodeContents(title!);
+        const lines = [...range.getClientRects()];
+        const dateRect = date!.getBoundingClientRect();
+        const first = lines[0]!;
+        const dateMid = dateRect.top + dateRect.height / 2;
+        const firstMid = first.top + first.height / 2;
+        const blockMid = (first.top + lines[lines.length - 1]!.bottom) / 2;
+
+        return {
+          lines: lines.length,
+          deltaFirst: Math.abs(dateMid - firstMid),
+          deltaBlock: Math.abs(dateMid - blockMid),
+        };
+      }),
+    );
+
+    const wrapped = rows.filter(row => row.lines > 1);
+    expect(wrapped.length).toBeGreaterThan(0);
+
+    for (const row of wrapped) {
+      expect(row.deltaFirst).toBeLessThan(row.deltaBlock);
+      expect(row.deltaFirst).toBeLessThan(4);
+    }
+  });
+
   test('opens every post from the catalog', async ({ page }) => {
     test.setTimeout(180_000);
 
