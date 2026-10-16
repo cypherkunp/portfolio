@@ -34,9 +34,20 @@ export async function streamPackagesFromApi({
   onResult,
   onError,
 }: StreamPackagesArgs): Promise<void> {
-  for (let i = 0; i < packages.length; i += MAX_PACKAGES_PER_REQUEST) {
+  // Dedupe by name before batching so duplicates that span batch boundaries
+  // (e.g. deps then devDeps) are not fetched twice. Keep first occurrence,
+  // matching `/api/npm` within a single request.
+  const seen = new Set<string>();
+  const unique: typeof packages = [];
+  for (const pkg of packages) {
+    if (seen.has(pkg.name)) continue;
+    seen.add(pkg.name);
+    unique.push(pkg);
+  }
+
+  for (let i = 0; i < unique.length; i += MAX_PACKAGES_PER_REQUEST) {
     if (signal?.aborted) return;
-    const batch = packages.slice(i, i + MAX_PACKAGES_PER_REQUEST);
+    const batch = unique.slice(i, i + MAX_PACKAGES_PER_REQUEST);
     const ok = await streamPackagesBatch({ packages: batch, signal, onResult, onError });
     if (!ok) return;
   }
