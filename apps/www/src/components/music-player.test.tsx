@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -10,6 +10,13 @@ describe('MusicPlayer', () => {
   });
 
   it('advances from the song that ended, not the first render', async () => {
+    class ResizeObserverStub {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    }
+    vi.stubGlobal('ResizeObserver', ResizeObserverStub);
+
     let ended: (() => void) | undefined;
 
     class FakeAudio {
@@ -36,8 +43,11 @@ describe('MusicPlayer', () => {
     await user.click(screen.getByText('Back to Nostrads'));
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Back to Nostrads');
 
-    ended?.();
+    await act(async () => {
+      ended?.();
+    });
 
+    expect(ended).toBeTypeOf('function');
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Happy New Year Folks');
   });
 });
