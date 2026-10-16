@@ -1,0 +1,103 @@
+---
+title: 'How to call another skill from a skill'
+summary: 'A step that names the other skill is a call.'
+publishedOn: '16-10-2026'
+version: '1'
+tags:
+  - 'agent'
+  - 'skills'
+---
+
+# How to call another skill from a skill
+
+A step that names the other skill is a call. The agent loads the file for that skill. Then the agent follows that file. The call fails when that skill is slash only. Only the name that you type loads the file for that skill.
+
+## A step that names the other skill
+
+A step that names the other skill is one line in the caller. The caller is the skill that contains the line. The line is in `SKILL.md`. The line gives the name of the other skill.
+
+You keep one procedure in one file. The same steps in two skills make two copies. The next edit changes one copy. The second copy stays unchanged.
+
+implement contains a line that names tdd. implement builds the change from a specification. The agent writes a test that fails. The agent writes that test before the change.
+
+```markdown
+Run the /tdd skill.
+```
+
+The agent loads the tdd file. The description at the top of the tdd file says when to use tdd. Thus Cursor shows tdd to the agent. You type /implement. The agent reads the line in implement. Then the agent loads the tdd file.
+
+Claude Code uses the Skill tool. The Skill tool adds the text of the tdd file to the conversation. The agent writes a test that fails. Then the agent writes the change.
+
+<Diagram
+  kind="flow"
+  title="What happens when implement names tdd"
+  steps={[
+    { label: 'You type /implement' },
+    { label: 'The line names tdd', current: true },
+    { label: 'The agent loads the tdd file' },
+    { label: 'The agent follows that file' },
+  ]}
+  marker="This line is the call"
+/>
+
+If the caller finishes the other procedure before the caller continues, write this line.
+
+If the fact fits in one sentence:
+
+- Write that sentence in the caller.
+- Do not name the other skill.
+
+## The call fails when that skill is slash only
+
+Slash only means the skill sets disable-model-invocation to true. The agent does not load that skill from a step. You type the slash command for that skill. The command loads the file for that skill.
+
+You set disable-model-invocation on a skill that deploys the application. The agent does not start that skill when the change looks finished. And disable-model-invocation makes a step in another skill fail.
+
+Cursor does not include a skill that is slash only in the agent list. The agent list includes that skill when you type /skill-name.
+
+Claude Code does not include the description for a skill that is slash only in the agent list. The Skill tool returns an error when a step names that skill. The Skill tool returned this error when a step named task-candidates. task-candidates is slash only.
+
+```text
+Error: Skill task-candidates cannot be used with Skill tool due to disable-model-invocation
+```
+
+<Diagram
+  kind="rows"
+  title="When the step loads the other skill"
+  rows={[
+    { label: 'tdd, not slash only', value: 'The step in implement loads tdd', tone: 'pass' },
+    {
+      label: 'task-candidates, slash only',
+      value: 'The Skill tool returns an error',
+      tone: 'fail',
+    },
+  ]}
+/>
+
+If another file names the skill, do not set disable-model-invocation on that skill.
+
+tdd has no disable-model-invocation. Thus the step in implement loads tdd.
+
+Keep implement slash only. You start implement when you type /implement.
+
+If the skill stays slash only, do these steps:
+
+1. Do not name the other skill.
+2. Put the shared steps in a markdown file.
+3. Do not give that file a slash command.
+4. Use the path `references/checks.md`.
+5. Tell each skill to read that path.
+
+Both descriptions stay in the agent list when both skills have no disable-model-invocation. The agent reads this list on each message.
+
+Keep disable-model-invocation on a workflow that only you start.
+
+If a step in another file names the skill, remove disable-model-invocation from that skill.
+
+<References
+  items={[
+    { author: 'Cursor', url: 'https://cursor.com/docs/skills' },
+    { author: 'Anthropic', url: 'https://code.claude.com/docs/en/skills' },
+    { author: 'MartinSoderholm', url: 'https://github.com/anthropics/claude-code/issues/30484' },
+  ]}
+/>
