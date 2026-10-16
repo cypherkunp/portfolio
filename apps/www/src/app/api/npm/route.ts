@@ -4,8 +4,9 @@ import { featureAppPackageAnalyzer } from '@/flags';
 import { z } from 'zod';
 
 import { fetchPackagesBatch, isValidPackageName, type NpmPackageInfo } from '@/lib/npm-registry';
+import { MAX_PACKAGES_PER_REQUEST } from '@/lib/npm-registry-client';
 
-const MAX_PACKAGES = 200;
+const MAX_PACKAGES = MAX_PACKAGES_PER_REQUEST;
 const CONCURRENCY = 4;
 const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 60_000;

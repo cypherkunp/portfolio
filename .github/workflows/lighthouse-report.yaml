@@ -54,9 +54,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # tools/unlighthouse is outside the pnpm workspace; install its deps locally.
+      - name: Install Unlighthouse dependencies
+        working-directory: tools/unlighthouse
+        run: npm install
+
       - name: Run Unlighthouse CI
         working-directory: tools/unlighthouse
-        run: pnpm exec unlighthouse-ci --build-static
+        run: npm run unlighthouse-ci
 
       - name: Deploy Unlighthouse report to GitHub Pages
         if: success() || failure()

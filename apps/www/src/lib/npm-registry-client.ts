@@ -20,9 +20,13 @@ export interface StreamPackagesArgs {
   onError: (error: 'api' | 'rate-limit') => void;
 }
 
+/** Must match `MAX_PACKAGES` on `/api/npm`. */
+export const MAX_PACKAGES_PER_REQUEST = 200;
+
 /**
  * Calls the `/api/npm` route which streams NDJSON. The client never talks
  * to npm directly; the server uses an auth token so we don't get 429s.
+ * Large manifests are split into batches under the server's package cap.
  */
 export async function streamPackagesFromApi({
   packages,
@@ -30,6 +34,20 @@ export async function streamPackagesFromApi({
   onResult,
   onError,
 }: StreamPackagesArgs): Promise<void> {
+  for (let i = 0; i < packages.length; i += MAX_PACKAGES_PER_REQUEST) {
+    if (signal?.aborted) return;
+    const batch = packages.slice(i, i + MAX_PACKAGES_PER_REQUEST);
+    const ok = await streamPackagesBatch({ packages: batch, signal, onResult, onError });
+    if (!ok) return;
+  }
+}
+
+async function streamPackagesBatch({
+  packages,
+  signal,
+  onResult,
+  onError,
+}: StreamPackagesArgs): Promise<boolean> {
   let response: Response;
   try {
     response = await fetch('/api/npm', {
@@ -39,18 +57,18 @@ export async function streamPackagesFromApi({
       signal,
     });
   } catch (err) {
-    if ((err as Error).name === 'AbortError') return;
+    if ((err as Error).name === 'AbortError') return false;
     onError('api');
-    return;
+    return false;
   }
 
   if (response.status === 429) {
     onError('rate-limit');
-    return;
+    return false;
   }
   if (!response.ok || !response.body) {
     onError('api');
-    return;
+    return false;
   }
 
   const reader = response.body.getReader();
@@ -89,9 +107,12 @@ export async function streamPackagesFromApi({
       }
     }
   } catch (err) {
-    if ((err as Error).name === 'AbortError') return;
+    if ((err as Error).name === 'AbortError') return false;
     onError('api');
+    return false;
   } finally {
     reader.releaseLock();
   }
+
+  return true;
 }

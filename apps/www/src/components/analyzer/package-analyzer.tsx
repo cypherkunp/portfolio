@@ -117,14 +117,14 @@ export function PackageAnalyzer() {
                 <AlertTitle>Some packages were skipped</AlertTitle>
                 <AlertDescription>
                   {analyzer.failures.length} of {analyzer.totalPackages} could not be fetched. The
-                  totals above count only packages the registry returned.
+                  totals below count only packages the registry returned.
                 </AlertDescription>
               </Alert>
             )}
 
             {isDone && (
               <StatsCards
-                totalPackages={analyzer.totalPackages}
+                totalPackages={analyzer.dependencies.length + analyzer.devDependencies.length}
                 outdatedCount={analyzer.outdatedCount}
                 upToDateCount={analyzer.upToDateCount}
                 averageAge={analyzer.averageAge}
