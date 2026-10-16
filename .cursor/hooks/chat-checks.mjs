@@ -153,9 +153,29 @@ function resolvePnpm() {
   return null;
 }
 
+function killProcessTree(pid, signal) {
+  try {
+    process.kill(-pid, signal);
+  } catch {
+    try {
+      process.kill(pid, signal);
+    } catch {
+      // Already gone.
+    }
+  }
+}
+
 function runCommand(command, args, cwd) {
   return new Promise(resolve => {
-    const child = spawn(command, args, { cwd, env: process.env });
+    const child = spawn(command, args, {
+      cwd,
+      env: process.env,
+      detached: true,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    let settled = false;
+    let timedOut = false;
+    let killTimer;
     let output = '';
     const append = chunk => {
       output += chunk.toString();
@@ -164,21 +184,40 @@ function runCommand(command, args, cwd) {
     child.stdout.on('data', append);
     child.stderr.on('data', append);
 
+    const settle = result => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      clearTimeout(killTimer);
+      resolve(result);
+    };
+
     const timer = setTimeout(() => {
-      child.kill('SIGTERM');
-      resolve({
-        code: 124,
-        output: `${output}\n[timed out after ${COMMAND_TIMEOUT_MS}ms]\n`,
-      });
+      timedOut = true;
+      killProcessTree(child.pid, 'SIGTERM');
+      killTimer = setTimeout(() => {
+        killProcessTree(child.pid, 'SIGKILL');
+        child.stdout.destroy();
+        child.stderr.destroy();
+        settle({
+          code: 124,
+          output: `${output}\n[timed out after ${COMMAND_TIMEOUT_MS}ms]\n`,
+        });
+      }, 2000);
     }, COMMAND_TIMEOUT_MS);
 
     child.on('error', error => {
-      clearTimeout(timer);
-      resolve({ code: 127, output: String(error) });
+      settle({ code: 127, output: String(error) });
     });
     child.on('close', code => {
-      clearTimeout(timer);
-      resolve({ code: code ?? 1, output });
+      if (timedOut) {
+        settle({
+          code: 124,
+          output: `${output}\n[timed out after ${COMMAND_TIMEOUT_MS}ms]\n`,
+        });
+        return;
+      }
+      settle({ code: code ?? 1, output });
     });
   });
 }
@@ -264,10 +303,14 @@ if (mode === 'mark') {
 }
 
 if (mode === 'stop') {
-  stop(input).catch(async error => {
-    console.error('[chat-checks] stop failed', error);
-    await finish({});
-  });
+  stop(input)
+    .catch(async error => {
+      console.error('[chat-checks] stop failed', error);
+      await finish({});
+    })
+    .finally(() => {
+      process.exit(0);
+    });
 } else {
   console.error('[chat-checks] expected "mark" or "stop"');
   process.exit(0);

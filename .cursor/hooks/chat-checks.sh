@@ -5,8 +5,11 @@ set -euo pipefail
 if ! command -v node >/dev/null 2>&1; then
   export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
   if [ -s "$NVM_DIR/nvm.sh" ]; then
+    # nvm uses unset vars and non-zero exits as normal control flow.
+    set +euo pipefail
     # shellcheck disable=SC1091
     . "$NVM_DIR/nvm.sh"
+    set -euo pipefail
   fi
 fi
 
