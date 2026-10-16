@@ -4,10 +4,9 @@ export interface NpmPackageInfo {
   latestVersion: string;
   lastPublished: string;
   githubUrl: string | null;
-  openIssues: number;
 }
 
-export type NpmFetchErrorType = 'api' | 'rate-limit' | 'not-found';
+export type NpmFetchErrorType = 'api' | 'rate-limit' | 'not-found' | 'invalid';
 
 export type NpmStreamRow =
   | { ok: true; name: string; configuredVersion: string; info: NpmPackageInfo }

@@ -16,15 +16,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ca
 import { Input } from '@repo/ui/components/input';
 ```
 
-### Method 2: Named Exports
+### Method 2: There is no package barrel
 
-You can also import multiple components at once:
-
-```typescript
-import { Button, Card, Dialog, Input } from '@repo/ui';
-
-// Note: Some components with naming conflicts may need direct imports
-```
+`@repo/ui` does not export a root barrel. Import each component from its subpath (`@repo/ui/components/<name>`), as in Method 1.
 
 ### Method 3: Star Import from Specific Paths
 

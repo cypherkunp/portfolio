@@ -22,7 +22,7 @@ Next.js 16, React 19, TypeScript, Tailwind CSS 4, ESLint 9 (flat config), Pretti
 ## Features
 
 - **Content**: MDX posts under `apps/www/src/content/posts`, dynamic `[slug]` routes.
-- **Sections**: About, music, photos; optional homepage apps block behind `FEATURE_APPS_SUPPORT`.
+- **Sections**: About, music, photos; optional homepage apps block behind the Vercel Flag `feature-apps-support`.
 - **UX**: Dark-first theming, responsive layout, Vercel Analytics and Speed Insights.
 - **Analyzer** (`/analyzer`): upload a `package.json`, pull metadata from the npm registry, compare versions.
 - **Tooling**: Webpack bundle analyzer (`analyze-build`), Unlighthouse target for `www`.
@@ -46,4 +46,7 @@ Shared UI: `pnpm ui:add <component>` adds to `packages/ui`.
 
 ## Environment
 
-- `FEATURE_APPS_SUPPORT=true`: shows the homepage apps section (see `apps/www/src/flags.ts`).
+Apps are gated in `apps/www/src/flags.ts` (Vercel Flags). Local development defaults them on. Production follows the Flags dashboard:
+
+- `feature-apps-support` — homepage Apps section
+- `feature-app-music`, `feature-app-inspirations`, `feature-app-bookmarks`, `feature-app-photos`, `feature-app-package-analyzer` — each App route

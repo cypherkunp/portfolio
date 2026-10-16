@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useId, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '../lib/utils';
-import { SparklesCore } from './sparkles';
+
+const SparklesCore = lazy(() => import('./sparkles').then(mod => ({ default: mod.SparklesCore })));
 
 export const Cover = ({
   children,
@@ -67,22 +68,24 @@ export const Cover = ({
               }}
               className="flex h-full w-[200%]"
             >
-              <SparklesCore
-                background="transparent"
-                minSize={0.4}
-                maxSize={1}
-                particleDensity={500}
-                className="size-full"
-                particleColor="#FFFFFF"
-              />
-              <SparklesCore
-                background="transparent"
-                minSize={0.4}
-                maxSize={1}
-                particleDensity={500}
-                className="size-full"
-                particleColor="#FFFFFF"
-              />
+              <Suspense fallback={null}>
+                <SparklesCore
+                  background="transparent"
+                  minSize={0.4}
+                  maxSize={1}
+                  particleDensity={500}
+                  className="size-full"
+                  particleColor="#FFFFFF"
+                />
+                <SparklesCore
+                  background="transparent"
+                  minSize={0.4}
+                  maxSize={1}
+                  particleDensity={500}
+                  className="size-full"
+                  particleColor="#FFFFFF"
+                />
+              </Suspense>
             </motion.div>
           </motion.div>
         )}

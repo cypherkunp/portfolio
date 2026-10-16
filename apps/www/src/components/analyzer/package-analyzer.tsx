@@ -111,6 +111,17 @@ export function PackageAnalyzer() {
           >
             <MetadataDisplay metadata={analyzer.metadata} />
 
+            {isDone && analyzer.failures.length > 0 && (
+              <Alert>
+                <AlertTriangle className="size-4" />
+                <AlertTitle>Some packages were skipped</AlertTitle>
+                <AlertDescription>
+                  {analyzer.failures.length} of {analyzer.totalPackages} could not be fetched. The
+                  totals above count only packages the registry returned.
+                </AlertDescription>
+              </Alert>
+            )}
+
             {isDone && (
               <StatsCards
                 totalPackages={analyzer.totalPackages}

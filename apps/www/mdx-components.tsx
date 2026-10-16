@@ -5,8 +5,9 @@ import { Callout } from '@repo/ui/components/callout';
 import { CodeBlock } from '@repo/ui/components/code-block';
 import { CodeBlockCommand } from '@repo/ui/components/code-block-command';
 import { References } from '@repo/ui/components/references';
-import { Terminal } from '@repo/ui/components/terminal';
+import { Terminal, type TerminalProps } from '@repo/ui/components/terminal';
 import UnderlineText from '@repo/ui/components/underline-text';
+import { highlightBash } from '@repo/ui/lib/highlight-bash';
 import { cn } from '@repo/ui/lib/utils';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
@@ -271,7 +272,10 @@ const components = {
   ),
   Callout,
   References,
-  Terminal,
+  Terminal: async function TerminalBlock({ command, ...props }: TerminalProps) {
+    const codeHtml = await highlightBash(command);
+    return <Terminal command={command} codeHtml={codeHtml} {...props} />;
+  },
 };
 
 declare global {

@@ -57,7 +57,6 @@ describe('usePackageAnalyzer', () => {
               latestVersion: '19.0.0',
               lastPublished: '2026-01-01T00:00:00.000Z',
               githubUrl: 'https://github.com/facebook/react',
-              openIssues: 0,
             },
           },
         ]),
@@ -83,6 +82,72 @@ describe('usePackageAnalyzer', () => {
       }),
     ]);
     expect(result.current.outdatedCount).toBe(1);
+    expect(result.current.dependencies[0]?.versionStatus).toBe('outdated');
+  });
+
+  it('keeps a failed package and does not mark a satisfied range outdated', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        ndjsonResponse([
+          {
+            ok: false,
+            name: 'missing',
+            configuredVersion: '1.0.0',
+            error: 'not-found',
+          },
+          {
+            ok: true,
+            name: 'react',
+            configuredVersion: '^18.2.0',
+            info: {
+              name: 'react',
+              description: 'UI library',
+              latestVersion: '18.3.0',
+              lastPublished: '2026-01-01T00:00:00.000Z',
+              githubUrl: null,
+            },
+          },
+          {
+            ok: true,
+            name: '@repo/ui',
+            configuredVersion: 'workspace:*',
+            info: {
+              name: '@repo/ui',
+              description: 'local',
+              latestVersion: '0.0.0',
+              lastPublished: '',
+              githubUrl: null,
+            },
+          },
+        ]),
+      ),
+    );
+
+    const { result } = renderHook(() => usePackageAnalyzer());
+
+    await act(async () => {
+      result.current.handleFileUpload(
+        jsonFile(
+          JSON.stringify({
+            name: 'demo',
+            dependencies: { missing: '1.0.0', react: '^18.2.0', '@repo/ui': 'workspace:*' },
+          }),
+        ),
+      );
+    });
+
+    await waitFor(() => expect(result.current.phase).toBe('done'));
+    expect(result.current.failures).toEqual([
+      { name: 'missing', configuredVersion: '1.0.0', error: 'not-found' },
+    ]);
+    expect(result.current.dependencies.map(pkg => [pkg.name, pkg.versionStatus])).toEqual([
+      ['react', 'current'],
+      ['@repo/ui', 'unknown'],
+    ]);
+    expect(result.current.outdatedCount).toBe(0);
+    expect(result.current.upToDateCount).toBe(1);
+    expect(result.current.totalPackages).toBe(3);
   });
 
   it('reset returns the analyzer to idle', async () => {

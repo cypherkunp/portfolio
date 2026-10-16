@@ -49,6 +49,9 @@ jobs:
             turbo-test-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
             turbo-test-${{ runner.os }}-
 
+      - name: Lint
+        run: pnpm lint
+
       - name: Run unit tests
         run: pnpm test
 

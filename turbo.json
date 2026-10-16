@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NEXT_PUBLIC_APP_URL", "GITHUB_ACCESS_TOKEN"],
+  "globalEnv": ["NEXT_PUBLIC_APP_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

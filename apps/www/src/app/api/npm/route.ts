@@ -1,27 +1,27 @@
 // Streamed npm registry proxy. Authenticated server-side requests avoid 429s.
 import { NextResponse } from 'next/server';
+import { featureAppPackageAnalyzer } from '@/flags';
 import { z } from 'zod';
 
-import {
-  fetchPackagesBatch,
-  isValidPackageName,
-  type NpmPackageInfo,
-} from '@/lib/npm-registry';
+import { fetchPackagesBatch, isValidPackageName, type NpmPackageInfo } from '@/lib/npm-registry';
 
-const MAX_PACKAGES = 1500;
+const MAX_PACKAGES = 200;
+const CONCURRENCY = 4;
+const RATE_LIMIT = 20;
+const RATE_WINDOW_MS = 60_000;
 
-const PackageInput = z.object({
-  name: z
-    .string()
-    .min(1)
-    .max(214)
-    .refine(isValidPackageName, { message: 'invalid npm package name' }),
-  version: z.string().max(64).default(''),
+const hits = new Map<string, { count: number; resetAt: number }>();
+
+const PackageItem = z.object({
+  name: z.string(),
+  version: z.union([z.string(), z.number()]).optional(),
 });
 
 const Body = z.object({
-  packages: z.array(PackageInput).min(1).max(MAX_PACKAGES),
+  packages: z.array(z.unknown()).min(1).max(MAX_PACKAGES),
 });
+
+export type NpmStreamError = 'api' | 'rate-limit' | 'not-found' | 'invalid';
 
 export type NpmStreamRow =
   | {
@@ -34,26 +34,61 @@ export type NpmStreamRow =
       ok: false;
       name: string;
       configuredVersion: string;
-      error: 'api' | 'rate-limit' | 'not-found';
+      error: NpmStreamError;
     };
 
+function clientIp(request: Request): string {
+  const forwarded = request.headers.get('x-forwarded-for');
+  if (!forwarded) return 'unknown';
+  return forwarded.split(',')[0]?.trim() || 'unknown';
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = hits.get(ip);
+  if (!entry || entry.resetAt <= now) {
+    hits.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_LIMIT;
+}
+
+export function resetNpmRateLimit() {
+  hits.clear();
+}
+
 export async function POST(request: Request) {
+  if (!(await featureAppPackageAnalyzer())) {
+    return NextResponse.json({ error: 'not found' }, { status: 404 });
+  }
+
+  if (isRateLimited(clientIp(request))) {
+    return NextResponse.json({ error: 'rate limit' }, { status: 429 });
+  }
+
   let parsed: z.infer<typeof Body>;
   try {
-    const json = await request.json();
-    parsed = Body.parse(json);
-  } catch (err) {
-    const message = err instanceof z.ZodError ? err.issues : 'invalid body';
-    return NextResponse.json({ error: 'invalid request', details: message }, { status: 400 });
+    parsed = Body.parse(await request.json());
+  } catch {
+    return NextResponse.json({ error: 'invalid request' }, { status: 400 });
   }
 
-  // Dedupe by name; keep the first configured version we saw for each.
   const versionByName = new Map<string, string>();
-  for (const p of parsed.packages) {
-    if (!versionByName.has(p.name)) versionByName.set(p.name, p.version);
-  }
-  const uniqueNames = Array.from(versionByName.keys());
+  const invalid: NpmStreamRow[] = [];
 
+  for (const raw of parsed.packages) {
+    const item = PackageItem.safeParse(raw);
+    const name = item.success ? item.data.name : '';
+    const configuredVersion = item.success ? String(item.data.version ?? '') : '';
+    if (!item.success || !isValidPackageName(name)) {
+      invalid.push({ ok: false, name, configuredVersion, error: 'invalid' });
+      continue;
+    }
+    if (!versionByName.has(name)) versionByName.set(name, configuredVersion);
+  }
+
+  const uniqueNames = Array.from(versionByName.keys());
   const encoder = new TextEncoder();
   const abortController = new AbortController();
   request.signal.addEventListener('abort', () => abortController.abort());
@@ -65,6 +100,9 @@ export async function POST(request: Request) {
       };
 
       try {
+        for (const row of invalid) write(row);
+        if (uniqueNames.length === 0) return;
+
         await fetchPackagesBatch(
           uniqueNames,
           (name, result) => {
@@ -75,13 +113,13 @@ export async function POST(request: Request) {
               write({ ok: false, name, configuredVersion, error: result.error });
             }
           },
-          { signal: abortController.signal, concurrency: 10 },
+          { signal: abortController.signal, concurrency: CONCURRENCY },
         );
       } catch (err) {
-        // Surface a final error frame; client treats unknown errors as 'api'.
-        const message =
-          err instanceof Error && err.name === 'AbortError' ? 'aborted' : 'api';
-        write({ ok: false, name: '', configuredVersion: '', error: message as 'api' });
+        const error = err instanceof Error && err.name === 'AbortError' ? 'aborted' : 'api';
+        if (error !== 'aborted') {
+          write({ ok: false, name: '', configuredVersion: '', error: 'api' });
+        }
       } finally {
         controller.close();
       }

@@ -10,7 +10,6 @@ export interface NpmPackageInfo {
   latestVersion: string;
   lastPublished: string;
   githubUrl: string | null;
-  openIssues: number;
 }
 
 interface NpmRegistryResponse {
@@ -56,27 +55,48 @@ function getNpmAuthToken(): string | null {
   return null;
 }
 
-function cleanGithubUrl(repoField: unknown): string | null {
-  let url = '';
+function repositoryText(repoField: unknown): string {
+  if (typeof repoField === 'string') return repoField.trim();
+  if (repoField && typeof repoField === 'object' && 'url' in repoField) {
+    const url = (repoField as { url?: unknown }).url;
+    if (typeof url === 'string') return url.trim();
+  }
+  return '';
+}
 
-  if (typeof repoField === 'string') {
-    url = repoField;
-  } else if (repoField && typeof repoField === 'object' && 'url' in repoField) {
-    url = (repoField as { url: string }).url || '';
+/** https URL on github.com only. Rejects hosts that merely contain the substring. */
+export function githubUrlFromRepository(repoField: unknown): string | null {
+  let raw = repositoryText(repoField);
+  if (!raw) return null;
+
+  raw = raw.replace(/^git\+/, '').replace(/\.git$/, '');
+
+  const scp = /^git@github\.com:(.+)$/.exec(raw);
+  if (scp?.[1]) raw = `https://github.com/${scp[1]}`;
+
+  const shorthand = /^github:(.+)$/.exec(raw);
+  if (shorthand?.[1]) raw = `https://github.com/${shorthand[1]}`;
+
+  raw = raw
+    .replace(/^ssh:\/\/git@github\.com\//, 'https://github.com/')
+    .replace(/^git:\/\/github\.com\//, 'https://github.com/');
+
+  if (!raw.startsWith('https://')) return null;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(raw);
+  } catch {
+    return null;
   }
 
-  if (!url) return null;
+  const host = parsed.hostname.toLowerCase();
+  if (host !== 'github.com' && host !== 'www.github.com') return null;
 
-  url = url
-    .replace(/^git\+/, '')
-    .replace(/^ssh:\/\/git@github\.com/, 'https://github.com')
-    .replace(/^git:\/\//, 'https://')
-    .replace(/\.git$/, '');
+  const path = parsed.pathname.replace(/\/$/, '');
+  if (!path || path === '/') return null;
 
-  if (!url.includes('github.com')) return null;
-  if (!url.startsWith('http')) url = `https://${url}`;
-
-  return url;
+  return `https://github.com${path}`;
 }
 
 // Names allowed by npm: scoped or unscoped, lowercased, limited charset.
@@ -133,8 +153,7 @@ async function fetchOnce(name: string, signal: AbortSignal): Promise<NpmPackageI
     description: data.description || '',
     latestVersion,
     lastPublished,
-    githubUrl: cleanGithubUrl(data.repository),
-    openIssues: 0,
+    githubUrl: githubUrlFromRepository(data.repository),
   };
 }
 
@@ -191,8 +210,7 @@ export async function fetchPackagesBatch(
         onResult(name, { ok: true, info });
       } catch (err) {
         if (signal?.aborted) return;
-        const code =
-          err instanceof NpmRegistryError ? (err.message as NpmFetchErrorType) : 'api';
+        const code = err instanceof NpmRegistryError ? (err.message as NpmFetchErrorType) : 'api';
         onResult(name, { ok: false, error: code });
       }
     }

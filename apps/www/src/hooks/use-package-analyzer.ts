@@ -2,17 +2,25 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import type { NpmPackageInfo } from '@/lib/npm-registry-client';
+import type { NpmFetchErrorType, NpmPackageInfo } from '@/lib/npm-registry-client';
 import { streamPackagesFromApi } from '@/lib/npm-registry-client';
+import { versionStatus, type VersionStatus } from '@/lib/package-version';
 
 export type ErrorType = 'parse' | 'empty' | 'api' | 'rate-limit';
-export type SortColumn = 'name' | 'currentVersion' | 'latestVersion' | 'issues' | 'lastPublished';
+export type SortColumn = 'name' | 'currentVersion' | 'latestVersion' | 'lastPublished';
 export type SortDirection = 'asc' | 'desc' | null;
 export type AnalyzerPhase = 'idle' | 'loading' | 'done' | 'error';
 
 export interface PackageEntry extends NpmPackageInfo {
   configuredVersion: string;
   isOutdated: boolean;
+  versionStatus: VersionStatus;
+}
+
+export interface FailedPackage {
+  name: string;
+  configuredVersion: string;
+  error: NpmFetchErrorType;
 }
 
 export interface ProjectMetadata {
@@ -28,16 +36,6 @@ interface ParsedPackageJson {
   metadata: ProjectMetadata;
   dependencies: Array<{ name: string; version: string }>;
   devDependencies: Array<{ name: string; version: string }>;
-}
-
-function parseVersion(version: string): string {
-  return version.replace(/^[\^~>=<*]*/g, '').trim();
-}
-
-function isOutdated(configured: string, latest: string): boolean {
-  const clean = parseVersion(configured);
-  if (!clean || latest === 'unknown') return false;
-  return clean !== latest;
 }
 
 function parsePackageJson(text: string): ParsedPackageJson {
@@ -95,8 +93,6 @@ function comparePackages(
       return mul * a.configuredVersion.localeCompare(b.configuredVersion);
     case 'latestVersion':
       return mul * a.latestVersion.localeCompare(b.latestVersion);
-    case 'issues':
-      return mul * (a.openIssues - b.openIssues);
     case 'lastPublished': {
       const dateA = a.lastPublished ? new Date(a.lastPublished).getTime() : 0;
       const dateB = b.lastPublished ? new Date(b.lastPublished).getTime() : 0;
@@ -116,6 +112,7 @@ export function usePackageAnalyzer() {
   const [totalDeps, setTotalDeps] = useState(0);
   const [totalDevDeps, setTotalDevDeps] = useState(0);
   const [fetchedCount, setFetchedCount] = useState(0);
+  const [failures, setFailures] = useState<FailedPackage[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortColumn, setSortColumn] = useState<SortColumn>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
@@ -135,6 +132,7 @@ export function usePackageAnalyzer() {
     setTotalDeps(0);
     setTotalDevDeps(0);
     setFetchedCount(0);
+    setFailures([]);
     setSearchQuery('');
     setSortColumn('name');
     setSortDirection(null);
@@ -152,6 +150,7 @@ export function usePackageAnalyzer() {
     setDependencies([]);
     setDevDependencies([]);
     setFetchedCount(0);
+    setFailures([]);
     setExpandedRows(new Set());
     setFileName(name);
     lastFileContent.current = content;
@@ -189,12 +188,20 @@ export function usePackageAnalyzer() {
         fetchCount++;
         setFetchedCount(fetchCount);
 
-        if (!row.ok) return; // Per-package errors are silently dropped from the table.
+        if (!row.ok) {
+          setFailures(prev => [
+            ...prev,
+            { name: row.name, configuredVersion: row.configuredVersion, error: row.error },
+          ]);
+          return;
+        }
 
+        const status = versionStatus(row.configuredVersion, row.info.latestVersion);
         const entry: PackageEntry = {
           ...row.info,
           configuredVersion: row.configuredVersion,
-          isOutdated: isOutdated(row.configuredVersion, row.info.latestVersion),
+          versionStatus: status,
+          isOutdated: status === 'outdated',
         };
 
         if (isDevByName.get(row.name)) {
@@ -304,11 +311,11 @@ export function usePackageAnalyzer() {
 
   const totalPackages = totalDeps + totalDevDeps;
   const outdatedCount = useMemo(
-    () => [...dependencies, ...devDependencies].filter(p => p.isOutdated).length,
+    () => [...dependencies, ...devDependencies].filter(p => p.versionStatus === 'outdated').length,
     [dependencies, devDependencies],
   );
   const upToDateCount = useMemo(
-    () => [...dependencies, ...devDependencies].filter(p => !p.isOutdated).length,
+    () => [...dependencies, ...devDependencies].filter(p => p.versionStatus === 'current').length,
     [dependencies, devDependencies],
   );
 
@@ -341,6 +348,7 @@ export function usePackageAnalyzer() {
     upToDateCount,
     averageAge,
     fetchedCount,
+    failures,
     searchQuery,
     sortColumn,
     sortDirection,

@@ -1,9 +1,9 @@
 import 'server-only';
 
-import { readFile, readdir, stat } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { parse as parseExif } from 'exifr';
 import { cache } from 'react';
+import { parse as parseExif } from 'exifr';
 import sharp from 'sharp';
 
 import type { Photo } from '@/lib/photo';
@@ -44,7 +44,9 @@ function locationLabel(slug: string) {
   return slug
     .split('-')
     .filter(Boolean)
-    .map(part => (part.length <= 2 ? part.toUpperCase() : part.charAt(0).toUpperCase() + part.slice(1)))
+    .map(part =>
+      part.length <= 2 ? part.toUpperCase() : part.charAt(0).toUpperCase() + part.slice(1),
+    )
     .join(' ');
 }
 
@@ -82,31 +84,36 @@ function cleanText(value: unknown): string | undefined {
   return text;
 }
 
-function toIsoDate(value: unknown): string | undefined {
-  if (!value) return;
-
-  if (value instanceof Date && !Number.isNaN(value.getTime())) {
-    return value.toISOString().slice(0, 10);
-  }
-
-  if (typeof value === 'string') {
-    const normalized = value.includes('T')
-      ? value
-      : value.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3');
-    const parsed = new Date(normalized);
-    if (!Number.isNaN(parsed.getTime())) return parsed.toISOString().slice(0, 10);
-  }
-
-  return;
+function localYmd(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
-function formatGps(lat: unknown, lng: unknown): string | undefined {
-  if (typeof lat !== 'number' || typeof lng !== 'number') return;
-  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+function ymd(year: string, month: string, day: string): string | undefined {
+  const monthNumber = Number(month);
+  const dayNumber = Number(day);
+  if (monthNumber < 1 || monthNumber > 12 || dayNumber < 1 || dayNumber > 31) return;
+  return `${year}-${month}-${day}`;
+}
 
-  const latHemisphere = lat >= 0 ? 'N' : 'S';
-  const lngHemisphere = lng >= 0 ? 'E' : 'W';
-  return `${Math.abs(lat).toFixed(2)}°${latHemisphere}, ${Math.abs(lng).toFixed(2)}°${lngHemisphere}`;
+/** Calendar date from EXIF text or a Date. Does not shift the day through UTC. */
+export function calendarDate(value: unknown): string | undefined {
+  if (value instanceof Date) {
+    if (Number.isNaN(value.getTime())) return;
+    return localYmd(value);
+  }
+
+  if (typeof value !== 'string') return;
+
+  const exif = /^(\d{4}):(\d{2}):(\d{2})/.exec(value);
+  if (exif?.[1] && exif[2] && exif[3]) return ymd(exif[1], exif[2], exif[3]);
+
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
+  if (iso?.[1] && iso[2] && iso[3]) return ymd(iso[1], iso[2], iso[3]);
+
+  return;
 }
 
 function firstText(...values: unknown[]) {
@@ -119,7 +126,7 @@ function firstText(...values: unknown[]) {
 
 function firstDate(...values: unknown[]) {
   for (const value of values) {
-    const date = toIsoDate(value);
+    const date = calendarDate(value);
     if (date) return date;
   }
   return undefined;
@@ -129,7 +136,7 @@ async function readEmbeddedMeta(filePath: string): Promise<EmbeddedMeta> {
   try {
     const bytes = await readFile(filePath);
     const tags = await parseExif(bytes, {
-      gps: true,
+      gps: false,
       iptc: true,
       xmp: true,
       userComment: true,
@@ -143,7 +150,7 @@ async function readEmbeddedMeta(filePath: string): Promise<EmbeddedMeta> {
     const city = firstText(tags.City, tags.Sublocation, tags.SubLocation, tags.Location);
     const region = firstText(tags.State, tags['Province-State']);
     const country = firstText(tags.Country, tags.CountryName);
-    const place = [city, region, country].filter(Boolean).join(', ') || formatGps(tags.latitude, tags.longitude);
+    const place = [city, region, country].filter(Boolean).join(', ');
 
     return {
       date: firstDate(tags.DateTimeOriginal, tags.CreateDate, tags.DateCreated, tags.ModifyDate),
@@ -165,6 +172,24 @@ async function readEmbeddedMeta(filePath: string): Promise<EmbeddedMeta> {
   }
 }
 
+let photoCache: { signature: string; photos: Photo[] } | null = null;
+
+function isPhotoFile(filename: string): boolean {
+  if (filename.startsWith('.')) return false;
+  return PHOTO_EXTENSIONS.has(path.extname(filename).toLowerCase());
+}
+
+async function folderSignature(filenames: string[]): Promise<string> {
+  const parts = await Promise.all(
+    filenames.map(async filename => {
+      const fileStat = await stat(path.join(PHOTOS_DIR, filename));
+      return `${filename}:${fileStat.mtimeMs}:${fileStat.size}`;
+    }),
+  );
+  parts.sort();
+  return parts.join('|');
+}
+
 async function readPhotoFolder(): Promise<Photo[]> {
   let entries: string[];
   try {
@@ -173,11 +198,13 @@ async function readPhotoFolder(): Promise<Photo[]> {
     return [];
   }
 
+  const filenames = entries.filter(isPhotoFile);
+  const signature = await folderSignature(filenames);
+  if (photoCache?.signature === signature) return photoCache.photos;
+
   const photos = await Promise.all(
     entries.map(async (filename): Promise<Photo | null> => {
-      const ext = path.extname(filename).toLowerCase();
-      if (!PHOTO_EXTENSIONS.has(ext)) return null;
-      if (filename.startsWith('.')) return null;
+      if (!isPhotoFile(filename)) return null;
 
       const filePath = path.join(PHOTOS_DIR, filename);
       const [fileStat, metadata, embedded] = await Promise.all([
@@ -197,17 +224,20 @@ async function readPhotoFolder(): Promise<Photo[]> {
         width: metadata.width ?? 800,
         height: metadata.height ?? 800,
         location: embedded.location ?? parsed.location,
-        date: embedded.date ?? parsed.date ?? fileStat.mtime.toISOString().slice(0, 10),
+        date: embedded.date ?? parsed.date ?? calendarDate(fileStat.mtime) ?? '',
       };
     }),
   );
 
-  return photos
+  const sorted = photos
     .filter((photo): photo is Photo => photo !== null)
     .toSorted((a, b) => {
       if (a.date === b.date) return a.id.localeCompare(b.id);
       return a.date < b.date ? 1 : -1;
     });
+
+  photoCache = { signature, photos: sorted };
+  return sorted;
 }
 
 export type { Photo };

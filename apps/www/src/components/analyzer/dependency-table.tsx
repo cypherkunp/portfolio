@@ -149,21 +149,14 @@ function PackageRow({
         <TableCell className="hidden md:table-cell">
           <div className="flex items-center gap-2">
             <span className="font-mono text-sm">{pkg.latestVersion}</span>
-            {pkg.isOutdated ? (
+            {pkg.versionStatus === 'outdated' ? (
               <AlertTriangle className="size-3.5 text-yellow-400" />
-            ) : (
+            ) : pkg.versionStatus === 'current' ? (
               <CheckCircle className="size-3.5 text-emerald-400" />
+            ) : (
+              <span className="text-muted-foreground text-xs">—</span>
             )}
           </div>
-        </TableCell>
-        <TableCell className="hidden text-center lg:table-cell">
-          {pkg.openIssues > 0 ? (
-            <Badge variant="outline" className="text-xs">
-              {pkg.openIssues}
-            </Badge>
-          ) : (
-            <span className="text-muted-foreground text-xs">—</span>
-          )}
         </TableCell>
         <TableCell className="hidden xl:table-cell">
           <span className="text-muted-foreground text-xs">
@@ -203,7 +196,7 @@ function PackageRow({
       <AnimatePresence>
         {isExpanded && (
           <tr>
-            <td colSpan={7}>
+            <td colSpan={6}>
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
@@ -212,9 +205,9 @@ function PackageRow({
                 className="overflow-hidden"
               >
                 <div className="border-border bg-muted/20 border-b px-6 py-4">
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {pkg.description && (
-                      <div className="md:col-span-2 lg:col-span-4">
+                      <div className="md:col-span-2 lg:col-span-3">
                         <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
                           Description
                         </span>
@@ -232,12 +225,6 @@ function PackageRow({
                         Latest version
                       </span>
                       <p className="mt-1 font-mono text-sm">{pkg.latestVersion}</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
-                        Issues
-                      </span>
-                      <p className="mt-1 text-sm">{pkg.openIssues}</p>
                     </div>
                     <div>
                       <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
@@ -272,9 +259,6 @@ function LoadingSkeleton() {
           </TableCell>
           <TableCell className="hidden md:table-cell">
             <Skeleton className="h-4 w-20" />
-          </TableCell>
-          <TableCell className="hidden lg:table-cell">
-            <Skeleton className="mx-auto h-4 w-8" />
           </TableCell>
           <TableCell className="hidden xl:table-cell">
             <Skeleton className="h-4 w-24" />
@@ -376,14 +360,6 @@ function PackageTable({
                 className="hidden md:table-cell"
               />
               <SortableHeader
-                label="Issues"
-                column="issues"
-                activeColumn={sortColumn}
-                direction={sortDirection}
-                onSort={onSort}
-                className="hidden text-center lg:table-cell"
-              />
-              <SortableHeader
                 label="Last published"
                 column="lastPublished"
                 activeColumn={sortColumn}
@@ -399,7 +375,7 @@ function PackageTable({
               <LoadingSkeleton />
             ) : packages.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-muted-foreground py-12 text-center">
+                <TableCell colSpan={6} className="text-muted-foreground py-12 text-center">
                   {searchQuery
                     ? `No packages found matching "${searchQuery}"`
                     : 'No packages in this category'}

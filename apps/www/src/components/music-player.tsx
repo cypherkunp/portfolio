@@ -36,9 +36,12 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isRepeatRef = useRef(isRepeat);
   const isShuffleRef = useRef(isShuffle);
+  const currentSongRef = useRef(currentSong);
+  const onEndedRef = useRef<() => void>(() => {});
 
   isRepeatRef.current = isRepeat;
   isShuffleRef.current = isShuffle;
+  currentSongRef.current = currentSong;
 
   const getAudio = () => {
     if (!audioRef.current) {
@@ -63,11 +66,7 @@ export default function MusicPlayer() {
       });
 
       audioRef.current.addEventListener('ended', () => {
-        if (isRepeatRef.current) {
-          loadAndPlay(undefined);
-        } else {
-          skipNext();
-        }
+        onEndedRef.current();
       });
 
       audioRef.current.addEventListener('error', () => {
@@ -95,7 +94,7 @@ export default function MusicPlayer() {
 
   const loadAndPlay = (song: Song | undefined) => {
     const audio = getAudio();
-    const target = song ?? currentSong;
+    const target = song ?? currentSongRef.current;
 
     if (song) setCurrentSong(song);
 
@@ -148,7 +147,7 @@ export default function MusicPlayer() {
   };
 
   const getNextIndex = (direction: -1 | 1) => {
-    const idx = songs.findIndex(s => s.id === currentSong.id);
+    const idx = songs.findIndex(s => s.id === currentSongRef.current.id);
     if (isShuffleRef.current) return Math.floor(Math.random() * songs.length);
     if (direction === -1) return idx <= 0 ? songs.length - 1 : idx - 1;
     return idx >= songs.length - 1 ? 0 : idx + 1;
@@ -157,6 +156,14 @@ export default function MusicPlayer() {
   const skipPrev = () => loadAndPlay(songs[getNextIndex(-1)]);
   const skipNext = () => loadAndPlay(songs[getNextIndex(1)]);
   const selectSong = (song: Song) => loadAndPlay(song);
+
+  onEndedRef.current = () => {
+    if (isRepeatRef.current) {
+      loadAndPlay(currentSongRef.current);
+      return;
+    }
+    skipNext();
+  };
 
   return (
     <div className="text-foreground flex min-h-0 flex-1 flex-col lg:flex-row lg:gap-0">
