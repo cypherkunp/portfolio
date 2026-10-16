@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/chat-checks.sh mark"
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/chat-checks.sh stop",
+        "timeout": 900,
+        "loop_limit": 3
+      }
+    ]
+  }
+}

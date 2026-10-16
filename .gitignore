@@ -55,3 +55,6 @@ storybook-static
 
 # Skill eval workspaces
 .agents/skills/*-workspace/
+
+# Cursor hook run state
+.cursor/hooks/state/
