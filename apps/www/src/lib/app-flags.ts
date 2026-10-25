@@ -18,9 +18,7 @@ const flags: Record<AppId, () => Promise<boolean>> = {
 };
 
 async function readAppFlags(): Promise<Record<AppId, boolean>> {
-  const entries = await Promise.all(
-    getAppIds().map(async id => [id, await flags[id]()] as const),
-  );
+  const entries = await Promise.all(getAppIds().map(async id => [id, await flags[id]()] as const));
   return Object.fromEntries(entries) as Record<AppId, boolean>;
 }
 
@@ -29,9 +27,12 @@ export async function getEnabledApps(): Promise<AppId[]> {
   return getAppIds().filter(id => values[id]);
 }
 
+export async function isAppEnabled(id: AppId): Promise<boolean> {
+  return flags[id]();
+}
+
 export async function assertAppEnabled(id: AppId): Promise<void> {
-  const enabled = await flags[id]();
-  if (!enabled) notFound();
+  if (!(await isAppEnabled(id))) notFound();
 }
 
 export async function getSitemapPaths(): Promise<string[]> {

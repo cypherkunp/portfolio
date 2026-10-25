@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { assertAppEnabled, getEnabledApps, getSitemapPaths } from '@/lib/app-flags';
 import { getApp } from '@/lib/app-catalog';
+import { assertAppEnabled, getEnabledApps, getSitemapPaths, isAppEnabled } from '@/lib/app-flags';
 
 const flagValues: Record<string, boolean> = {};
 
@@ -122,6 +122,17 @@ describe('getSitemapPaths', () => {
     });
 
     await expect(getSitemapPaths()).resolves.toEqual(['/', '/about', '/posts']);
+  });
+});
+
+describe('isAppEnabled', () => {
+  it('is false when the Music catalog flag is off', async () => {
+    setFlags({ ...ALL_ON, 'feature-app-music': false });
+    await expect(isAppEnabled('musicPlayer')).resolves.toBe(false);
+  });
+
+  it('is true when the Music catalog flag is on', async () => {
+    await expect(isAppEnabled('musicPlayer')).resolves.toBe(true);
   });
 });
 

@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as AboutRouteImport } from './routes/about';
+import { Route as InspirationsRouteImport } from './routes/inspirations';
+import { Route as MusicRouteImport } from './routes/music';
+import { Route as BookmarksIndexRouteImport } from './routes/bookmarks/index';
+import { Route as BookmarksCollectionRouteImport } from './routes/bookmarks/$collection';
 import { Route as PostsIndexRouteImport } from './routes/posts/index';
 import { Route as PostsSlugRouteImport } from './routes/posts/$slug';
 
@@ -22,6 +26,26 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const InspirationsRoute = InspirationsRouteImport.update({
+  id: '/inspirations',
+  path: '/inspirations',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const MusicRoute = MusicRouteImport.update({
+  id: '/music',
+  path: '/music',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const BookmarksIndexRoute = BookmarksIndexRouteImport.update({
+  id: '/bookmarks/',
+  path: '/bookmarks/',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const BookmarksCollectionRoute = BookmarksCollectionRouteImport.update({
+  id: '/bookmarks/$collection',
+  path: '/bookmarks/$collection',
   getParentRoute: () => rootRouteImport,
 } as any);
 const PostsIndexRoute = PostsIndexRouteImport.update({
@@ -38,34 +62,75 @@ const PostsSlugRoute = PostsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/inspirations': typeof InspirationsRoute;
+  '/music': typeof MusicRoute;
+  '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
+  '/bookmarks/': typeof BookmarksIndexRoute;
   '/posts/': typeof PostsIndexRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/inspirations': typeof InspirationsRoute;
+  '/music': typeof MusicRoute;
+  '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
+  '/bookmarks': typeof BookmarksIndexRoute;
   '/posts': typeof PostsIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/inspirations': typeof InspirationsRoute;
+  '/music': typeof MusicRoute;
+  '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
+  '/bookmarks/': typeof BookmarksIndexRoute;
   '/posts/': typeof PostsIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/about' | '/posts/$slug' | '/posts/';
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/inspirations'
+    | '/music'
+    | '/bookmarks/$collection'
+    | '/posts/$slug'
+    | '/bookmarks/'
+    | '/posts/';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/about' | '/posts/$slug' | '/posts';
-  id: '__root__' | '/' | '/about' | '/posts/$slug' | '/posts/';
+  to:
+    | '/'
+    | '/about'
+    | '/inspirations'
+    | '/music'
+    | '/bookmarks/$collection'
+    | '/posts/$slug'
+    | '/bookmarks'
+    | '/posts';
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/inspirations'
+    | '/music'
+    | '/bookmarks/$collection'
+    | '/posts/$slug'
+    | '/bookmarks/'
+    | '/posts/';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   AboutRoute: typeof AboutRoute;
+  InspirationsRoute: typeof InspirationsRoute;
+  MusicRoute: typeof MusicRoute;
+  BookmarksCollectionRoute: typeof BookmarksCollectionRoute;
   PostsSlugRoute: typeof PostsSlugRoute;
+  BookmarksIndexRoute: typeof BookmarksIndexRoute;
   PostsIndexRoute: typeof PostsIndexRoute;
 }
 
@@ -83,6 +148,34 @@ declare module '@tanstack/react-router' {
       path: '/about';
       fullPath: '/about';
       preLoaderRoute: typeof AboutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/inspirations': {
+      id: '/inspirations';
+      path: '/inspirations';
+      fullPath: '/inspirations';
+      preLoaderRoute: typeof InspirationsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/music': {
+      id: '/music';
+      path: '/music';
+      fullPath: '/music';
+      preLoaderRoute: typeof MusicRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/bookmarks/': {
+      id: '/bookmarks/';
+      path: '/bookmarks';
+      fullPath: '/bookmarks/';
+      preLoaderRoute: typeof BookmarksIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/bookmarks/$collection': {
+      id: '/bookmarks/$collection';
+      path: '/bookmarks/$collection';
+      fullPath: '/bookmarks/$collection';
+      preLoaderRoute: typeof BookmarksCollectionRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/posts/': {
@@ -105,7 +198,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  InspirationsRoute: InspirationsRoute,
+  MusicRoute: MusicRoute,
+  BookmarksCollectionRoute: BookmarksCollectionRoute,
   PostsSlugRoute: PostsSlugRoute,
+  BookmarksIndexRoute: BookmarksIndexRoute,
   PostsIndexRoute: PostsIndexRoute,
 };
 export const routeTree = rootRouteImport
