@@ -1,29 +1,12 @@
-import Link from 'next/link';
-
-import { formatDate } from '@/lib/format-date';
 import { getTimeSortedPosts } from '@/lib/post.utils';
+import { PostLinks } from '@/components/post-links';
 
-export default async function PostsBlock() {
-  const allTimeSortedPosts = getTimeSortedPosts();
+export default function PostsBlock() {
+  const posts = getTimeSortedPosts().map(post => ({
+    slug: post.slug,
+    title: post.metadata.title,
+    publishedOn: post.metadata.publishedOn,
+  }));
 
-  if (!allTimeSortedPosts || allTimeSortedPosts.length === 0) {
-    return <div className="text-neutral-500">No posts available.</div>;
-  }
-
-  return (
-    <div>
-      {allTimeSortedPosts.map(post => (
-        <Link key={post.slug} className="mb-4 flex flex-col space-y-1" href={`/posts/${post.slug}`}>
-          <div className="flex items-start gap-2">
-            <p className="shrink-0 text-sm leading-6 text-neutral-600 tabular-nums dark:text-neutral-400">
-              {formatDate(post.metadata.publishedOn, false)}
-            </p>
-            <p className="hover:decoration-tertiary tracking-tight text-neutral-900 hover:underline hover:underline-offset-8 dark:text-neutral-100">
-              {post.metadata.title}
-            </p>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
+  return <PostLinks posts={posts} />;
 }

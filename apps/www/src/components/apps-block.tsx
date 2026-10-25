@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 import { getApp, type AppId } from '@/lib/app-catalog';
 
@@ -8,8 +8,8 @@ interface AppsBlockProps {
   enabledApps: AppId[];
 }
 
-export default async function AppsBlock({ enabledApps }: AppsBlockProps) {
-  const t = await getTranslations('Blocks.apps');
+export default function AppsBlock({ enabledApps }: AppsBlockProps) {
+  const t = useTranslations('Blocks.apps');
 
   if (enabledApps.length === 0) return null;
 

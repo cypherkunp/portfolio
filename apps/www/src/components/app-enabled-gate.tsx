@@ -1,6 +1,7 @@
 import { Suspense, type ReactNode } from 'react';
 
-import { assertAppEnabled, type AppId } from '@/lib/app-catalog';
+import { assertAppEnabled } from '@/lib/app-flags';
+import type { AppId } from '@/lib/app-catalog';
 
 interface AppEnabledGateProps {
   id: AppId;

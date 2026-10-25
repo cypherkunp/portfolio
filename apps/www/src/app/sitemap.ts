@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 import { PORTFOLIO_BASE_URL } from '@/config/site-data';
-import { getSitemapPaths } from '@/lib/app-catalog';
+import { getSitemapPaths } from '@/lib/app-flags';
 import { getCollections } from '@/lib/bookmarks';
 import { getBlogPosts } from '@/lib/post.utils';
 import { buildSitemapEntries } from '@/lib/seo';

@@ -2,6 +2,10 @@
 
 import Image from 'next/image';
 import ProfilePic from '@/images/profile.jpg';
+
+function assetSrc(asset: string | { src: string }) {
+  return typeof asset === 'string' ? asset : asset.src;
+}
 import { Cover } from '@repo/ui/components/cover';
 import { FollowerPointerCard } from '@repo/ui/components/following-pointer';
 import { useTranslations } from 'next-intl';
@@ -12,10 +16,10 @@ export default function InfoBlock() {
     <Cover className="p-2">
       <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-start md:gap-16">
         <FollowerPointerCard
-          title={<Pointer title={t('Blocks.infoBlock.pointer.text')} avatar={ProfilePic.src} />}
+          title={<Pointer title={t('Blocks.infoBlock.pointer.text')} avatar={assetSrc(ProfilePic)} />}
         >
           <Image
-            src={ProfilePic.src}
+            src={assetSrc(ProfilePic)}
             alt={t('Common.contact.name')}
             className="size-[200px] rounded-full object-cover md:size-[200px] md:rounded-md"
             width={200}

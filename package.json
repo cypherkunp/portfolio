@@ -59,7 +59,8 @@
     "turbo": "^2.11.7",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1",
-    "unlighthouse": "^0.17.7"
+    "unlighthouse": "^0.17.7",
+    "vite": "^8.3.0"
   },
   "peerDependencies": {
     "typescript": ">=5.0.0"

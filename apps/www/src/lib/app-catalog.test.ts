@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { assertAppEnabled, getApp, getEnabledApps, getSitemapPaths } from '@/lib/app-catalog';
+import { assertAppEnabled, getEnabledApps, getSitemapPaths } from '@/lib/app-flags';
+import { getApp } from '@/lib/app-catalog';
 
 const flagValues: Record<string, boolean> = {};
 

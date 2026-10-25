@@ -5,7 +5,7 @@ import PageContainer from '@repo/ui/components/layout/page-container';
 import { Section } from '@repo/ui/components/layout/section';
 import { getTranslations } from 'next-intl/server';
 
-import { getEnabledApps } from '@/lib/app-catalog';
+import { getEnabledApps } from '@/lib/app-flags';
 import {
   documentTitle,
   serializeJsonLd,

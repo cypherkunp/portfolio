@@ -31,5 +31,5 @@
     "src/images/logos/*.*",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/router.tsx", "src/routes", "src/routeTree.gen.ts", "src/server"]
 }

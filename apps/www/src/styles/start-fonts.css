@@ -1,0 +1,10 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+.font-geist {
+  font-family: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-geist-mono {
+  font-family: 'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
