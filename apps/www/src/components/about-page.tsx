@@ -1,0 +1,136 @@
+import { Badge } from '@repo/ui/components/badge';
+import { Card, CardContent, CardHeader } from '@repo/ui/components/card';
+import PageContainer from '@repo/ui/components/layout/page-container';
+import { Section } from '@repo/ui/components/layout/section';
+import { RenderIf } from '@repo/ui/components/render-if';
+import { useTranslations } from 'next-intl';
+
+import { faqJsonLd, serializeJsonLd } from '@/lib/seo';
+import { FaqBlock } from '@/components/faq-block';
+import StackBlock from '@/components/stack-block';
+
+export function AboutPage() {
+  const rootTranslations = useTranslations();
+  const t = useTranslations('AboutPage.data');
+  const stackBlock = useTranslations('Blocks.stackBlock');
+  const faqs = rootTranslations.raw('Blocks.faqBlock.list') as {
+    question: string;
+    answer: string;
+  }[];
+
+  return (
+    <PageContainer className="w-full overflow-auto print:p-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd(faqs)) }}
+      />
+      <Section isFirstSection title={t('labels.about')}>
+        <ul className="flex list-inside list-disc flex-col">
+          {t('summary')
+            .split('. ')
+            .map((sentence, index) => (
+              <li key={index} className="text-base leading-relaxed text-pretty">
+                {sentence}
+              </li>
+            ))}
+        </ul>
+      </Section>
+      <Section className="space-y-2" title={stackBlock('title')}>
+        <StackBlock />
+      </Section>
+      <Section title={t('labels.work')}>
+        {(t.raw('work') as WorkEntry[]).map(work => {
+          return (
+            <Card key={work.company} className="mb-10 space-y-2 border-none !bg-neutral-950">
+              <CardHeader className="mb-8 !p-0">
+                <div className="flex flex-col items-start justify-start text-base md:flex-row md:items-center md:justify-between">
+                  <h3 className="inline-flex items-center justify-center gap-x-1 text-base leading-none font-normal">
+                    <a className="hover:underline" href={work.link}>
+                      {work.company}
+                    </a>
+
+                    <RenderIf condition={!!work.badges}>
+                      <span className="inline-flex gap-x-1">
+                        {work.badges?.map((badge: string) => (
+                          <Badge variant="secondary" className="align-middle text-base" key={badge}>
+                            {badge}
+                          </Badge>
+                        ))}
+                      </span>
+                    </RenderIf>
+                  </h3>
+                  <div className="min-w-[96px] text-sm text-gray-500 tabular-nums">
+                    {work.start} - {work.end}
+                  </div>
+                </div>
+
+                <p className="text-muted-foreground text-base leading-relaxed">{work.title}</p>
+              </CardHeader>
+              <CardContent className="!p-0 text-base leading-relaxed">
+                {work.description}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </Section>
+      <Section title={t('labels.education')}>
+        {(t.raw('education') as EducationEntry[]).map(education => {
+          return (
+            <Card key={education.school} className="space-y-4 border-none !bg-neutral-950">
+              <CardHeader className="mb-8 !p-0">
+                <div className="flex flex-col items-start justify-start gap-x-2 text-base md:flex-row md:items-center md:justify-between">
+                  <h3 className="leading-none font-[200]">{education.school}</h3>
+                  <div className="text-sm text-gray-500 tabular-nums">
+                    {education.start} - {education.end}
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="!p-0 text-base leading-relaxed">
+                {education.degree}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </Section>
+      <Section title="Skills">
+        <div className="flex flex-wrap gap-1">
+          {t.raw('skills').map((skill: string) => {
+            return (
+              <Badge
+                variant="outline"
+                className="rounded-xl border-neutral-500 px-3 py-1 text-base font-normal text-white"
+                key={skill}
+              >
+                {skill}
+              </Badge>
+            );
+          })}
+        </div>
+      </Section>
+      <Section
+        title={rootTranslations('Blocks.faqBlock.title')}
+        description={rootTranslations('Blocks.faqBlock.description')}
+        isLastSection
+      >
+        <FaqBlock />
+      </Section>
+    </PageContainer>
+  );
+}
+
+interface WorkEntry {
+  company: string;
+  link: string;
+  badges?: string[];
+  start: string;
+  end: string;
+  title: string;
+  description: string;
+}
+
+interface EducationEntry {
+  school: string;
+  degree: string;
+  start: string;
+  end: string;
+}

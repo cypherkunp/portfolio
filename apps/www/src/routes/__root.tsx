@@ -45,7 +45,6 @@ export const Route = createRootRoute({
       { name: 'twitter:image', content: `${PORTFOLIO_BASE_URL}${OG_HOME_IMAGE.url}` },
     ],
     links: [
-      { rel: 'canonical', href: PORTFOLIO_BASE_URL },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
       { rel: 'icon', href: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
