@@ -33,6 +33,8 @@ export default function Image({
     : undefined;
 
   return (
+    // This module is the next/image stand-in, so the native element is the implementation.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={url}
       alt={alt ?? ''}

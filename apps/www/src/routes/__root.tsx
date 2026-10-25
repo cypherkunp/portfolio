@@ -66,6 +66,7 @@ function RootComponent() {
 function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang="en-GB" className={`${geistMono.className} antialiased`} suppressHydrationWarning>
+      {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <HeadContent />
       </head>
