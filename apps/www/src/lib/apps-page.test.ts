@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  analyzerPageHead,
   bookmarksIndexHead,
   collectionPageHead,
   inspirationsPageHead,
@@ -68,6 +69,23 @@ describe('photosPageHead', () => {
     expect(head.links).toContainEqual({
       rel: 'canonical',
       href: 'https://www.devvrat.cc/photos',
+    });
+  });
+});
+
+describe('analyzerPageHead', () => {
+  it('matches the current Package Analyzer title, description, and canonical URL', () => {
+    const head = analyzerPageHead();
+
+    expect(head.meta).toContainEqual({ title: 'Package Analyzer | Devvrat' });
+    expect(head.meta).toContainEqual({
+      name: 'description',
+      content:
+        'Analyze your package.json dependencies — find outdated packages, check versions, and inspect your project health.',
+    });
+    expect(head.links).toContainEqual({
+      rel: 'canonical',
+      href: 'https://www.devvrat.cc/analyzer',
     });
   });
 });

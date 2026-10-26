@@ -134,6 +134,11 @@ describe('isAppEnabled', () => {
   it('is true when the Music catalog flag is on', async () => {
     await expect(isAppEnabled('musicPlayer')).resolves.toBe(true);
   });
+
+  it('is false when the Package Analyzer catalog flag is off', async () => {
+    setFlags({ ...ALL_ON, 'feature-app-package-analyzer': false });
+    await expect(isAppEnabled('packageAnalyzer')).resolves.toBe(false);
+  });
 });
 
 describe('assertAppEnabled', () => {
@@ -144,5 +149,10 @@ describe('assertAppEnabled', () => {
   it('404s when the catalog flag is off', async () => {
     setFlags({ ...ALL_ON, 'feature-app-music': false });
     await expect(assertAppEnabled('musicPlayer')).rejects.toThrow('NEXT_NOT_FOUND');
+  });
+
+  it('404s when the Package Analyzer catalog flag is off', async () => {
+    setFlags({ ...ALL_ON, 'feature-app-package-analyzer': false });
+    await expect(assertAppEnabled('packageAnalyzer')).rejects.toThrow('NEXT_NOT_FOUND');
   });
 });

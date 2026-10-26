@@ -1,0 +1,138 @@
+- generic [ref=f1e2]:
+  - banner [ref=f1e3]:
+    - navigation [ref=f1e4]:
+      - generic [ref=f1e7]:
+        - link "Home" [ref=f1e8] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=f1e9] [cursor=pointer]:
+          - /url: /about
+        - link "Connect" [ref=f1e10] [cursor=pointer]:
+          - /url: https://devvrat.uk
+  - main [ref=f1e15]:
+    - generic [ref=f1e19]:
+      - img "Devvrat" [ref=f1e21]
+      - generic [ref=f1e22]:
+        - heading "Hi, I'm Devvrat" [level=1] [ref=f1e23]
+        - paragraph [ref=f1e24]: AI Sorcerer | Engineer | Craftsman
+        - paragraph [ref=f1e25]: I am software engineer specializing in web app development. My passion is crafting digital experiences and building high-performance development teams.
+    - generic [ref=f1e26]:
+      - heading "Posts" [level=2] [ref=f1e28]
+      - generic [ref=f1e30]:
+        - link [ref=f1e31] [cursor=pointer]:
+          - /url: /posts/agent-software-factory
+          - generic [ref=f1e32]:
+            - paragraph [ref=f1e33]: 16/10/26
+            - paragraph [ref=f1e34]: An agent software factory is the workflow for the coding agent
+        - link [ref=f1e35] [cursor=pointer]:
+          - /url: /posts/how-to-call-another-skill-from-a-skill
+          - generic [ref=f1e36]:
+            - paragraph [ref=f1e37]: 16/10/26
+            - paragraph [ref=f1e38]: How to call another skill from a skill
+        - link [ref=f1e39] [cursor=pointer]:
+          - /url: /posts/what-each-cursor-hook-does
+          - generic [ref=f1e40]:
+            - paragraph [ref=f1e41]: 16/10/26
+            - paragraph [ref=f1e42]: What each Cursor hook does
+        - link [ref=f1e43] [cursor=pointer]:
+          - /url: /posts/atomic-design-in-react
+          - generic [ref=f1e44]:
+            - paragraph [ref=f1e45]: 09/10/26
+            - paragraph [ref=f1e46]: The Five Stages of Atomic Design
+        - link [ref=f1e47] [cursor=pointer]:
+          - /url: /posts/git-worktrees-parallel-agents
+          - generic [ref=f1e48]:
+            - paragraph [ref=f1e49]: 09/10/26
+            - paragraph [ref=f1e50]: Check out two branches at once with git worktrees
+        - link [ref=f1e51] [cursor=pointer]:
+          - /url: /posts/agent-skills-101
+          - generic [ref=f1e52]:
+            - paragraph [ref=f1e53]: 08/10/26
+            - paragraph [ref=f1e54]: Agent skills 101
+        - link [ref=f1e55] [cursor=pointer]:
+          - /url: /posts/branch-naming-conventions
+          - generic [ref=f1e56]:
+            - paragraph [ref=f1e57]: 06/10/26
+            - paragraph [ref=f1e58]: Name branches like commits
+        - link [ref=f1e59] [cursor=pointer]:
+          - /url: /posts/factory-mindset
+          - generic [ref=f1e60]:
+            - paragraph [ref=f1e61]: 01/10/26
+            - paragraph [ref=f1e62]: The Factory Mindset
+        - link [ref=f1e63] [cursor=pointer]:
+          - /url: /posts/github-stacked-prs
+          - generic [ref=f1e64]:
+            - paragraph [ref=f1e65]: 19/09/26
+            - paragraph [ref=f1e66]: GitHub stacked pull requests
+        - link [ref=f1e67] [cursor=pointer]:
+          - /url: /posts/build-better-agent-skills
+          - generic [ref=f1e68]:
+            - paragraph [ref=f1e69]: 02/08/26
+            - paragraph [ref=f1e70]: Build better agent skills
+        - link [ref=f1e71] [cursor=pointer]:
+          - /url: /posts/claude-code-mcp
+          - generic [ref=f1e72]:
+            - paragraph [ref=f1e73]: 04/01/26
+            - paragraph [ref=f1e74]: MCPs with love
+        - link [ref=f1e75] [cursor=pointer]:
+          - /url: /posts/hello-world
+          - generic [ref=f1e76]:
+            - paragraph [ref=f1e77]: 01/01/25
+            - paragraph [ref=f1e78]: Hello world
+        - link [ref=f1e79] [cursor=pointer]:
+          - /url: /posts/handbook
+          - generic [ref=f1e80]:
+            - paragraph [ref=f1e81]: 01/01/24
+            - paragraph [ref=f1e82]: Devvrat's Handbook
+    - generic [ref=f1e83]:
+      - heading "Apps" [level=2] [ref=f1e85]
+      - generic [ref=f1e87]:
+        - link "MP Music Player Music in collaboration with AI artists" [ref=f1e88] [cursor=pointer]:
+          - /url: /music
+          - generic [ref=f1e89]: MP
+          - generic [ref=f1e90]: Music Player
+          - generic [ref=f1e91]: Music in collaboration with AI artists
+        - link "IN Inspirations Collection of ideas and references that inspire." [ref=f1e95] [cursor=pointer]:
+          - /url: /inspirations
+          - generic [ref=f1e96]: IN
+          - generic [ref=f1e97]: Inspirations
+          - generic [ref=f1e98]: Collection of ideas and references that inspire.
+        - link "BM Bookmarks Saved links and resources." [ref=f1e102] [cursor=pointer]:
+          - /url: /bookmarks
+          - generic [ref=f1e103]: BM
+          - generic [ref=f1e104]: Bookmarks
+          - generic [ref=f1e105]: Saved links and resources.
+        - link "PH Photos Photo gallery and visual snapshots." [ref=f1e109] [cursor=pointer]:
+          - /url: /photos
+          - generic [ref=f1e110]: PH
+          - generic [ref=f1e111]: Photos
+          - generic [ref=f1e112]: Photo gallery and visual snapshots.
+        - link "PA Package Analyzer Analyze npm dependencies and check for updates." [ref=f1e116] [cursor=pointer]:
+          - /url: /analyzer
+          - generic [ref=f1e117]: PA
+          - generic [ref=f1e118]: Package Analyzer
+          - generic [ref=f1e119]: Analyze npm dependencies and check for updates.
+  - contentinfo [ref=f1e123]:
+    - generic [ref=f1e125]:
+      - generic [ref=f1e126]:
+        - heading "Have a question for me?" [level=3] [ref=f1e127]
+        - paragraph [ref=f1e128]:
+          - text: Reach out via
+          - link "Email" [ref=f1e130] [cursor=pointer]:
+            - /url: mailto:devvrat.shukla@gmail.com
+          - text: or
+          - link "Twitter" [ref=f1e134] [cursor=pointer]:
+            - /url: https://x.com/devvrathq
+      - generic [ref=f1e137]:
+        - heading "You can also find me on" [level=3] [ref=f1e138]
+        - paragraph [ref=f1e139]:
+          - link "LinkedIn" [ref=f1e141] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/devvratshukla/
+          - text: and
+          - link "GitHub" [ref=f1e145] [cursor=pointer]:
+            - /url: https://github.com/cypherkunp
+  - generic:
+    - generic:
+      - paragraph:
+        - text: Handmade by
+        - generic: Devvrat
+        - text: . All rights reserved.

@@ -1,0 +1,8 @@
+{
+  "name": "analyzer-fixture",
+  "version": "1.0.0",
+  "description": "Tiny fixture for the Package Analyzer",
+  "dependencies": {
+    "zod": "^3.23.0"
+  }
+}

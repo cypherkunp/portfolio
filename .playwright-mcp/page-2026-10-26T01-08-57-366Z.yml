@@ -1,0 +1,25 @@
+- generic [ref=f2e3]:
+  - banner [ref=f2e4]:
+    - navigation [ref=f2e5]:
+      - generic [ref=f2e8]:
+        - link "Home" [ref=f2e9] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=f2e10] [cursor=pointer]:
+          - /url: /about
+        - link "Connect" [ref=f2e11] [cursor=pointer]:
+          - /url: https://devvrat.uk
+  - generic [ref=f2e14]:
+    - heading "Package Analyzer" [level=1] [ref=f2e15]
+    - generic [ref=f2e17]:
+      - generic [ref=f2e20] [cursor=pointer]:
+        - generic [ref=f2e27]:
+          - heading "Drop your package.json here" [level=3] [ref=f2e28]
+          - paragraph [ref=f2e29]: Drag and drop your package.json file, or click to browse. We'll analyze your dependencies and show what's outdated.
+        - button "Browse files" [ref=f2e31]
+      - paragraph [ref=f2e33]: Upload a package.json file to see detailed information about your project dependencies
+  - generic:
+    - generic:
+      - paragraph:
+        - text: Handmade by
+        - generic: Devvrat
+        - text: . All rights reserved.
