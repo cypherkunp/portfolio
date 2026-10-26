@@ -39,6 +39,14 @@ export function bookmarksIndexHead() {
   return pageHead('Bookmarks', 'Collections of links worth keeping.', '/bookmarks');
 }
 
+export function analyzerPageHead() {
+  return pageHead(
+    'Package Analyzer',
+    'Analyze your package.json dependencies — find outdated packages, check versions, and inspect your project health.',
+    '/analyzer',
+  );
+}
+
 interface CollectionHeadInput {
   id: string;
   name: string;

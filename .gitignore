@@ -32,6 +32,7 @@ yarn-error.log*
 coverage
 /coverage
 playwright-report/
+.playwright-mcp/
 blob-report/
 test-results
 cypress/screenshots
