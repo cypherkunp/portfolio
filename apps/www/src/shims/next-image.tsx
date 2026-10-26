@@ -1,19 +1,22 @@
 import type { CSSProperties, ImgHTMLAttributes, ReactNode } from 'react';
 
-type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> & {
+export interface ImageLoaderProps {
+  src: string;
+  width: number;
+  quality?: number;
+}
+
+interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   src: string | { src: string };
   fill?: boolean;
   priority?: boolean;
   quality?: number;
-  loader?: unknown;
+  loader?: (props: ImageLoaderProps) => string;
   sizes?: string;
-};
+}
 
-export type ImageLoaderProps = {
-  src: string;
-  width: number;
-  quality?: number;
-};
+// next/image picks `src` from its largest device width. Photo loaders clamp that.
+const NEXT_IMAGE_MAX_WIDTH = 3840;
 
 export default function Image({
   src,
@@ -22,12 +25,21 @@ export default function Image({
   priority,
   className,
   style,
-  loader: _loader,
-  quality: _quality,
+  loader,
+  quality,
   sizes: _sizes,
   ...props
 }: ImageProps) {
-  const url = typeof src === 'string' ? src : src.src;
+  const imageSrc = typeof src === 'string' ? src : src.src;
+  const width = typeof props.width === 'number' ? props.width : Number(props.width);
+  const url =
+    loader && Number.isFinite(width)
+      ? loader({
+          src: imageSrc,
+          width: Math.max(width, NEXT_IMAGE_MAX_WIDTH),
+          quality: typeof quality === 'number' ? quality : undefined,
+        })
+      : imageSrc;
   const fillStyle: CSSProperties | undefined = fill
     ? { position: 'absolute', inset: 0, width: '100%', height: '100%' }
     : undefined;

@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
@@ -9,6 +10,7 @@ import { defineConfig } from 'vite';
 import * as sourceConfig from './source.config.ts';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 function exact(find: string, replacement: string) {
   return { find: new RegExp(`^${find}$`), replacement };
@@ -31,6 +33,8 @@ export default defineConfig(async () => ({
       exact('next-intl', path.join(root, 'src/shims/next-intl.tsx')),
       exact('flags/next', path.join(root, 'src/shims/flags-next.ts')),
       exact('server-only', path.join(root, 'src/test/stubs/server-only.ts')),
+      // Vite's SSR runner loads exifr's CJS build, which has no named `parse` export.
+      exact('exifr', require.resolve('exifr/dist/full.esm.mjs')),
     ],
   },
   plugins: [

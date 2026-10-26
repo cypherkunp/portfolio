@@ -31,6 +31,10 @@ export function inspirationsPageHead() {
   );
 }
 
+export function photosPageHead() {
+  return pageHead('Photos', 'A journal of places I stopped to look.', '/photos');
+}
+
 export function bookmarksIndexHead() {
   return pageHead('Bookmarks', 'Collections of links worth keeping.', '/bookmarks');
 }

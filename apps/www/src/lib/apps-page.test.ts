@@ -5,6 +5,7 @@ import {
   collectionPageHead,
   inspirationsPageHead,
   musicPageHead,
+  photosPageHead,
 } from '@/lib/apps-page';
 
 describe('musicPageHead', () => {
@@ -51,6 +52,22 @@ describe('bookmarksIndexHead', () => {
     expect(head.links).toContainEqual({
       rel: 'canonical',
       href: 'https://www.devvrat.cc/bookmarks',
+    });
+  });
+});
+
+describe('photosPageHead', () => {
+  it('matches the current Photos title, description, and canonical URL', () => {
+    const head = photosPageHead();
+
+    expect(head.meta).toContainEqual({ title: 'Photos | Devvrat' });
+    expect(head.meta).toContainEqual({
+      name: 'description',
+      content: 'A journal of places I stopped to look.',
+    });
+    expect(head.links).toContainEqual({
+      rel: 'canonical',
+      href: 'https://www.devvrat.cc/photos',
     });
   });
 });

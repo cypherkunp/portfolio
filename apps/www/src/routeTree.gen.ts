@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index';
 import { Route as AboutRouteImport } from './routes/about';
 import { Route as InspirationsRouteImport } from './routes/inspirations';
 import { Route as MusicRouteImport } from './routes/music';
+import { Route as PhotosRouteImport } from './routes/photos';
+import { Route as Char91_nextChar93ImageRouteImport } from './routes/[_next]/image';
 import { Route as BookmarksIndexRouteImport } from './routes/bookmarks/index';
 import { Route as BookmarksCollectionRouteImport } from './routes/bookmarks/$collection';
 import { Route as PostsIndexRouteImport } from './routes/posts/index';
@@ -36,6 +38,16 @@ const InspirationsRoute = InspirationsRouteImport.update({
 const MusicRoute = MusicRouteImport.update({
   id: '/music',
   path: '/music',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const PhotosRoute = PhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const Char91_nextChar93ImageRoute = Char91_nextChar93ImageRouteImport.update({
+  id: '/_next/image',
+  path: '/_next/image',
   getParentRoute: () => rootRouteImport,
 } as any);
 const BookmarksIndexRoute = BookmarksIndexRouteImport.update({
@@ -64,6 +76,8 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
+  '/photos': typeof PhotosRoute;
+  '/_next/image': typeof Char91_nextChar93ImageRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
   '/bookmarks/': typeof BookmarksIndexRoute;
@@ -74,6 +88,8 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
+  '/photos': typeof PhotosRoute;
+  '/_next/image': typeof Char91_nextChar93ImageRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
   '/bookmarks': typeof BookmarksIndexRoute;
@@ -85,6 +101,8 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
+  '/photos': typeof PhotosRoute;
+  '/_next/image': typeof Char91_nextChar93ImageRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
   '/bookmarks/': typeof BookmarksIndexRoute;
@@ -97,6 +115,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/inspirations'
     | '/music'
+    | '/photos'
+    | '/_next/image'
     | '/bookmarks/$collection'
     | '/posts/$slug'
     | '/bookmarks/'
@@ -107,6 +127,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/inspirations'
     | '/music'
+    | '/photos'
+    | '/_next/image'
     | '/bookmarks/$collection'
     | '/posts/$slug'
     | '/bookmarks'
@@ -117,6 +139,8 @@ export interface FileRouteTypes {
     | '/about'
     | '/inspirations'
     | '/music'
+    | '/photos'
+    | '/_next/image'
     | '/bookmarks/$collection'
     | '/posts/$slug'
     | '/bookmarks/'
@@ -128,6 +152,8 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute;
   InspirationsRoute: typeof InspirationsRoute;
   MusicRoute: typeof MusicRoute;
+  PhotosRoute: typeof PhotosRoute;
+  Char91_nextChar93ImageRoute: typeof Char91_nextChar93ImageRoute;
   BookmarksCollectionRoute: typeof BookmarksCollectionRoute;
   PostsSlugRoute: typeof PostsSlugRoute;
   BookmarksIndexRoute: typeof BookmarksIndexRoute;
@@ -162,6 +188,20 @@ declare module '@tanstack/react-router' {
       path: '/music';
       fullPath: '/music';
       preLoaderRoute: typeof MusicRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/photos': {
+      id: '/photos';
+      path: '/photos';
+      fullPath: '/photos';
+      preLoaderRoute: typeof PhotosRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/_next/image': {
+      id: '/_next/image';
+      path: '/_next/image';
+      fullPath: '/_next/image';
+      preLoaderRoute: typeof Char91_nextChar93ImageRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/bookmarks/': {
@@ -200,6 +240,8 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   InspirationsRoute: InspirationsRoute,
   MusicRoute: MusicRoute,
+  PhotosRoute: PhotosRoute,
+  Char91_nextChar93ImageRoute: Char91_nextChar93ImageRoute,
   BookmarksCollectionRoute: BookmarksCollectionRoute,
   PostsSlugRoute: PostsSlugRoute,
   BookmarksIndexRoute: BookmarksIndexRoute,
