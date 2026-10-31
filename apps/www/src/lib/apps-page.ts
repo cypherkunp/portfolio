@@ -23,6 +23,14 @@ export function musicPageHead() {
   return pageHead('Music', 'Play tracks made in collaboration with AI artists.', '/music');
 }
 
+export function analyzerPageHead() {
+  return pageHead(
+    'Package Analyzer',
+    'Analyze your package.json dependencies — find outdated packages, check versions, and inspect your project health.',
+    '/analyzer',
+  );
+}
+
 export function inspirationsPageHead() {
   return pageHead(
     'Inspirations',

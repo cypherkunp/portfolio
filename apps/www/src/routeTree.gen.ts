@@ -11,14 +11,20 @@
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as AboutRouteImport } from './routes/about';
+import { Route as ConnectRouteImport } from './routes/connect';
+import { Route as ContactsRouteImport } from './routes/contacts';
 import { Route as InspirationsRouteImport } from './routes/inspirations';
 import { Route as MusicRouteImport } from './routes/music';
 import { Route as PhotosRouteImport } from './routes/photos';
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt';
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml';
 import { Route as Char91_nextChar93ImageRouteImport } from './routes/[_next]/image';
+import { Route as ApiOgRouteImport } from './routes/api/og';
 import { Route as BookmarksIndexRouteImport } from './routes/bookmarks/index';
 import { Route as BookmarksCollectionRouteImport } from './routes/bookmarks/$collection';
 import { Route as PostsIndexRouteImport } from './routes/posts/index';
 import { Route as PostsSlugRouteImport } from './routes/posts/$slug';
+import { Route as DotwellKnownVercelFlagsRouteImport } from './routes/[.]well-known/vercel/flags';
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,6 +34,16 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ConnectRoute = ConnectRouteImport.update({
+  id: '/connect',
+  path: '/connect',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ContactsRoute = ContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any);
 const InspirationsRoute = InspirationsRouteImport.update({
@@ -45,9 +61,24 @@ const PhotosRoute = PhotosRouteImport.update({
   path: '/photos',
   getParentRoute: () => rootRouteImport,
 } as any);
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const Char91_nextChar93ImageRoute = Char91_nextChar93ImageRouteImport.update({
   id: '/_next/image',
   path: '/_next/image',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ApiOgRoute = ApiOgRouteImport.update({
+  id: '/api/og',
+  path: '/api/og',
   getParentRoute: () => rootRouteImport,
 } as any);
 const BookmarksIndexRoute = BookmarksIndexRouteImport.update({
@@ -70,94 +101,141 @@ const PostsSlugRoute = PostsSlugRouteImport.update({
   path: '/posts/$slug',
   getParentRoute: () => rootRouteImport,
 } as any);
+const DotwellKnownVercelFlagsRoute = DotwellKnownVercelFlagsRouteImport.update({
+  id: '/.well-known/vercel/flags',
+  path: '/.well-known/vercel/flags',
+  getParentRoute: () => rootRouteImport,
+} as any);
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/connect': typeof ConnectRoute;
+  '/contacts': typeof ContactsRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
   '/photos': typeof PhotosRoute;
+  '/robots.txt': typeof RobotsDottxtRoute;
+  '/sitemap.xml': typeof SitemapDotxmlRoute;
   '/_next/image': typeof Char91_nextChar93ImageRoute;
+  '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
   '/bookmarks/': typeof BookmarksIndexRoute;
   '/posts/': typeof PostsIndexRoute;
+  '/.well-known/vercel/flags': typeof DotwellKnownVercelFlagsRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/connect': typeof ConnectRoute;
+  '/contacts': typeof ContactsRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
   '/photos': typeof PhotosRoute;
+  '/robots.txt': typeof RobotsDottxtRoute;
+  '/sitemap.xml': typeof SitemapDotxmlRoute;
   '/_next/image': typeof Char91_nextChar93ImageRoute;
+  '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
   '/bookmarks': typeof BookmarksIndexRoute;
   '/posts': typeof PostsIndexRoute;
+  '/.well-known/vercel/flags': typeof DotwellKnownVercelFlagsRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/connect': typeof ConnectRoute;
+  '/contacts': typeof ContactsRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
   '/photos': typeof PhotosRoute;
+  '/robots.txt': typeof RobotsDottxtRoute;
+  '/sitemap.xml': typeof SitemapDotxmlRoute;
   '/_next/image': typeof Char91_nextChar93ImageRoute;
+  '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
   '/bookmarks/': typeof BookmarksIndexRoute;
   '/posts/': typeof PostsIndexRoute;
+  '/.well-known/vercel/flags': typeof DotwellKnownVercelFlagsRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/about'
+    | '/connect'
+    | '/contacts'
     | '/inspirations'
     | '/music'
     | '/photos'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/_next/image'
+    | '/api/og'
     | '/bookmarks/$collection'
     | '/posts/$slug'
     | '/bookmarks/'
-    | '/posts/';
+    | '/posts/'
+    | '/.well-known/vercel/flags';
   fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/about'
+    | '/connect'
+    | '/contacts'
     | '/inspirations'
     | '/music'
     | '/photos'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/_next/image'
+    | '/api/og'
     | '/bookmarks/$collection'
     | '/posts/$slug'
     | '/bookmarks'
-    | '/posts';
+    | '/posts'
+    | '/.well-known/vercel/flags';
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/connect'
+    | '/contacts'
     | '/inspirations'
     | '/music'
     | '/photos'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/_next/image'
+    | '/api/og'
     | '/bookmarks/$collection'
     | '/posts/$slug'
     | '/bookmarks/'
-    | '/posts/';
+    | '/posts/'
+    | '/.well-known/vercel/flags';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   AboutRoute: typeof AboutRoute;
+  ConnectRoute: typeof ConnectRoute;
+  ContactsRoute: typeof ContactsRoute;
   InspirationsRoute: typeof InspirationsRoute;
   MusicRoute: typeof MusicRoute;
   PhotosRoute: typeof PhotosRoute;
+  RobotsDottxtRoute: typeof RobotsDottxtRoute;
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
   Char91_nextChar93ImageRoute: typeof Char91_nextChar93ImageRoute;
+  ApiOgRoute: typeof ApiOgRoute;
   BookmarksCollectionRoute: typeof BookmarksCollectionRoute;
   PostsSlugRoute: typeof PostsSlugRoute;
   BookmarksIndexRoute: typeof BookmarksIndexRoute;
   PostsIndexRoute: typeof PostsIndexRoute;
+  DotwellKnownVercelFlagsRoute: typeof DotwellKnownVercelFlagsRoute;
 }
 
 declare module '@tanstack/react-router' {
@@ -174,6 +252,20 @@ declare module '@tanstack/react-router' {
       path: '/about';
       fullPath: '/about';
       preLoaderRoute: typeof AboutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/connect': {
+      id: '/connect';
+      path: '/connect';
+      fullPath: '/connect';
+      preLoaderRoute: typeof ConnectRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/contacts': {
+      id: '/contacts';
+      path: '/contacts';
+      fullPath: '/contacts';
+      preLoaderRoute: typeof ContactsRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/inspirations': {
@@ -197,11 +289,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PhotosRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/robots.txt': {
+      id: '/robots.txt';
+      path: '/robots.txt';
+      fullPath: '/robots.txt';
+      preLoaderRoute: typeof RobotsDottxtRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/sitemap.xml': {
+      id: '/sitemap.xml';
+      path: '/sitemap.xml';
+      fullPath: '/sitemap.xml';
+      preLoaderRoute: typeof SitemapDotxmlRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_next/image': {
       id: '/_next/image';
       path: '/_next/image';
       fullPath: '/_next/image';
       preLoaderRoute: typeof Char91_nextChar93ImageRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/api/og': {
+      id: '/api/og';
+      path: '/api/og';
+      fullPath: '/api/og';
+      preLoaderRoute: typeof ApiOgRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/bookmarks/': {
@@ -232,30 +345,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsSlugRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/.well-known/vercel/flags': {
+      id: '/.well-known/vercel/flags';
+      path: '/.well-known/vercel/flags';
+      fullPath: '/.well-known/vercel/flags';
+      preLoaderRoute: typeof DotwellKnownVercelFlagsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ConnectRoute: ConnectRoute,
+  ContactsRoute: ContactsRoute,
   InspirationsRoute: InspirationsRoute,
   MusicRoute: MusicRoute,
   PhotosRoute: PhotosRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char91_nextChar93ImageRoute: Char91_nextChar93ImageRoute,
+  ApiOgRoute: ApiOgRoute,
   BookmarksCollectionRoute: BookmarksCollectionRoute,
   PostsSlugRoute: PostsSlugRoute,
   BookmarksIndexRoute: BookmarksIndexRoute,
   PostsIndexRoute: PostsIndexRoute,
+  DotwellKnownVercelFlagsRoute: DotwellKnownVercelFlagsRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>();
 
 import type { getRouter } from './router.tsx';
-import type { createStart } from '@tanstack/react-start';
+import type { startInstance } from './start.ts';
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true;
     router: Awaited<ReturnType<typeof getRouter>>;
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>;
   }
 }
