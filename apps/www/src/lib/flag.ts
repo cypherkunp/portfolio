@@ -1,4 +1,4 @@
-import { decryptOverrides, reportValue } from 'flags';
+import { decryptOverrides, reportValue, type FlagDefinitionType } from 'flags';
 
 interface FlagDecideParams {
   key: string;
@@ -26,14 +26,7 @@ function readCookie(header: string | null, name: string) {
   return decodeURIComponent(match.slice(name.length + 1));
 }
 
-export interface KeyedFlagDefinitionType {
-  key: string;
-  options?: unknown;
-  origin?: unknown;
-  description?: string;
-  defaultValue?: unknown;
-  declaredInCode?: boolean;
-}
+export type KeyedFlagDefinitionType = { key: string } & FlagDefinitionType;
 
 export function flag<Value>(definition: FlagDefinition) {
   const read = async () => {

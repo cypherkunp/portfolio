@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import Image from '@/components/image';
 import { Button } from '@repo/ui/components/button';
 import { Slider } from '@repo/ui/components/slider';
 import { cn } from '@repo/ui/lib/utils';

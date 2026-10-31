@@ -1,9 +1,9 @@
 ---
-description: TypeScript, Next.js App Router, RSC, and component conventions. Use when writing or reviewing app/www code.
+description: TypeScript, TanStack Start, and component conventions. Use when writing or reviewing app/www code.
 alwaysApply: false
 ---
 
-You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.
+You are an expert in TypeScript, Node.js, TanStack Start, React, Shadcn UI, Radix UI and Tailwind.
 
 Code Style and Structure
 
@@ -48,8 +48,8 @@ Key Conventions
 - Use 'nuqs' for URL search parameter state management.
 - Optimize Web Vitals (LCP, CLS, FID).
 - Limit 'use client':
-  - Favor server components and Next.js SSR.
+  - Favor server rendering.
   - Use only for Web API access in small components.
   - Avoid for data fetching or state management.
 
-Follow Next.js docs for Data Fetching, Rendering, and Routing.
+Follow the TanStack Start routes in `apps/www/src/routes`.

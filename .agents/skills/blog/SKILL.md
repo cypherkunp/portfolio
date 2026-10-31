@@ -57,7 +57,7 @@ Write valid CommonMark / MDX. `apps/www/mdx-components.tsx` maps these elements:
 - Ordered lists, unordered lists, list items
 - Emphasis, strong, strikethrough (`~~deleted~~`)
 - Images. `width` and `height` when you know them
-- Links. A site path uses `next/link`. A `#hash` stays on the page. Any other URL opens in a new tab
+- Links. A site path uses the app link. A `#hash` stays on the page. Any other URL opens in a new tab
 - Thematic breaks (`---`)
 - Fenced code with a language tag, and inline code
 - GFM tables

@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound } from '@tanstack/react-router';
 import {
   featureAppBookmarks,
   featureAppInspirations,
@@ -32,7 +32,7 @@ export async function isAppEnabled(id: AppId): Promise<boolean> {
 }
 
 export async function assertAppEnabled(id: AppId): Promise<void> {
-  if (!(await isAppEnabled(id))) notFound();
+  if (!(await isAppEnabled(id))) throw notFound();
 }
 
 export async function getSitemapPaths(): Promise<string[]> {

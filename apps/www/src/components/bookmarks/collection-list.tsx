@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { Badge } from '@repo/ui/components/badge';
 import { cn } from '@repo/ui/lib/utils';
 import { ArrowUpRight } from 'lucide-react';

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { ArrowIcon } from '@/images/icons/arrow';
 import { cn } from '@repo/ui/lib/utils';
 

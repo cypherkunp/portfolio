@@ -14,12 +14,12 @@ import { Route as AboutRouteImport } from './routes/about';
 import { Route as AnalyzerRouteImport } from './routes/analyzer';
 import { Route as ConnectRouteImport } from './routes/connect';
 import { Route as ContactsRouteImport } from './routes/contacts';
+import { Route as ImageRouteImport } from './routes/image';
 import { Route as InspirationsRouteImport } from './routes/inspirations';
 import { Route as MusicRouteImport } from './routes/music';
 import { Route as PhotosRouteImport } from './routes/photos';
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt';
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml';
-import { Route as Char91_nextChar93ImageRouteImport } from './routes/[_next]/image';
 import { Route as ApiNpmRouteImport } from './routes/api/npm';
 import { Route as ApiOgRouteImport } from './routes/api/og';
 import { Route as BookmarksIndexRouteImport } from './routes/bookmarks/index';
@@ -53,6 +53,11 @@ const ContactsRoute = ContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any);
+const ImageRoute = ImageRouteImport.update({
+  id: '/image',
+  path: '/image',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const InspirationsRoute = InspirationsRouteImport.update({
   id: '/inspirations',
   path: '/inspirations',
@@ -76,11 +81,6 @@ const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any);
-const Char91_nextChar93ImageRoute = Char91_nextChar93ImageRouteImport.update({
-  id: '/_next/image',
-  path: '/_next/image',
   getParentRoute: () => rootRouteImport,
 } as any);
 const ApiNpmRoute = ApiNpmRouteImport.update({
@@ -125,12 +125,12 @@ export interface FileRoutesByFullPath {
   '/analyzer': typeof AnalyzerRoute;
   '/connect': typeof ConnectRoute;
   '/contacts': typeof ContactsRoute;
+  '/image': typeof ImageRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
   '/photos': typeof PhotosRoute;
   '/robots.txt': typeof RobotsDottxtRoute;
   '/sitemap.xml': typeof SitemapDotxmlRoute;
-  '/_next/image': typeof Char91_nextChar93ImageRoute;
   '/api/npm': typeof ApiNpmRoute;
   '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
@@ -145,12 +145,12 @@ export interface FileRoutesByTo {
   '/analyzer': typeof AnalyzerRoute;
   '/connect': typeof ConnectRoute;
   '/contacts': typeof ContactsRoute;
+  '/image': typeof ImageRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
   '/photos': typeof PhotosRoute;
   '/robots.txt': typeof RobotsDottxtRoute;
   '/sitemap.xml': typeof SitemapDotxmlRoute;
-  '/_next/image': typeof Char91_nextChar93ImageRoute;
   '/api/npm': typeof ApiNpmRoute;
   '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
@@ -166,12 +166,12 @@ export interface FileRoutesById {
   '/analyzer': typeof AnalyzerRoute;
   '/connect': typeof ConnectRoute;
   '/contacts': typeof ContactsRoute;
+  '/image': typeof ImageRoute;
   '/inspirations': typeof InspirationsRoute;
   '/music': typeof MusicRoute;
   '/photos': typeof PhotosRoute;
   '/robots.txt': typeof RobotsDottxtRoute;
   '/sitemap.xml': typeof SitemapDotxmlRoute;
-  '/_next/image': typeof Char91_nextChar93ImageRoute;
   '/api/npm': typeof ApiNpmRoute;
   '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
@@ -188,12 +188,12 @@ export interface FileRouteTypes {
     | '/analyzer'
     | '/connect'
     | '/contacts'
+    | '/image'
     | '/inspirations'
     | '/music'
     | '/photos'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/_next/image'
     | '/api/npm'
     | '/api/og'
     | '/bookmarks/$collection'
@@ -208,12 +208,12 @@ export interface FileRouteTypes {
     | '/analyzer'
     | '/connect'
     | '/contacts'
+    | '/image'
     | '/inspirations'
     | '/music'
     | '/photos'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/_next/image'
     | '/api/npm'
     | '/api/og'
     | '/bookmarks/$collection'
@@ -228,12 +228,12 @@ export interface FileRouteTypes {
     | '/analyzer'
     | '/connect'
     | '/contacts'
+    | '/image'
     | '/inspirations'
     | '/music'
     | '/photos'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/_next/image'
     | '/api/npm'
     | '/api/og'
     | '/bookmarks/$collection'
@@ -249,12 +249,12 @@ export interface RootRouteChildren {
   AnalyzerRoute: typeof AnalyzerRoute;
   ConnectRoute: typeof ConnectRoute;
   ContactsRoute: typeof ContactsRoute;
+  ImageRoute: typeof ImageRoute;
   InspirationsRoute: typeof InspirationsRoute;
   MusicRoute: typeof MusicRoute;
   PhotosRoute: typeof PhotosRoute;
   RobotsDottxtRoute: typeof RobotsDottxtRoute;
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
-  Char91_nextChar93ImageRoute: typeof Char91_nextChar93ImageRoute;
   ApiNpmRoute: typeof ApiNpmRoute;
   ApiOgRoute: typeof ApiOgRoute;
   BookmarksCollectionRoute: typeof BookmarksCollectionRoute;
@@ -301,6 +301,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactsRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/image': {
+      id: '/image';
+      path: '/image';
+      fullPath: '/image';
+      preLoaderRoute: typeof ImageRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/inspirations': {
       id: '/inspirations';
       path: '/inspirations';
@@ -334,13 +341,6 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml';
       fullPath: '/sitemap.xml';
       preLoaderRoute: typeof SitemapDotxmlRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    '/_next/image': {
-      id: '/_next/image';
-      path: '/_next/image';
-      fullPath: '/_next/image';
-      preLoaderRoute: typeof Char91_nextChar93ImageRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/api/npm': {
@@ -401,12 +401,12 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyzerRoute: AnalyzerRoute,
   ConnectRoute: ConnectRoute,
   ContactsRoute: ContactsRoute,
+  ImageRoute: ImageRoute,
   InspirationsRoute: InspirationsRoute,
   MusicRoute: MusicRoute,
   PhotosRoute: PhotosRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  Char91_nextChar93ImageRoute: Char91_nextChar93ImageRoute,
   ApiNpmRoute: ApiNpmRoute,
   ApiOgRoute: ApiOgRoute,
   BookmarksCollectionRoute: BookmarksCollectionRoute,

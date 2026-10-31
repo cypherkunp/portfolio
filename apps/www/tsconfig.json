@@ -15,13 +15,8 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "next/link": ["./src/shims/next-link.tsx"],
-      "next/navigation": ["./src/shims/next-navigation.ts"],
-      "next/image": ["./src/shims/next-image.tsx"],
-      "next/font/google": ["./src/shims/next-font.ts"],
       "next-intl/server": ["./src/shims/next-intl-server.ts"],
-      "next-intl": ["./src/shims/next-intl.tsx"],
-      "flags/next": ["./src/shims/flags-next.ts"]
+      "next-intl": ["./src/shims/next-intl.tsx"]
     }
   },
   "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx", "src/images/logos/*.*"],

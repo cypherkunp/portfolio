@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from '@/components/image';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { Callout } from '@repo/ui/components/callout';
 import { CodeBlock } from '@repo/ui/components/code-block';
 import { CodeBlockCommand } from '@repo/ui/components/code-block-command';

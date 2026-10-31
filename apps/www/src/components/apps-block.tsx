@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

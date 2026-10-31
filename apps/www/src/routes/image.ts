@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { renditionFor } from '@/lib/photo-rendition';
 
-export const Route = createFileRoute('/_next/image')({
+export const Route = createFileRoute('/image')({
   server: {
     handlers: {
       GET: async ({ request }) => {

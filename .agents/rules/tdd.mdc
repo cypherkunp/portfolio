@@ -36,4 +36,4 @@ Test these public APIs. Do not reach into unexported helpers.
 
 E2E seams (Playwright, real browser): home identity + nav, design system tokens and canvas on `/`, About, a post from the catalog (Hello world), Inspirations from Apps, a bookmark collection, sitemap.xml when flags default on in development.
 
-Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`, Flags SDK (`flags/next`, `@flags-sdk/vercel`) and `next/navigation` `notFound` in App catalog tests. `server-only` is aliased in `vitest.config.ts`. Do not mock modules we own. E2e never mocks the app.
+Mock system boundaries only: `fetch`, clipboard, `next-intl` messages via `NextIntlClientProvider`, and the Flags SDK (`@flags-sdk/vercel`). `server-only` is aliased in `vitest.config.mts`. Do not mock modules we own. E2e never mocks the app.

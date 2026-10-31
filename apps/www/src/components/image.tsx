@@ -1,4 +1,4 @@
-import type { CSSProperties, ImgHTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, ImgHTMLAttributes } from 'react';
 
 export interface ImageLoaderProps {
   src: string;
@@ -15,8 +15,8 @@ interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   sizes?: string;
 }
 
-// next/image picks `src` from its largest device width. Photo loaders clamp that.
-const NEXT_IMAGE_MAX_WIDTH = 3840;
+// Photo loaders ask for a width. Use the largest device width so the rendition stays sharp.
+const MAX_IMAGE_WIDTH = 3840;
 
 export default function Image({
   src,
@@ -36,7 +36,7 @@ export default function Image({
     loader && Number.isFinite(width)
       ? loader({
           src: imageSrc,
-          width: Math.max(width, NEXT_IMAGE_MAX_WIDTH),
+          width: Math.max(width, MAX_IMAGE_WIDTH),
           quality: typeof quality === 'number' ? quality : undefined,
         })
       : imageSrc;
@@ -45,7 +45,6 @@ export default function Image({
     : undefined;
 
   return (
-    // This module is the next/image stand-in, so the native element is the implementation.
     <img
       src={url}
       alt={alt ?? ''}
@@ -55,8 +54,4 @@ export default function Image({
       {...props}
     />
   );
-}
-
-export function ImageResponse({ children }: { children?: ReactNode }) {
-  return children ?? null;
 }

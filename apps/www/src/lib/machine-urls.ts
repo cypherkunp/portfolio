@@ -1,7 +1,7 @@
 import { vercelFlags } from '@/flags';
 import { getProviderData } from '@flags-sdk/vercel';
 import type { FlagDefinitionType, ProviderData } from 'flags';
-import type { KeyedFlagDefinitionType } from 'flags/next';
+import type { KeyedFlagDefinitionType } from '@/lib/flag';
 
 import { PORTFOLIO_BASE_URL } from '@/config/site-data';
 import { getSitemapPaths } from '@/lib/app-flags';
@@ -153,7 +153,6 @@ function declaredFlags() {
     const origin = originOf(flag);
     definitions[flag.key] = {
       options: flag.options,
-      origin,
       description: flag.description,
       defaultValue: flag.defaultValue,
       declaredInCode: true,

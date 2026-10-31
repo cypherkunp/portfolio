@@ -15,20 +15,15 @@ function exact(find: string, replacement: string) {
 
 export default defineConfig(async () => ({
   plugins: [
-    // Keep generated indexes out of `.source`. That directory is the Next.js output.
+    // Vitest must not rewrite apps/www/.source. That directory is the app's fumadocs output.
     await mdx(sourceConfig, { outDir: 'node_modules/.cache/fumadocs-vitest' }),
     tsconfigPaths(),
     react(),
   ],
   resolve: {
     alias: [
-      exact('next/link', path.join(root, 'src/shims/next-link.tsx')),
-      exact('next/navigation', path.join(root, 'src/shims/next-navigation.ts')),
-      exact('next/image', path.join(root, 'src/shims/next-image.tsx')),
-      exact('next/font/google', path.join(root, 'src/shims/next-font.ts')),
       exact('next-intl/server', path.join(root, 'src/shims/next-intl-server.ts')),
       exact('next-intl', path.join(root, 'src/shims/next-intl.tsx')),
-      exact('flags/next', path.join(root, 'src/shims/flags-next.ts')),
       exact('server-only', path.join(root, 'src/test/stubs/server-only.ts')),
     ],
   },
@@ -36,6 +31,6 @@ export default defineConfig(async () => ({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['node_modules', '.next'],
+    exclude: ['node_modules'],
   },
 }));

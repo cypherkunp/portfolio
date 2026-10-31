@@ -11,7 +11,7 @@ import {
 
 const flagValues: Record<string, boolean> = {};
 
-vi.mock('flags/next', () => ({
+vi.mock('@/lib/flag', () => ({
   flag: (opts: { key: string }) => Object.assign(async () => flagValues[opts.key] ?? false, opts),
 }));
 
@@ -19,12 +19,6 @@ vi.mock('@flags-sdk/vercel', () => ({
   vercelAdapter: () => ({}),
   getProviderData: async () => {
     throw new Error('FLAGS datafile unavailable');
-  },
-}));
-
-vi.mock('next/navigation', () => ({
-  notFound: () => {
-    throw new Error('NEXT_NOT_FOUND');
   },
 }));
 

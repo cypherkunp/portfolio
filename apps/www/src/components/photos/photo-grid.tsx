@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Image, { type ImageLoaderProps } from 'next/image';
+import Image, { type ImageLoaderProps } from '@/components/image';
 import { cn } from '@repo/ui/lib/utils';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Grid, type CellComponentProps } from 'react-window';
@@ -33,7 +33,7 @@ function clampedWidth(widths: readonly number[], width: number) {
 }
 
 function optimizedSrc(src: string, width: number) {
-  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=75`;
+  return `/image?url=${encodeURIComponent(src)}&w=${width}&q=75`;
 }
 
 function thumbLoader({ src, width }: ImageLoaderProps) {

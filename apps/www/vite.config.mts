@@ -30,13 +30,8 @@ export default defineConfig(async () => ({
     alias: [
       { find: /^@\//, replacement: `${path.join(root, 'src')}/` },
       exact('node:path', path.join(path.dirname(require.resolve('pathe')), 'index.mjs')),
-      exact('next/link', path.join(root, 'src/shims/next-link.tsx')),
-      exact('next/navigation', path.join(root, 'src/shims/next-navigation.ts')),
-      exact('next/image', path.join(root, 'src/shims/next-image.tsx')),
-      exact('next/font/google', path.join(root, 'src/shims/next-font.ts')),
       exact('next-intl/server', path.join(root, 'src/shims/next-intl-server.ts')),
       exact('next-intl', path.join(root, 'src/shims/next-intl.tsx')),
-      exact('flags/next', path.join(root, 'src/shims/flags-next.ts')),
       exact('server-only', path.join(root, 'src/test/stubs/server-only.ts')),
       // Vite's SSR runner loads exifr's CJS build, which has no named `parse` export.
       exact('exifr', require.resolve('exifr/dist/full.esm.mjs')),

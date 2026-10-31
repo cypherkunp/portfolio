@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/image';
 import { Card, CardContent } from '@repo/ui/components/card';
 
 import type { Song } from '@/lib/types';

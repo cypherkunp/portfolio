@@ -90,7 +90,7 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const init: RequestInit & { next?: { revalidate: number | false } } = {
+    const init: RequestInit = {
       headers: {
         'User-Agent': UA,
         Accept: 'text/html,application/xhtml+xml',
@@ -99,11 +99,7 @@ export async function fetchOg(url: string, opts: FetchOgOptions = {}): Promise<O
       redirect: 'follow',
       signal: controller.signal,
     };
-    if (!force) {
-      init.next = { revalidate: 60 * 60 * 24 * 7 };
-    } else {
-      init.cache = 'no-store';
-    }
+    if (force) init.cache = 'no-store';
 
     const res = await fetch(url, init);
     if (!res.ok) return null;

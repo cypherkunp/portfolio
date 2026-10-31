@@ -1,5 +1,5 @@
 import { vercelAdapter } from '@flags-sdk/vercel';
-import { flag } from 'flags/next';
+import { flag } from '@/lib/flag';
 
 const booleanOptions = [
   { value: false, label: 'Off' },
