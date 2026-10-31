@@ -1,5 +1,4 @@
 import js from '@eslint/js';
-import nextPlugin from '@next/eslint-plugin-next';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -8,9 +7,8 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.{ts,tsx,js,jsx,mjs}'],
+    files: ['**/*.{ts,tsx,js,jsx,mjs,cjs}'],
     plugins: {
-      '@next/next': nextPlugin,
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
     },
@@ -71,10 +69,6 @@ export default tseslint.config(
       },
     },
     rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs['core-web-vitals'].rules,
-      '@next/next/no-html-link-for-pages': 'off',
-      '@next/next/no-img-element': 'error',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
@@ -99,7 +93,6 @@ export default tseslint.config(
       '**/coverage/**',
       '**/storybook-static/**',
       '**/.source/**',
-      '**/next-env.d.ts',
       '**/tools/**',
     ],
   },

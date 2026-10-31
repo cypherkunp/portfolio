@@ -94,7 +94,7 @@ export function AboutPage() {
       </Section>
       <Section title="Skills">
         <div className="flex flex-wrap gap-1">
-          {t.raw('skills').map((skill: string) => {
+          {(t.raw('skills') as string[]).map((skill: string) => {
             return (
               <Badge
                 variant="outline"

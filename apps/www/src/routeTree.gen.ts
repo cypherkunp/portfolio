@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as AboutRouteImport } from './routes/about';
+import { Route as AnalyzerRouteImport } from './routes/analyzer';
 import { Route as ConnectRouteImport } from './routes/connect';
 import { Route as ContactsRouteImport } from './routes/contacts';
 import { Route as InspirationsRouteImport } from './routes/inspirations';
@@ -19,6 +20,7 @@ import { Route as PhotosRouteImport } from './routes/photos';
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt';
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml';
 import { Route as Char91_nextChar93ImageRouteImport } from './routes/[_next]/image';
+import { Route as ApiNpmRouteImport } from './routes/api/npm';
 import { Route as ApiOgRouteImport } from './routes/api/og';
 import { Route as BookmarksIndexRouteImport } from './routes/bookmarks/index';
 import { Route as BookmarksCollectionRouteImport } from './routes/bookmarks/$collection';
@@ -34,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any);
+const AnalyzerRoute = AnalyzerRouteImport.update({
+  id: '/analyzer',
+  path: '/analyzer',
   getParentRoute: () => rootRouteImport,
 } as any);
 const ConnectRoute = ConnectRouteImport.update({
@@ -76,6 +83,11 @@ const Char91_nextChar93ImageRoute = Char91_nextChar93ImageRouteImport.update({
   path: '/_next/image',
   getParentRoute: () => rootRouteImport,
 } as any);
+const ApiNpmRoute = ApiNpmRouteImport.update({
+  id: '/api/npm',
+  path: '/api/npm',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const ApiOgRoute = ApiOgRouteImport.update({
   id: '/api/og',
   path: '/api/og',
@@ -110,6 +122,7 @@ const DotwellKnownVercelFlagsRoute = DotwellKnownVercelFlagsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/analyzer': typeof AnalyzerRoute;
   '/connect': typeof ConnectRoute;
   '/contacts': typeof ContactsRoute;
   '/inspirations': typeof InspirationsRoute;
@@ -118,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute;
   '/sitemap.xml': typeof SitemapDotxmlRoute;
   '/_next/image': typeof Char91_nextChar93ImageRoute;
+  '/api/npm': typeof ApiNpmRoute;
   '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
@@ -128,6 +142,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/analyzer': typeof AnalyzerRoute;
   '/connect': typeof ConnectRoute;
   '/contacts': typeof ContactsRoute;
   '/inspirations': typeof InspirationsRoute;
@@ -136,6 +151,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute;
   '/sitemap.xml': typeof SitemapDotxmlRoute;
   '/_next/image': typeof Char91_nextChar93ImageRoute;
+  '/api/npm': typeof ApiNpmRoute;
   '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
@@ -147,6 +163,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/about': typeof AboutRoute;
+  '/analyzer': typeof AnalyzerRoute;
   '/connect': typeof ConnectRoute;
   '/contacts': typeof ContactsRoute;
   '/inspirations': typeof InspirationsRoute;
@@ -155,6 +172,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute;
   '/sitemap.xml': typeof SitemapDotxmlRoute;
   '/_next/image': typeof Char91_nextChar93ImageRoute;
+  '/api/npm': typeof ApiNpmRoute;
   '/api/og': typeof ApiOgRoute;
   '/bookmarks/$collection': typeof BookmarksCollectionRoute;
   '/posts/$slug': typeof PostsSlugRoute;
@@ -167,6 +185,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/analyzer'
     | '/connect'
     | '/contacts'
     | '/inspirations'
@@ -175,6 +194,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_next/image'
+    | '/api/npm'
     | '/api/og'
     | '/bookmarks/$collection'
     | '/posts/$slug'
@@ -185,6 +205,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/analyzer'
     | '/connect'
     | '/contacts'
     | '/inspirations'
@@ -193,6 +214,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_next/image'
+    | '/api/npm'
     | '/api/og'
     | '/bookmarks/$collection'
     | '/posts/$slug'
@@ -203,6 +225,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/analyzer'
     | '/connect'
     | '/contacts'
     | '/inspirations'
@@ -211,6 +234,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_next/image'
+    | '/api/npm'
     | '/api/og'
     | '/bookmarks/$collection'
     | '/posts/$slug'
@@ -222,6 +246,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   AboutRoute: typeof AboutRoute;
+  AnalyzerRoute: typeof AnalyzerRoute;
   ConnectRoute: typeof ConnectRoute;
   ContactsRoute: typeof ContactsRoute;
   InspirationsRoute: typeof InspirationsRoute;
@@ -230,6 +255,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute;
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute;
   Char91_nextChar93ImageRoute: typeof Char91_nextChar93ImageRoute;
+  ApiNpmRoute: typeof ApiNpmRoute;
   ApiOgRoute: typeof ApiOgRoute;
   BookmarksCollectionRoute: typeof BookmarksCollectionRoute;
   PostsSlugRoute: typeof PostsSlugRoute;
@@ -252,6 +278,13 @@ declare module '@tanstack/react-router' {
       path: '/about';
       fullPath: '/about';
       preLoaderRoute: typeof AboutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    '/analyzer': {
+      id: '/analyzer';
+      path: '/analyzer';
+      fullPath: '/analyzer';
+      preLoaderRoute: typeof AnalyzerRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/connect': {
@@ -310,6 +343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91_nextChar93ImageRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/api/npm': {
+      id: '/api/npm';
+      path: '/api/npm';
+      fullPath: '/api/npm';
+      preLoaderRoute: typeof ApiNpmRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/api/og': {
       id: '/api/og';
       path: '/api/og';
@@ -358,6 +398,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AnalyzerRoute: AnalyzerRoute,
   ConnectRoute: ConnectRoute,
   ContactsRoute: ContactsRoute,
   InspirationsRoute: InspirationsRoute,
@@ -366,6 +407,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char91_nextChar93ImageRoute: Char91_nextChar93ImageRoute,
+  ApiNpmRoute: ApiNpmRoute,
   ApiOgRoute: ApiOgRoute,
   BookmarksCollectionRoute: BookmarksCollectionRoute,
   PostsSlugRoute: PostsSlugRoute,

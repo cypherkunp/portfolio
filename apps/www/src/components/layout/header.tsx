@@ -1,11 +1,11 @@
 import { cn } from '@repo/ui/lib/utils';
 import { useTranslations } from 'next-intl';
 
-import { Navbar } from '../navbar';
+import { Navbar, type NavItem } from '../navbar';
 
 export default function Header({ className }: { className?: string }) {
   const t = useTranslations();
-  const navItems = t.raw('Header.navbar');
+  const navItems = t.raw('Header.navbar') as NavItem[];
 
   return (
     <header

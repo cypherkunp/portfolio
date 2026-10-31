@@ -8,7 +8,7 @@ Turborepo monorepo with PNPM workspaces:
 
 | Path | Role |
 | --- | --- |
-| `apps/www` | Next.js 16 App Router app (main site) |
+| `apps/www` | TanStack Start app (main site) |
 | `packages/ui` | Shared UI (shadcn/Radix, Tailwind) |
 | `packages/utils` | Shared utilities |
 | `tools/unlighthouse` | Lighthouse CI config |
@@ -17,7 +17,7 @@ The app favors React Server Components, `next-intl` for copy, and a small client
 
 ## Stack
 
-Next.js 16, React 19, TypeScript, Tailwind CSS 4, ESLint 9 (flat config), Prettier, Husky, Commitlint.
+TanStack Start, React 19, TypeScript, Tailwind CSS 4, ESLint 9 (flat config), Prettier, Husky, Commitlint.
 
 ## Features
 
@@ -25,7 +25,7 @@ Next.js 16, React 19, TypeScript, Tailwind CSS 4, ESLint 9 (flat config), Pretti
 - **Sections**: About, music, photos; optional homepage apps block behind `FEATURE_APPS_SUPPORT`.
 - **UX**: Dark-first theming, responsive layout, Vercel Analytics and Speed Insights.
 - **Analyzer** (`/analyzer`): upload a `package.json`, pull metadata from the npm registry, compare versions.
-- **Tooling**: Webpack bundle analyzer (`analyze-build`), Unlighthouse target for `www`.
+- **Tooling**: Unlighthouse target for `www`.
 
 ## Development
 
@@ -37,7 +37,7 @@ pnpm dev    # www on http://localhost:3333
 pnpm build
 pnpm lint
 pnpm test       # Vitest + RTL in www, plus node:test for bookmark sync scripts
-pnpm test:e2e   # Playwright against next dev on :3333 (install Chromium once: pnpm --filter www playwright:install)
+pnpm test:e2e   # Playwright against the dev server on :3333 (install Chromium once: pnpm --filter www playwright:install)
 ```
 
 `git push` runs `.husky/pre-push`: lint, unit tests, then e2e.

@@ -9,6 +9,10 @@ import * as sourceConfig from './source.config.ts';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 
+function exact(find: string, replacement: string) {
+  return { find: new RegExp(`^${find}$`), replacement };
+}
+
 export default defineConfig(async () => ({
   plugins: [
     // Keep generated indexes out of `.source`. That directory is the Next.js output.
@@ -17,9 +21,16 @@ export default defineConfig(async () => ({
     react(),
   ],
   resolve: {
-    alias: {
-      'server-only': path.join(root, 'src/test/stubs/server-only.ts'),
-    },
+    alias: [
+      exact('next/link', path.join(root, 'src/shims/next-link.tsx')),
+      exact('next/navigation', path.join(root, 'src/shims/next-navigation.ts')),
+      exact('next/image', path.join(root, 'src/shims/next-image.tsx')),
+      exact('next/font/google', path.join(root, 'src/shims/next-font.ts')),
+      exact('next-intl/server', path.join(root, 'src/shims/next-intl-server.ts')),
+      exact('next-intl', path.join(root, 'src/shims/next-intl.tsx')),
+      exact('flags/next', path.join(root, 'src/shims/flags-next.ts')),
+      exact('server-only', path.join(root, 'src/test/stubs/server-only.ts')),
+    ],
   },
   test: {
     environment: 'jsdom',

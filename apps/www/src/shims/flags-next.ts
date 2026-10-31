@@ -1,18 +1,18 @@
 import { decryptOverrides, reportValue } from 'flags';
 
+interface FlagDecideParams {
+  key: string;
+  defaultValue?: unknown;
+  headers: Headers;
+  cookies: { get(name: string): string | undefined };
+}
+
 interface FlagDefinition {
   key: string;
   description?: string;
   defaultValue?: unknown;
   options?: unknown;
-  adapter?: {
-    decide: (params: {
-      key: string;
-      defaultValue?: unknown;
-      headers: Headers;
-      cookies: { get: (name: string) => undefined };
-    }) => Promise<unknown> | unknown;
-  };
+  adapter?: unknown;
   origin?: unknown;
 }
 
@@ -24,6 +24,15 @@ function readCookie(header: string | null, name: string) {
     .find(part => part.startsWith(`${name}=`));
   if (!match) return undefined;
   return decodeURIComponent(match.slice(name.length + 1));
+}
+
+export interface KeyedFlagDefinitionType {
+  key: string;
+  options?: unknown;
+  origin?: unknown;
+  description?: string;
+  defaultValue?: unknown;
+  declaredInCode?: boolean;
 }
 
 export function flag<Value>(definition: FlagDefinition) {
@@ -46,9 +55,13 @@ export function flag<Value>(definition: FlagDefinition) {
       // No Start request, or the overrides cookie is not for this process.
     }
 
-    if (definition.adapter) {
+    const adapter = definition.adapter as
+      | { decide?: (params: FlagDecideParams) => Promise<unknown> | unknown }
+      | undefined;
+
+    if (adapter?.decide) {
       try {
-        const value = await definition.adapter.decide({
+        const value = await adapter.decide({
           key,
           defaultValue: definition.defaultValue,
           headers: new Headers(),

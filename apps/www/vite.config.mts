@@ -18,13 +18,18 @@ function exact(find: string, replacement: string) {
 
 export default defineConfig(async () => ({
   server: {
-    port: 3334,
+    port: 3333,
+    host: '127.0.0.1',
+  },
+  preview: {
+    port: 3333,
+    host: '127.0.0.1',
   },
   resolve: {
     tsconfigPaths: true,
     alias: [
       { find: /^@\//, replacement: `${path.join(root, 'src')}/` },
-      exact('node:path', 'pathe'),
+      exact('node:path', path.join(path.dirname(require.resolve('pathe')), 'index.mjs')),
       exact('next/link', path.join(root, 'src/shims/next-link.tsx')),
       exact('next/navigation', path.join(root, 'src/shims/next-navigation.ts')),
       exact('next/image', path.join(root, 'src/shims/next-image.tsx')),

@@ -12,7 +12,6 @@ export function BookmarkThumb({ src }: BookmarkThumbProps) {
   if (failed) return null;
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt=""

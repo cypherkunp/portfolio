@@ -6,5 +6,15 @@ import { useTranslations } from 'next-intl';
 
 export default function StackBlock() {
   const t = useTranslations('Blocks.stackBlock');
-  return <HoverEffect items={t.raw('list')} />;
+  return (
+    <HoverEffect
+      items={
+        t.raw('list') as {
+          title: string;
+          description: string;
+          link: string | undefined;
+        }[]
+      }
+    />
+  );
 }

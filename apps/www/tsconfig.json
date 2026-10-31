@@ -13,23 +13,17 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "next/link": ["./src/shims/next-link.tsx"],
+      "next/navigation": ["./src/shims/next-navigation.ts"],
+      "next/image": ["./src/shims/next-image.tsx"],
+      "next/font/google": ["./src/shims/next-font.ts"],
+      "next-intl/server": ["./src/shims/next-intl-server.ts"],
+      "next-intl": ["./src/shims/next-intl.tsx"],
+      "flags/next": ["./src/shims/flags-next.ts"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/images/logos/*.*",
-    ".next/dev/types/**/*.ts"
-  ],
-  "exclude": ["node_modules", "src/router.tsx", "src/routes", "src/routeTree.gen.ts", "src/server"]
+  "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx", "src/images/logos/*.*"],
+  "exclude": ["node_modules"]
 }

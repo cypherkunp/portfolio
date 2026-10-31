@@ -67,11 +67,15 @@ function createTranslator(messages: unknown, namespace?: string) {
     return interpolate(value, values);
   }
 
-  translate.raw = (key: string) => lookup(messages, namespace ? `${namespace}.${key}` : key);
-  translate.rich = (key: string, tags: Record<string, (chunks: string) => ReactNode>) => {
+  translate.raw = (key: string): unknown =>
+    lookup(messages, namespace ? `${namespace}.${key}` : key);
+  translate.rich = (
+    key: string,
+    tags: Record<string, (chunks: string) => ReactNode>,
+  ): ReactNode => {
     const full = namespace ? `${namespace}.${key}` : key;
     const value = lookup(messages, full);
-    if (typeof value !== 'string') return value;
+    if (typeof value !== 'string') return value as ReactNode;
     return renderRich(value, tags);
   };
 

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink } from '../lib/app-link';
 
 import IconArrow from './icon-arrow';
 
@@ -6,7 +6,7 @@ export default function ExternalLink({ href, text = '' }: { href: string; text: 
   const isMail = href.startsWith('mailto:');
 
   return (
-    <Link
+    <AppLink
       href={href}
       target={isMail ? undefined : '_blank'}
       rel={isMail ? undefined : 'noopener noreferrer'}
@@ -14,6 +14,6 @@ export default function ExternalLink({ href, text = '' }: { href: string; text: 
     >
       <IconArrow />
       {text}
-    </Link>
+    </AppLink>
   );
 }
