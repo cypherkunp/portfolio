@@ -38,9 +38,8 @@ UI and Styling
 
 Performance Optimization
 
-- Minimize 'use client', 'useEffect', and 'setState'; favor React Server Components (RSC).
-- Wrap client components in Suspense with fallback.
-- Use dynamic loading for non-critical components.
+- Follow `docs/agents/stack.md` for links, images, routes, and dependencies.
+- Use dynamic `import()` for non-critical UI.
 - Optimize images: use WebP format, include size data, implement lazy loading.
 
 Key Conventions

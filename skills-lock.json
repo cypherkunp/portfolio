@@ -67,11 +67,6 @@
       "skillPath": "skills/modern-web-guidance/SKILL.md",
       "computedHash": "8e91867cc20dda14251c78c8d905847314c8c196557e1181d586a456cddcb5dc"
     },
-    "next-best-practices": {
-      "source": "vercel-labs/next-skills",
-      "sourceType": "github",
-      "computedHash": "db85045827ebeb83ac8dbc992b69188755eeb74dcf01cbf5e694d58aa494a106"
-    },
     "optimize": {
       "source": "pbakaus/impeccable",
       "sourceType": "github",
@@ -101,6 +96,12 @@
       "source": "pbakaus/impeccable",
       "sourceType": "github",
       "computedHash": "8edad33758f2461f51afdb51741bfcc4cc57d84ea42e2751a84be2c6a2d48f69"
+    },
+    "tanstack-start": {
+      "source": "tanstack-skills/tanstack-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/tanstack-start/skills/tanstack-start/SKILL.md",
+      "computedHash": "e9d8355fe3e47b118e739081f1123c52aa0ecde57da840722177e1ad5caf9908"
     },
     "typeset": {
       "source": "pbakaus/impeccable",

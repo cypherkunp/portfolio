@@ -80,6 +80,29 @@ export default tseslint.config(
       'no-undef': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'next',
+              message:
+                'Use AppLink from @repo/ui/lib/app-link, Image from @/components/image, and @tanstack/react-router. Flags come from @/lib/flag. See docs/agents/stack.md.',
+            },
+            {
+              name: 'flags/next',
+              message: 'Declare flags with @/lib/flag. See docs/agents/stack.md.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['next/*'],
+              message:
+                'Use AppLink from @repo/ui/lib/app-link, Image from @/components/image, and @tanstack/react-router. Flags come from @/lib/flag. See docs/agents/stack.md.',
+            },
+          ],
+        },
+      ],
     },
   },
   {

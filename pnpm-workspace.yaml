@@ -2,6 +2,7 @@ packages:
   - 'apps/*'
   - 'packages/*'
 
+# Optional peers name `next`. This repo does not install it. See docs/agents/stack.md.
 overrides:
   next: '-'
 
