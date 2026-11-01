@@ -1,27 +1,19 @@
 ---
 name: blog
-description: Write a portfolio blog post. Explain each concept with the asd-ste100 skill.
+description: Write a portfolio blog post
 disable-model-invocation: false
 ---
 
 # Blog
 
-Write the post a reader can restate after one read.
+Write the post a reader can restate after one read. Or write the post if its shared using the blogging format defined
 
 ## Research
 
 Do this before the draft.
 
-1. Search the web for the topic. Read the strongest official docs, tutorials, and blog posts. Prefer a primary source over a roundup.
-2. When the user gives a URL, read that page. Then open every relevant link on it: docs, tutorials, related posts, and cited sources. Skip nav, footer, login, and off-topic links.
-3. One hop from each provided URL. Follow a second hop only when the first page is a list of links.
-4. Keep the URL, the author, and the fact you will use. The author name goes in `<References />` only. See `references/sources.md`. Do not invent a URL.
-5. Study the diagrams on the pages you read. Note the flow, the structure, or the sequence they show.
-6. In the draft, draw your own diagram when a picture explains a concept faster than a paragraph. Do not copy a source diagram. Cite the page the idea came from. The component is `references/diagram.md`.
-
-## Explain the concept
-
-Write the blog using `asd-ste100`. The reader may not have English as a first language, so keep the fact and shorten the grammar. A concept is a description: one subject in the sentence, topic sentence first. A step the reader must do is a procedure: imperative, one action.
+1. Keep the URL, the author, and the fact you will use. The author name goes in `<References />` only. See `references/sources.md`. Do not invent a URL.
+2. Cite the page the idea came from. The component is `references/diagram.md`.
 
 ## Backticks
 
