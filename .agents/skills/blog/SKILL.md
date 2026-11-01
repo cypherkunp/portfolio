@@ -1,12 +1,14 @@
 ---
 name: blog
-description: Write a portfolio blog post
-disable-model-invocation: false
+description: Write a portfolio blog post. Research before the draft. Shared markdown that only needs the site post format is the blog-template skill.
+disable-model-invocation: true
 ---
 
 # Blog
 
-Write the post a reader can restate after one read. Or write the post if its shared using the blogging format defined
+Write the post a reader can restate after one read.
+
+The user shared the markdown and wants it formatted as a post: read `.agents/skills/blog-template/SKILL.md` and follow that. Skip Research.
 
 ## Research
 
@@ -59,11 +61,11 @@ Write valid CommonMark / MDX. `apps/www/mdx-components.tsx` maps these elements:
 
 The components you can add are the files in `/references/` whose names are the component. Read the file for the component you add. Skip the rest. They are registered. No import.
 
-| Adding     | Read                     |
-| ---------- | ------------------------ |
-| Callout    | `/references/callout.md` |
-| Terminal   | `/terminal.md`           |
-| Table      | `/references/table.md`   |
-| Diagram    | `/references/diagram.md` |
-| Dialog     | `/references/dialog.md`  |
-| References | `/references/sources.md` |
+| Adding     | Read                      |
+| ---------- | ------------------------- |
+| Callout    | `/references/callout.md`  |
+| Terminal   | `/references/terminal.md` |
+| Table      | `/references/table.md`    |
+| Diagram    | `/references/diagram.md`  |
+| Dialog     | `/references/dialog.md`   |
+| References | `/references/sources.md`  |
