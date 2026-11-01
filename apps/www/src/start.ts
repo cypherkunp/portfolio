@@ -1,4 +1,4 @@
-import { createMiddleware, createStart } from '@tanstack/react-start';
+import { createCsrfMiddleware, createMiddleware, createStart } from '@tanstack/react-start';
 
 import { securityHeaders } from '@/lib/machine-urls';
 
@@ -10,6 +10,11 @@ const securityHeaderMiddleware = createMiddleware().server(async ({ next }) => {
   return result;
 });
 
+// Document loads send Sec-Fetch-Site: none. Limit the check to server functions.
+const csrfMiddleware = createCsrfMiddleware({
+  filter: ctx => ctx.handlerType === 'serverFn',
+});
+
 export const startInstance = createStart(() => ({
-  requestMiddleware: [securityHeaderMiddleware],
+  requestMiddleware: [securityHeaderMiddleware, csrfMiddleware],
 }));
