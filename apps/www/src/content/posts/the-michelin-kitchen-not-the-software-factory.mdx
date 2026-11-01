@@ -1,0 +1,61 @@
+---
+title: 'The Michelin kitchen, not the software factory'
+summary: 'Lauren Tan argues that "software factory" is the wrong picture for building software with agents.'
+publishedOn: '01-11-2026'
+version: '1'
+tags:
+  - 'agents'
+  - 'quality'
+  - 'craft'
+---
+
+# The Michelin kitchen, not the software factory
+
+Lauren Tan, who posts as [@poteto](https://x.com/poteto), argues that "software factory" is the wrong picture for building software with agents. She prefers a Michelin kitchen.
+
+## Problem
+
+When agents write most of the code, the output goes up a lot. The phrase people reach for is "software factory": many agents, a stream of pull requests, humans somewhere upstream.
+
+Lauren's objection is about what the word suggests. In a [video interview](https://postgrok.com/sources/2026-10-05-youtube-poteto-software-factory) she says she has never liked the term, and not because it is inaccurate. When people hear "factory," they don't think of quality or craft, and she cares about both. In her talk on shipping 2,500 PRs in a month, she says we aren't mass-producing a product on an assembly line, and that building a product looks creative, even like art ([talk transcript](https://www.textpurr.com/transcript/how-i-shipped-2000-prs-last-month-trusting-ai-agentsgrok-botlauren-tan)). She still allows that a well-set-up environment can look like a team software factory. Her complaint is with what the name signals.
+
+The word matters because it sets expectations. If you picture a factory, you measure throughput and treat the output as interchangeable. If the picture says nobody cares how it turns out, the work follows.
+
+## Solution
+
+Lauren replaces the factory with a Michelin kitchen. Here is how she describes it:
+
+- **Agents are the cooks.** You are no longer cooking every dish yourself, but you are still responsible for what goes out. She describes her role as closer to a head chef who owns quality control ([interview](https://www.youtube.com/watch?v=p8Ceadxc1Q4)).
+- **The kitchen is the thing you design.** She lists the line cooks, the sous chefs, their equipment and training, the dishwashers, and even the ratio of line cooks to dishwashers. In a codebase, that means lint rules, diagnostics, written rules, code review tooling, and skills.
+- **The chef organizes more than she cooks.** Her home-cook example: one person in a kitchen is fine, but add the family and it gets stressful. The question is how to divide the work so the whole beats the sum of the parts.
+- **Give context, not control.** She says this idea from managing engineers carries over to agents. Micromanaging gets you an outcome, but giving context and teaching people to be self-sufficient scales better.
+- **Quality goes into the rules.** She says to turn style guides and rules into lint rules and hard constraints that fail CI, and to keep refactoring so agents can work well even when they are not very smart.
+- **Trust comes from layers.** In her talk she says that after enough time spent on these pieces, the layers together let you trust the agent's work.
+
+The same picture also covers scale. She talks about building one kitchen and then not having to be there anymore, moving between several restaurants. Her name stays on every plate either way.
+
+## Outcome
+
+With a factory in mind, you ask how much you can produce. With a Michelin kitchen in mind, you ask how good the result is, and you build what keeps it that way: standards, tools, checks, and training for the agents.
+
+Volume still counts, and Lauren says so. In a [post on October 8](https://x.com/poteto/status/2108290818746528017) she argued that volume does matter now. As far as I can tell from the part I could read, her case is that trust is what makes the extra volume safe. A [summary of her pstack work](https://barnabyrobson.org/on-pstack/) puts it this way: a factory suggests volume, and a Michelin kitchen keeps the volume and adds craft.
+
+For you, the lesson is practical. Spend your time on the kitchen: the rules, the verification, and the context the agents work from. Keep tasting the dishes.
+
+<References
+  items={[
+    { author: 'Lauren Tan', url: 'https://x.com/poteto/status/2102050467505430555' },
+    {
+      author: 'Lauren Tan',
+      url: 'https://www.textpurr.com/transcript/how-i-shipped-2000-prs-last-month-trusting-ai-agentsgrok-botlauren-tan',
+    },
+    {
+      author: 'Lauren Tan',
+      url: 'https://postgrok.com/sources/2026-10-05-youtube-poteto-software-factory',
+    },
+    { author: 'Lauren Tan', url: 'https://www.youtube.com/watch?v=p8Ceadxc1Q4' },
+    { author: 'Lauren Tan', url: 'https://x.com/poteto/status/2108290818746528017' },
+    { author: 'Barnaby Robson', url: 'https://barnabyrobson.org/on-pstack/' },
+    { author: 'bsbarkur', url: 'https://bsbarkur.github.io/explainers/poteto-pstack/' },
+  ]}
+/>
