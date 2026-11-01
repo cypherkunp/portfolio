@@ -1,0 +1,72 @@
+---
+title: 'User-invoked vs model-invoked skills'
+summary: 'A skill can be started by you typing /name, by the model deciding it fits, or by both.'
+publishedOn: '30-10-2026'
+version: '1'
+tags:
+  - 'agent'
+  - 'skills'
+---
+
+# User-invoked vs model-invoked skills
+
+A skill can be started by you typing /name, by the model deciding it fits, or by both. Two frontmatter fields control which one you get.
+
+## Problem
+
+Skills are folders with a `SKILL.md` file that teach an agent how to do a task. By default, the agent sees each skill's name and description, and loads the full instructions when it decides the skill is relevant. You can also type / in chat and pick one yourself.
+
+That default is fine for a style guide. It is risky for a skill like /deploy or /send-slack-message. You don't want the model deciding that your code looks ready and shipping it. The reverse also happens: some skills hold background knowledge, such as how an old system works, and are pointless as a command you would type.
+
+So there are two kinds of skills: ones you start, and ones the model starts. You need a way to say which is which.
+
+## Solution
+
+Both [Cursor](https://cursor.com/docs/skills) and [Claude Code](https://code.claude.com/docs/en/skills) follow the Agent Skills standard, and both use this frontmatter flag:
+
+**disable-model-invocation: true** makes a skill user-invoked only. The model won't load it from context. It runs only when you type /skill-name. In Claude Code, the description isn't even put in the model's context, and if the model tries to use the skill anyway, the call is blocked. Cursor describes the result as behaving like a traditional slash command. Cursor's /migrate-to-skills uses it too: when it converts your old slash commands into skills, it sets this flag so they keep working as explicit commands.
+
+**user-invocable: false** is the opposite and makes a skill model-invoked only. Claude Code hides it from the / menu and doesn't run it if you type /name. The description stays in the model's context, so Claude can load the skill when it's relevant. Use it for background knowledge, such as a legacy-system-context skill.
+
+**user-invocable: true** is the default, so you rarely need to write it. The skill shows in the / menu and you can run it. Setting it to true only matters when you want to be explicit.
+
+Here is how the combinations work in Claude Code:
+
+| Frontmatter                    | You can run it | Model can run it | Description in context |
+| ------------------------------ | -------------- | ---------------- | ---------------------- |
+| default (user-invocable: true) | Yes            | Yes              | Yes                    |
+| disable-model-invocation: true | Yes            | No               | No                     |
+| user-invocable: false          | No             | Yes              | Yes                    |
+
+Two details are easy to miss:
+
+- user-invocable: false only hides the skill from you. It does not stop the model from using it. To block the model too, use disable-model-invocation: true. Claude's docs say this directly.
+- Cursor's skills page lists disable-model-invocation in its frontmatter table, but not user-invocable. If you want a model-only skill, test it in Cursor first. Cursor also loads skills from `.claude/skills/`, so Claude Code files carry over.
+
+There is also a small difference in how a typed skill behaves. In Cursor, a skill you invoke with / attaches to that one message, and to keep it on for the whole session you use it as a Custom Mode. In Claude Code, the skill's instructions stay in the conversation after it is invoked.
+
+### A catch: skills calling skills
+
+[MartinSoderholm described a real problem](https://github.com/anthropics/claude-code/issues/30484) in a comment on an issue about skill composability. He had an /orchestrate skill that he invoked himself, with disable-model-invocation: true. It delegated to sub-skills such as /task-candidates, /claim-task, and /sync-github, and those also had the flag set so the model couldn't trigger them on its own.
+
+When /orchestrate called them through the Skill tool, they failed with an error saying the skill couldn't be used with the Skill tool because of disable-model-invocation. His point was that the flag is a flat check. A sub-skill called by a skill you started should inherit your intent, not be treated as the model acting on its own. His workaround was to remove the flag from all eight sub-skills, which gave up the protection he wanted.
+
+The issue was closed after going inactive and then locked, so I can't tell you it was resolved. The current docs I read don't describe any way for a user-invoked skill to call another user-invoked skill. Treat it as a known limit.
+
+## Outcome
+
+Once you pick the right invocation style for each skill, your skill library gets easier to trust:
+
+- Skills with side effects, like deploys, commits, and messages, run only when you type them.
+- Reference skills, like conventions and style guides, stay available to the model and load when relevant.
+- Background-only skills stay out of your menu and don't clutter it.
+
+A simple rule works well: if running the skill at the wrong moment would cost you something, set disable-model-invocation: true. If the skill has no use as a command, set user-invocable: false in Claude Code. Leave everything else on the default.
+
+<References
+  items={[
+    { author: 'Cursor', url: 'https://cursor.com/docs/skills' },
+    { author: 'Claude Code', url: 'https://code.claude.com/docs/en/skills' },
+    { author: 'MartinSoderholm', url: 'https://github.com/anthropics/claude-code/issues/30484' },
+  ]}
+/>

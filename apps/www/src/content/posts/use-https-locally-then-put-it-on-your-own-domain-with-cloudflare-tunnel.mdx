@@ -1,7 +1,7 @@
 ---
 title: 'Use HTTPS locally, then put it on your own domain with Cloudflare Tunnel'
 summary: 'Run your dev server over trusted HTTPS with mkcert, then use a Cloudflare Tunnel to reach it from the internet on your own domain.'
-publishedOn: '01-11-2026'
+publishedOn: '25-10-2026'
 version: '1'
 tags:
   - 'https'
@@ -105,7 +105,8 @@ If you only need a quick demo without a domain, Cloudflare's Quick Tunnels give 
 You can now open your local app at `https://localhost:8000` with a trusted certificate. It also runs at `https://dev.yourdomain.com` for anyone you share it with, without a router change or a public IP. Traffic goes out through Cloudflare, and your machine accepts no inbound connections.
 
 <Callout variant="warning" title="CAUTION">
-  Keep one caution in mind. Anyone with the public URL can reach your dev server, so don't leave a tunnel running with sensitive data behind it. Stop cloudflared when you're done.
+  Keep one caution in mind. Anyone with the public URL can reach your dev server, so don't leave a
+  tunnel running with sensitive data behind it. Stop cloudflared when you're done.
 </Callout>
 
 <References
