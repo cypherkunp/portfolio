@@ -220,7 +220,7 @@ const components = {
       return (
         <code
           className={cn(
-            'rounded-sm bg-neutral-200 px-[0.4rem] py-[0.12rem] font-mono text-[0.9em] text-neutral-950',
+            'rounded-sm bg-muted/50 px-[0.35rem] py-[0.1rem] font-mono text-[0.9em] text-foreground/75',
             className,
           )}
           {...props}
