@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3333",
+    "dev:tunnel": "node scripts/ensure-dev-certs.mjs && TUNNEL=1 vite dev --port 3036 --host :: --strictPort",
     "build": "vite build",
     "start": "vite preview --port 3333 --host 127.0.0.1",
     "preview": "pnpm build && pnpm start",

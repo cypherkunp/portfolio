@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=www",
+    "dev:tunnel": "turbo run dev:tunnel --filter=www",
     "start": "turbo run start",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",

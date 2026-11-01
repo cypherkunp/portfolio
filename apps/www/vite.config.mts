@@ -11,6 +11,7 @@ import * as sourceConfig from './source.config.ts';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const tunnel = process.env.TUNNEL === '1';
 
 function exact(find: string, replacement: string) {
   return { find: new RegExp(`^${find}$`), replacement };
@@ -20,6 +21,18 @@ export default defineConfig(async () => ({
   server: {
     port: 3333,
     host: '127.0.0.1',
+    // Tunnel origin is https://localhost:3036. HTTPS also skips Vite's host check,
+    // so localhost.devvrat.cc is accepted. HMR uses the public 443 socket.
+    ...(tunnel
+      ? {
+          host: '::',
+          https: {
+            cert: path.join(root, '.certs/localhost.pem'),
+            key: path.join(root, '.certs/localhost-key.pem'),
+          },
+          ws: { clientPort: 443 },
+        }
+      : {}),
   },
   preview: {
     port: 3333,
