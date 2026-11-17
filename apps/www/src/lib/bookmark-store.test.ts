@@ -5,8 +5,16 @@ import {
   getCollection,
   getCollections,
   hostnameOf,
+  type BookmarkInput,
   type BookmarksConfigFile,
+  type FillSnapshotsResult,
 } from '@/lib/bookmark-store';
+
+function writtenBookmark(result: FillSnapshotsResult): BookmarkInput {
+  const bookmark = result.file.collections[0]?.bookmarks?.[0];
+  if (!bookmark || typeof bookmark === 'string') throw new Error('expected a bookmark object');
+  return bookmark;
+}
 
 function file(collections: BookmarksConfigFile['collections']): BookmarksConfigFile {
   return { collections };
@@ -163,7 +171,7 @@ describe('fillSnapshots', () => {
       image: 'https://grugbrain.dev/og.png',
     }));
     expect(skipped.fetched).toBe(0);
-    expect(skipped.file.collections[0]?.bookmarks[0]?.image).toBeNull();
+    expect(writtenBookmark(skipped).image).toBeNull();
     expect(skipped.missingImage).toEqual([
       { url: 'https://grugbrain.dev/', collection: 'Reading List' },
     ]);
@@ -174,7 +182,7 @@ describe('fillSnapshots', () => {
       { force: true },
     );
     expect(forced.fetched).toBe(1);
-    expect(forced.file.collections[0]?.bookmarks[0]?.image).toBe('https://grugbrain.dev/og.png');
+    expect(writtenBookmark(forced).image).toBe('https://grugbrain.dev/og.png');
   });
 
   it('reports a missing title when the OG adapter cannot supply one', async () => {

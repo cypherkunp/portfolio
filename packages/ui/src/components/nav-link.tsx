@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouterState } from '@tanstack/react-router';
 
+import { AppLink } from '../lib/app-link';
 import { cn } from '../lib/utils';
 
 type NavLinkProps = {
@@ -11,12 +11,13 @@ type NavLinkProps = {
 };
 
 export default function NavLink({ href, text }: NavLinkProps) {
-  const pathname = usePathname();
+  const pathname = useRouterState({ select: state => state.location.pathname });
 
   const linkHref = href === 'home' ? '' : href;
+  const to: string = `/${linkHref}`;
   return (
-    <Link
-      href={`/${linkHref}`}
+    <AppLink
+      href={to}
       className={cn(
         'text-lg font-bold text-white underline decoration-3 underline-offset-4 hover:text-rose-500',
         {
@@ -25,6 +26,6 @@ export default function NavLink({ href, text }: NavLinkProps) {
       )}
     >
       {text}
-    </Link>
+    </AppLink>
   );
 }

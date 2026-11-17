@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import UnderlineText from '@repo/ui/components/underline-text';
 import { siteShellClassName } from '@repo/ui/lib/site-shell';
 import { cn } from '@repo/ui/lib/utils';
 
@@ -25,7 +26,9 @@ export function ToolSubpageLayout({
       <Header className="mt-4 md:mt-10" />
       <div className="flex grow flex-col gap-6 md:gap-10">
         {title ? (
-          <h1 className="text-foreground text-2xl font-semibold tracking-tight">{title}</h1>
+          <h1 className="text-lg font-bold tracking-tight">
+            <UnderlineText>{title}</UnderlineText>
+          </h1>
         ) : null}
         <div className={cn('min-h-0 w-full flex-1', flush ? '' : 'pb-6')}>{children}</div>
       </div>

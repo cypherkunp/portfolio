@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { AppLink } from '../lib/app-link';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
 import { encode } from 'qss';
@@ -24,7 +23,6 @@ export const LinkPreview = ({
   className,
   width = 200,
   height = 125,
-  quality = 50,
   isStatic = false,
   imageSrc = '',
 }: LinkPreviewProps) => {
@@ -59,8 +57,8 @@ export const LinkPreview = ({
 
   const translateX = useSpring(x, springConfig);
 
-  const handleMouseMove = (event: any) => {
-    const targetRect = event.target.getBoundingClientRect();
+  const handleMouseMove = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const targetRect = event.currentTarget.getBoundingClientRect();
     const eventOffsetX = event.clientX - targetRect.left;
     const offsetFromCenter = (eventOffsetX - targetRect.width / 2) / 2; // Reduce the effect to make it subtle
     x.set(offsetFromCenter);
@@ -70,7 +68,7 @@ export const LinkPreview = ({
     <>
       {isMounted ? (
         <div className="hidden">
-          <Image src={src} width={width} height={height} quality={quality} priority={true} alt="" />
+          <img src={src} width={width} height={height} alt="" />
         </div>
       ) : null}
 
@@ -115,21 +113,19 @@ export const LinkPreview = ({
                   x: translateX,
                 }}
               >
-                <Link
+                <AppLink
                   href={url}
                   className="block rounded-xl border-2 border-transparent bg-white p-1 shadow hover:border-neutral-200 dark:hover:border-neutral-800"
                   style={{ fontSize: 0 }}
                 >
-                  <Image
+                  <img
                     src={isStatic ? imageSrc : src}
                     width={width}
                     height={height}
-                    quality={quality}
-                    priority={true}
                     className="rounded-lg"
                     alt={`Preview of ${url}`}
                   />
-                </Link>
+                </AppLink>
               </motion.div>
             )}
           </AnimatePresence>

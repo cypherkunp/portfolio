@@ -1,0 +1,137 @@
+---
+title: 'An agent software factory is the workflow for the coding agent'
+summary: 'An agent software factory turns a work item into a change for a person to review, and the queue forms at the review.'
+publishedOn: '16-10-2026'
+version: '1'
+tags:
+  - 'agent'
+  - 'engineering'
+---
+
+# An agent software factory is the workflow for the coding agent
+
+An agent software factory turns a work item into a change for a person to review, and the queue forms at the review. The factory is not the coding agent, and five stages move the work item. Two checks stay outside the agent, and you use the factory for work you can judge.
+
+## The factory is not the coding agent
+
+A coding agent writes the code for one work item. An agent software factory is the workflow for that agent. The factory gives the agent a work item. The factory takes back a change a person can review. That change is the code on a branch.
+
+<Diagram
+  kind="rows"
+  title="The coding agent and the factory"
+  rows={[
+    { label: 'Coding agent', value: 'Writes the code for one work item' },
+    { label: 'Factory', value: 'Passes a result from one stage to the next stage', tone: 'pass' },
+  ]}
+/>
+
+Agents can write many changes in one day. A person does these steps:
+
+- The person confirms the problem.
+- The person chooses the change.
+- The person runs the checks.
+- The person reads the result.
+
+Those steps form the queue. The factory passes a result from one stage to the next stage. The reviewer then receives the work item, the change, and the check results together.
+
+An orchestrator controls the order of the agents. The orchestrator gives the work item to one agent. That agent has its own instructions, its own tools, and its own conversation. The agent returns one result. The orchestrator sends that result to the next agent.
+
+1. Use a factory when more than one agent must work on the work item.
+2. If one person and one agent can finish the work item in one conversation, do not use a factory.
+
+## Five stages move the work item
+
+Five stages move one work item. Each stage answers one question and returns one result:
+
+- Intake returns a work item with the facts, or a request for more facts.
+- Investigation returns findings and the acceptance criteria.
+- Implementation returns the change on a branch and the check results.
+- The review returns findings, a revision request, or approval for the human decision.
+- The human decision merges the change, requests a revision, or stops the work.
+
+<Diagram
+  kind="flow"
+  title="Five stages for one work item"
+  steps={[
+    { label: 'Intake' },
+    { label: 'Investigation' },
+    { label: 'Implementation', current: true },
+    { label: 'Review' },
+    { label: 'Human decision' },
+  ]}
+  marker="The coding agent writes the code in this stage"
+  notes={['Intake can stop the work item before Implementation.']}
+/>
+
+A stage can stop the work item before any change. A work item can state that an API accepts input that is not valid. Investigation sends that input to the API. If the API rejects the input, the factory returns the findings and makes no change.
+
+Foreman is a factory that uses four agents for these stages. The orchestrator runs the four agents in order and does not skip an agent. The classifier records whether the work item is ready for investigation. The analyst reads a copy of the repository. The analyst writes the acceptance criteria. The implementer writes the change on a branch.
+
+Work can start from a GitHub issue with the label "factory". A pull request is the proposed change for the repository. Foreman opens a draft pull request. The factory tools do not include a merge. A person marks the pull request ready. The person merges the pull request or stops the work.
+
+The acceptance criteria are the statements that the change must meet. The reviewer judges the branch against the acceptance criteria. The reviewer reads only the branch and the acceptance criteria. The reviewer records pass or fail for each acceptance criterion. The reviewer uses a model from a different company. That model can find a fault that the implementer model does not find.
+
+A revision has a limit. If the reviewer requests changes, the implementer applies the findings. The factory then runs the review again. Foreman allows two revisions. Foreman then stops and reports the remaining findings. Foreman does not open a pull request for that work item.
+
+1. If the work item does not have the facts for an investigation, ask the person.
+2. Then wait for the answer.
+3. If no person is present, post the questions on the GitHub issue.
+4. Then stop that work item.
+
+## Two checks stay outside the agent
+
+A check stays outside the agent when the agent does not judge its own work. The review reads the change on the branch. The release check runs the required tests in the team test system. A sandbox is the separate place where the agent runs commands. The work check runs in that sandbox during implementation.
+
+The agent can choose the checks in the sandbox. A sandbox result can pass while the change misses a repository rule. The release check uses the test set and the security rules from the team.
+
+The work check runs the tests for this change. The release check runs before the merge. The factory sends the failure output to the agent. A release check that passes does not merge the change.
+
+A person reads the change and the evidence. The person decides whether the change belongs in the product.
+
+<Diagram
+  kind="rows"
+  title="Where the checks run"
+  rows={[
+    { label: 'Work check', value: 'Tests in the sandbox during implementation' },
+    { label: 'Review', value: 'Reads the change on the branch', tone: 'pass' },
+    {
+      label: 'Release check',
+      value: 'Required tests in the team test system',
+      tone: 'pass',
+    },
+  ]}
+  notes={['The marked rows are the checks outside the agent.']}
+/>
+
+1. Use both checks when the repository requires tests before a merge.
+2. If the change is a document and it has no test, use the review against the acceptance criteria.
+3. Keep the agent instructions and the checks current.
+4. If the same failure occurs on many runs, correct the rule or the check.
+
+## Use the factory for work you can judge
+
+The factory fits work with a repeatable process and a result the team can judge. The acceptance criteria give the factory a rule for the next stage. The work check and the release check give the factory evidence for that rule. A person who reviews the output decides whether the factory continues.
+
+Start with work the team already knows how to judge:
+
+- A bug report with a failure the team can reproduce and a regression test
+- A change that follows the repository rules
+- A maintenance change, such as a backport of a fix to an older release
+
+The AI SDK repository uses a factory for bug fixes, for documentation updates, and for backports.
+
+Product behavior is what the product does for a person. If the work item does not state the product behavior, the factory can write the wrong change. A public API is a function that other software calls. If the work item does not state the public API, the factory can write the wrong change.
+
+1. If the product behavior or a public API is not stated, do not start implementation. The tests can pass on the wrong change.
+
+<References
+  items={[
+    { author: 'Vercel', url: 'https://vercel.com/docs/eve/software-factory' },
+    { author: 'Vercel', url: 'https://vercel.com/kb/guide/eve-software-factory' },
+    {
+      author: 'Vercel Labs',
+      url: 'https://github.com/vercel-labs/eve-software-factory-template/blob/main/.github/ARCHITECTURE.md',
+    },
+    { author: 'Jacob Schmitt', url: 'https://circleci.com/blog/software-factory/' },
+  ]}
+/>

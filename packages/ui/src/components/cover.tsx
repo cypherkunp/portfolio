@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { cn } from '../lib/utils';
 import { SparklesCore } from './sparkles';
@@ -14,6 +14,7 @@ export const Cover = ({
   className?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -25,7 +26,7 @@ export const Cover = ({
       setContainerWidth(ref.current?.clientWidth ?? 0);
 
       const height = ref.current?.clientHeight ?? 0;
-      const numberOfBeams = Math.floor(height / 10); // Adjust the divisor to control the spacing
+      const numberOfBeams = Math.floor(height / 24);
       const positions = Array.from(
         { length: numberOfBeams },
         (_, i) => (i + 1) * (height / (numberOfBeams + 1)),
@@ -33,6 +34,8 @@ export const Cover = ({
       setBeamPositions(positions);
     }
   }, []);
+
+  const showSparkles = hovered && !reduceMotion;
 
   return (
     <div
@@ -42,7 +45,7 @@ export const Cover = ({
       className="group/cover relative inline-block rounded-sm bg-neutral-100 p-2 transition duration-200 hover:bg-neutral-900 dark:bg-neutral-900"
     >
       <AnimatePresence>
-        {hovered && (
+        {showSparkles && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -87,50 +90,21 @@ export const Cover = ({
           </motion.div>
         )}
       </AnimatePresence>
-      {beamPositions.map((position, index) => (
-        <Beam
-          key={index}
-          hovered={hovered}
-          duration={Math.random() * 2 + 1}
-          delay={Math.random() * 2 + 1}
-          width={containerWidth}
-          style={{
-            top: `${position}px`,
-          }}
-        />
-      ))}
+      {showSparkles
+        ? beamPositions.map((position, index) => (
+            <Beam
+              key={index}
+              hovered={hovered}
+              duration={Math.random() * 2 + 1}
+              delay={Math.random() * 2 + 1}
+              width={containerWidth}
+              style={{
+                top: `${position}px`,
+              }}
+            />
+          ))
+        : null}
       <motion.span
-        key={String(hovered)}
-        animate={{
-          scale: hovered ? 0.8 : 1,
-          x: hovered ? [0, -30, 30, -30, 30, 0] : 0,
-          y: hovered ? [0, 30, -30, 30, -30, 0] : 0,
-        }}
-        exit={{
-          filter: 'none',
-          scale: 1,
-          x: 0,
-          y: 0,
-        }}
-        transition={{
-          duration: 0.2,
-          x: {
-            duration: 0.2,
-            repeat: Infinity,
-            repeatType: 'loop',
-          },
-          y: {
-            duration: 0.2,
-            repeat: Infinity,
-            repeatType: 'loop',
-          },
-          scale: {
-            duration: 0.2,
-          },
-          filter: {
-            duration: 0.2,
-          },
-        }}
         className={cn(
           'relative z-20 inline-block text-neutral-900 transition duration-200 group-hover/cover:text-white dark:text-white',
           className,
@@ -199,9 +173,9 @@ export const Beam = ({
             repeatDelay: hovered ? Math.random() * (2 - 1) + 1 : (delay ?? 1),
           }}
         >
-          <stop stopColor="#2EB9DF" stopOpacity="0" />
-          <stop stopColor="#3b82f6" />
-          <stop offset="1" stopColor="#3b82f6" stopOpacity="0" />
+          <stop stopColor="#eab308" stopOpacity="0" />
+          <stop stopColor="#eab308" stopOpacity="0.55" />
+          <stop offset="1" stopColor="#eab308" stopOpacity="0" />
         </motion.linearGradient>
       </defs>
     </motion.svg>
@@ -212,9 +186,10 @@ export const CircleIcon = ({ className, delay }: { className?: string; delay?: n
   return (
     <div
       className={cn(
-        `group pointer-events-none size-2 animate-pulse rounded-full bg-neutral-600 opacity-20 group-hover/cover:hidden group-hover/cover:bg-white group-hover/cover:opacity-100 dark:bg-white`,
+        `group pointer-events-none size-2 animate-pulse rounded-full bg-neutral-600 opacity-20 group-hover/cover:hidden group-hover/cover:bg-white group-hover/cover:opacity-100 motion-reduce:animate-none dark:bg-white`,
         className,
       )}
+      style={delay === undefined ? undefined : { animationDelay: `${delay}s` }}
     ></div>
   );
 };

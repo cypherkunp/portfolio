@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { cn } from '@repo/ui/lib/utils';
 import { Building2, Code, Database, Globe, Package, Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';

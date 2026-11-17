@@ -1,0 +1,65 @@
+---
+title: 'Cursor hooks: make every chat check its own work'
+summary: 'I use two Cursor hooks so that every agent chat runs my lint and tests when it finishes, and fixes what breaks, without me asking.'
+publishedOn: '16-10-2026'
+version: '1'
+tags:
+  - 'cursor'
+  - 'hooks'
+  - 'tests'
+---
+
+# Cursor hooks: make every chat check its own work
+
+I use two Cursor hooks so that every agent chat runs my lint and tests when it finishes, and fixes what breaks, without me asking.
+
+## Problem
+
+An agent chat can edit a dozen files and then stop. It says it's done, but nothing has run pnpm lint or pnpm test. I find the failures later, when I review the code or when CI turns red. Then I have to paste the errors back into the chat, or start a new one.
+
+A line in a prompt or rule saying "always run lint and tests" doesn't fix this. The model can forget it, or decide the change was too small to check. I wanted the check to happen every time, without depending on the model remembering.
+
+## Solution
+
+The setup is one `hooks.json` with two hooks, both pointing to the same script in `.cursor/hooks/`.
+
+```json
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [{ "command": ".cursor/hooks/chat-checks.sh mark" }],
+    "stop": [
+      {
+        "command": ".cursor/hooks/chat-checks.sh stop",
+        "timeout": 900,
+        "loop_limit": 3
+      }
+    ]
+  }
+}
+```
+
+**Recording edits.** The afterFileEdit hook runs after every file the agent edits. The script saves the chat's conversation ID and the file path to a small log inside the project. That way each chat has its own list of what it changed, even when several chats run in the same repo at once.
+
+**Checking when the chat ends.** The stop hook runs when the agent loop finishes. The script first checks that the chat actually completed and that it edited project files. If a chat only answered a question and touched nothing, the hook does nothing and the chat ends normally. If there were edits, it runs pnpm lint and pnpm test together.
+
+**Sending failures back.** If both pass, the chat ends as usual. If either fails, the hook returns a follow-up message, and Cursor submits it as the next prompt. The message lists the edited files and the tail of each failing command's output, and tells the agent to fix the failures without touching unrelated files. The agent works on the errors, ends again, and the check reruns.
+
+A few settings keep this safe:
+
+- timeout: 900 gives the checks 15 minutes before Cursor gives up on the hook. The commands inside also have their own shorter limit.
+- loop_limit: 3 caps the automatic retries at three, so a stubborn failure can't loop forever.
+- The shell wrapper loads nvm when node isn't on Cursor's PATH. If Node still isn't found, the hook exits quietly instead of breaking the chat.
+- If pnpm can't be found, the follow-up message says the checks didn't run, rather than silently reporting a pass.
+
+I'm not pasting the script here. Its job is small: log edits per chat, run the two commands, and report back.
+
+## Outcome
+
+Every chat that changes code now ends with a lint and test run. Most of the time that run is invisible, because everything passes. When something fails, the agent gets the real error output in the next turn and fixes it before I see the result. I spend less time pasting errors and more time reviewing code that already passes.
+
+It also keeps the quality bar in a place the model can't skip. The rule is a script, not a prompt, and it runs the same way for every chat, every teammate, and every cloud agent that reads the project's `.cursor/hooks.json`.
+
+The limits are real. The checks only run on a clean finish, so an aborted chat gets none. The retry cap means a hard failure still comes back to me after three tries. That is the point: the agent handles the easy fixes, and I only look at what it couldn't solve.
+
+<References items={[{ author: 'Cursor', url: 'https://cursor.com/docs/hooks' }]} />

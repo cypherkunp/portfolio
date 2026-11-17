@@ -1,10 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NEXT_PUBLIC_APP_URL", "GITHUB_ACCESS_TOKEN"],
+  "agentGuidance": false,
+  "globalEnv": ["GITHUB_ACCESS_TOKEN", "FLAGS", "FLAGS_SECRET"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": ["dist/**", ".output/**", ".vercel/output/**"]
     },
     "lint": {
       "outputs": []
@@ -21,6 +22,10 @@
     },
     "dev": {
       "cache": false
+    },
+    "dev:tunnel": {
+      "cache": false,
+      "persistent": true
     },
     "storybook": {
       "cache": false,

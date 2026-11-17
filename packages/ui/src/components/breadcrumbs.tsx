@@ -1,8 +1,9 @@
 'use client';
 
 import { Fragment, type MouseEvent, type ReactNode } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@tanstack/react-router';
+
+import { AppLink } from '../lib/app-link';
 
 import {
   Breadcrumb,
@@ -62,14 +63,14 @@ function BreadcrumbBackLink({ href, children }: { href: string; children: ReactN
     if (isModifiedClick(event)) return;
     if (!canPopTo(href)) return;
     event.preventDefault();
-    router.back();
+    router.history.back();
   }
 
   return (
     <BreadcrumbLink asChild>
-      <Link href={href} onClick={onClick}>
+      <AppLink href={href} onClick={onClick}>
         {children}
-      </Link>
+      </AppLink>
     </BreadcrumbLink>
   );
 }

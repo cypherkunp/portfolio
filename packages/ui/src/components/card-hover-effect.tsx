@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Link from 'next/link';
+import { AppLink } from '../lib/app-link';
 import { ArrowRightIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -27,7 +27,7 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
   return (
     <div className={cn('grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3', className)}>
       {items.map((item, idx) => (
-        <Link
+        <AppLink
           href={item.link ?? '#'}
           key={item.title}
           className="group relative block h-full w-full"
@@ -51,7 +51,7 @@ export function HoverEffect({ items, className }: HoverEffectProps) {
             </CardTitle>
             <CardDescription>{item.description}</CardDescription>
           </Card>
-        </Link>
+        </AppLink>
       ))}
     </div>
   );

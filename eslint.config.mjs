@@ -1,5 +1,4 @@
 import js from '@eslint/js';
-import nextPlugin from '@next/eslint-plugin-next';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -8,9 +7,8 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.{ts,tsx,js,jsx,mjs}'],
+    files: ['**/*.{ts,tsx,js,jsx,mjs,cjs}'],
     plugins: {
-      '@next/next': nextPlugin,
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
     },
@@ -71,10 +69,6 @@ export default tseslint.config(
       },
     },
     rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs['core-web-vitals'].rules,
-      '@next/next/no-html-link-for-pages': 'off',
-      '@next/next/no-img-element': 'error',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
@@ -86,20 +80,43 @@ export default tseslint.config(
       'no-undef': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'next',
+              message:
+                'Use AppLink from @repo/ui/lib/app-link, Image from @/components/image, and @tanstack/react-router. Flags come from @/lib/flag. See docs/agents/stack.md.',
+            },
+            {
+              name: 'flags/next',
+              message: 'Declare flags with @/lib/flag. See docs/agents/stack.md.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['next/*'],
+              message:
+                'Use AppLink from @repo/ui/lib/app-link, Image from @/components/image, and @tanstack/react-router. Flags come from @/lib/flag. See docs/agents/stack.md.',
+            },
+          ],
+        },
+      ],
     },
   },
   {
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
-      '**/.next/**',
+      '**/.output/**',
+      '**/.nitro/**',
       '**/out/**',
       '**/build/**',
       '**/.turbo/**',
       '**/coverage/**',
       '**/storybook-static/**',
       '**/.source/**',
-      '**/next-env.d.ts',
       '**/tools/**',
     ],
   },

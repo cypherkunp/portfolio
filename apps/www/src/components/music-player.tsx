@@ -1,13 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { Button } from '@repo/ui/components/button';
 import { Slider } from '@repo/ui/components/slider';
+import UnderlineText from '@repo/ui/components/underline-text';
 import { cn } from '@repo/ui/lib/utils';
 import {
-  ChevronDown,
-  ChevronUp,
   Pause,
   Play,
   Repeat,
@@ -21,17 +19,22 @@ import {
 import { songs } from '@/config/songs';
 import type { Song } from '@/lib/types';
 import { formatTime } from '@/lib/utils';
+import Image from '@/components/image';
+
+function isCurrent(song: Song, current: Song) {
+  return song.id === current.id;
+}
 
 export default function MusicPlayer() {
-  const [currentSong, setCurrentSong] = useState<Song>(songs[0]);
+  const [currentSong, setCurrentSong] = useState<Song>(songs[0]!);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [durations, setDurations] = useState<Record<string, number>>({});
   const [volume, setVolume] = useState(0.7);
   const [isMuted, setIsMuted] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
-  const [showMobilePlaylist, setShowMobilePlaylist] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isRepeatRef = useRef(isRepeat);
@@ -93,6 +96,29 @@ export default function MusicPlayer() {
     }
   }, [volume, isMuted]);
 
+  // Read the duration of every track up front so the list is not full of placeholders.
+  useEffect(() => {
+    const players = songs.map(song => {
+      const audio = new Audio();
+      audio.preload = 'metadata';
+      audio.src = song.url;
+      const onMetadata = () => {
+        if (isFinite(audio.duration)) {
+          setDurations(prev => ({ ...prev, [song.id]: audio.duration }));
+        }
+      };
+      audio.addEventListener('loadedmetadata', onMetadata);
+      return { audio, onMetadata };
+    });
+
+    return () => {
+      for (const { audio, onMetadata } of players) {
+        audio.removeEventListener('loadedmetadata', onMetadata);
+        audio.src = '';
+      }
+    };
+  }, []);
+
   const loadAndPlay = (song: Song | undefined) => {
     const audio = getAudio();
     const target = song ?? currentSong;
@@ -126,15 +152,15 @@ export default function MusicPlayer() {
   };
 
   const handleProgressChange = (value: number[]) => {
-    if (audioRef.current) {
-      const newTime = value[0];
-      audioRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-    }
+    const newTime = value[0] ?? 0;
+    const audio = getAudio();
+    if (!audio.src) audio.src = currentSong.url;
+    audio.currentTime = newTime;
+    setCurrentTime(newTime);
   };
 
   const handleVolumeChange = (value: number[]) => {
-    const newVolume = value[0];
+    const newVolume = value[0] ?? 0;
     setVolume(newVolume);
     if (audioRef.current) audioRef.current.volume = newVolume;
     if (newVolume > 0 && isMuted) setIsMuted(false);
@@ -156,207 +182,198 @@ export default function MusicPlayer() {
 
   const skipPrev = () => loadAndPlay(songs[getNextIndex(-1)]);
   const skipNext = () => loadAndPlay(songs[getNextIndex(1)]);
-  const selectSong = (song: Song) => loadAndPlay(song);
+  const selectSong = (song: Song) => {
+    if (isCurrent(song, currentSong)) {
+      togglePlay();
+      return;
+    }
+    loadAndPlay(song);
+  };
+
+  const albumLine = [currentSong.artist, currentSong.album].filter(Boolean).join(' · ');
+  const totalDuration = durations[currentSong.id] ?? currentSong.duration ?? duration;
 
   return (
-    <div className="text-foreground flex min-h-0 flex-1 flex-col lg:flex-row lg:gap-0">
-      {/* Now playing panel */}
-      <div className="flex flex-col items-center px-4 py-6 lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:py-8">
-        {/* Album art */}
-        <div className="border-border/90 relative aspect-square w-full max-w-xs overflow-hidden rounded-xl border bg-neutral-900/70 shadow-lg shadow-black/20 lg:max-w-md">
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-end">
+        <div className="border-border relative aspect-square w-36 shrink-0 overflow-hidden rounded-sm border bg-neutral-900 sm:w-44">
           <Image
-            src={currentSong.cover || '/placeholder.svg'}
+            src={currentSong.cover}
             alt={`${currentSong.title} cover`}
             fill
-            sizes="(max-width: 1024px) 100vw, 448px"
-            className="object-cover transition-transform duration-500 ease-out motion-reduce:transition-none lg:hover:scale-[1.02]"
+            className="object-cover"
             priority
           />
         </div>
 
-        {/* Song info */}
-        <div className="mt-5 w-full max-w-xs text-center lg:mt-8 lg:max-w-md">
-          <h2 className="truncate text-xl font-semibold tracking-tight text-neutral-100 lg:text-2xl">
+        <div className="min-w-0 flex-1">
+          <p className="text-xs text-neutral-600 dark:text-neutral-500">Now playing</p>
+          <h2
+            className="mt-1 truncate text-xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100"
+            aria-live="polite"
+          >
             {currentSong.title}
           </h2>
-          <p className="mt-1.5 text-sm text-neutral-400">{currentSong.artist}</p>
-        </div>
+          <p className="mt-0.5 text-sm text-neutral-600 dark:text-neutral-500">{albumLine}</p>
 
-        {/* Progress */}
-        <div className="mt-5 flex w-full max-w-xs items-center gap-3 lg:mt-7 lg:max-w-md">
-          <span className="w-10 text-right text-xs text-neutral-500 tabular-nums">
-            {formatTime(currentTime)}
-          </span>
-          <Slider
-            value={[currentTime]}
-            max={duration || 1}
-            step={1}
-            onValueChange={handleProgressChange}
-            className="flex-1"
-            trackClassName="bg-neutral-700/60 h-1.5"
-            rangeClassName="bg-primary"
-            thumbClassName="h-4 w-4 border-primary bg-primary shadow-sm shadow-primary/30"
-          />
-          <span className="w-10 text-xs text-neutral-500 tabular-nums">{formatTime(duration)}</span>
+          <div className="mt-5 flex items-center gap-3">
+            <span className="w-10 text-right text-xs text-neutral-600 tabular-nums dark:text-neutral-500">
+              {formatTime(currentTime)}
+            </span>
+            <Slider
+              value={[currentTime]}
+              max={totalDuration || 1}
+              step={1}
+              onValueChange={handleProgressChange}
+              aria-label="Seek"
+              className="flex-1"
+              trackClassName="h-1 bg-neutral-800"
+              rangeClassName="bg-neutral-200"
+              thumbClassName="size-3 border-0 bg-neutral-200 focus-visible:ring-1"
+            />
+            <span className="w-10 text-xs text-neutral-600 tabular-nums dark:text-neutral-500">
+              {totalDuration ? formatTime(totalDuration) : '–:––'}
+            </span>
+          </div>
         </div>
+      </div>
 
-        {/* Transport controls */}
-        <div className="mt-5 flex w-full max-w-xs items-center justify-between lg:mt-6 lg:max-w-md">
+      <div className="flex items-center gap-1">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={skipPrev}
+          className="size-11 text-neutral-500 hover:bg-neutral-800/60 hover:text-neutral-100"
+          aria-label="Previous track"
+        >
+          <SkipBack className="size-5" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={togglePlay}
+          className="mx-1 size-12 rounded-full bg-neutral-100 text-neutral-900 hover:bg-white hover:text-neutral-900"
+          aria-label={isPlaying ? 'Pause' : 'Play'}
+        >
+          {isPlaying ? <Pause className="size-5" /> : <Play className="ml-0.5 size-5" />}
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={skipNext}
+          className="size-11 text-neutral-500 hover:bg-neutral-800/60 hover:text-neutral-100"
+          aria-label="Next track"
+        >
+          <SkipForward className="size-5" />
+        </Button>
+
+        <div className="ml-2 flex items-center gap-1">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setIsRepeat(!isRepeat)}
             className={cn(
-              'h-9 w-9 text-neutral-400 hover:bg-neutral-800/80 hover:text-neutral-100',
-              isRepeat && 'text-primary',
+              'size-11 text-neutral-500 hover:bg-neutral-800/60 hover:text-neutral-100',
+              isRepeat && 'text-yellow-400 hover:text-yellow-400',
             )}
+            aria-label="Repeat"
+            aria-pressed={isRepeat}
           >
-            <Repeat className="h-4 w-4" />
+            <Repeat className="size-4" />
           </Button>
-
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-10 w-10 text-neutral-300 hover:bg-neutral-800/80 hover:text-neutral-50"
-              onClick={skipPrev}
-            >
-              <SkipBack className="h-5 w-5" />
-            </Button>
-
-            <Button
-              variant="default"
-              size="icon"
-              className="shadow-primary/15 h-14 w-14 rounded-full shadow-md"
-              onClick={togglePlay}
-            >
-              {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="ml-0.5 h-6 w-6" />}
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-10 w-10 text-neutral-300 hover:bg-neutral-800/80 hover:text-neutral-50"
-              onClick={skipNext}
-            >
-              <SkipForward className="h-5 w-5" />
-            </Button>
-          </div>
-
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setIsShuffle(!isShuffle)}
             className={cn(
-              'h-9 w-9 text-neutral-400 hover:bg-neutral-800/80 hover:text-neutral-100',
-              isShuffle && 'text-primary',
+              'size-11 text-neutral-500 hover:bg-neutral-800/60 hover:text-neutral-100',
+              isShuffle && 'text-yellow-400 hover:text-yellow-400',
             )}
+            aria-label="Shuffle"
+            aria-pressed={isShuffle}
           >
-            <Shuffle className="h-4 w-4" />
+            <Shuffle className="size-4" />
           </Button>
         </div>
 
-        {/* Volume */}
-        <div className="mt-5 flex w-full max-w-xs items-center gap-3 lg:mt-6 lg:max-w-md">
+        <div className="ml-auto flex items-center gap-1">
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 shrink-0 text-neutral-400 hover:bg-neutral-800/80 hover:text-neutral-100"
             onClick={toggleMute}
+            className="size-11 text-neutral-500 hover:bg-neutral-800/60 hover:text-neutral-100"
+            aria-label={isMuted ? 'Unmute' : 'Mute'}
           >
-            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            {isMuted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
           </Button>
           <Slider
             value={[isMuted ? 0 : volume]}
             max={1}
             step={0.01}
             onValueChange={handleVolumeChange}
-            className="flex-1"
-            trackClassName="bg-neutral-700/60 h-1.5"
-            rangeClassName="bg-neutral-300"
-            thumbClassName="h-3.5 w-3.5 border-neutral-300 bg-neutral-300 shadow-sm"
+            aria-label="Volume"
+            className="hidden w-24 sm:flex"
+            trackClassName="h-1 bg-neutral-800"
+            rangeClassName="bg-neutral-500"
+            thumbClassName="size-3 border-0 bg-neutral-400"
           />
         </div>
-
-        {/* Mobile playlist toggle */}
-        <Button
-          variant="ghost"
-          className="border-border/60 mt-6 w-full max-w-xs border bg-neutral-900/40 text-neutral-200 hover:bg-neutral-800/70 hover:text-neutral-50 lg:hidden"
-          onClick={() => setShowMobilePlaylist(!showMobilePlaylist)}
-        >
-          {showMobilePlaylist ? (
-            <>
-              Hide playlist <ChevronUp className="ml-2 h-4 w-4" />
-            </>
-          ) : (
-            <>
-              Show playlist <ChevronDown className="ml-2 h-4 w-4" />
-            </>
-          )}
-        </Button>
       </div>
 
-      {/* Playlist panel - always visible on desktop, toggleable on mobile */}
-      <div
-        className={cn(
-          'border-border overflow-hidden transition-all duration-300 lg:flex lg:w-88 lg:shrink-0 lg:flex-col lg:justify-center lg:border-t-0 lg:border-l',
-          'border-t lg:max-h-none',
-          showMobilePlaylist ? 'max-h-[min(52vh,28rem)]' : 'max-h-0 lg:max-h-none',
-        )}
-      >
-        <div className="flex min-h-0 flex-col bg-neutral-900/25 px-3 py-4 lg:bg-neutral-900/15 lg:px-5 lg:py-6">
-          <h3 className="mb-3 text-[11px] font-semibold tracking-widest text-neutral-500 uppercase">
-            Playlist
-          </h3>
-          <ul className="min-h-0 space-y-0.5 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom,0px)] lg:max-h-[calc(100dvh-10rem)]">
-            {songs.map(song => (
-              <li
-                key={song.id}
-                onClick={() => selectSong(song)}
-                className={cn(
-                  'flex cursor-pointer items-center gap-3 rounded-md px-2.5 py-2 transition-colors',
-                  'hover:bg-neutral-800/50',
-                  currentSong.id === song.id
-                    ? 'bg-neutral-800/80 text-neutral-50'
-                    : 'text-neutral-300',
-                )}
-              >
-                <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded">
-                  <Image
-                    src={song.cover || '/placeholder.svg'}
-                    alt={song.title}
-                    width={40}
-                    height={40}
-                    className="h-full w-full object-cover"
-                  />
-                  {currentSong.id === song.id && isPlaying && (
-                    <div className="bg-primary/85 absolute inset-0 flex items-center justify-center">
-                      <span className="flex gap-0.5">
-                        {[10, 14, 12].map((barHeight, i) => (
-                          <span
-                            key={i}
-                            className="inline-block w-0.5 animate-pulse rounded-full bg-white"
-                            style={{
-                              height: `${barHeight}px`,
-                              animationDelay: `${i * 0.15}s`,
-                            }}
-                          />
-                        ))}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-neutral-100">{song.title}</p>
-                  <p className="truncate text-xs text-neutral-500">{song.artist}</p>
-                </div>
-                <span className="text-xs text-neutral-500 tabular-nums">
-                  {currentSong.id === song.id && duration > 0 ? formatTime(duration) : '--:--'}
-                </span>
+      <div>
+        <h2 className="text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <UnderlineText>Tracks</UnderlineText>
+        </h2>
+        <ol className="mt-3 flex list-none flex-col">
+          {songs.map((song, index) => {
+            const active = isCurrent(song, currentSong);
+            const songDuration = durations[song.id] ?? song.duration;
+
+            return (
+              <li key={song.id}>
+                <button
+                  type="button"
+                  onClick={() => selectSong(song)}
+                  aria-current={active ? 'true' : undefined}
+                  aria-label={`${active && isPlaying ? 'Pause' : 'Play'} ${song.title}`}
+                  className="group flex w-full items-center gap-2 py-2.5 text-left sm:gap-3"
+                >
+                  <span className="w-8 shrink-0 text-sm text-neutral-600 tabular-nums dark:text-neutral-400">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="relative size-8 shrink-0 overflow-hidden rounded-sm bg-neutral-900">
+                    <Image src={song.cover} alt="" fill className="object-cover" />
+                  </span>
+                  <span
+                    className={cn(
+                      'min-w-0 truncate tracking-tight text-neutral-900 dark:text-neutral-100',
+                      active
+                        ? 'underline decoration-yellow-500 underline-offset-4'
+                        : 'group-hover:underline group-hover:decoration-yellow-500 group-hover:underline-offset-4',
+                    )}
+                  >
+                    {song.title}
+                  </span>
+                  <span className="hidden min-w-0 truncate text-sm text-neutral-600 sm:inline dark:text-neutral-500">
+                    {song.artist}
+                  </span>
+                  <span className="ml-auto shrink-0 text-sm text-neutral-600 tabular-nums dark:text-neutral-500">
+                    {songDuration ? formatTime(songDuration) : '–:––'}
+                  </span>
+                  <span className="hidden size-5 shrink-0 items-center justify-center text-neutral-500 opacity-40 transition-opacity group-hover:opacity-100 sm:flex [@media(hover:hover)_and_(pointer:fine)]:opacity-0">
+                    {active && isPlaying ? (
+                      <Pause className="size-3.5" />
+                    ) : (
+                      <Play className="size-3.5" />
+                    )}
+                  </span>
+                </button>
               </li>
-            ))}
-          </ul>
-        </div>
+            );
+          })}
+        </ol>
       </div>
     </div>
   );

@@ -1,5 +1,11 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import type { Decorator, Preview } from '@storybook/react-vite';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+  RouterContextProvider,
+} from '@tanstack/react-router';
 
 import { ThemeProvider } from '../src/components/theme-provider';
 import { TooltipProvider } from '../src/components/tooltip';
@@ -26,11 +32,24 @@ function ThemeFrame({ theme, children }: { theme: 'dark' | 'light'; children: Re
   );
 }
 
+function RouterFrame({ children }: { children: ReactNode }) {
+  const [router] = useState(() =>
+    createRouter({
+      routeTree: createRootRoute(),
+      history: createMemoryHistory({ initialEntries: ['/'] }),
+    }),
+  );
+
+  return <RouterContextProvider router={router}>{children}</RouterContextProvider>;
+}
+
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme === 'light' ? 'light' : 'dark';
   return (
     <ThemeFrame theme={theme}>
-      <Story />
+      <RouterFrame>
+        <Story />
+      </RouterFrame>
     </ThemeFrame>
   );
 };

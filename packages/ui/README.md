@@ -19,7 +19,7 @@ Inside the package, never use `@/`: it resolves against the consuming app. Use r
 ## New workspace app
 
 1. Add the dependency: `"@repo/ui": "workspace:*"`.
-2. In `next.config.ts`, set `transpilePackages: ['@repo/ui']`.
+2. Import the package as source. It does not depend on Next.js.
 3. In the app stylesheet, import the design system first. Add app-only rules after it:
 
    ```css
@@ -43,7 +43,7 @@ Inside the package, never use `@/`: it resolves against the consuming app. Use r
 
 5. Copy `apps/www/components.json` so the shadcn CLI resolves `ui` and `utils` to this package.
 
-Route view transitions need `experimental.viewTransition` in `next.config.ts` for `RouteViewTransition`.
+`RouteViewTransition` uses React 19.3 `<ViewTransition>`.
 
 ## Add a primitive
 
@@ -59,7 +59,7 @@ pnpm --filter @repo/ui test
 
 ## Storybook
 
-Stories live in `src/stories`, one file per reusable component. The preview loads the design-system stylesheet, defaults to the dark theme, and mocks `next/link`, `next/image`, `next/navigation`, and `next/font`.
+Stories live in `src/stories`, one file per reusable component. The preview loads the design-system stylesheet and defaults to the dark theme.
 
 ```sh
 pnpm storybook

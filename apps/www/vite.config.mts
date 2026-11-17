@@ -1,0 +1,79 @@
+import { createRequire } from 'node:module';
+import { cp } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import tailwindcss from '@tailwindcss/vite';
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
+import viteReact from '@vitejs/plugin-react';
+import mdx from 'fumadocs-mdx/vite';
+import { nitro } from 'nitro/vite';
+import { defineConfig } from 'vite';
+
+import * as sourceConfig from './source.config.ts';
+
+const root = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const tunnel = process.env.TUNNEL === '1';
+
+function exact(find: string, replacement: string) {
+  return { find: new RegExp(`^${find}$`), replacement };
+}
+
+export default defineConfig(async () => ({
+  server: {
+    port: 3333,
+    host: '127.0.0.1',
+    // Tunnel origin is https://localhost:3036. HTTPS also skips Vite's host check,
+    // so localhost.devvrat.cc is accepted. HMR uses the public 443 socket.
+    ...(tunnel
+      ? {
+          host: '::',
+          https: {
+            cert: path.join(root, '.certs/localhost.pem'),
+            key: path.join(root, '.certs/localhost-key.pem'),
+          },
+          ws: { clientPort: 443 },
+        }
+      : {}),
+  },
+  preview: {
+    port: 3333,
+    host: '127.0.0.1',
+  },
+  resolve: {
+    tsconfigPaths: true,
+    alias: [
+      { find: /^@\//, replacement: `${path.join(root, 'src')}/` },
+      exact('node:path', path.join(path.dirname(require.resolve('pathe')), 'index.mjs')),
+      exact('next-intl/server', path.join(root, 'src/shims/next-intl-server.ts')),
+      exact('next-intl', path.join(root, 'src/shims/next-intl.tsx')),
+      exact('server-only', path.join(root, 'src/test/stubs/server-only.ts')),
+      // Vite's SSR runner loads exifr's CJS build, which has no named `parse` export.
+      exact('shiki/wasm', path.join(root, 'src/shims/shiki-wasm.ts')),
+      exact('exifr', require.resolve('exifr/dist/full.esm.mjs')),
+    ],
+  },
+  plugins: [
+    await mdx(sourceConfig),
+    tailwindcss(),
+    tanstackStart({
+      router: {
+        quoteStyle: 'single',
+        semicolons: true,
+      },
+    }),
+    viteReact(),
+    nitro({
+      hooks: {
+        // Vercel serves public/ from the CDN only. The photo grid and /image read
+        // public/photos with fs at runtime, so ship a copy inside the function.
+        compiled: async nitro => {
+          if (nitro.options.preset !== 'vercel') return;
+          await cp(path.join(root, 'public/photos'), path.join(nitro.options.output.serverDir, 'public/photos'), {
+            recursive: true,
+          });
+        },
+      },
+    }),
+  ],
+}));

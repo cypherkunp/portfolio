@@ -1,10 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import ProfilePic from '@/images/profile.jpg';
 import { Cover } from '@repo/ui/components/cover';
 import { FollowerPointerCard } from '@repo/ui/components/following-pointer';
 import { useTranslations } from 'next-intl';
+
+import Image from '@/components/image';
+
+function assetSrc(asset: string | { src: string }) {
+  return typeof asset === 'string' ? asset : asset.src;
+}
 
 export default function InfoBlock() {
   const t = useTranslations();
@@ -12,10 +17,12 @@ export default function InfoBlock() {
     <Cover className="p-2">
       <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-start md:gap-16">
         <FollowerPointerCard
-          title={<Pointer title={t('Blocks.infoBlock.pointer.text')} avatar={ProfilePic.src} />}
+          title={
+            <Pointer title={t('Blocks.infoBlock.pointer.text')} avatar={assetSrc(ProfilePic)} />
+          }
         >
           <Image
-            src={ProfilePic.src}
+            src={assetSrc(ProfilePic)}
             alt={t('Common.contact.name')}
             className="size-[200px] rounded-full object-cover md:size-[200px] md:rounded-md"
             width={200}
@@ -36,13 +43,13 @@ export default function InfoBlock() {
 }
 
 const Pointer = ({ title, avatar }: { title: string; avatar: string }) => (
-  <div className="flex items-center space-x-2 rounded-full bg-sky-500">
+  <div className="flex items-center space-x-2">
     <Image
       src={avatar}
       height={20}
       width={20}
       alt=""
-      className="rounded-full border-2 border-white"
+      className="rounded-full border border-neutral-900/20"
     />
     <p className="pr-2">{title}</p>
   </div>

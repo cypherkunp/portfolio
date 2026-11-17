@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { renderWithRouter } from '@/test/render-with-router';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { CollectionList } from '@/components/bookmarks/collection-list';
 
 describe('CollectionList', () => {
-  it('links each collection by id and shows how many bookmarks it holds', () => {
-    render(
+  it('links each collection by id and shows how many bookmarks it holds', async () => {
+    await renderWithRouter(
       <CollectionList
         collections={[
           {
@@ -19,6 +20,7 @@ describe('CollectionList', () => {
           },
         ]}
       />,
+      '/bookmarks',
     );
 
     const link = screen.getByRole('link', { name: /Reading List/ });

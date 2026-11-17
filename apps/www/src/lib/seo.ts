@@ -1,5 +1,3 @@
-import type { Metadata } from 'next';
-
 import { PORTFOLIO_BASE_URL } from '@/config/site-data';
 import { toIsoDate } from '@/lib/format-date';
 
@@ -21,7 +19,11 @@ export function brandedTitle(title: string) {
   return alreadyBranded(title) ? title : `${title} | ${SITE_NAME}`;
 }
 
-export function documentTitle(title: string): Metadata['title'] {
+interface AbsoluteDocumentTitle {
+  absolute: string;
+}
+
+export function documentTitle(title: string): string | AbsoluteDocumentTitle {
   return alreadyBranded(title) ? { absolute: title } : title;
 }
 
@@ -49,6 +51,27 @@ interface SocialMetadataInput {
   publishedTime?: string;
 }
 
+interface SocialMetadata {
+  openGraph: {
+    title: string;
+    description: string;
+    url: string;
+    siteName: string;
+    locale: string;
+    images: SocialImage[];
+    type: 'website' | 'article';
+    publishedTime?: string;
+  };
+  twitter: {
+    card: 'summary_large_image';
+    title: string;
+    description: string;
+    images: string[];
+    site: string;
+    creator: string;
+  };
+}
+
 export function socialMetadata({
   title,
   description,
@@ -57,7 +80,7 @@ export function socialMetadata({
   images = [OG_HOME_IMAGE],
   creator = TWITTER_SITE,
   publishedTime,
-}: SocialMetadataInput): Pick<Metadata, 'openGraph' | 'twitter'> {
+}: SocialMetadataInput): SocialMetadata {
   const imageUrls = images.map(image => image.url);
 
   return {

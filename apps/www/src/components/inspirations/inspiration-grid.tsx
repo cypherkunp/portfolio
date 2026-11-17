@@ -44,7 +44,7 @@ function InspirationCard({ item, isCopied, onCopy }: InspirationCardProps) {
     .join(' · ');
 
   return (
-    <Card className="mb-4 break-inside-avoid rounded-sm border-white/10 bg-transparent shadow-none">
+    <Card className="group border-border mb-4 break-inside-avoid rounded-sm bg-transparent shadow-none">
       <CardHeader>
         {isPinned ? (
           <span
@@ -66,7 +66,7 @@ function InspirationCard({ item, isCopied, onCopy }: InspirationCardProps) {
           type="button"
           variant="ghost"
           size="icon"
-          className="ml-auto"
+          className="ml-auto opacity-0 transition-opacity duration-150 group-hover:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100"
           onClick={() => onCopy(item)}
           aria-label={isCopied ? 'Copied' : 'Copy quote'}
         >

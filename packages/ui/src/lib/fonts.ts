@@ -1,12 +1,11 @@
-import { Geist, Geist_Mono } from 'next/font/google';
+export const geist = {
+  className: 'font-geist',
+  variable: '--font-geist',
+  style: { fontFamily: 'Geist Variable' },
+};
 
-// If loading a variable font, you don't need to specify the font weight
-export const geist = Geist({
-  subsets: ['latin'],
-  display: 'swap',
-});
-
-export const geistMono = Geist_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-});
+export const geistMono = {
+  className: 'font-geist-mono',
+  variable: '--font-geist-mono',
+  style: { fontFamily: "'Geist Mono Variable'" },
+};

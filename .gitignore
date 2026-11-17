@@ -11,6 +11,7 @@ node_modules
 
 # Distribution directories
 dist/
+.output/
 .next
 out
 build
@@ -52,3 +53,9 @@ tsconfig.tsbuildinfo
 
 # Storybook
 storybook-static
+
+# Skill eval workspaces
+.agents/skills/*-workspace/
+
+# Cursor hook run state
+.cursor/hooks/state/

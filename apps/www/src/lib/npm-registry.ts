@@ -112,8 +112,6 @@ async function fetchOnce(name: string, signal: AbortSignal): Promise<NpmPackageI
   const response = await fetch(`${REGISTRY}/${encodeURIComponent(name)}`, {
     signal,
     headers,
-    // Edge/Node fetch: leverage Next.js data cache for 1 day, also revalidatable.
-    next: { revalidate: 60 * 60 * 24, tags: [`npm:${name}`] },
   });
 
   if (response.status === 429) throw new NpmRegistryError('rate-limit', 429);

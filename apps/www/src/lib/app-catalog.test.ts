@@ -1,21 +1,17 @@
+import { isNotFound } from '@tanstack/react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { assertAppEnabled, getApp, getEnabledApps, getSitemapPaths } from '@/lib/app-catalog';
+import { getApp } from '@/lib/app-catalog';
+import { assertAppEnabled, getEnabledApps, getSitemapPaths, isAppEnabled } from '@/lib/app-flags';
 
 const flagValues: Record<string, boolean> = {};
 
-vi.mock('flags/next', () => ({
+vi.mock('@/lib/flag', () => ({
   flag: (opts: { key: string }) => async () => flagValues[opts.key] ?? false,
 }));
 
 vi.mock('@flags-sdk/vercel', () => ({
   vercelAdapter: () => ({}),
-}));
-
-vi.mock('next/navigation', () => ({
-  notFound: () => {
-    throw new Error('NEXT_NOT_FOUND');
-  },
 }));
 
 const ALL_ON = {
@@ -124,6 +120,17 @@ describe('getSitemapPaths', () => {
   });
 });
 
+describe('isAppEnabled', () => {
+  it('is false when the Music catalog flag is off', async () => {
+    setFlags({ ...ALL_ON, 'feature-app-music': false });
+    await expect(isAppEnabled('musicPlayer')).resolves.toBe(false);
+  });
+
+  it('is true when the Music catalog flag is on', async () => {
+    await expect(isAppEnabled('musicPlayer')).resolves.toBe(true);
+  });
+});
+
 describe('assertAppEnabled', () => {
   it('allows an app whose catalog flag is on', async () => {
     await expect(assertAppEnabled('musicPlayer')).resolves.toBeUndefined();
@@ -131,6 +138,6 @@ describe('assertAppEnabled', () => {
 
   it('404s when the catalog flag is off', async () => {
     setFlags({ ...ALL_ON, 'feature-app-music': false });
-    await expect(assertAppEnabled('musicPlayer')).rejects.toThrow('NEXT_NOT_FOUND');
+    await expect(assertAppEnabled('musicPlayer')).rejects.toSatisfy(isNotFound);
   });
 });

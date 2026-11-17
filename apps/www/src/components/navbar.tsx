@@ -1,9 +1,8 @@
 'use client';
 
-import type React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import IconArrow from '@repo/ui/components/icon-arrow';
+import { useRouterState } from '@tanstack/react-router';
 import { cn } from '@repo/ui/lib/utils';
 
 export interface NavItem {
@@ -14,7 +13,6 @@ export interface NavItem {
 
 export interface NavbarProps {
   items: NavItem[];
-  logo?: React.ReactNode;
   className?: string;
 }
 
@@ -22,8 +20,8 @@ function isExternalHref(href: string, external?: boolean) {
   return external === true || /^https?:\/\//i.test(href);
 }
 
-export function Navbar({ items, logo = 'Logo', className }: NavbarProps) {
-  const pathname = usePathname();
+export function Navbar({ items, className }: NavbarProps) {
+  const pathname = useRouterState({ select: state => state.location.pathname });
 
   return (
     <nav className={cn('w-full', className)}>

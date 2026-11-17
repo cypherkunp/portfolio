@@ -88,7 +88,7 @@ export function PackageAnalyzer() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="border-border bg-card flex flex-col gap-3 rounded-lg border p-6"
+          className="border-border bg-card flex flex-col gap-3 rounded-sm border p-6"
         >
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Analyzing packages...</span>
@@ -158,14 +158,6 @@ export function PackageAnalyzer() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {analyzer.phase === 'idle' && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-16 text-center">
-          <p className="text-muted-foreground">
-            Upload a package.json file to see detailed information about your project dependencies
-          </p>
-        </motion.div>
-      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink } from '../lib/app-link';
 
 interface DockItem {
   title: string;
@@ -22,7 +22,7 @@ export function LinkDock({ items, showLabels = false }: LinkDockProps) {
         'type' in item ? (
           <div key={index} className="h-8 w-px bg-neutral-300 dark:bg-neutral-700" />
         ) : (
-          <Link
+          <AppLink
             key={index}
             href={item.href}
             className="flex flex-col items-center justify-center rounded-full p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -33,7 +33,7 @@ export function LinkDock({ items, showLabels = false }: LinkDockProps) {
                 {item.title}
               </span>
             )}
-          </Link>
+          </AppLink>
         ),
       )}
     </div>

@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Github, Instagram, Linkedin, Mail, MoreVertical, Twitter, X } from 'lucide-react';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
+import { Github, Linkedin, Mail, MoreVertical, Twitter, X } from 'lucide-react';
 
 const socialLinks = [
   {
