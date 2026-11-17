@@ -23,7 +23,7 @@ export default function AppsBlock({ enabledApps }: AppsBlockProps) {
             <span className="w-8 shrink-0 text-sm text-neutral-600 dark:text-neutral-400">
               {app.abbreviation}
             </span>
-            <span className="group-hover:decoration-tertiary tracking-tight text-neutral-900 group-hover:underline group-hover:underline-offset-8 dark:text-neutral-100">
+            <span className="tracking-tight text-neutral-900 group-hover:underline group-hover:decoration-yellow-500 group-hover:underline-offset-8 dark:text-neutral-100">
               {t(`${id}.name`)}
             </span>
             <span className="hidden text-sm text-neutral-600 sm:inline dark:text-neutral-500">

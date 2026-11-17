@@ -1,16 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Image, { type ImageLoaderProps } from '@/components/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@repo/ui/lib/utils';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { Grid, type CellComponentProps } from 'react-window';
 
 import type { Photo } from '@/lib/photo';
+import Image, { type ImageLoaderProps } from '@/components/image';
 
-const COLUMN_COUNT = 3;
-const INITIAL_GRID_WIDTH = 900;
-const INITIAL_GRID_HEIGHT = 600;
 const THUMB_WIDTH = 320;
 const FULL_WIDTH = 960;
 const THUMB_WIDTHS = [384, 640] as const;
@@ -48,70 +44,6 @@ function scaledHeight(photo: Photo, width: number) {
   return Math.max(1, Math.round((width * photo.height) / Math.max(photo.width, 1)));
 }
 
-interface PhotoCellProps {
-  photos: readonly Photo[];
-  onOpen: (index: number) => void;
-  loaded: ReadonlySet<string>;
-  onLoad: (id: string) => void;
-}
-
-function PhotoCell({
-  ariaAttributes,
-  columnIndex,
-  rowIndex,
-  style,
-  photos,
-  onOpen,
-  loaded,
-  onLoad,
-}: CellComponentProps<PhotoCellProps>) {
-  const index = rowIndex * COLUMN_COUNT + columnIndex;
-  const photo = photos[index];
-
-  if (!photo) {
-    return <div style={style} {...ariaAttributes} />;
-  }
-
-  return (
-    <div style={style} {...ariaAttributes}>
-      <button
-        type="button"
-        onClick={() => onOpen(index)}
-        className="group absolute inset-px overflow-hidden bg-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:outline-none sm:inset-0.5"
-        aria-label={`Open photo: ${photo.alt}`}
-      >
-        {/* `sizes` makes Next set `src` to the largest configured width. */}
-        <Image
-          loader={thumbLoader}
-          src={photo.src}
-          alt={photo.alt}
-          width={THUMB_WIDTH}
-          height={THUMB_WIDTH}
-          priority={rowIndex === 0 && columnIndex === 0}
-          className={cn(
-            'h-full w-full object-cover transition-[opacity,transform] duration-500',
-            loaded.has(photo.id) ? 'scale-100 opacity-100' : 'scale-105 opacity-0',
-            'group-hover:scale-[1.02]',
-          )}
-          onLoad={() => onLoad(photo.id)}
-        />
-
-        <div
-          aria-hidden
-          className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/55 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-        >
-          <span className="text-sm text-neutral-300 tabular-nums">{formatDate(photo.date)}</span>
-          {photo.location ? (
-            <span className="px-3 text-center text-sm tracking-tight text-white">
-              {photo.location}
-            </span>
-          ) : null}
-        </div>
-      </button>
-    </div>
-  );
-}
-
 interface PhotoGridProps {
   photos: Photo[];
 }
@@ -120,16 +52,11 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [loaded, setLoaded] = useState<Set<string>>(new Set());
   const [fullLoadedId, setFullLoadedId] = useState<string | null>(null);
-  const [gridWidth, setGridWidth] = useState(INITIAL_GRID_WIDTH);
-  const [frameHeight, setFrameHeight] = useState(INITIAL_GRID_HEIGHT);
-  const frameRef = useRef<HTMLDivElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
 
   const total = photos.length;
   const selected = selectedIndex === null ? null : photos[selectedIndex];
-  const cellSize = Math.max(1, Math.floor(gridWidth / COLUMN_COUNT));
-  const rowCount = Math.ceil(total / COLUMN_COUNT);
 
   const onLoad = useCallback((id: string) => {
     setLoaded(prev => {
@@ -138,26 +65,6 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
       next.add(id);
       return next;
     });
-  }, []);
-
-  const onGridResize = useCallback(({ width }: { width: number }) => {
-    if (width <= 0) return;
-    setGridWidth(current => (Math.abs(current - width) < 1 ? current : width));
-  }, []);
-
-  useLayoutEffect(() => {
-    const frame = frameRef.current;
-    if (!frame) return;
-
-    function measure() {
-      const top = frame?.getBoundingClientRect().top ?? 0;
-      const next = Math.max(320, Math.floor(window.innerHeight - Math.max(top, 0) - 16));
-      setFrameHeight(current => (Math.abs(current - next) < 1 ? current : next));
-    }
-
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
   }, []);
 
   const open = useCallback((idx: number) => setSelectedIndex(idx), []);
@@ -195,21 +102,50 @@ export function PhotoGrid({ photos }: PhotoGridProps) {
 
   return (
     <>
-      <div ref={frameRef} className="w-full" style={{ height: frameHeight }}>
-        <Grid
-          cellComponent={PhotoCell}
-          cellProps={{ photos, onOpen: open, loaded, onLoad }}
-          columnCount={COLUMN_COUNT}
-          columnWidth={cellSize}
-          defaultHeight={INITIAL_GRID_HEIGHT}
-          defaultWidth={INITIAL_GRID_WIDTH}
-          onResize={onGridResize}
-          overscanCount={1}
-          rowCount={rowCount}
-          rowHeight={cellSize}
-          className="overscroll-y-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          style={{ height: '100%', width: '100%' }}
-        />
+      <div className="grid grid-cols-3 gap-px sm:gap-0.5">
+        {photos.map((photo, index) => (
+          <button
+            key={photo.id}
+            type="button"
+            onClick={() => open(index)}
+            className="group relative aspect-square overflow-hidden bg-neutral-900 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-neutral-200 focus-visible:outline-none"
+            aria-label={`Open photo: ${photo.alt}`}
+          >
+            <Image
+              loader={thumbLoader}
+              src={photo.src}
+              alt={photo.alt}
+              width={THUMB_WIDTH}
+              height={THUMB_WIDTH}
+              fill
+              loading={index < 9 ? 'eager' : 'lazy'}
+              // A cached image is already complete before React attaches `onLoad`, so mark it here too.
+              ref={node => {
+                if (node?.complete && node.naturalWidth > 0) onLoad(photo.id);
+              }}
+              className={cn(
+                'object-cover transition-[opacity,transform] duration-500',
+                loaded.has(photo.id) ? 'scale-100 opacity-100' : 'scale-105 opacity-0',
+                'group-hover:scale-[1.02]',
+              )}
+              onLoad={() => onLoad(photo.id)}
+            />
+
+            <div
+              aria-hidden
+              className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/55 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            >
+              <span className="text-sm text-neutral-300 tabular-nums">
+                {formatDate(photo.date)}
+              </span>
+              {photo.location ? (
+                <span className="px-3 text-center text-sm tracking-tight text-white">
+                  {photo.location}
+                </span>
+              ) : null}
+            </div>
+          </button>
+        ))}
       </div>
 
       {selected && (

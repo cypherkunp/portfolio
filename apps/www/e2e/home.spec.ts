@@ -37,7 +37,7 @@ test.describe('home', () => {
         return Array.from(ctx.getImageData(0, 0, 1, 1).data.slice(0, 3));
       };
       return {
-        background: [resolve('var(--background)'), resolve('oklch(0.1649 0.0352 281.8285)')],
+        background: [resolve('var(--background)'), resolve('oklch(0.145 0 0)')],
         primary: [resolve('var(--primary)'), resolve('oklch(0.9168 0.1915 101.407)')],
         bodyImage: getComputedStyle(document.body).backgroundImage,
       };

@@ -45,8 +45,8 @@ export function StatsCards({
       label: 'Up to date',
       value: upToDateCount,
       icon: CheckCircle,
-      accent: 'text-emerald-400',
-      iconBg: 'bg-emerald-400/10',
+      accent: 'text-foreground',
+      iconBg: 'bg-muted',
     },
     {
       label: 'Avg. age',
@@ -67,18 +67,18 @@ export function StatsCards({
           animate="visible"
           variants={cardVariants}
         >
-          <Card className="border-border bg-card">
+          <Card className="border-border bg-card rounded-sm shadow-none">
             <CardContent className="flex items-center gap-3 p-4">
               <div
-                className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${stat.iconBg}`}
+                className={`flex size-9 shrink-0 items-center justify-center rounded-sm ${stat.iconBg}`}
               >
-                <stat.icon className={`size-5 ${stat.accent}`} />
+                <stat.icon className={`size-4 ${stat.accent}`} />
               </div>
-              <div className="flex flex-col">
-                <span className={`text-xl font-bold tabular-nums ${stat.accent}`}>
+              <div className="flex min-w-0 flex-col">
+                <span className={`text-lg font-bold tabular-nums ${stat.accent}`}>
                   {stat.value}
                 </span>
-                <span className="text-muted-foreground text-[11px]">{stat.label}</span>
+                <span className="text-muted-foreground truncate text-xs">{stat.label}</span>
               </div>
             </CardContent>
           </Card>

@@ -1,6 +1,4 @@
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from 'react';
-import Image from '@/components/image';
-import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { Callout } from '@repo/ui/components/callout';
 import { CodeBlock } from '@repo/ui/components/code-block';
 import { CodeBlockCommand } from '@repo/ui/components/code-block-command';
@@ -17,7 +15,10 @@ import { ImageContract } from '@repo/ui/components/image-contract';
 import { References } from '@repo/ui/components/references';
 import { Terminal } from '@repo/ui/components/terminal';
 import UnderlineText from '@repo/ui/components/underline-text';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { cn } from '@repo/ui/lib/utils';
+
+import Image from '@/components/image';
 
 type HeadingProps = ComponentPropsWithoutRef<'h1'>;
 type ParagraphProps = ComponentPropsWithoutRef<'p'>;
@@ -62,16 +63,7 @@ function DialogTrigger({
   className,
   ...props
 }: ComponentPropsWithoutRef<typeof DialogTriggerBase>) {
-  return (
-    <DialogTriggerBase
-      className={cn(
-        'font-medium text-blue-500 underline-offset-4 hover:underline',
-        'dark:text-sky-400 dark:decoration-sky-400/40 hover:dark:text-sky-300',
-        className,
-      )}
-      {...props}
-    />
-  );
+  return <DialogTriggerBase className={cn('link-inline', className)} {...props} />;
 }
 
 const components = {
@@ -132,11 +124,7 @@ const components = {
     );
   },
   a: ({ href, children, className, ...props }: AnchorProps) => {
-    const linkClass = cn(
-      'wrap-break-words font-medium text-blue-500 underline-offset-4 hover:underline',
-      'dark:text-sky-400 dark:decoration-sky-400/40 hover:dark:text-sky-300',
-      className,
-    );
+    const linkClass = cn('link-inline wrap-break-words', className);
     if (href?.startsWith('/')) {
       return (
         <Link href={href} className={linkClass} {...props}>
@@ -220,7 +208,7 @@ const components = {
       return (
         <code
           className={cn(
-            'rounded-sm bg-muted/50 px-[0.35rem] py-[0.1rem] font-mono text-[0.9em] text-foreground/75',
+            'bg-muted/50 text-foreground/75 rounded-sm px-[0.35rem] py-[0.1rem] font-mono text-[0.9em]',
             className,
           )}
           {...props}

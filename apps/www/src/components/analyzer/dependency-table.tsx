@@ -152,7 +152,7 @@ function PackageRow({
             {pkg.isOutdated ? (
               <AlertTriangle className="size-3.5 text-yellow-400" />
             ) : (
-              <CheckCircle className="size-3.5 text-emerald-400" />
+              <CheckCircle className="size-3.5 text-neutral-500" />
             )}
           </div>
         </TableCell>
@@ -215,34 +215,24 @@ function PackageRow({
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     {pkg.description && (
                       <div className="md:col-span-2 lg:col-span-4">
-                        <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
-                          Description
-                        </span>
+                        <span className="text-muted-foreground text-xs">Description</span>
                         <p className="text-foreground mt-1 text-sm">{pkg.description}</p>
                       </div>
                     )}
                     <div>
-                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
-                        Current version
-                      </span>
+                      <span className="text-muted-foreground text-xs">Current version</span>
                       <p className="mt-1 font-mono text-sm">{pkg.configuredVersion}</p>
                     </div>
                     <div>
-                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
-                        Latest version
-                      </span>
+                      <span className="text-muted-foreground text-xs">Latest version</span>
                       <p className="mt-1 font-mono text-sm">{pkg.latestVersion}</p>
                     </div>
                     <div>
-                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
-                        Issues
-                      </span>
+                      <span className="text-muted-foreground text-xs">Issues</span>
                       <p className="mt-1 text-sm">{pkg.openIssues}</p>
                     </div>
                     <div>
-                      <span className="text-muted-foreground text-[11px] tracking-wider uppercase">
-                        Last published
-                      </span>
+                      <span className="text-muted-foreground text-xs">Last published</span>
                       <p className="mt-1 text-sm">{formatDate(pkg.lastPublished)}</p>
                     </div>
                   </div>
@@ -347,7 +337,7 @@ function PackageTable({
         )}
       </div>
 
-      <div className="border-border max-w-full overflow-x-auto rounded-lg border">
+      <div className="border-border max-w-full overflow-x-auto rounded-sm border">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">

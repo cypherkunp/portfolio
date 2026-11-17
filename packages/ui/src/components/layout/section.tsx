@@ -47,7 +47,7 @@ export function Section({
           </RenderIf>
 
           <RenderIf condition={!!description}>
-            <p className="text-muted-foreground">{description}</p>
+            <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
           </RenderIf>
         </div>
       </RenderIf>

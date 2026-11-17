@@ -9,7 +9,7 @@ import {
   catalogMetaClassName,
   catalogRowClassName,
   catalogTitleClassName,
-} from '@/components/bookmarks/catalog-row';
+} from '@/components/catalog-row';
 
 interface BookmarkListProps {
   bookmarks: Bookmark[];

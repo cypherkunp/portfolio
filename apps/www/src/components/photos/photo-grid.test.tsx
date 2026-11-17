@@ -1,12 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import type { Photo } from '@/lib/photo';
 import { PhotoGrid } from '@/components/photos/photo-grid';
-
-const VIEWPORT_WIDTH = 900;
-const VIEWPORT_HEIGHT = 600;
 
 function photo(id: number): Photo {
   return {
@@ -26,44 +23,6 @@ function imageUrl(img: HTMLElement) {
   return `${img.getAttribute('src') ?? ''} ${img.getAttribute('srcset') ?? ''}`;
 }
 
-beforeEach(() => {
-  globalThis.ResizeObserver = class {
-    private readonly callback: ResizeObserverCallback;
-
-    constructor(callback: ResizeObserverCallback) {
-      this.callback = callback;
-    }
-
-    observe(target: Element) {
-      this.callback(
-        [
-          {
-            contentRect: {
-              width: VIEWPORT_WIDTH,
-              height: VIEWPORT_HEIGHT,
-              top: 0,
-              left: 0,
-              bottom: VIEWPORT_HEIGHT,
-              right: VIEWPORT_WIDTH,
-              x: 0,
-              y: 0,
-              toJSON() {
-                return {};
-              },
-            },
-            target,
-          } as ResizeObserverEntry,
-        ],
-        this as unknown as ResizeObserver,
-      );
-    }
-
-    unobserve() {}
-
-    disconnect() {}
-  };
-});
-
 describe('PhotoGrid', () => {
   it('shows the empty copy when there are no photos', () => {
     render(<PhotoGrid photos={[]} />);
@@ -71,12 +30,11 @@ describe('PhotoGrid', () => {
     expect(screen.getByText('Drop images into public/photos.')).toBeInTheDocument();
   });
 
-  it('mounts only the visible thumbnail window', () => {
+  it('renders every photo so the page scrolls naturally', () => {
     render(<PhotoGrid photos={photos} />);
 
-    // 900×600 viewport, 300px cells, one overscan row → 3×3.
-    expect(screen.getAllByRole('button', { name: /Open photo/ })).toHaveLength(9);
-    expect(screen.queryByRole('button', { name: 'Open photo: Alt 10' })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Open photo/ })).toHaveLength(30);
+    expect(screen.getByRole('button', { name: 'Open photo: Alt 10' })).toBeInTheDocument();
   });
 
   it('keeps thumbnails small and fetches a full rendition only for the opened photo', async () => {

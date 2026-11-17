@@ -1,5 +1,5 @@
-import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { Badge } from '@repo/ui/components/badge';
+import { AppLink as Link } from '@repo/ui/lib/app-link';
 import { cn } from '@repo/ui/lib/utils';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -9,7 +9,7 @@ import {
   catalogMetaClassName,
   catalogRowClassName,
   catalogTitleClassName,
-} from '@/components/bookmarks/catalog-row';
+} from '@/components/catalog-row';
 
 interface CollectionListProps {
   collections: BookmarkCollection[];

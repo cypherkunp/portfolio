@@ -1,4 +1,4 @@
-import type { CSSProperties, ImgHTMLAttributes } from 'react';
+import type { CSSProperties, ImgHTMLAttributes, Ref } from 'react';
 
 export interface ImageLoaderProps {
   src: string;
@@ -13,6 +13,7 @@ interface ImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   quality?: number;
   loader?: (props: ImageLoaderProps) => string;
   sizes?: string;
+  ref?: Ref<HTMLImageElement>;
 }
 
 // Photo loaders ask for a width. Use the largest device width so the rendition stays sharp.
@@ -28,6 +29,7 @@ export default function Image({
   loader,
   quality,
   sizes: _sizes,
+  ref,
   ...props
 }: ImageProps) {
   const imageSrc = typeof src === 'string' ? src : src.src;
@@ -46,6 +48,7 @@ export default function Image({
 
   return (
     <img
+      ref={ref}
       src={url}
       alt={alt ?? ''}
       className={className}

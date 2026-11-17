@@ -49,19 +49,20 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
   if (fileName) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="border-border bg-card flex items-center gap-3 rounded-lg border px-4 py-3"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="border-border flex items-center gap-3 rounded-sm border px-4 py-3"
       >
-        <FileJson className="size-5 text-yellow-400" />
-        <span className="text-foreground font-mono text-sm">{fileName}</span>
-        {isAnalyzing && <span className="text-muted-foreground text-xs">Analyzing...</span>}
+        <FileJson className="size-4 shrink-0 text-yellow-500" />
+        <span className="text-foreground min-w-0 truncate text-sm">{fileName}</span>
+        {isAnalyzing && <span className="text-muted-foreground shrink-0 text-xs">Analyzing…</span>}
         <Button
           variant="ghost"
           size="icon"
-          className="ml-auto size-8"
+          className="ml-auto size-8 shrink-0"
           onClick={onReset}
           disabled={isAnalyzing}
+          aria-label="Remove file"
         >
           <X className="size-4" />
         </Button>
@@ -73,10 +74,10 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
     <AnimatePresence mode="wait">
       <motion.div
         key="dropzone"
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.96, y: -20 }}
-        transition={{ duration: 0.3 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
       >
         <div
           onDrop={handleDrop}
@@ -84,58 +85,37 @@ export function UploadZone({ onFileUpload, fileName, isAnalyzing, onReset }: Upl
           onDragLeave={handleDragLeave}
           onClick={() => inputRef.current?.click()}
           className={cn(
-            'group relative cursor-pointer overflow-hidden rounded-xl border-2 border-dashed transition-all duration-300',
+            'group relative cursor-pointer overflow-hidden rounded-sm border border-dashed transition-colors duration-200',
             isDragOver
-              ? 'border-yellow-400 bg-yellow-400/5'
-              : 'border-border hover:bg-card/50 hover:border-yellow-400/50',
+              ? 'border-yellow-500 bg-yellow-400/5'
+              : 'border-border hover:border-yellow-500/60',
           )}
         >
-          <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 md:py-24">
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className={cn(
-                'flex size-20 items-center justify-center rounded-2xl border transition-colors duration-300',
-                isDragOver
-                  ? 'border-yellow-400/40 bg-yellow-400/10 text-yellow-400'
-                  : 'border-border bg-card text-muted-foreground group-hover:border-yellow-400/30 group-hover:text-yellow-400',
-              )}
-            >
-              <FileJson className="size-10" />
-            </motion.div>
-
-            <div className="flex flex-col items-center gap-2 text-center">
-              <h3 className="text-foreground text-lg font-semibold">Drop your package.json here</h3>
-              <p className="text-muted-foreground max-w-sm text-sm">
-                Drag and drop your package.json file, or click to browse. We'll analyze your
-                dependencies and show what's outdated.
+          <div className="flex flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-foreground flex items-center gap-2 text-base font-bold tracking-tight">
+                <FileJson className="size-4 shrink-0 text-neutral-500" aria-hidden />
+                Drop your package.json here
+              </h3>
+              <p className="text-muted-foreground mt-1 max-w-xl text-sm leading-relaxed">
+                Drag and drop a file, or browse. We&apos;ll list your dependencies and flag what is
+                out of date.
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2 border-yellow-400/30 text-yellow-400 hover:bg-yellow-400/10 hover:text-yellow-400"
-                onClick={e => {
-                  e.stopPropagation();
-                  inputRef.current?.click();
-                }}
-              >
-                <Upload className="size-4" />
-                Browse files
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-fit shrink-0 gap-2 border-neutral-700 text-neutral-200 hover:border-yellow-500/60 hover:bg-neutral-800/60 hover:text-neutral-100"
+              onClick={e => {
+                e.stopPropagation();
+                inputRef.current?.click();
+              }}
+            >
+              <Upload className="size-4" />
+              Browse files
+            </Button>
           </div>
-
-          {isDragOver && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="pointer-events-none absolute inset-0 rounded-xl bg-yellow-400/5"
-            />
-          )}
 
           <input
             ref={inputRef}

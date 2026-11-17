@@ -33,9 +33,7 @@ function getRepoUrl(repository: ProjectMetadata['repository']): string | null {
 function MetadataField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
-        {label}
-      </span>
+      <span className="text-muted-foreground text-xs">{label}</span>
       <span className="text-foreground text-sm">{children}</span>
     </div>
   );
@@ -50,7 +48,7 @@ export function MetadataDisplay({ metadata }: MetadataDisplayProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="border-border bg-card flex flex-wrap items-start gap-6 rounded-lg border px-5 py-4 md:gap-10"
+      className="border-border bg-card flex flex-wrap items-start gap-6 rounded-sm border px-5 py-4 md:gap-10"
     >
       <MetadataField label="Name">
         <span className="font-mono font-semibold">{metadata.name}</span>
@@ -78,7 +76,7 @@ export function MetadataDisplay({ metadata }: MetadataDisplayProps) {
             href={repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-yellow-400 transition-colors hover:text-yellow-500"
+            className="link-inline inline-flex items-center gap-1"
           >
             {repoUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}
             <ExternalLink className="size-3" />

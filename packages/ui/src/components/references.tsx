@@ -46,10 +46,7 @@ export function References({ items, title = 'References', className }: Reference
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(
-                'wrap-break-words font-medium text-blue-500 underline-offset-4 hover:underline',
-                'dark:text-sky-400 dark:decoration-sky-400/40 hover:dark:text-sky-300',
-              )}
+              className="link-inline wrap-break-words"
             >
               {displayUrl(item.url)}
             </a>
