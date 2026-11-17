@@ -2,12 +2,26 @@
 
 import * as React from 'react';
 import { IconCheck, IconCopy, IconTerminal } from '@tabler/icons-react';
-import { codeToHtml } from 'shiki';
+import { createHighlighterCore } from 'shiki/core';
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 
 import { cn } from '../lib/utils';
 import { Button } from './button';
 import { copyToClipboardWithMeta } from './copy-button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
+
+// `codeToHtml` from 'shiki' loads the Oniguruma WASM engine, which the app aliases to a
+// stub (Nitro cannot bundle onig.wasm). Use the JS regex engine and load only what we need.
+let highlighterPromise: ReturnType<typeof createHighlighterCore> | undefined;
+
+function getHighlighter() {
+  highlighterPromise ??= createHighlighterCore({
+    themes: [import('shiki/themes/github-dark.mjs')],
+    langs: [import('shiki/langs/bash.mjs')],
+    engine: createJavaScriptRegexEngine(),
+  });
+  return highlighterPromise;
+}
 
 interface TerminalProps {
   command: string;
@@ -32,7 +46,8 @@ export function Terminal({ command, title = 'Terminal', className }: TerminalPro
     const highlight = async () => {
       try {
         const trimmedCommand = command.trim();
-        const html = await codeToHtml(trimmedCommand, {
+        const highlighter = await getHighlighter();
+        const html = highlighter.codeToHtml(trimmedCommand, {
           lang: 'bash',
           theme: 'github-dark',
         });
