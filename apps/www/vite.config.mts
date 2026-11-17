@@ -1,4 +1,5 @@
 import { createRequire } from 'node:module';
+import { cp } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
@@ -62,6 +63,17 @@ export default defineConfig(async () => ({
       },
     }),
     viteReact(),
-    nitro(),
+    nitro({
+      hooks: {
+        // Vercel serves public/ from the CDN only. The photo grid and /image read
+        // public/photos with fs at runtime, so ship a copy inside the function.
+        compiled: async nitro => {
+          if (nitro.options.preset !== 'vercel') return;
+          await cp(path.join(root, 'public/photos'), path.join(nitro.options.output.serverDir, 'public/photos'), {
+            recursive: true,
+          });
+        },
+      },
+    }),
   ],
 }));
