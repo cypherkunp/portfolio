@@ -13,7 +13,7 @@ describe('mdx code', () => {
     const node = screen.getByText('git status');
     expect(node.tagName).toBe('CODE');
     expect(node).toHaveClass(chip);
-    expect(node).toHaveClass('text-[0.85em]');
+    expect(node).toHaveClass('text-[0.9em]');
     expect(node).not.toHaveClass('text-sm');
   });
 
