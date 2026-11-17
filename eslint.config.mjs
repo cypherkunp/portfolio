@@ -109,6 +109,8 @@ export default tseslint.config(
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
+      '**/.output/**',
+      '**/.nitro/**',
       '**/out/**',
       '**/build/**',
       '**/.turbo/**',

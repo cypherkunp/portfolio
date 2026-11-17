@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import mdx from 'fumadocs-mdx/vite';
+import { nitro } from 'nitro/vite';
 import { defineConfig } from 'vite';
 
 import * as sourceConfig from './source.config.ts';
@@ -47,6 +48,7 @@ export default defineConfig(async () => ({
       exact('next-intl', path.join(root, 'src/shims/next-intl.tsx')),
       exact('server-only', path.join(root, 'src/test/stubs/server-only.ts')),
       // Vite's SSR runner loads exifr's CJS build, which has no named `parse` export.
+      exact('shiki/wasm', path.join(root, 'src/shims/shiki-wasm.ts')),
       exact('exifr', require.resolve('exifr/dist/full.esm.mjs')),
     ],
   },
@@ -60,5 +62,6 @@ export default defineConfig(async () => ({
       },
     }),
     viteReact(),
+    nitro(),
   ],
 }));

@@ -2,6 +2,12 @@
 
 The public site is a TanStack Start app in `apps/www`. Vite builds it and serves it.
 
+## Deploy
+
+Vercel builds `apps/www` with Root Directory `apps/www` and Output Directory unset.
+`nitro()` in `vite.config.mts` writes `.vercel/output` when `VERCEL=1`.
+`shiki/wasm` aliases to `src/shims/shiki-wasm.ts`. The site uses the JS regex engine, and Nitro cannot bundle `onig.wasm`.
+
 ## Links, images, routes
 
 An in-app path uses `AppLink` from `@repo/ui/lib/app-link`.
