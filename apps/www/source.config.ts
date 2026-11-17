@@ -1,6 +1,8 @@
 import { defineCollections, defineConfig } from 'fumadocs-mdx/config';
 import { z } from 'zod';
 
+import { markCodeInFences } from './src/lib/mark-fence-code';
+
 export const blogPosts = defineCollections({
   type: 'doc',
   dir: 'src/content/posts',
@@ -46,5 +48,6 @@ export default defineConfig({
         },
       ],
     },
+    rehypePlugins: [() => markCodeInFences],
   },
 });

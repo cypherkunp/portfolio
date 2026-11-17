@@ -204,7 +204,8 @@ const components = {
       );
     }
 
-    if (typeof children === 'string') {
+    const isCodeBlock = className?.includes('language-');
+    if (typeof children === 'string' && !isCodeBlock) {
       return (
         <code
           className={cn(
